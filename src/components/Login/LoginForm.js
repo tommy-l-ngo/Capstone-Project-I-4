@@ -1,6 +1,5 @@
-import logo from "./logo.svg";
 import "./Login.css";
-import UserStore from "./stores/UserStore";
+import UserStore from "../../stores/UserStore";
 import React from "react";
 import InputField from "./InputField";
 import InputField2 from "./InputField2";

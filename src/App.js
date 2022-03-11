@@ -1,10 +1,9 @@
-import logo from "./logo.svg";
-import "./Login.css";
+import "./components/Login/Login.css";
 import UserStore from "./stores/UserStore";
 import React from "react";
 import { observer } from 'mobx-react';
-import LoginForm from "./LoginForm";
-import SubmitButton from "./SubmitButton";
+import LoginForm from "./components/Login/LoginForm";
+import SubmitButton from "./components/Login/SubmitButton";
 
 class App extends React.Component {
   async doLogOut() {

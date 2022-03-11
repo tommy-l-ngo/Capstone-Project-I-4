@@ -1,6 +1,5 @@
-import logo from "./logo.svg";
 import "./Login.css";
-import UserStore from "./stores/UserStore";
+import UserStore from "../../stores/UserStore";
 import React from "react";
 
 class InputField2 extends React.Component {
