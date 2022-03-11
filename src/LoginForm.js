@@ -5,6 +5,19 @@ import React from "react";
 import InputField from "./InputField";
 import InputField2 from "./InputField2";
 import SubmitButton from "./SubmitButton";
+import { getDatabase, get, ref, child} from "firebase/database";
+
+const dbRef = ref(getDatabase());
+
+get(child(dbRef, "users/" + "test0123")).then((snapshot) => {
+  if (snapshot.exists()) {
+    console.log(snapshot.val());
+  } else {
+    console.log("No data available");
+  }
+}).catch((error) => {
+  console.error(error);
+});
 
 
 class LoginForm extends React.Component {
