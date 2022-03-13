@@ -103,10 +103,13 @@ class LoginForm extends React.Component {
           value={this.state.password ? this.state.password : ""}
           onChange={(val) => this.setInputValue("password", val)}
         />
+        <a href=''>Forgot Password</a>
         <SubmitButton text="Log in"
             disabled={this.state.buttonDisabled}
             onClick={ () => this.doLogin() } 
         />
+        <p style={{marginBottom: '0px'}}>Don't have an account?</p>
+        <a href=''>Sign Up</a>
       </div>
       </div>
     );
