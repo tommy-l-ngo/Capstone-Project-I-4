@@ -1,11 +1,12 @@
-import "./components/Login/Login.css";
-import UserStore from "./stores/UserStore";
+import "./Login.css";
+import UserStore from "../../stores/UserStore";
 import React from "react";
 import { observer } from 'mobx-react';
-import LoginForm from "./components/Login/LoginForm";
-import SubmitButton from "./components/Login/SubmitButton";
-import Register from "./components/Register/Register";
-import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import LoginForm from "./LoginForm";
+import SubmitButton from "./SubmitButton";
+import Register from "./Register";
+import {Routes as Switch, Route, HashRouter as Router} from "react-router-dom";
+
 
 
 class App extends React.Component {
@@ -88,9 +89,17 @@ class App extends React.Component {
         );
       }
       return (
-        <div id="loginBorder">
-          <LoginForm />
-        </div>
+        <main> 
+          <div className="App">
+            <Router>
+              <Switch>
+                <Route path="/" element={<LoginForm/>} exact/>
+                <Route path="/Register" element={<Register/>} />
+              </Switch>
+            </Router>
+          </div>
+        </main>
+        
       );
     }
   }
