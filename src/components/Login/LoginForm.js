@@ -5,6 +5,7 @@ import InputField from "./InputField";
 import InputField2 from "./InputField2";
 import SubmitButton from "./SubmitButton";
 import { getDatabase, get, ref, child} from "firebase/database";
+import {Link} from 'react-router-dom';
 
 const dbRef = ref(getDatabase());
 
@@ -103,13 +104,14 @@ class LoginForm extends React.Component {
           value={this.state.password ? this.state.password : ""}
           onChange={(val) => this.setInputValue("password", val)}
         />
-        <a href=''>Forgot Password</a>
+        <a href=''>Forgot Password</a> {/*FIXME: change to React Link*/}
         <SubmitButton text="Log in"
             disabled={this.state.buttonDisabled}
             onClick={ () => this.doLogin() } 
         />
         <p style={{marginBottom: '0px'}}>Don't have an account?</p>
-        <a href=''>Sign Up</a>
+        {/*<li><Link to={"/Register"}>Sign Up</Link></li>*/}{/*Can't get this to work*/}
+        <a href=''>Sign Up</a> {/*FIXME: change to React Link*/}
       </div>
       </div>
     );

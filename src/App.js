@@ -4,8 +4,25 @@ import React from "react";
 import { observer } from 'mobx-react';
 import LoginForm from "./components/Login/LoginForm";
 import SubmitButton from "./components/Login/SubmitButton";
+import Register from "./components/Register/Register";
+import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
+
 
 class App extends React.Component {
+  /*
+  App2() {
+    return (
+        <Router>
+        <div>
+            <Routes>
+            <Route path="/Register" element={<Register/>} />
+            </Routes>
+        </div>
+        </Router>
+        );
+  }
+  */
+
   async doLogOut() {
     try {
       let res = await fetch("/logout", {
@@ -73,7 +90,6 @@ class App extends React.Component {
       return (
         <div id="loginBorder">
           <LoginForm />
-          
         </div>
       );
     }
