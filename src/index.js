@@ -4,7 +4,8 @@ import './index.css';
 import firebase from "./firebase";
 
 import LoginForm from './components/Login/LoginForm';
-import App from "./App";
+import Register from './components/Login/Register';
+import App from "./components/Login/App";
 
 ReactDOM.render(
   <React.StrictMode>

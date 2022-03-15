@@ -1,9 +1,15 @@
+import"./register.css"
 import {React, Component} from "react";
 import { Form, Button, Card, Container } from "react-bootstrap";
 import "../../firebase";
 import {getDatabase, set, ref } from "firebase/database";
 import { Link } from 'react-router-dom';
 import {BrowserRouter as Router,Switch} from 'react-router-dom';
+import InputFieldFname from "./InputFieldFname";
+import InputFieldEmail from "./InputFieldEmail";
+import InputFieldIname from "./InputFieldIname";
+import InputFieldLname from "./InpurtFieldLname";
+import InputFieldPassword from "./InputFieldPassword";
 
 
 export default class Register extends Component {
@@ -11,10 +17,12 @@ export default class Register extends Component {
         super(props);
 
         this.state = {
-            userFullName: "",
-            userEuid: "",
-            userDOB: "",
-            userPassword: "",
+            institutionName: "",
+            firstName: "",
+            lastname: "",
+            emal: "",
+            password:"",
+            buttonDisable: false
         };
     }
 
@@ -33,10 +41,34 @@ export default class Register extends Component {
     
     render() {
         return (
-            <div>
-                {console.log('hi')}
-                <p>Welcome</p>
+            <div className="container">
+                <div className="register">
+                    <b>Sign Up</b>
+                    <InputFieldIname
+                        type="text"
+                        placeholder="Institution Name"
+                        
+                    />
+                    <InputFieldFname
+                        type="text"
+                        placeholder="First Name"
+                    />
+                    <InputFieldLname
+                        type="text"
+                        placeholder="Last Name"
+                    />
+                    <InputFieldEmail
+                        type="email"
+                        placeholder="Email"
+                    />
+
+                    <InputFieldPassword
+                        type="password"
+                        placeholder="Password"
+                    />
+
+                </div>
             </div>
-        )
+        );
     }
 }
