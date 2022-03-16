@@ -118,8 +118,8 @@ class LoginForm extends React.Component {
             onClick={this.handleLoginUser}
           />
           <p style={{ marginBottom: '0px' }}>Don't have an account?</p>
-          {/*<li><Link to={"/Register"}>Sign Up</Link></li>*/}{/*Can't get this to work*/}
-          <Link to={"/Register"}>Sign Up</Link> {/*FIXME: change to React Link*/}
+          <Link to={"/Register"}>Sign Up</Link>
+          {/*<Link to={"/Register"}>Sign Up</Link>*/} {/*FIXME: change to React Link*/}
         </div>
       </div>
     );

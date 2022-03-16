@@ -4,6 +4,8 @@ import "../../firebase";
 import {getDatabase, set, ref } from "firebase/database";
 import { Link } from 'react-router-dom';
 import {BrowserRouter as Router,Switch} from 'react-router-dom';
+import LoginForm from "./LoginForm";
+import SubmitButton from "./SubmitButton";
 
 
 export default class Register extends Component {
@@ -33,9 +35,11 @@ export default class Register extends Component {
     
     render() {
         return (
-            <div>
+            <div className="loginForm">
                 {console.log('hi')}
-                <p>Welcome</p>
+                <b>Register as</b>
+                <button style={{marginTop: '12px', marginBottom: '20px'}} className="btn">Student</button>
+                <button className="btn">Advisor/Professor</button>
             </div>
         )
     }
