@@ -99,7 +99,7 @@ class LoginForm extends React.Component {
     return (
       <div classname="container">
         <div className="loginForm">
-          <b>Log In</b>
+          <h2 style={{lineHeight:'0px'}}>Log In</h2>
           <InputField2
             type="text"
             placeholder="Username"

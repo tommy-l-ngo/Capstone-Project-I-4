@@ -37,8 +37,8 @@ export default class Register extends Component {
         return (
             <div className="loginForm">
                 {console.log('hi')}
-                <b>Register as</b>
-                <button style={{marginTop: '12px', marginBottom: '20px'}} className="btn">Student</button>
+                <h3 style={{lineHeight:'0px'}}>Register as</h3>
+                <button style={{marginTop: '6px', marginBottom: '20px'}} className="btn">Student</button>
                 <button className="btn">Advisor/Professor</button>
             </div>
         )
