@@ -5,19 +5,9 @@ import InputField from "./InputField";
 import InputField2 from "./InputField2";
 import SubmitButton from "./SubmitButton";
 import { getDatabase, get, ref, child } from "firebase/database";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
-const dbRef = ref(getDatabase());
 
-get(child(dbRef, "users/" + "test0123")).then((snapshot) => {
-  if (snapshot.exists()) {
-    console.log(snapshot.val());
-  } else {
-    console.log("No data available");
-  }
-}).catch((error) => {
-  console.error(error);
-});
 
 
 class LoginForm extends React.Component {
@@ -28,6 +18,24 @@ class LoginForm extends React.Component {
       password: '',
       buttonDisabled: false
     }
+  }
+
+  handleLoginUser = () => {
+    const dbRef = ref(getDatabase());
+
+    get(child(dbRef, "users/" + this.state.username)).then((snapshot) => {
+      if (snapshot.exists()) {
+        //check password
+        if (snapshot.child("password").val() == this.state.password)
+        {
+          console.log("Password Match");
+        }
+      } else {
+        console.log("Login credentials incorrect");
+      }
+    }).catch((error) => {
+      console.error(error);
+    });
   }
 
   setInputValue(property, val) {
@@ -91,7 +99,7 @@ class LoginForm extends React.Component {
     return (
       <div classname="container">
         <div className="loginForm">
-          <b>Log In</b>
+          <h2 style={{lineHeight:'0px'}}>Log In</h2>
           <InputField2
             type="text"
             placeholder="Username"
@@ -107,11 +115,11 @@ class LoginForm extends React.Component {
           <a href=''>Forgot Password</a> {/*FIXME: change to React Link*/}
           <SubmitButton text="Log in"
             disabled={this.state.buttonDisabled}
-            onClick={() => this.doLogin()}
+            onClick={this.handleLoginUser}
           />
           <p style={{ marginBottom: '0px' }}>Don't have an account?</p>
-          {/*<li><Link to={"/Register"}>Sign Up</Link></li>*/}{/*Can't get this to work*/}
-          <Link to={"/Register"}>Sign Up</Link> {/*FIXME: change to React Link*/}
+          <Link to={"/Register"}>Sign Up</Link>
+          {/*<Link to={"/Register"}>Sign Up</Link>*/} {/*FIXME: change to React Link*/}
         </div>
       </div>
     );
