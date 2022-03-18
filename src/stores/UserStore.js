@@ -1,3 +1,4 @@
+/*
 import { extendObservable } from "mobx";
 
 class UserStore {
@@ -13,3 +14,4 @@ class UserStore {
 }
 
 export default new UserStore();
+*/

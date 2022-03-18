@@ -1,5 +1,5 @@
 import "./Login.css";
-import UserStore from "../../stores/UserStore";
+//import UserStore from "../../stores/UserStore";
 import React from "react";
 import InputField from "./InputField";
 import InputField2 from "./InputField2";
@@ -7,28 +7,26 @@ import SubmitButton from "./SubmitButton";
 import { getDatabase, get, ref, child } from "firebase/database";
 import { Link, useNavigate } from 'react-router-dom';
 
-
-
-
-class LoginForm extends React.Component {
+export default class LoginForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       username: '',
       password: '',
-      buttonDisabled: false
+      buttonDisabled: false 
     }
   }
 
   handleLoginUser = () => {
     const dbRef = ref(getDatabase());
-
+    // let navigate = useNavigate(); // FIX ME
     get(child(dbRef, "users/" + this.state.username)).then((snapshot) => {
       if (snapshot.exists()) {
         //check password
         if (snapshot.child("password").val() == this.state.password)
         {
           console.log("Password Match");
+          //navigate("/Register"); //FIX ME
         }
       } else {
         console.log("Login credentials incorrect");
@@ -47,7 +45,7 @@ class LoginForm extends React.Component {
       [property]: val
     })
   }
-
+  /*
   resetForm() {
     this.setState({
       username: '',
@@ -95,9 +93,11 @@ class LoginForm extends React.Component {
       this.resetForm();
     }
   }
+  */
+  
   render() {
     return (
-      <div classname="container">
+      <div className="container">
         <div className="loginForm">
           <h2 style={{lineHeight:'0px'}}>Log In</h2>
           <InputField2
@@ -125,5 +125,3 @@ class LoginForm extends React.Component {
     );
   }
 }
-
-export default LoginForm;

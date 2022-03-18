@@ -1,5 +1,5 @@
 import "./Login.css";
-import UserStore from "../../stores/UserStore";
+//import UserStore from "../../stores/UserStore";
 import React from "react";
 import { observer } from 'mobx-react';
 import LoginForm from "./LoginForm";
@@ -23,7 +23,7 @@ class App extends React.Component {
         );
   }
   */
-
+  /*
   async doLogOut() {
     try {
       let res = await fetch("/logout", {
@@ -68,8 +68,10 @@ class App extends React.Component {
       UserStore.isLoggedIn = false;
     }
   }
+  */
 
   render() {
+    /*
     if (UserStore.loading) {
       return (
         <div className="app">
@@ -88,6 +90,7 @@ class App extends React.Component {
           </div>
         );
       }
+      */
       return (
         <main> 
           <div className="App">
@@ -103,6 +106,5 @@ class App extends React.Component {
       );
     }
   }
-}
 
 export default observer(App);

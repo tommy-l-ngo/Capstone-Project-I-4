@@ -1,4 +1,4 @@
-import { React, Component } from "react";
+import React, {Component}  from "react";
 import { Form, Button, Card, Container } from "react-bootstrap";
 import "../../firebase";
 import { getDatabase, set, ref } from "firebase/database";
@@ -89,42 +89,42 @@ export default class Register extends Component {
                                 <button className="btn">Advisor/Professor</button>
                                 <Form>
                                     <Form.Group id="department">
-                                        <Form.Label for="departmentName" ></Form.Label>
+                                        <Form.Label htmlFor="departmentName" ></Form.Label>
                                         <Form.Control type="text" id="departmentName" name="departmentName" placeholder="Department Name" required></Form.Control>
                                     </Form.Group>
 
                                     <Form.Group id="eUID">
-                                        <Form.Label for="userEUID" ></Form.Label>
+                                        <Form.Label htmlFor="userEUID" ></Form.Label>
                                         <Form.Control type="text" id="userEUID" name="userEUID" placeholder="eUID" required></Form.Control>
                                     </Form.Group>
 
                                     <Form.Group id="email">
-                                        <Form.Label for="userEmail"></Form.Label>
+                                        <Form.Label htmlFor="userEmail"></Form.Label>
                                         <Form.Control type="text" id="userEmail" name="userEmail" placeholder="Email" required></Form.Control>
                                     </Form.Group>
 
                                     <Form.Group id="firstName">
-                                        <Form.Label for="userFirstName"></Form.Label>
+                                        <Form.Label htmlFor="userFirstName"></Form.Label>
                                         <Form.Control type="text" id="userFirstlName" name="userFirstName" placeholder="First Name" required></Form.Control>
                                     </Form.Group>
 
                                     <Form.Group id="lastName">
-                                        <Form.Label for="userLastName"></Form.Label>
+                                        <Form.Label htmlFor="userLastName"></Form.Label>
                                         <Form.Control type="text" id="userLastlName" name="userLastName" placeholder="Last Name" required></Form.Control>
                                     </Form.Group>
 
                                     <Form.Group id="password">
-                                        <Form.Label for="userPassowrd"></Form.Label>
+                                        <Form.Label htmlFor="userPassowrd"></Form.Label>
                                         <Form.Control type="text" id="userPassword" name="userPassowrd" placeholder="Password" required></Form.Control>
                                     </Form.Group>
 
                                     <Form.Group id="confirmPassword">
-                                        <Form.Label for="userConfirmPassword"></Form.Label>
+                                        <Form.Label htmlFor="userConfirmPassword"></Form.Label>
                                         <Form.Control type="text" id="userConfirmPassword" name="userConfirmPassword" placeholder="Confirm Password" required></Form.Control>
                                     </Form.Group>
 
                                     <Form.Group id="Role">
-                                        <Form.Label for="userRole"></Form.Label>
+                                        <Form.Label htmlFor="userRole"></Form.Label>
                                         <Form.Control type="text" id="userRole" name="userRole" placeholder="Role" required></Form.Control>
                                     </Form.Group>
                                 </Form>
