@@ -6,7 +6,7 @@ import LoginForm from "./LoginForm";
 import SubmitButton from "./SubmitButton";
 import Register from "./Register";
 import {Routes as Switch, Route, HashRouter as Router} from "react-router-dom";
-
+import CreateProject from "../Create-project/CreateProject";
 
 
 class App extends React.Component {
@@ -98,6 +98,7 @@ class App extends React.Component {
               <Switch>
                 <Route path="/" element={<LoginForm/>} exact/>
                 <Route path="/Register" element={<Register/>} />
+                <Route path="/CreateProject" element={<CreateProject/>} />
               </Switch>
             </Router>
           </div>
