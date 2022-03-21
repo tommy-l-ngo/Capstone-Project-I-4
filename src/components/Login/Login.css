@@ -59,7 +59,7 @@ html,
   padding-top: 16px;
 }
 .inputField2 {
-    padding-top:16px
+  padding-top: 16px;
 }
 .input {
   box-sizing: border-box;
@@ -101,4 +101,13 @@ html,
   border-radius: 4px;
   background: #fff;
   cursor: pointer;
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
