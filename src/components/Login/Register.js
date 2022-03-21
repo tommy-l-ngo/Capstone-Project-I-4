@@ -5,11 +5,15 @@ import { getDatabase, set, ref } from "firebase/database";
 import { BrowserRouter as Router, Switch, Link } from 'react-router-dom';
 import LoginForm from "./LoginForm";
 import SubmitButton from "./SubmitButton";
+import "./Login.css";
 
 
 export default class Register extends Component {
+    
     constructor(props) {
         super(props);
+      document.documentElement.style.setProperty("--loginFormHeight", "600px");
+      document.documentElement.style.setProperty("--loginFormWidth", "500px");
 
         this.state = {
             department: "",
@@ -77,62 +81,126 @@ export default class Register extends Component {
 
     render() {
         return (
-            <div>
-                <Container className="d-flex align-item-center justify-content-center">
-                    <div className="w-100" style={{ maxWidth: "400px" }}>
-                        <Card className="register">
-                            <Card.Body>
-                                <h1>Registration</h1>
-                                <div className="w-100 text-center mt-2 text-danger" id="errorMessage"></div>
-                                <h3 style={{ lineHeight: '0px' }}>Register as</h3>
-                                <button style={{ marginTop: '6px', marginBottom: '20px' }} className="btn">Student</button>
-                                <button className="btn">Advisor/Professor</button>
-                                <Form>
-                                    <Form.Group id="department">
-                                        <Form.Label htmlFor="departmentName" ></Form.Label>
-                                        <Form.Control type="text" id="departmentName" name="departmentName" placeholder="Department Name" required></Form.Control>
-                                    </Form.Group>
+          <div>
+            <Container className="d-flex align-item-center justify-content-center">
+              <div className="w-100" style={{ maxWidth: "400px" }}>
+                <Card className="register">
+                  <Card.Body>
+                    <h2>Registration</h2>
+                    <div
+                      className="w-100 text-center mt-2 text-danger"
+                      id="errorMessage"
+                    ></div>
 
-                                    <Form.Group id="eUID">
-                                        <Form.Label htmlFor="userEUID" ></Form.Label>
-                                        <Form.Control type="text" id="userEUID" name="userEUID" placeholder="eUID" required></Form.Control>
-                                    </Form.Group>
+                    <Form>
+                      <Form.Group id="department">
+                        <Form.Label htmlFor="departmentName"></Form.Label>
+                        <Form.Control
+                          type="text"
+                          id="departmentName"
+                          name="departmentName"
+                          placeholder="Department Name"
+                          required
+                        ></Form.Control>
+                      </Form.Group>
 
-                                    <Form.Group id="email">
-                                        <Form.Label htmlFor="userEmail"></Form.Label>
-                                        <Form.Control type="text" id="userEmail" name="userEmail" placeholder="Email" required></Form.Control>
-                                    </Form.Group>
+                      <Form.Group id="eUID">
+                        <Form.Label htmlFor="userEUID"></Form.Label>
+                        <Form.Control
+                          type="text"
+                          id="userEUID"
+                          name="userEUID"
+                          placeholder="eUID"
+                          required
+                        ></Form.Control>
+                      </Form.Group>
 
-                                    <Form.Group id="firstName">
-                                        <Form.Label htmlFor="userFirstName"></Form.Label>
-                                        <Form.Control type="text" id="userFirstlName" name="userFirstName" placeholder="First Name" required></Form.Control>
-                                    </Form.Group>
+                      <Form.Group id="email">
+                        <Form.Label htmlFor="userEmail"></Form.Label>
+                        <Form.Control
+                          type="text"
+                          id="userEmail"
+                          name="userEmail"
+                          placeholder="Email"
+                          required
+                        ></Form.Control>
+                      </Form.Group>
 
-                                    <Form.Group id="lastName">
-                                        <Form.Label htmlFor="userLastName"></Form.Label>
-                                        <Form.Control type="text" id="userLastlName" name="userLastName" placeholder="Last Name" required></Form.Control>
-                                    </Form.Group>
+                      <Form.Group id="firstName">
+                        <Form.Label htmlFor="userFirstName"></Form.Label>
+                        <Form.Control
+                          type="text"
+                          id="userFirstlName"
+                          name="userFirstName"
+                          placeholder="First Name"
+                          required
+                        ></Form.Control>
+                      </Form.Group>
 
-                                    <Form.Group id="password">
-                                        <Form.Label htmlFor="userPassowrd"></Form.Label>
-                                        <Form.Control type="text" id="userPassword" name="userPassowrd" placeholder="Password" required></Form.Control>
-                                    </Form.Group>
+                      <Form.Group id="lastName">
+                        <Form.Label htmlFor="userLastName"></Form.Label>
+                        <Form.Control
+                          type="text"
+                          id="userLastlName"
+                          name="userLastName"
+                          placeholder="Last Name"
+                          required
+                        ></Form.Control>
+                      </Form.Group>
 
-                                    <Form.Group id="confirmPassword">
-                                        <Form.Label htmlFor="userConfirmPassword"></Form.Label>
-                                        <Form.Control type="text" id="userConfirmPassword" name="userConfirmPassword" placeholder="Confirm Password" required></Form.Control>
-                                    </Form.Group>
+                      <Form.Group id="password">
+                        <Form.Label htmlFor="userPassowrd"></Form.Label>
+                        <Form.Control
+                          type="text"
+                          id="userPassword"
+                          name="userPassowrd"
+                          placeholder="Password"
+                          required
+                        ></Form.Control>
+                      </Form.Group>
 
-                                    <Form.Group id="Role">
-                                        <Form.Label htmlFor="userRole"></Form.Label>
-                                        <Form.Control type="text" id="userRole" name="userRole" placeholder="Role" required></Form.Control>
-                                    </Form.Group>
-                                </Form>
-                            </Card.Body>
-                        </Card>
+                      <Form.Group id="confirmPassword">
+                        <Form.Label htmlFor="userConfirmPassword"></Form.Label>
+                        <Form.Control
+                          type="text"
+                          id="userConfirmPassword"
+                          name="userConfirmPassword"
+                          placeholder="Confirm Password"
+                          required
+                        ></Form.Control>
+                      </Form.Group>
+
+                      <Form.Group id="Role">
+                        <Form.Label htmlFor="userRole"></Form.Label>
+                        <Form.Control
+                          type="text"
+                          id="userRole"
+                          name="userRole"
+                          placeholder="Role"
+                          required
+                        ></Form.Control>
+                      </Form.Group>
+                    </Form>
+                    <h4 style={{ lineHeight: "0px", marginTop: "35px" }}>Register as</h4>
+                    <div className="buttonsRegister">
+                      <button
+                        style={{ marginTop: "0px", marginBottom: "06px" }}
+                        className="btn2"
+                      >
+                        Student
+                      </button>
+                      <button
+                        style={{ marginTop: "6px", marginBottom: "06px" }}
+                        className="btn2"
+                      >
+                        Advisor/Professor
+                      </button>
                     </div>
-                </Container>
-            </div>
-        )
+                  </Card.Body>
+                </Card>
+              </div>
+            </Container>
+          </div>
+        );
     }
 }

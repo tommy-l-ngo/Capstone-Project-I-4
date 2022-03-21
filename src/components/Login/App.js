@@ -4,6 +4,7 @@ import React from "react";
 import { observer } from 'mobx-react';
 import LoginForm from "./LoginForm";
 import SubmitButton from "./SubmitButton";
+import { Forgot }  from "./Forgot";
 import Register from "./Register";
 import {Routes as Switch, Route, HashRouter as Router} from "react-router-dom";
 
@@ -93,13 +94,17 @@ class App extends React.Component {
       */
       return (
         <main> 
+
           <div className="App">
+            <div className="loginFormContainer">
             <Router>
               <Switch>
                 <Route path="/" element={<LoginForm/>} exact/>
+                <Route path="/Forgot" element={<Forgot/>} />
                 <Route path="/Register" element={<Register/>} />
               </Switch>
             </Router>
+            </div>
           </div>
         </main>
         
