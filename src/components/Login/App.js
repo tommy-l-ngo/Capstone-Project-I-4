@@ -1,12 +1,13 @@
 import "./Login.css";
-import UserStore from "../../stores/UserStore";
+//import UserStore from "../../stores/UserStore";
 import React from "react";
 import { observer } from 'mobx-react';
 import LoginForm from "./LoginForm";
 import SubmitButton from "./SubmitButton";
+import { Forgot }  from "./Forgot";
 import Register from "./Register";
 import {Routes as Switch, Route, HashRouter as Router} from "react-router-dom";
-
+import CreateProject from "../Create-project/CreateProject";
 
 
 class App extends React.Component {
@@ -23,7 +24,7 @@ class App extends React.Component {
         );
   }
   */
-
+  /*
   async doLogOut() {
     try {
       let res = await fetch("/logout", {
@@ -68,8 +69,10 @@ class App extends React.Component {
       UserStore.isLoggedIn = false;
     }
   }
+  */
 
   render() {
+    /*
     if (UserStore.loading) {
       return (
         <div className="app">
@@ -88,21 +91,26 @@ class App extends React.Component {
           </div>
         );
       }
+      */
       return (
         <main> 
+
           <div className="App">
+            <div className="loginFormContainer">
             <Router>
               <Switch>
                 <Route path="/" element={<LoginForm/>} exact/>
+                <Route path="/Forgot" element={<Forgot/>} />
                 <Route path="/Register" element={<Register/>} />
+                <Route path="/CreateProject" element={<CreateProject/>} />
               </Switch>
             </Router>
+            </div>
           </div>
         </main>
         
       );
     }
   }
-}
 
 export default observer(App);

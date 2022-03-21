@@ -1,53 +1,76 @@
 import "./Login.css";
-import UserStore from "../../stores/UserStore";
+//import UserStore from "../../stores/UserStore";
 import React from "react";
 import InputField from "./InputField";
 import InputField2 from "./InputField2";
 import SubmitButton from "./SubmitButton";
+import Forgot from "./Forgot";
 import { getDatabase, get, ref, child } from "firebase/database";
 import { Link, useNavigate } from 'react-router-dom';
 
 
+// function goToPage(i) {
+//   if (i==2) {
+//   document.documentElement.style.setProperty("--loginFormHeight", "300px");
+//   }
+//   else if (i==0) {
+//   document.documentElement.style.setProperty("--loginFormHeight", "500px");
 
+//   }
+//   else 
+//     document.documentElement.style.setProperty("--loginFormHeight", "500px");
 
-class LoginForm extends React.Component {
+// }
+export default class LoginForm extends React.Component {
+  goToPage = (i) => {
+    if (i == 2) {
+      document.documentElement.style.setProperty("--loginFormHeight", "300px");
+    } else if (i == 0) {
+      document.documentElement.style.setProperty("--loginFormHeight", "500px");
+    } else
+      document.documentElement.style.setProperty("--loginFormHeight", "500px");
+  };
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
-      password: '',
-      buttonDisabled: false
-    }
+      username: "",
+      password: "",
+      buttonDisabled: false,
+      tab: 0,
+    };
+    this.goToPage(0);
   }
 
   handleLoginUser = () => {
     const dbRef = ref(getDatabase());
-
-    get(child(dbRef, "users/" + this.state.username)).then((snapshot) => {
-      if (snapshot.exists()) {
-        //check password
-        if (snapshot.child("password").val() == this.state.password)
-        {
-          console.log("Password Match");
+    let navigate = useNavigate(); // FIX ME
+    get(child(dbRef, "users/" + this.state.username))
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          //check password
+          if (snapshot.child("password").val() === this.state.password) {
+            console.log("Password Match");
+            navigate("/Register"); //FIX ME
+          }
+        } else {
+          console.log("Login credentials incorrect");
         }
-      } else {
-        console.log("Login credentials incorrect");
-      }
-    }).catch((error) => {
-      console.error(error);
-    });
-  }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
   setInputValue(property, val) {
     val = val.trim();
-    if (val.length > 12) {
+    if (val.length > 16) {
       return;
     }
     this.setState({
-      [property]: val
-    })
+      [property]: val,
+    });
   }
-
+  /*
   resetForm() {
     this.setState({
       username: '',
@@ -95,11 +118,13 @@ class LoginForm extends React.Component {
       this.resetForm();
     }
   }
+  */
+
   render() {
     return (
-      <div classname="container">
-        <div className="loginForm">
-          <b>Log In</b>
+      <div className="container">
+        <div className="loginForm1">
+          <h2 style={{ lineHeight: "0px" }}>Log In</h2>
           <InputField2
             type="text"
             placeholder="Username"
@@ -112,18 +137,34 @@ class LoginForm extends React.Component {
             value={this.state.password ? this.state.password : ""}
             onChange={(val) => this.setInputValue("password", val)}
           />
-          <a href=''>Forgot Password</a> {/*FIXME: change to React Link*/}
-          <SubmitButton text="Log in"
+          <div className="forgotpass">
+            <Link
+              to={"/Forgot"}
+              onClick={() => {
+                this.goToPage(2);
+              }}
+            >
+              Forgot Password
+            </Link>
+          </div>{" "}
+          {/*FIXME: change to React Link*/}
+          <SubmitButton
+            text="Log in"
             disabled={this.state.buttonDisabled}
             onClick={this.handleLoginUser}
           />
-          <p style={{ marginBottom: '0px' }}>Don't have an account?</p>
-          {/*<li><Link to={"/Register"}>Sign Up</Link></li>*/}{/*Can't get this to work*/}
-          <Link to={"/Register"}>Sign Up</Link> {/*FIXME: change to React Link*/}
+          <p style={{ marginBottom: "0px", fontSize: "20px" }}>
+            Don't have an account?
+          </p>
+          <div className="registerLink">
+            <Link style={{ lineHeight: "22px" }} to={"/Register"}>
+              Sign Up
+            </Link>
+          </div>
+          {/*<Link to={"/Register"}>Sign Up</Link>*/}{" "}
+          {/*FIXME: change to React Link*/}
         </div>
       </div>
     );
   }
 }
-
-export default LoginForm;
