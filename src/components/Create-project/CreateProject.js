@@ -6,16 +6,17 @@ export default class CreateProject extends Component {
 
     constructor(props) {
         super(props)
-        this.state = { description: '', task: '', date: '' }
+        this.state = { projectName: '',description: '', task: '', date: '' }
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
     }
 
     handleSubmit(event) {
-        const { description, task, date } = this.state
+        const {projectName, description, task, date } = this.state
         event.preventDefault()
         alert(`
             ____Your Details____\n
+            Project : ${projectName}
             Description : ${description}
             Task : ${task}
             Date : ${date}
@@ -45,7 +46,20 @@ export default class CreateProject extends Component {
                                 {/*<InputGroup size="sm" className="mb-3">
     <InputGroup.Text id="inputGroup-sizing-sm">Small</InputGroup.Text>
     <FormControl aria-label="Small" aria-describedby="inputGroup-sizing-sm" />
-        </InputGroup>*/}
+        </InputGroup>*/}            
+                                    <Form.Group id="projectName">
+                                        <Form.Label htmlFor="projectName" ></Form.Label>
+                                        <Form.Control 
+                                            type="text" 
+                                            id="projectName" 
+                                            name="projectName" 
+                                            placeholder="Project Name" 
+                                            value = {this.state.projectName}
+                                            onChange={this.handleChange}
+                                            required>
+                                        </Form.Control>
+                                    </Form.Group>
+
                                     <Form.Group id="description">
                                         <Form.Label htmlFor="description" ></Form.Label>
                                         <Form.Control 
