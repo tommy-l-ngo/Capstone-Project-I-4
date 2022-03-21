@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Switch, Link } from 'react-router-dom';
 import LoginForm from "./LoginForm";
 import SubmitButton from "./SubmitButton";
 import "./Login.css";
-
+import { Navi } from "./Navi";
 
 export default class Register extends Component {
     
@@ -82,11 +82,12 @@ export default class Register extends Component {
     render() {
         return (
           <div>
+            <Navi />
             <Container className="d-flex align-item-center justify-content-center">
               <div className="w-100" style={{ maxWidth: "400px" }}>
                 <Card className="register">
                   <Card.Body>
-                    <h2>Registration</h2>
+                    <div className="titleText">Registration</div>
                     <div
                       className="w-100 text-center mt-2 text-danger"
                       id="errorMessage"
@@ -181,7 +182,9 @@ export default class Register extends Component {
                         ></Form.Control>
                       </Form.Group>
                     </Form>
-                    <h4 style={{ lineHeight: "0px", marginTop: "35px" }}>Register as</h4>
+                    <h4 style={{ lineHeight: "0px", marginTop: "35px" }}>
+                      Register as
+                    </h4>
                     <div className="buttonsRegister">
                       <button
                         style={{ marginTop: "0px", marginBottom: "06px" }}

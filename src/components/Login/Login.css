@@ -10,6 +10,36 @@
   width: 100%;
 }
 
+.backImg {
+  opacity: 0.5;
+  height: 50px;
+  width: 50px;
+  border-radius: 50px;
+  transition: all 0.5s;
+}
+.backImg:hover {
+  box-shadow: 1px 01px 10px rgba(0, 0, 0, 0.8);
+}
+.backButton:hover {
+}
+.navContainer {
+  text-align: left;
+  font-size: 18px;
+  margin-left: -20px;
+  font-family: "Trebuchet MS", sans-serif;
+  left: -100px;
+  width: 50px;
+  height: 50px;
+}
+.backButton {
+  transition: all 0.5s;
+  text-align: left;
+  position: relative;
+  /* background: red; */
+  /* border-radius: 50px; */
+  left: 10px;
+  top: 10px;
+}
 .form__field {
   font-family: inherit;
   width: 100%;
@@ -91,12 +121,16 @@ html {
 body,
 html,
 #root,
-.app,
 .container {
   width: 100%;
   height: 100%;
 }
 
+.app {
+  width: 100%;
+  height: 100%;
+  /* background-color: green; */
+}
 body {
   background-image: url(hip-square.png);
   background-repeat: repeat;
@@ -116,15 +150,18 @@ body {
   color: slategray;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  /* align-items: center; */
   /* justify-content: center; */
   width: 100%;
   height: 100%;
-  /* background-color: red; */
 }
 .emailInput {
   width: 100%;
   /* height:100%; */
+}
+
+.loginForm1 h2 {
+  text-align: center;
 }
 .container {
   white-space: nowrap;
@@ -153,6 +190,7 @@ body {
   padding-left: 20px;
   padding-right: 20px;
   padding-bottom: 20px;
+  padding-top: 0px;
   background-color: #f3e9dd;
   /* background-color: #2baed642; */
   border: 15px solid rgba(0, 0, 0, 0.05);
@@ -178,7 +216,26 @@ body {
 }
 
 .inputField2 {
+  color: #292929;
   padding-top: 16px;
+}
+
+.registerLink {
+  margin: 10px;
+  transition: all 0.25s ease;
+  font-size: 20px;
+  /* line-height: 50px; */
+  /* min-height: 26px; */
+}
+
+.registerLink:hover {
+  transform: scale(1.1);
+}
+
+.register {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .input {
   box-sizing: border-box;
@@ -223,13 +280,16 @@ h4 {
 h2 {
   font-size: 42px;
   font-family: "Trebuchet MS", sans-serif;
-  /* font-size: 5em; */
-  /* letter-spacing: -1px; */
-  /* font-family: 'Inter', sans-serif; */
-  /* text-align: center; */
-  /* font-family: "Poppins", sans-serif; */
+  line-height: 42px;
 }
 
+.titleText {
+  font-size: 42px;
+  font-family: "Trebuchet MS", sans-serif;
+  line-height: 42px;
+  font-weight: bolder;
+  margin-top: 20px;
+}
 .btn {
   width: 100%;
   min-width: 280px;
@@ -259,14 +319,6 @@ h2 {
   cursor: pointer;
 }
 
-@keyframes fadeOut {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
 a {
   transition: text-shadow 0.5s ease;
   color: #4f89bb;

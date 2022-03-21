@@ -7,6 +7,7 @@ import SubmitButton from "./SubmitButton";
 import Forgot from "./Forgot";
 import { getDatabase, get, ref, child } from "firebase/database";
 import { Link, useNavigate } from 'react-router-dom';
+import { Navi } from "./Navi";
 
 
 // function goToPage(i) {
@@ -25,8 +26,15 @@ export default class LoginForm extends React.Component {
   goToPage = (i) => {
     if (i == 2) {
       document.documentElement.style.setProperty("--loginFormHeight", "300px");
-    } else if (i == 0) {
+      document.documentElement.style.setProperty("--loginFormWidth", "400px");
+    } else if (i == 1) {
       document.documentElement.style.setProperty("--loginFormHeight", "500px");
+      document.documentElement.style.setProperty("--loginFormWidth", "400px");
+
+    } 
+     else if (i == 0) {
+      document.documentElement.style.setProperty("--loginFormHeight", "500px");
+      document.documentElement.style.setProperty("--loginFormWidth", "400px");
     } else
       document.documentElement.style.setProperty("--loginFormHeight", "500px");
   };
@@ -124,6 +132,7 @@ export default class LoginForm extends React.Component {
     return (
       <div className="container">
         <div className="loginForm1">
+          {/* <Navi /> */}
           <h2 style={{ lineHeight: "0px" }}>Log In</h2>
           <InputField2
             type="text"
