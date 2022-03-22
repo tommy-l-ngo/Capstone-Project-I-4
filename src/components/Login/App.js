@@ -8,6 +8,7 @@ import { Forgot }  from "./Forgot";
 import Register from "./Register";
 import {Routes as Switch, Route, HashRouter as Router} from "react-router-dom";
 import CreateProject from "../Create-project/CreateProject";
+import EditProject from "../Create-project/EditProject";
 
 
 class App extends React.Component {
@@ -103,6 +104,7 @@ class App extends React.Component {
                 <Route path="/Forgot" element={<Forgot/>} />
                 <Route path="/Register" element={<Register/>} />
                 <Route path="/CreateProject" element={<CreateProject/>} />
+                <Route path="/EditProject" element={<EditProject/>} />
               </Switch>
             </Router>
             </div>
