@@ -105,9 +105,15 @@ class App extends React.Component {
                 <Route path="/Register" element={<Register/>} />
                 <Route path="/CreateProject" element={<CreateProject/>} />
                 <Route path="/EditProject" element={<EditProject/>} />
-                <Route path="/Home" element={<Home/>} />
               </Switch>
             </Router>
+            </div>
+            <div>
+              <Router>
+                <Switch>
+                  <Route path="/Home" element={<Home/>} />
+                </Switch>
+              </Router>
             </div>
           </div>
         </main>
