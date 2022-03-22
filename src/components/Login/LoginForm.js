@@ -1,6 +1,6 @@
 import "./Login.css";
 //import UserStore from "../../stores/UserStore";
-import React from "react";
+import React, { useState } from "react";
 import InputField from "./InputField";
 import InputField2 from "./InputField2";
 import SubmitButton from "./SubmitButton";
@@ -22,8 +22,13 @@ import { Navi } from "./Navi";
 //     document.documentElement.style.setProperty("--loginFormHeight", "500px");
 
 // }
-export default class LoginForm extends React.Component {
-  goToPage = (i) => {
+export default function LoginForm(){
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState('');
+  const [buttonDisabled] = useState(false);
+  const navigate = useNavigate();
+
+  function goToPage(i) {
     if (i == 2) {
       document.documentElement.style.setProperty("--loginFormHeight", "300px");
       document.documentElement.style.setProperty("--loginFormWidth", "400px");
@@ -38,27 +43,18 @@ export default class LoginForm extends React.Component {
     } else
       document.documentElement.style.setProperty("--loginFormHeight", "500px");
   };
-  constructor(props) {
-    super(props);
-    this.state = {
-      username: "",
-      password: "",
-      buttonDisabled: false,
-      tab: 0,
-    };
-    this.goToPage(0);
-  }
+  
 
-  handleLoginUser = () => {
+  function handleLoginUser(){
     const dbRef = ref(getDatabase());
-    let navigate = useNavigate(); // FIX ME
-    get(child(dbRef, "users/" + this.state.username))
+    
+    get(child(dbRef, "users/" + username))
       .then((snapshot) => {
         if (snapshot.exists()) {
           //check password
-          if (snapshot.child("password").val() === this.state.password) {
+          if (snapshot.child("password").val() === password) {
             console.log("Password Match");
-            navigate("/Register"); //FIX ME
+            navigate("/Home"); //FIX ME
           }
         } else {
           console.log("Login credentials incorrect");
@@ -69,15 +65,18 @@ export default class LoginForm extends React.Component {
       });
   };
 
-  setInputValue(property, val) {
+  /*
+  function setInputValue(property, val) {
     val = val.trim();
     if (val.length > 16) {
       return;
     }
-    this.setState({
+    ({
       [property]: val,
     });
   }
+  */
+  
   /*
   resetForm() {
     this.setState({
@@ -128,7 +127,7 @@ export default class LoginForm extends React.Component {
   }
   */
 
-  render() {
+  
     return (
       <div className="container">
         <div className="loginForm1">
@@ -137,20 +136,20 @@ export default class LoginForm extends React.Component {
           <InputField2
             type="text"
             placeholder="Username"
-            value={this.state.username ? this.state.username : ""}
-            onChange={(val) => this.setInputValue("username", val)}
+            
+            onChange={(e) => {setUsername(e);}}
           />
           <InputField
             type="password"
             placeholder="Password"
-            value={this.state.password ? this.state.password : ""}
-            onChange={(val) => this.setInputValue("password", val)}
+            
+            onChange={(e) => setPassword(e)}
           />
           <div className="forgotpass">
             <Link
               to={"/Forgot"}
               onClick={() => {
-                this.goToPage(2);
+                goToPage(2);
               }}
             >
               Forgot Password
@@ -159,8 +158,8 @@ export default class LoginForm extends React.Component {
           {/*FIXME: change to React Link*/}
           <SubmitButton
             text="Log in"
-            disabled={this.state.buttonDisabled}
-            onClick={this.handleLoginUser}
+            disabled={buttonDisabled}
+            onClick={handleLoginUser}
           />
           <p style={{ marginBottom: "0px", fontSize: "20px" }}>
             Don't have an account?
@@ -175,5 +174,5 @@ export default class LoginForm extends React.Component {
         </div>
       </div>
     );
-  }
+  
 }
