@@ -10,7 +10,7 @@ function HeroSection() {
         <p>WORK IN PROGRESS</p>
         <div className="hero-btns">
             <Button
-                page='create_project'
+                page='CreateProject'
                 className='btns'
                 buttonStyle='btn--outline'
                 buttonSize='btn--large'
@@ -18,7 +18,7 @@ function HeroSection() {
                 Create Project
             </Button>
             <Button
-                page='edit_project'
+                page='EditProject'
                 className='btns'
                 buttonStyle='btn--primary'
                 buttonSize='btn--large'
