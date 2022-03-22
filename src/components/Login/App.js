@@ -97,25 +97,22 @@ class App extends React.Component {
         <main> 
 
           <div className="App">
-            <div className="loginFormContainer">
+            
             <Router>
               <Switch>
+              
                 <Route path="/" element={<LoginForm/>} exact/>
                 <Route path="/Forgot" element={<Forgot/>} />
                 <Route path="/Register" element={<Register/>} />
+                
+                <Route path="/Home" element={<Home/>} />
                 <Route path="/CreateProject" element={<CreateProject/>} />
                 <Route path="/EditProject" element={<EditProject/>} />
               </Switch>
             </Router>
             </div>
-            <div>
-              <Router>
-                <Switch>
-                  <Route path="/Home" element={<Home/>} />
-                </Switch>
-              </Router>
-            </div>
-          </div>
+            
+          
         </main>
         
       );

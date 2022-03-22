@@ -54,7 +54,7 @@ export default function LoginForm(){
           //check password
           if (snapshot.child("password").val() === password) {
             console.log("Password Match");
-            navigate("/Home"); //FIX ME
+            navigate("/Home"); 
           }
         } else {
           console.log("Login credentials incorrect");
@@ -129,6 +129,7 @@ export default function LoginForm(){
 
   
     return (
+      <div className="loginFormContainer">
       <div className="container">
         <div className="loginForm1">
           {/* <Navi /> */}
@@ -172,6 +173,7 @@ export default function LoginForm(){
           {/*<Link to={"/Register"}>Sign Up</Link>*/}{" "}
           {/*FIXME: change to React Link*/}
         </div>
+      </div>
       </div>
     );
   

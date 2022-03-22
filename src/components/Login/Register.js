@@ -82,6 +82,7 @@ export default class Register extends Component {
     render() {
         return (
           <div>
+            <div className="loginFormContainer">
             <Navi />
             <Container className="d-flex align-item-center justify-content-center">
               <div className="w-100" style={{ maxWidth: "400px" }}>
@@ -203,6 +204,7 @@ export default class Register extends Component {
                 </Card>
               </div>
             </Container>
+            </div>
           </div>
         );
     }

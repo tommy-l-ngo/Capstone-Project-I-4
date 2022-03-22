@@ -9,7 +9,7 @@ export const Forgot = () => {
   return (
     <div>
       <Navi />
-
+      <div className="loginFormContainer">
       <div className="forgotContainer">
         <div className="titleText">
         Forgot Password
@@ -17,6 +17,7 @@ export const Forgot = () => {
         <div className="emailInput">
           <InputField2 type="text" placeholder="Email" />
         </div>
+      </div>
       </div>
     </div>
   );
