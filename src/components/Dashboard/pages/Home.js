@@ -1,5 +1,5 @@
 import React from 'react';
-import '../App.css';
+import '../Dashboard.css';
 import Cards from '../Cards';
 import HeroSection from '../HeroSection';
 import Navbar from '../Navbar';
