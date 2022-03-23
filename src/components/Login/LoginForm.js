@@ -166,7 +166,7 @@ export default function LoginForm(){
             Don't have an account?
           </p>
           <div className="registerLink">
-            <Link style={{ lineHeight: "22px" }} to={"/Register"}>
+            <Link style={{ lineHeight: "22px" }} to={"/RegisterAs"}>
               Sign Up
             </Link>
           </div>

@@ -10,6 +10,7 @@ import {Routes as Switch, Route, HashRouter as Router} from "react-router-dom";
 import CreateProject from "../Create-project/CreateProject";
 import EditProject from "../Create-project/EditProject";
 import Home from "../Dashboard/pages/Home";
+import RegisterAs from "./RegisterAs";
 
 class App extends React.Component {
   /*
@@ -104,6 +105,7 @@ class App extends React.Component {
                 <Route path="/" element={<LoginForm/>} exact/>
                 <Route path="/Forgot" element={<Forgot/>} />
                 <Route path="/Register" element={<Register/>} />
+                <Route path='/RegisterAs' element={<RegisterAs/>}/>
                 
                 <Route path="/Home" element={<Home/>} />
                 <Route path="/CreateProject" element={<CreateProject/>} />

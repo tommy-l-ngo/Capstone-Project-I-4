@@ -7,6 +7,11 @@ import LoginForm from "./LoginForm";
 import SubmitButton from "./SubmitButton";
 import "./Login.css";
 import { Navi } from "./Navi";
+import "./RegisterAs";
+//import {useLocation} from 'react-router-dom';
+
+
+
 
 export default class Register extends Component {
     
@@ -31,7 +36,8 @@ export default class Register extends Component {
             },
             passwordValid: false,
             euid: false,
-            formValid: false
+            formValid: false,
+            isStudent: true
         };
     }
 
@@ -80,10 +86,22 @@ export default class Register extends Component {
     }
 
     render() {
+/*
+      if(isStudent == true)
+      {
+        this.deptOrMaj = "Major";
+        this.showRole = false;
+      }
+      else
+      {
+        this.deptOrMaj = "Department Name";
+        this.showRole = true;
+      }
+      */
         return (
           <div>
             <div className="loginFormContainer">
-            <Navi />
+            <Navi/>
             <Container className="d-flex align-item-center justify-content-center">
               <div className="w-100" style={{ maxWidth: "400px" }}>
                 <Card className="register">
@@ -101,7 +119,7 @@ export default class Register extends Component {
                           type="text"
                           id="departmentName"
                           name="departmentName"
-                          placeholder="Department Name"
+                          placeholder= "Department Name"
                           required
                         ></Form.Control>
                       </Form.Group>
@@ -183,23 +201,6 @@ export default class Register extends Component {
                         ></Form.Control>
                       </Form.Group>
                     </Form>
-                    <h4 style={{ lineHeight: "0px", marginTop: "35px" }}>
-                      Register as
-                    </h4>
-                    <div className="buttonsRegister">
-                      <button
-                        style={{ marginTop: "0px", marginBottom: "06px" }}
-                        className="btn2"
-                      >
-                        Student
-                      </button>
-                      <button
-                        style={{ marginTop: "6px", marginBottom: "06px" }}
-                        className="btn2"
-                      >
-                        Advisor/Professor
-                      </button>
-                    </div>
                   </Card.Body>
                 </Card>
               </div>
