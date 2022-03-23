@@ -1,8 +1,8 @@
-import React, {Component}  from "react";
+import React, {Component, useState}  from "react";
 import { Form, Button, Card, Container } from "react-bootstrap";
 import "../../firebase";
 import { getDatabase, set, ref } from "firebase/database";
-import { BrowserRouter as Router, Switch, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Link, useNavigate } from 'react-router-dom';
 import LoginForm from "./LoginForm";
 import SubmitButton from "./SubmitButton";
 import "./Login.css";
@@ -10,82 +10,68 @@ import { Navi } from "./Navi";
 import "./RegisterAs";
 //import {useLocation} from 'react-router-dom';
 
-
-
-
-export default class Register extends Component {
+export default function Register() {
     
-    constructor(props) {
-        super(props);
-      document.documentElement.style.setProperty("--loginFormHeight", "600px");
-      document.documentElement.style.setProperty("--loginFormWidth", "500px");
+  const [department, setDepartment] = useState("");
+  const [userEUID, setUserEUID] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+  const [userFirstName, setUserFirstName] = useState("");
+  const [userLastName, setUserLastName] = useState("");
+  const [userPassowrd, setUserPassword] = useState("");
+  const [userConfirmPassword, setUserConfirmPassword] = useState("");
+  const [userRole, setUserRole] = useState("");
+  const navigate = useNavigate();
 
-        this.state = {
-            department: "",
-            eUID: "",
-            userEmail: "",
-            userFirstName: "",
-            userLastName: "",
-            userPassword: "",
-            userPasswordConfirm: "",
-            role: "",
-            formErrors: {
-                password: "",
-                passwordConfirmation: "",
-                euid: "",
-            },
-            passwordValid: false,
-            euid: false,
-            formValid: false,
-            isStudent: true
-        };
-    }
-
-    newUser = () => {
+    function newUser() {
         let errorMessage = "";
-        if (this.state.department.length == 0) {
+        if (department.length == 0) {
             errorMessage = "Please make sure you enter a deperament of study.";
-        } else if (this.state.userEuid == 0) {
+        } else if ( userEUID == 0) {
             errorMessage = "Please enter your euid."
-        } else if (this.state.lastName == 0) {
+        } else if ( userLastName == 0) {
             errorMessage = "Please enter your last name."
-        } else if (this.state.firstName == 0) {
+        } else if ( userFirstName == 0) {
             errorMessage = "Please enter your first name."
-        } else if (this.state.email < 6) {
+        } else if ( userEmail < 6) {
             errorMessage = "Please enter an email."
         } else {
+            
+          
             const db = getDatabase();
-
-            set(ref(db, "users/"), {
-                department: this.state.department,
-                eUID: this.state.userEuid,
-                email: this.state.email,
-                firstName: this.state.firstName,
-                lastName: this.state.lastName,
-                password: this.state.password,
-                role: this.state.role
-            })
-                .then(() => {
-                    this.props.history.push("/", { state: 'pass' })
-                })
-                .catch((e) => {
-                    console.log("Data failed: " + e);
-                });
+            
+            set(ref(db, "users/" + userEUID), {
+                department:  department,
+                eUID:  userEUID,
+                email:  userEmail,
+                firstName:  userFirstName,
+                lastName:  userLastName,
+                password:  userPassowrd,
+                role:  userRole
+            });
+            
+            navigate("/");
+            
+           // .catch((error) => {
+           //     console.log("Data failed: " + error);
+           // });
+            
         }
 
-        let error = document.getElementById("errorMessage");
-        error.textContent = errorMessage;
+        //let error = document.getElementById("errorMessage");
+        //error.textContent = errorMessage;
     }
 
+    /*
     userInput = (e) => {
 
     }
+    
 
     validForm() {
         this.setState({ formValid: ((this.state.euid !== undefined) && this.state.passwordValid) })
     }
-
-    render() {
+    */
+    // {}
 /*
       if(isStudent == true)
       {
@@ -121,6 +107,7 @@ export default class Register extends Component {
                           name="departmentName"
                           placeholder= "Department Name"
                           required
+                          onChange={(e) => setDepartment(e.target.value)}
                         ></Form.Control>
                       </Form.Group>
 
@@ -132,6 +119,7 @@ export default class Register extends Component {
                           name="userEUID"
                           placeholder="eUID"
                           required
+                          onChange={(e) => setUserEUID(e.target.value)}
                         ></Form.Control>
                       </Form.Group>
 
@@ -143,6 +131,7 @@ export default class Register extends Component {
                           name="userEmail"
                           placeholder="Email"
                           required
+                          onChange={(e) => setUserEmail(e.target.value)}
                         ></Form.Control>
                       </Form.Group>
 
@@ -154,6 +143,7 @@ export default class Register extends Component {
                           name="userFirstName"
                           placeholder="First Name"
                           required
+                          onChange={(e) => setUserFirstName(e.target.value)}
                         ></Form.Control>
                       </Form.Group>
 
@@ -165,6 +155,7 @@ export default class Register extends Component {
                           name="userLastName"
                           placeholder="Last Name"
                           required
+                          onChange={(e) => setUserLastName(e.target.value)}
                         ></Form.Control>
                       </Form.Group>
 
@@ -176,6 +167,7 @@ export default class Register extends Component {
                           name="userPassowrd"
                           placeholder="Password"
                           required
+                          onChange={(e) => setUserPassword(e.target.value)}
                         ></Form.Control>
                       </Form.Group>
 
@@ -187,6 +179,7 @@ export default class Register extends Component {
                           name="userConfirmPassword"
                           placeholder="Confirm Password"
                           required
+                          onChange={(e) => setUserConfirmPassword(e.target.value)}
                         ></Form.Control>
                       </Form.Group>
 
@@ -198,15 +191,17 @@ export default class Register extends Component {
                           name="userRole"
                           placeholder="Role"
                           required
+                          onChange={(e) => setUserRole(e.target.value)}
                         ></Form.Control>
                       </Form.Group>
                     </Form>
                   </Card.Body>
+                  <Button onClick={newUser}>Submit</Button>
                 </Card>
               </div>
             </Container>
             </div>
           </div>
         );
-    }
+    
 }

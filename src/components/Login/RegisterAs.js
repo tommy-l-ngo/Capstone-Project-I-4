@@ -11,7 +11,7 @@ function RegisterAs()
                 Register as
             </h4>
             <div className="buttonsRegister">
-                <Link to='/Register' state={{from: 'student'}}>
+                <Link to={"/Register"}>
                     <button 
                     style={{ marginTop: "0px", marginBottom: "06px" }}
                     className="btn2">
