@@ -54,6 +54,11 @@ export default function LoginForm(){
     error.textContent = "Invalid Login";
     console.log("Invalid Login");
   }
+  function invalidLoginMessageEmpty(){
+    var error = document.getElementById("errorMessage");
+    error.textContent = "Username and Password are required";
+    console.log("Username and Password are required");
+  }
 
   function handleLoginUser(){
     const dbRef = ref(getDatabase());
@@ -67,7 +72,7 @@ export default function LoginForm(){
             navigate("/Home"); 
           }
           else {
-            invalidLoginMessage();
+            invalidLoginMessageEmpty();
           }
         } else {
           invalidLoginMessage();
