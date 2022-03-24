@@ -2,7 +2,7 @@ import React, {Component, useState}  from "react";
 import { Form, Button, Card, Container } from "react-bootstrap";
 import "../../firebase";
 import { getDatabase, set, ref } from "firebase/database";
-import { BrowserRouter as Router, Switch, Link, useNavigate } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Link, useNavigate, useLocation } from 'react-router-dom';
 import LoginForm from "./LoginForm";
 import SubmitButton from "./SubmitButton";
 import "./Login.css";
@@ -11,6 +11,10 @@ import "./RegisterAs";
 //import {useLocation} from 'react-router-dom';
 
 export default function Register() {
+  // get role from previous page
+  const location = useLocation();
+  const data  = location.state;
+  console.log("role:", data.role);
     
   const [department, setDepartment] = useState("");
   const [userEUID, setUserEUID] = useState("");
@@ -19,7 +23,7 @@ export default function Register() {
   const [userLastName, setUserLastName] = useState("");
   const [userPassowrd, setUserPassword] = useState("");
   const [userConfirmPassword, setUserConfirmPassword] = useState("");
-  const [userRole, setUserRole] = useState("");
+  const [userRole, setUserRole] = useState(data.role);
   const navigate = useNavigate();
 
     function newUser() {
@@ -189,9 +193,8 @@ export default function Register() {
                           type="text"
                           id="userRole"
                           name="userRole"
-                          placeholder="Role"
-                          required
-                          onChange={(e) => setUserRole(e.target.value)}
+                          placeholder = {data.role}
+                          disabled = "true"
                         ></Form.Control>
                       </Form.Group>
                     </Form>

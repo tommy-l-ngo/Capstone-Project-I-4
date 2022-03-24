@@ -43,7 +43,17 @@ export default function LoginForm(){
     } else
       document.documentElement.style.setProperty("--loginFormHeight", "500px");
   };
-  
+
+  function clearErrorMessage() {
+    var error = document.getElementById("errorMessage");
+    error.textContent = "";
+  }
+
+  function invalidLoginMessage(){
+    var error = document.getElementById("errorMessage");
+    error.textContent = "Invalid Login";
+    console.log("Invalid Login");
+  }
 
   function handleLoginUser(){
     const dbRef = ref(getDatabase());
@@ -56,8 +66,11 @@ export default function LoginForm(){
             console.log("Password Match");
             navigate("/Home"); 
           }
+          else {
+            invalidLoginMessage();
+          }
         } else {
-          console.log("Login credentials incorrect");
+          invalidLoginMessage();
         }
       })
       .catch((error) => {
@@ -65,67 +78,6 @@ export default function LoginForm(){
       });
   };
 
-  /*
-  function setInputValue(property, val) {
-    val = val.trim();
-    if (val.length > 16) {
-      return;
-    }
-    ({
-      [property]: val,
-    });
-  }
-  */
-  
-  /*
-  resetForm() {
-    this.setState({
-      username: '',
-      password: '',
-      buttonDisabled: false
-    })
-  }
-
-  async doLogin() {
-
-    if (!this.state.username) {
-      return;
-    }
-    if (!this.state.password) {
-      return;
-    }
-
-    this.setState({ buttonDisabled: true })
-
-    try {
-      let res = await fetch('/login', {
-        method: 'post',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          username: this.state.username,
-          password: this.state.password
-        })
-      })
-      let result = await res.json();
-      if (result && result.success) {
-        UserStore.isLoggedIn = true;
-        UserStore.username = result.username;
-      }
-
-      else if (result && result.success === false) {
-        this.resetForm();
-        alert(result.msg);
-      }
-    }
-    catch (e) {
-      console.log(e);
-      this.resetForm();
-    }
-  }
-  */
 
   
     return (
@@ -138,13 +90,13 @@ export default function LoginForm(){
             type="text"
             placeholder="Username"
             
-            onChange={(e) => {setUsername(e);}}
+            onChange={(e) => {setUsername(e); clearErrorMessage();}}
           />
           <InputField
             type="password"
             placeholder="Password"
             
-            onChange={(e) => setPassword(e)}
+            onChange={(e) => {setPassword(e); clearErrorMessage();}}
           />
           <div className="forgotpass">
             <Link
@@ -156,6 +108,8 @@ export default function LoginForm(){
               Forgot Password
             </Link>
           </div>{" "}
+          <p id="errorMessage" style={{ marginTop: "10px", fontSize: "20px", color:"red" }}>
+          </p>
           {/*FIXME: change to React Link*/}
           <SubmitButton
             text="Log in"
