@@ -56,12 +56,23 @@ export default function Register() {
 
         throw Error('Please enter your last name.');
       }
-      else if (userPassowrd.length < 6) {
-        throw Error('Password must be at least 6 character')
-      }
       else if (userPassowrd.length == 0) {
         throw Error('Please enter your Password ')
       }
+      else if (userPassowrd.length < 8) {
+        throw Error('Password must be at least 8 character')
+      }
+      else if (userPassowrd.search (/[0-9]/) == -1 ) {
+        throw Error('Password must contain at least 1 number')
+      }
+      else if (userPassowrd.search (/[a-z]/) == -1 ) {
+        throw Error('Password must contain at least 1 lower case letter')
+      }
+      else if (userPassowrd.search (/[A-Z]/) == -1 ) {
+        throw Error('Password must contain at least 1 upper case letter')
+      }
+      
+      
       else if (userPassowrd !== userConfirmPassword) {
         throw Error('Password does not match');
       }
@@ -71,6 +82,7 @@ export default function Register() {
 
 
       else {
+
 
 
         const db = getDatabase();
