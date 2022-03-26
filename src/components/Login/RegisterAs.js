@@ -26,7 +26,7 @@ function RegisterAs()
                         Student
                     </button>
                 </Link>
-                <Link to="/Register" state={{role:"advisor"}}>
+                <Link to="/Register" state={{role:"staff"}}>
                     <button
                     style={{ marginTop: "6px", marginBottom: "06px" }}
                     className="btn2">

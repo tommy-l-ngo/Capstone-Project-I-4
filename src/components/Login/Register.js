@@ -15,6 +15,20 @@ export default function Register() {
   const location = useLocation();
   const data = location.state;
   console.log("role:", data.role);
+  let placeholder = "";
+  let regDesign = ""
+  if (data.role == "student")
+  {
+    placeholder = "Major";
+    regDesign = "RegisterFormContainerStudent";
+  }
+  else
+  {
+    placeholder = "Department Name";
+    regDesign = "RegisterFormContainerStaff";
+  }
+
+
 
   const [department, setDepartment] = useState("");
   const [userEUID, setUserEUID] = useState("");
@@ -141,7 +155,7 @@ export default function Register() {
   return (
     <div>
 
-      <div className="loginFormContainer">
+      <div className={regDesign}>
         <Navi />
         <Container className="d-flex align-item-center justify-content-center">
           <div className="w-100" style={{ maxWidth: "400px" }}>
@@ -164,7 +178,7 @@ export default function Register() {
                       type="text"
                       id="departmentName"
                       name="departmentName"
-                      placeholder="Department Name"
+                      placeholder={placeholder}
                       required
                       onChange={(e) => setDepartment(e.target.value)}
                     ></Form.Control>
@@ -241,17 +255,18 @@ export default function Register() {
                       onChange={(e) => setUserConfirmPassword(e.target.value)}
                     ></Form.Control>
                   </Form.Group>
-
-                  <Form.Group id="Role">
-                    <Form.Label htmlFor="userRole"></Form.Label>
-                    <Form.Control
-                      type="text"
-                      id="userRole"
-                      name="userRole"
-                      placeholder={data.role}
-                      disabled="true"
-                    ></Form.Control>
-                  </Form.Group>
+                  {(data.role == "student") ? (() => setUserRole(data.role)) : 
+                  (
+                    <Form.Group id="Role">
+                      <Form.Label htmlFor="userRole"></Form.Label>
+                      <select name="userRole" required onChange={(e) => setUserRole(e.target.value)}>
+                        <option value="" selected disabled hidden>Select Role</option>
+                        <option value="professor">Professor</option>
+                        <option value="advisor">Advisor</option>
+                      </select>
+                    </Form.Group>
+                  )}
+                  
                 </Form>
               </Card.Body>
               <Button onClick={newUser}>Submit</Button>

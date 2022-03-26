@@ -199,6 +199,56 @@ body {
   /* transition: font-size .25s; */
   /* transition: min-height .5s; */
 }
+.RegisterFormContainerStudent {
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  transition: all 0.5s;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  box-sizing: border-box;
+  width: 100%;
+  max-width: var(--loginFormWidth);
+  height: 470px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 50px;
+  padding-top: 0px;
+  background-color: #f3e9dd;
+  /* background-color: #2baed642; */
+  border: 15px solid rgba(0, 0, 0, 0.05);
+  /* border: 15px solid #DAB88B; */
+  border-radius: 20px;
+  /* transition: font-size .25s; */
+  /* transition: min-height .5s; */
+}
+.RegisterFormContainerStaff {
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  transition: all 0.5s;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  box-sizing: border-box;
+  width: 100%;
+  max-width: var(--loginFormWidth);
+  height: var(--loginFormHeight);
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 50px;
+  padding-top: 0px;
+  background-color: #f3e9dd;
+  /* background-color: #2baed642; */
+  border: 15px solid rgba(0, 0, 0, 0.05);
+  /* border: 15px solid #DAB88B; */
+  border-radius: 20px;
+  /* transition: font-size .25s; */
+  /* transition: min-height .5s; */
+}
 .loginForm {
   /* background-color: red; */
   transition: all 0.5s;
@@ -288,7 +338,6 @@ h2 {
   font-family: "Trebuchet MS", sans-serif;
   line-height: 42px;
   font-weight: bolder;
-  margin-top: 20px;
 }
 .btn {
   width: 100%;
