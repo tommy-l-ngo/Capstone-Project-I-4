@@ -1,5 +1,21 @@
+import { getDatabase, update } from "firebase/database";
 import React, { Component } from "react";
 import { Form, Button, Card, Container, InputGroup, FormControl } from "react-bootstrap";
+import firebase from "firebase/compat/app"
+import { ref, set} from "firebase/database"
+import { initializeApp } from "firebase/app";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyAu1kdEKPqTfL1XIjDF2l8rfG53FcdtVSM",
+    authDomain: "capstone-i4.firebaseapp.com",
+    databaseURL: "https://capstone-i4-default-rtdb.firebaseio.com",
+    projectId: "capstone-i4",
+    storageBucket: "capstone-i4.appspot.com",
+    messagingSenderId: "768427043765",
+    appId: "1:768427043765:web:6643185734fe346ddd07fc",
+    measurementId: "G-X8E63KZMT3"
+  };
+  
 
 export default class EditProject extends Component {
 
@@ -8,8 +24,23 @@ export default class EditProject extends Component {
         this.state = { title: 'temporary title', description: 'terrible discription', task: 'a few tasks', date: 'today' }
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
+        this.edit_project = this.edit_project.bind(this); 
+        
     }
+    edit_project(project_name,project_description,project_tasks,project_date)
+    {
+       
+        
+        const db = getDatabase(); 
+        set(ref(db, "projects/" + project_name ), {
+            description:project_description,
+            tasks:project_tasks,
+            date:project_date,
+        
+        }); 
+        
 
+    }
     handleSubmit(event) {
         const { title, description, task, date } = this.state
         event.preventDefault()
@@ -20,6 +51,7 @@ export default class EditProject extends Component {
             Task : ${task}
             Date : ${date}
         `)
+        this.edit_project(this.state.title,this.state.description,this.state.task,this.state.date);
     }
 
     handleChange(event){

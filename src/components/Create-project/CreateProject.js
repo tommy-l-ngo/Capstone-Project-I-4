@@ -1,5 +1,31 @@
 import React, { Component } from "react";
 import { Form, Button, Card, Container, InputGroup, FormControl } from "react-bootstrap";
+import firebase from "firebase/compat/app"
+import {getDatabase, ref, set} from "firebase/database"
+import { initializeApp } from "firebase/app";
+
+
+      
+      
+  
+    
+    
+    
+      
+  
+    
+    
+
+ const firebaseConfig = {
+    apiKey: "AIzaSyAu1kdEKPqTfL1XIjDF2l8rfG53FcdtVSM",
+    authDomain: "capstone-i4.firebaseapp.com",
+    databaseURL: "https://capstone-i4-default-rtdb.firebaseio.com",
+    projectId: "capstone-i4",
+    storageBucket: "capstone-i4.appspot.com",
+    messagingSenderId: "768427043765",
+    appId: "1:768427043765:web:6643185734fe346ddd07fc",
+    measurementId: "G-X8E63KZMT3"
+  };
 
 
 export default class CreateProject extends Component {
@@ -9,9 +35,37 @@ export default class CreateProject extends Component {
         this.state = { projectName: '',description: '', task: '', date: '' }
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
+        this.add_project = this.add_project.bind(this); 
+        
+        
+        
+    
+        
+       
+        
+        
+        
+        
     }
+    
+    add_project(project_name,project_description,project_tasks,project_date) 
+    {
+        
+        
+        const db = getDatabase(); 
+        set(ref(db, "projects/" + project_name ), {
+            user_id:"pkv0024",
+            description:project_description,
+            tasks:project_tasks,
+            date:project_date,
+        
+        }); 
+        
+    }
+    
 
     handleSubmit(event) {
+        
         const {projectName, description, task, date } = this.state
         event.preventDefault()
         alert(`
@@ -21,6 +75,10 @@ export default class CreateProject extends Component {
             Task : ${task}
             Date : ${date}
         `)
+        
+        this.add_project(this.state.projectName,this.state.description,this.state.task,this.state.date);
+        
+        
     }
 
     handleChange(event){
@@ -28,10 +86,15 @@ export default class CreateProject extends Component {
           // Computed property names
           // keys of the objects are computed dynamically
           [event.target.name] : event.target.value
+          
         })
+        
     }
 
     render() {
+        
+       
+        
         return (
             <div>
                 <Container className="d-flex align-item-center justify-content-center">
