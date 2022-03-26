@@ -1,0 +1,130 @@
+.ep{
+    background: linear-gradient(90deg, rgb(28, 27, 27) 0%, rgb(26, 23, 23) 100%);
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+
+.ep-title{
+    color: #fff;
+    justify-self: start;
+    margin-left: 20px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+}
+
+.titleText {
+    font-size: 42px;
+    font-family: "Trebuchet MS", sans-serif;
+    line-height: 42px;
+    font-weight: bolder;
+    margin-top: 20px;
+}
+.ep-container{
+    white-space: nowrap;
+
+    font-size: 28px;
+    color: slategray;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.ep-projectname{
+    box-sizing: border-box;
+    outline: none;
+    border: solid 2px #1189de;
+    border-radius: 4px;
+    color: #292929;
+    width: 100%;
+    padding: 12px;
+    font-size: 14px;
+    background: white;
+}
+
+.ep-taskbar{
+    box-sizing: border-box;
+    outline: none;
+    border: solid 2px #1189de;
+    border-radius: 4px;
+    color: #292929;
+    width: 100%;
+    padding: 12px;
+    font-size: 14px;
+    background: white;
+}
+
+.ep-date{
+    box-sizing: border-box;
+    outline: none;
+    border: solid 2px #1189de;
+    border-radius: 4px;
+    color: #292929;
+    width: 100%;
+    padding: 12px;
+    font-size: 14px;
+    background: white;
+}
+
+.ep-description{
+    box-sizing: border-box;
+    outline: none;
+    border: solid 2px #1189de;
+    border-radius: 4px;
+    color: #292929;
+    width: 100%;
+    padding: 12px;
+    font-size: 14px;
+    background: white;
+}
+
+#userInput {
+    border-radius: 20px 20px 4px 4px;
+}
+
+input[type="name"] {
+    text-align: left;
+}
+
+input[type="tasks"] {
+    text-align: left;
+}
+
+input[type="description"] {
+    text-align: left;
+}
+
+input[type="date"] {
+    text-align: left;
+}
+
+.ep-inputField {
+    color: #292929;
+  
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+
+.btn {
+    width: 100%;
+    min-width: 280px;
+    color: #565656;
+    padding: 12px;
+    font-size: 14px;
+    font-weight: bold;
+    border: solid 2px rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+    margin-top: 16px;
+    /* background: #fff; */
+    background: #dab88b;
+    cursor: pointer;
+}
