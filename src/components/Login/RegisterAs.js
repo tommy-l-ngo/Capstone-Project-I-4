@@ -1,6 +1,8 @@
 import Register from "./Register";
 import "./Login.css"
 import { Link, useNavigate } from "react-router-dom";
+import { Navi } from "./Navi";
+
 
 
 function RegisterAs()
@@ -14,7 +16,8 @@ function RegisterAs()
     }
 
     return(
-        <div>
+        <div className='loginFormContainer' style={{height:"350px", top: "40%"}}>
+            <Navi destination="/"/>
             <h4 style={{ marginBottom: "35px", marginTop: "35px" }}>
                 Register as
             </h4>

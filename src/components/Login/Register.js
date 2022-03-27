@@ -156,7 +156,7 @@ export default function Register() {
     <div>
 
       <div className={regDesign}>
-        <Navi />
+        <Navi destination="/RegisterAs"/>
         <Container className="d-flex align-item-center justify-content-center">
           <div className="w-100" style={{ maxWidth: "400px" }}>
             <Card className="register">

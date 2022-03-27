@@ -2,7 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import back from "./back-button.png";
 const imgSize = 50;
-export const Navi = () => {
+export const Navi = (props) => {
+
   return (
     <div className="navContainer">
       <div className="backButton">
@@ -10,7 +11,7 @@ export const Navi = () => {
         {/* <Link to="/">← Back</Link> */}
           <div className="backImg">
 
-        <Link to="/">
+        <Link to={props.destination}>
           <img src={back} alt="back" backgroundColor="black" height={imgSize + "px"} width={imgSize + "px"}/>
 
         </Link>
