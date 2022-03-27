@@ -21,7 +21,7 @@ export default class EditProject extends Component {
 
     constructor(props) {
         super(props)
-        this.state = { title: 'temporary title', description: 'terrible discription', task: 'a few tasks', date: 'today' }
+        this.state = { projectName: '', description: '', task: '', date: '' }
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
         this.edit_project = this.edit_project.bind(this); 
@@ -42,16 +42,16 @@ export default class EditProject extends Component {
 
     }
     handleSubmit(event) {
-        const { title, description, task, date } = this.state
+        const { projectName, description, task, date } = this.state
         event.preventDefault()
         alert(`
             ____Your Details____\n
-            Title : ${title}
+            Title : ${projectName}
             Description : ${description}
             Task : ${task}
             Date : ${date}
         `)
-        this.edit_project(this.state.title,this.state.description,this.state.task,this.state.date);
+        this.edit_project(this.state.projectName,this.state.description,this.state.task,this.state.date);
     }
 
     handleChange(event){
@@ -78,14 +78,14 @@ export default class EditProject extends Component {
     <InputGroup.Text id="inputGroup-sizing-sm">Small</InputGroup.Text>
     <FormControl aria-label="Small" aria-describedby="inputGroup-sizing-sm" />
         </InputGroup>*/}
-                                    <Form.Group id="title">
-                                        <Form.Label htmlFor="title" ></Form.Label>
+                                    <Form.Group id="projectName">
+                                        <Form.Label htmlFor="projectName" ></Form.Label>
                                         <Form.Control 
                                             type="text" 
-                                            id="title" 
-                                            name="title" 
-                                            placeholder="Title" 
-                                            value = {this.state.title}
+                                            id="projectName" 
+                                            name="projectName" 
+                                            placeholder="Project Name" 
+                                            value = {this.state.projectName}
                                             onChange={this.handleChange}
                                             required>
                                         </Form.Control>
