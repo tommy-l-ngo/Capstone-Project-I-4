@@ -4,7 +4,7 @@ import React from "react";
 import { observer } from 'mobx-react';
 import LoginForm from "./LoginForm";
 import SubmitButton from "./SubmitButton";
-import { Forgot }  from "./Forgot";
+import Forgot from "./Forgot";
 import Register from "./Register";
 import {Routes as Switch, Route, HashRouter as Router} from "react-router-dom";
 import CreateProject from "../Create-project/CreateProject";

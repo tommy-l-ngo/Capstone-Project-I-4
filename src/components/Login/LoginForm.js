@@ -7,21 +7,8 @@ import SubmitButton from "./SubmitButton";
 import Forgot from "./Forgot";
 import { getDatabase, get, ref, child } from "firebase/database";
 import { Link, useNavigate } from 'react-router-dom';
-import { Navi } from "./Navi";
+//import { Navi } from "./Navi";
 
-
-// function goToPage(i) {
-//   if (i==2) {
-//   document.documentElement.style.setProperty("--loginFormHeight", "300px");
-//   }
-//   else if (i==0) {
-//   document.documentElement.style.setProperty("--loginFormHeight", "500px");
-
-//   }
-//   else 
-//     document.documentElement.style.setProperty("--loginFormHeight", "500px");
-
-// }
 export default function LoginForm(){
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState('');
@@ -106,9 +93,7 @@ export default function LoginForm(){
           <div className="forgotpass">
             <Link
               to={"/Forgot"}
-              onClick={() => {
-                goToPage(2);
-              }}
+              onClick={goToPage(2)}
             >
               Forgot Password
             </Link>
