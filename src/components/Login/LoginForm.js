@@ -1,6 +1,6 @@
 import "./Login.css";
 //import UserStore from "../../stores/UserStore";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import InputField from "./InputField";
 import InputField2 from "./InputField2";
 import SubmitButton from "./SubmitButton";
@@ -70,6 +70,12 @@ export default function LoginForm(){
       });
   };
 
+
+    useEffect(() => {
+      // Update the document title using the browser API
+      document.documentElement.style.setProperty("--loginFormHeight", "500px");
+      document.documentElement.style.setProperty("--loginFormWidth", "400px");
+    });
 
   
     return (

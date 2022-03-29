@@ -10,6 +10,16 @@
   width: 100%;
 }
 
+.titleBar {
+  color: slategray;
+    width: 100%;
+  height: 60px;
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  /* justify-content: center; */
+}
+
 .backImg {
   opacity: 0.5;
   height: 50px;
@@ -25,20 +35,16 @@
 .navContainer {
   text-align: left;
   font-size: 18px;
-  margin-left: -20px;
+  /* margin-left: -20px; */
   font-family: "Trebuchet MS", sans-serif;
-  left: -100px;
+  /* left: -100px; */
   width: 50px;
   height: 50px;
 }
 .backButton {
   transition: all 0.5s;
   text-align: left;
-  position: relative;
-  /* background: red; */
-  /* border-radius: 50px; */
-  left: 10px;
-  top: 10px;
+  position: absolute;
 }
 .form__field {
   font-family: inherit;
@@ -131,6 +137,12 @@ html,
   height: 100%;
   /* background-color: green; */
 }
+.loginFormContentForgot {
+  /* padding: 20px; */
+    position: relative;
+  top: -10px;
+}
+
 body {
   background-image: url(hip-square.png);
   background-repeat: repeat;
@@ -189,8 +201,8 @@ body {
   height: var(--loginFormHeight);
   padding-left: 20px;
   padding-right: 20px;
-  padding-bottom: 20px;
-  padding-top: 0px;
+  /* padding-bottom: 20px; */
+  padding-top: 10px;
   background-color: #f3e9dd;
   /* background-color: #2baed642; */
   border: 15px solid rgba(0, 0, 0, 0.05);
@@ -321,7 +333,7 @@ body {
 }
 
 .submitButton {
-  padding-top: 16px;
+  /* padding-top: 16px; */
 }
 h4 {
   /* font-family: "Trebuchet MS", sans-serif; */
@@ -334,12 +346,25 @@ h2 {
 }
 
 .titleText {
-  font-size: 42px;
+  font-size: 40px;
   font-family: "Trebuchet MS", sans-serif;
-  line-height: 42px;
+  line-height: 40px;
   font-weight: bolder;
+  /* width:100%; */
+  flex-grow: 1;
+  /* height: 60px; */
+  /* position: absolute; */
+  /* background-color: blue; */
 }
-.btn {
+.titleText2 {
+  font-size: 32px;
+  font-family: "Trebuchet MS", sans-serif;
+  line-height: 32px;
+  text-align: center;
+  font-weight: bolder;
+  flex-grow: 1;
+}
+.btnLogin {
   width: 100%;
   min-width: 280px;
   color: #565656;

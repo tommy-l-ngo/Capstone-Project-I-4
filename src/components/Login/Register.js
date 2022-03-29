@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, { Component, useState, useEffect } from "react";
 import { Form, Button, Card, Container } from "react-bootstrap";
 import "../../firebase";
 import { getDatabase, set, ref } from "firebase/database";
@@ -152,20 +152,39 @@ export default function Register() {
           this.showRole = true;
         }
         */
+
+
+
+  useEffect(() => {
+    // Update the document title using the browser API
+    document.documentElement.style.setProperty("--loginFormHeight", "480px");
+    document.documentElement.style.setProperty("--loginFormWidth", "400px");
+  });
+
+
   return (
     <div>
-
       <div className={regDesign}>
-        <Navi destination="/RegisterAs"/>
+        <div className="titleBar">
+          <Navi destination="/RegisterAs" />
+          <div className="titleText">Registration</div>
+        </div>
         <Container className="d-flex align-item-center justify-content-center">
           <div className="w-100" style={{ maxWidth: "400px" }}>
             <Card className="register">
               <Card.Body>
-                {error && <p style={{ marginTop: "10px", fontSize: "20px", color: "red" }}>{error}</p>}
+                {error && (
+                  <p
+                    style={{
+                      marginTop: "10px",
+                      fontSize: "20px",
+                      color: "red",
+                    }}
+                  >
+                    {error}
+                  </p>
+                )}
 
-
-
-                <div className="titleText">Registration</div>
                 <div
                   className="w-100 text-center mt-2 text-danger"
                   id="errorMessage"
@@ -255,21 +274,27 @@ export default function Register() {
                       onChange={(e) => setUserConfirmPassword(e.target.value)}
                     ></Form.Control>
                   </Form.Group>
-                  {(data.role == "student") ? (() => setUserRole(data.role)) : 
-                  (
+                  {data.role == "student" ? (
+                    () => setUserRole(data.role)
+                  ) : (
                     <Form.Group id="Role">
                       <Form.Label htmlFor="userRole"></Form.Label>
-                      <select name="userRole" required onChange={(e) => setUserRole(e.target.value)}>
-                        <option value="" selected disabled hidden>Select Role</option>
+                      <select
+                        name="userRole"
+                        required
+                        onChange={(e) => setUserRole(e.target.value)}
+                      >
+                        <option value="" selected disabled hidden>
+                          Select Role
+                        </option>
                         <option value="professor">Professor</option>
                         <option value="advisor">Advisor</option>
                       </select>
                     </Form.Group>
                   )}
-                  
                 </Form>
               </Card.Body>
-              <Button onClick={newUser}>Submit</Button>
+              <SubmitButton text="Submit" onClick={newUser} />
             </Card>
           </div>
         </Container>
