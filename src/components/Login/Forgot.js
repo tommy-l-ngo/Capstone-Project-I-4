@@ -5,6 +5,9 @@ import SubmitButton from "./SubmitButton";
 
 export default function Forgot() {
   //document.documentElement.style.setProperty("--loginFormHeight", "300px");
+  function resetPassword(){
+    console.log("Reset Password");
+  }
 
   useEffect(() => {
     // Update the document title using the browser API
@@ -25,7 +28,7 @@ export default function Forgot() {
             <div className="emailInput">
               <InputField2 type="text" placeholder="Email" />
             </div>
-            <SubmitButton text="Reset Password" />
+            <SubmitButton text="Reset Password" onClick={resetPassword}/>
           </div>
         </div>
       </div>
