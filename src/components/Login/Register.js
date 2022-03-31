@@ -207,7 +207,7 @@ export default function Register() {
                     <InputField2 
                       type="text"
                       placeholder={placeholder}
-                      onChange={(e) => setDepartment(e.target.value)}
+                      onChange={(e) => setDepartment(e)}
                     />
                   </Form.Group>
 
@@ -216,7 +216,7 @@ export default function Register() {
                     <InputField2 
                       type="text"
                       placeholder="eUID"
-                      onChange={(e) => setUserEUID(e.target.value)}
+                      onChange={(e) => setUserEUID(e)}
                     />
                   </Form.Group>
 
@@ -225,7 +225,7 @@ export default function Register() {
                     <InputField2 
                       type="text"
                       placeholder="Email"
-                      onChange={(e) => setUserEmail(e.target.value)}
+                      onChange={(e) => setUserEmail(e)}
                     />
                   </Form.Group>
 
@@ -234,7 +234,7 @@ export default function Register() {
                     <InputField2 
                       type="text"
                       placeholder="First Name"
-                      onChange={(e) => setUserFirstName(e.target.value)}
+                      onChange={(e) => setUserFirstName(e)}
                     />
                   </Form.Group>
 
@@ -243,7 +243,7 @@ export default function Register() {
                     <InputField2 
                       type="text"
                       placeholder="Last Name"
-                      onChange={(e) => setUserLastName(e.target.value)}
+                      onChange={(e) => setUserLastName(e)}
                     />
                   </Form.Group>
 
@@ -252,7 +252,7 @@ export default function Register() {
                     <InputField2 
                       type="password"
                       placeholder="Password"
-                      onChange={(e) => setUserPassword(e.target.value)}
+                      onChange={(e) => setUserPassword(e)}
                     />
                   </Form.Group>
 
@@ -261,7 +261,7 @@ export default function Register() {
                     <InputField2 
                       type="password"
                       placeholder="Confirm Password"
-                      onChange={(e) => setUserConfirmPassword(e.target.value)}
+                      onChange={(e) => setUserConfirmPassword(e)}
                     />
                   </Form.Group>
 
