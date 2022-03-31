@@ -90,7 +90,7 @@ export default function LoginForm(){
             
             onChange={(e) => {setUsername(e); clearErrorMessage();}}
           />
-          <InputField
+          <InputField2
             type="password"
             placeholder="Password"
             
@@ -112,7 +112,7 @@ export default function LoginForm(){
             disabled={buttonDisabled}
             onClick={handleLoginUser}
           />
-          <p style={{ marginBottom: "0px", fontSize: "20px" }}>
+          <p style={{ marginTop: "50px", fontSize: "20px" }}>
             Don't have an account?
           </p>
           <div className="registerLink">

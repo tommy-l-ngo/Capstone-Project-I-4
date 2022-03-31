@@ -8,6 +8,8 @@ import SubmitButton from "./SubmitButton";
 import "./Login.css";
 import { Navi } from "./Navi";
 import "./RegisterAs";
+import InputField from "./InputField";
+import InputField2 from "./InputField2";
 //import {useLocation} from 'react-router-dom';
 
 export default function Register() {
@@ -193,6 +195,7 @@ export default function Register() {
                 <Form>
                   <Form.Group id="department">
                     <Form.Label htmlFor="departmentName"></Form.Label>
+                    {/*<label style={{position:"absolute", left:"10px", fontSize:"20px", top: "23.4%"}}>Major:</label>
                     <Form.Control
                       type="text"
                       id="departmentName"
@@ -200,86 +203,79 @@ export default function Register() {
                       placeholder={placeholder}
                       required
                       onChange={(e) => setDepartment(e.target.value)}
-                    ></Form.Control>
+                    ></Form.Control>*/}
+                    <InputField2 
+                      type="text"
+                      placeholder={placeholder}
+                      onChange={(e) => setDepartment(e.target.value)}
+                    />
                   </Form.Group>
 
                   <Form.Group id="eUID">
                     <Form.Label htmlFor="userEUID"></Form.Label>
-                    <Form.Control
+                    <InputField2 
                       type="text"
-                      id="userEUID"
-                      name="userEUID"
                       placeholder="eUID"
-                      required
                       onChange={(e) => setUserEUID(e.target.value)}
-                    ></Form.Control>
+                    />
                   </Form.Group>
 
                   <Form.Group id="email">
                     <Form.Label htmlFor="userEmail"></Form.Label>
-                    <Form.Control
+                    <InputField2 
                       type="text"
-                      id="userEmail"
-                      name="userEmail"
                       placeholder="Email"
-                      required
                       onChange={(e) => setUserEmail(e.target.value)}
-                    ></Form.Control>
+                    />
                   </Form.Group>
 
                   <Form.Group id="firstName">
                     <Form.Label htmlFor="userFirstName"></Form.Label>
-                    <Form.Control
+                    <InputField2 
                       type="text"
-                      id="userFirstlName"
-                      name="userFirstName"
                       placeholder="First Name"
-                      required
                       onChange={(e) => setUserFirstName(e.target.value)}
-                    ></Form.Control>
+                    />
                   </Form.Group>
 
                   <Form.Group id="lastName">
                     <Form.Label htmlFor="userLastName"></Form.Label>
-                    <Form.Control
+                    <InputField2 
                       type="text"
-                      id="userLastlName"
-                      name="userLastName"
                       placeholder="Last Name"
-                      required
                       onChange={(e) => setUserLastName(e.target.value)}
-                    ></Form.Control>
+                    />
                   </Form.Group>
 
                   <Form.Group id="password">
                     <Form.Label htmlFor="userPassowrd"></Form.Label>
-                    <Form.Control
-                      type="text"
-                      id="userPassword"
-                      name="userPassowrd"
+                    <InputField2 
+                      type="password"
                       placeholder="Password"
-                      required
                       onChange={(e) => setUserPassword(e.target.value)}
-                    ></Form.Control>
+                    />
                   </Form.Group>
 
                   <Form.Group id="confirmPassword">
                     <Form.Label htmlFor="userConfirmPassword"></Form.Label>
-                    <Form.Control
-                      type="text"
-                      id="userConfirmPassword"
-                      name="userConfirmPassword"
+                    <InputField2 
+                      type="password"
                       placeholder="Confirm Password"
-                      required
                       onChange={(e) => setUserConfirmPassword(e.target.value)}
-                    ></Form.Control>
+                    />
                   </Form.Group>
-                  {data.role == "student" ? (
+
+                  {(data.role == "student") ? 
+                  (
                     () => setUserRole(data.role)
-                  ) : (
+                  ) 
+                  : 
+                  (
                     <Form.Group id="Role">
                       <Form.Label htmlFor="userRole"></Form.Label>
                       <select
+                        className="select"
+                        style={{marginTop:"25px", marginBottom:"10px"}}
                         name="userRole"
                         required
                         onChange={(e) => setUserRole(e.target.value)}
@@ -294,7 +290,7 @@ export default function Register() {
                   )}
                 </Form>
               </Card.Body>
-              <SubmitButton text="Submit" onClick={newUser} />
+              <SubmitButton text="Submit" Style={{paddingTop: "10px"}} onClick={newUser} />
             </Card>
           </div>
         </Container>
