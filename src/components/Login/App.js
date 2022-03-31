@@ -11,6 +11,8 @@ import CreateProject from "../Create-project/CreateProject";
 import EditProject from "../Create-project/EditProject";
 import Home from "../Dashboard/pages/Home";
 import RegisterAs from "./RegisterAs";
+import { Calendar } from "../Calendar/Calendar";
+
 
 class App extends React.Component {
   /*
@@ -110,6 +112,8 @@ class App extends React.Component {
                 <Route path="/Home" element={<Home/>} />
                 <Route path="/CreateProject" element={<CreateProject/>} />
                 <Route path="/EditProject" element={<EditProject/>} />
+                <Route path="/Calendar" element={<Calendar/>}/>
+                
               </Switch>
             </Router>
             </div>
