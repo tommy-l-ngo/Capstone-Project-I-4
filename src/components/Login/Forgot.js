@@ -1,12 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import InputField2 from "./InputField2";
 import { Navi } from "./Navi";
 import SubmitButton from "./SubmitButton";
 
 export default function Forgot() {
   //document.documentElement.style.setProperty("--loginFormHeight", "300px");
+  const [disabledBtn, setDisabledBtn] = useState(false);
   function resetPassword(){
     console.log("Reset Password");
+    setDisabledBtn(true);
   }
 
   useEffect(() => {
@@ -28,7 +30,7 @@ export default function Forgot() {
             <div className="emailInput">
               <InputField2 type="text" placeholder="Email" />
             </div>
-            <SubmitButton text="Reset Password" onClick={resetPassword}/>
+            <SubmitButton text="Reset Password" onClick={resetPassword} disabled={disabledBtn}/>
           </div>
         </div>
       </div>
