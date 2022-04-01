@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
-import InputField2 from "./InputField2";
+import InputField from "./InputField";
 import { Navi } from "./Navi";
 import SubmitButton from "./SubmitButton";
+
+
 
 export default function Forgot() {
   //document.documentElement.style.setProperty("--loginFormHeight", "300px");
@@ -21,7 +23,7 @@ export default function Forgot() {
           </div>
           <div className="loginFormContentForgot">
             <div className="emailInput">
-              <InputField2 type="text" placeholder="Email" />
+              <InputField type="text" placeholder="Email" />
             </div>
             <SubmitButton text="Reset Password" />
           </div>
