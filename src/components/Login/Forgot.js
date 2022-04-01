@@ -8,17 +8,15 @@ export default function Forgot() {
 
   useEffect(() => {
     // Update the document title using the browser API
-    document.documentElement.style.setProperty("--loginFormHeight", "290px");
-    document.documentElement.style.setProperty("--loginFormWidth", "400px");
+    document.documentElement.style.setProperty("--loginFormHeight", "250px");
+    document.documentElement.style.setProperty("--loginFormWidth", "350px");
   });
 
   return (
-    <div>
-      <div className="loginFormContainer">
-        <div className="forgotContainer">
+    <>
+        {/* <div className="forgotContainer"> */}
           <div className="titleBar">
-            <Navi destination="/" />
-
+            <Navi destination="/Login" />
             <div className="titleText2">Forgot Password</div>
           </div>
           <div className="loginFormContentForgot">
@@ -27,8 +25,7 @@ export default function Forgot() {
             </div>
             <SubmitButton text="Reset Password" />
           </div>
-        </div>
-      </div>
-    </div>
+        {/* </div> */}
+      </>
   );
 }

@@ -2,6 +2,7 @@ import React from 'react';
 import './Dashboard.css';
 import { Button } from './Button';
 import './HeroSection.css';
+import "./Navbar";
 
 function HeroSection() {
   return (

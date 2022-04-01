@@ -2,7 +2,7 @@ import "./Login.css";
 //import UserStore from "../../stores/UserStore";
 import React from "react";
 import { observer } from 'mobx-react';
-import LoginForm from "./LoginForm";
+import LoginPopup from "./LoginPopup";
 import SubmitButton from "./SubmitButton";
 import Forgot from "./Forgot";
 import Register from "./Register";
@@ -11,7 +11,10 @@ import CreateProject from "../Create-project/CreateProject";
 import EditProject from "../Create-project/EditProject";
 import Home from "../Dashboard/pages/Home";
 import RegisterAs from "./RegisterAs";
-
+import HomeLoginPopup from "../Dashboard/pages/HomeLoginPopup";
+import { HomeForgotPopup } from "../Dashboard/pages/HomeForgotPopup";
+import { HomeRegisterAsPopup } from "../Dashboard/pages/HomeRegisterAsPopup";
+import { HomeRegisterPopup } from "../Dashboard/pages/HomeRegisterPopup";
 class App extends React.Component {
   /*
   App2() {
@@ -102,11 +105,12 @@ class App extends React.Component {
             <Router>
               <Switch>
               
-                <Route path="/" element={<LoginForm/>} exact/>
-                <Route path="/Forgot" element={<Forgot/>} />
-                <Route path="/Register" element={<Register/>} />
-                <Route path='/RegisterAs' element={<RegisterAs/>}/>
+                <Route path="/" element={<Home/>} exact/>
+                <Route path="/Forgot" element={<HomeForgotPopup/>} />
+                <Route path="/Register" element={<HomeRegisterPopup/>} />
+                <Route path='/RegisterAs' element={<HomeRegisterAsPopup/>}/>
                 
+                <Route path="/Login" element={<HomeLoginPopup/>} exact />
                 <Route path="/Home" element={<Home/>} />
                 <Route path="/CreateProject" element={<CreateProject/>} />
                 <Route path="/EditProject" element={<EditProject/>} />
