@@ -16,6 +16,7 @@ class InputField2 extends React.Component {
       <div className="inputField2">
         <div className="form__group field">
           <input
+            style={{padding: "0px"}}
             name="name"
             id="name"
             className="form__field"

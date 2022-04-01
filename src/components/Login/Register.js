@@ -10,6 +10,7 @@ import { Navi } from "./Navi";
 import "./RegisterAs";
 import InputField2 from "./InputField2";
 import InputField3 from "./InputField3";
+import InputField from "./InputField";
 //import {useLocation} from 'react-router-dom';
 
 export default function Register() {

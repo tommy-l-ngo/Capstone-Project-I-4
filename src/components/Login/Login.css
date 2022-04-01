@@ -168,7 +168,7 @@ body {
 }
 .forgotpass {
   font-size: 20px;
-  /* margin-top: 10px; */
+  margin-top: 10px;
   min-height: 26px;
   transition: all 0.25s;
 
@@ -334,11 +334,11 @@ a {
   box-sizing: border-box;
   width: 100%;
   max-width: var(--loginFormWidth);
-  height: 470px;
+  height: 750px;
   padding-left: 20px;
   padding-right: 20px;
-  padding-bottom: 50px;
-  padding-top: 0px;
+  padding-bottom: 100px;
+  padding-top: 10px;
   background-color: #f3e9dd;
   /* background-color: #2baed642; */
   border: 15px solid rgba(0, 0, 0, 0.05);
@@ -359,11 +359,11 @@ a {
   box-sizing: border-box;
   width: 100%;
   max-width: var(--loginFormWidth);
-  height: var(--loginFormHeight);
+  height: 780px;
   padding-left: 20px;
   padding-right: 20px;
-  padding-bottom: 50px;
-  padding-top: 0px;
+  padding-bottom: 100px;
+  padding-top: 10px;
   background-color: #f3e9dd;
   /* background-color: #2baed642; */
   border: 15px solid rgba(0, 0, 0, 0.05);
@@ -451,7 +451,7 @@ a {
 }
 
 .submitButton {
-  /* padding-top: 16px; */
+  /*padding-top: 16px;*/
 }
 h4 {
   /* font-family: "Trebuchet MS", sans-serif; */
@@ -539,3 +539,55 @@ h2 {
 }
 /*# sourceMappingURL=Login.css.map */
 
+.select {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 15px;
+  width: 100%;
+}    .select select {
+      font-family: 'Arial';
+      display: inline-block;
+      width: 100%;
+      cursor: pointer;
+      padding: 8px 17px;
+      outline: 0;
+      border: 5px solid #877777;
+      border-radius: 19px;
+      background: #ffffff;
+      color: #000000;
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+  }
+      .select select::-ms-expand {
+          display: none;
+      }
+      .select select:hover,
+      .select select:focus {
+          color: #000000;
+          background: #ffffff;
+      }
+      .select select:disabled {
+          opacity: 0.2;
+          pointer-events: none;
+      }
+.select_arrow {
+  position: absolute;
+  top: 16px;
+  right: 21px;
+  width: 0px;
+  height: 0px;
+  border: solid #7b7b7b;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+}
+.select select:hover ~ .select_arrow,
+.select select:focus ~ .select_arrow {
+  border-color: #000000;
+}
+.select select:disabled ~ .select_arrow {
+  border-top-color: #cccccc;
+}

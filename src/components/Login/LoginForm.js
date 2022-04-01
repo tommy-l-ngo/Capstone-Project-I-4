@@ -70,7 +70,6 @@ var register;
   }
 
 
-var elmt2Render;
 
   useEffect(() => {
       // alert(3);
