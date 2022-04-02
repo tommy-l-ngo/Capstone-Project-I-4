@@ -3,7 +3,7 @@ import React , {useState} from 'react'
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from "@fullcalendar/interaction" // needed for dayClick
-import { getDatabase, set, ref, get, child, dbRef } from "firebase/database";
+import { getDatabase, set, ref, get } from "firebase/database";
 
 export function Calendar() {
     const db = getDatabase();
@@ -20,7 +20,7 @@ export function Calendar() {
         const meetProj = "Project 1"
         const meetTitle = window.prompt("Enter a title:","Meeting 1");
         const meetNotes = "None";
-        const meetID = meetDate+"_"+meetTime+"_"+meetTitle;// prevents duplicate meetings
+        const meetID = meetDate+"_"+meetTime+"_"+meetProj;// prevents duplicate meetings
         
         // add meeting to database
         set(ref(db, "calendars/" + userEUID + "/" + meetID), {
@@ -34,6 +34,10 @@ export function Calendar() {
         });
         console.log("Meeting added");
     }// handleDateClick
+
+    function testFunction(){
+        console.log("Hello");
+    }
 
     // get calendar events of userEUID from database
     get(ref(db, "calendars/" + userEUID)).then((snapshot) => {
@@ -57,7 +61,7 @@ export function Calendar() {
     return (<div style={{backgroundColor: 'white' }}>
         <>
             <Navbar />
-            <button>TEST BUTTON</button>
+            <button onClick={testFunction}>TEST BUTTON</button>
             <FullCalendar
                 plugins={[dayGridPlugin, interactionPlugin]}
                 initialView="dayGridMonth"
