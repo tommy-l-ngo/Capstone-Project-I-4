@@ -15,6 +15,7 @@ import HomeLoginPopup from "../Dashboard/pages/HomeLoginPopup";
 import { HomeForgotPopup } from "../Dashboard/pages/HomeForgotPopup";
 import { HomeRegisterAsPopup } from "../Dashboard/pages/HomeRegisterAsPopup";
 import { HomeRegisterPopup } from "../Dashboard/pages/HomeRegisterPopup";
+import { Calendar } from "../Calendar/Calendar";
 class App extends React.Component {
   /*
   App2() {
@@ -114,6 +115,7 @@ class App extends React.Component {
                 <Route path="/Home" element={<Home/>} />
                 <Route path="/CreateProject" element={<CreateProject/>} />
                 <Route path="/EditProject" element={<EditProject/>} />
+                <Route path="/Calendar" element={<Calendar/>}/>
               </Switch>
             </Router>
             </div>
