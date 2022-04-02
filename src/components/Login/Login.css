@@ -1,5 +1,5 @@
 :root {
-  --loginFormWidth: 400px;
+  --loginFormWidth: 350px;
   --loginFormHeight: 500px;
 }
 
@@ -80,7 +80,8 @@
   padding-bottom: 6px;
   font-weight: 700;
   border-width: 3px;
-  border-image: linear-gradient(to right, #11998e, #38ef7d);
+  border-image: linear-gradient(to right, #a54bff85, #a54bff);
+  /* border-image: linear-gradient(to right, #11998e, #38ef7d); */
   border-image-slice: 1;
 }
 .form__field:focus ~ .form__label {
@@ -89,7 +90,8 @@
   display: block;
   transition: 0.2s;
   font-size: 1rem;
-  color: #11998e;
+  color: #8c6cad;
+  /* color: #CB9CFA; */
   font-weight: 700;
 }
 
@@ -132,6 +134,23 @@ html,
   height: 100%;
 }
 
+.containerFirst {
+    width: 100%;
+  height: 100%;
+
+  white-space: nowrap;
+
+  font-size: 28px;  
+  color: slategray;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  /* animation: fadeInContent 2s; */
+  /* animation-delay: .5s; */
+
+}
 .app {
   width: 100%;
   height: 100%;
@@ -149,7 +168,7 @@ body {
 }
 .forgotpass {
   font-size: 20px;
-  /* margin-top: 10px; */
+  margin-top: 10px;
   min-height: 26px;
   transition: all 0.25s;
 
@@ -175,10 +194,45 @@ body {
 .loginForm1 h2 {
   text-align: center;
 }
+
+.loginForm1 {
+      width: 100%;
+  height: 100%;
+
+  white-space: nowrap;
+
+  font-size: 28px;  
+  color: slategray;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  /* animation: fadeInContent 1s; */
+  /* animation-delay: .5s; */
+}
+
+.loginForm2 {
+  /* opacity: 0; */
+        width: 100%;
+  height: 100%;
+
+  white-space: nowrap;
+
+  font-size: 28px;  
+  color: slategray;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  animation: fadeInContent 1.25s;
+  /* animation-delay: .5s; */
+}
 .container {
   white-space: nowrap;
 
-  font-size: 28px;
+  font-size: 28px;  
   color: slategray;
   display: flex;
   flex-direction: column;
@@ -186,7 +240,15 @@ body {
   justify-content: center;
   /* background-color: #282c34; */
 }
+
+.mainContent {
+  cursor:default;
+}
+a {
+  text-decoration: none;
+}
 .loginFormContainer {
+  z-index: 1000;
   font-family: "Poppins", sans-serif;
   margin: 0;
   transition: all 0.5s;
@@ -203,14 +265,63 @@ body {
   padding-right: 20px;
   /* padding-bottom: 20px; */
   padding-top: 10px;
-  background-color: #f3e9dd;
+  /* background-color: #f3e9dd; */
+  background-color: rgb(245, 245, 245);
   /* background-color: #2baed642; */
-  border: 15px solid rgba(0, 0, 0, 0.05);
+  border: 15px solid rgba(0, 0, 0, 0.15);
   /* border: 15px solid #DAB88B; */
-  border-radius: 20px;
+  border-radius: 50px;
+  box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.3);
+  opacity: 1;
+  overflow: hidden;
+  /* animation: fadein .5s; */
   /* transition: font-size .25s; */
   /* transition: min-height .5s; */
 }
+.loginFormContainerFirst {
+  overflow: hidden;
+
+  z-index: 1000;
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  transition: all 0.5s;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  box-sizing: border-box;
+  width: 100%;
+  max-width: var(--loginFormWidth);
+  height: var(--loginFormHeight);
+  padding-left: 20px;
+  padding-right: 20px;
+  /* padding-bottom: 20px; */
+  padding-top: 10px;
+  /* background-color: #f3e9dd; */
+  background-color: rgb(245, 245, 245);
+  /* background-color: #2baed642; */
+  border: 15px solid rgba(0, 0, 0, 0.15);
+  /* border: 15px solid #DAB88B; */
+  border-radius: 50px;
+  box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.3);
+  animation: fadein .5s;
+  /* transition: font-size .25s; */
+  /* transition: min-height .5s; */
+}
+
+
+@keyframes fadein {
+  from {opacity:0;}
+  to  { opacity: 1;}
+}
+
+@keyframes fadeInContent {
+    0%    { opacity: 0; }
+    10%   { opacity: 0; }
+    100%  { opacity: 1; }
+}
+
 .RegisterFormContainerStudent {
   font-family: "Poppins", sans-serif;
   margin: 0;
@@ -223,11 +334,11 @@ body {
   box-sizing: border-box;
   width: 100%;
   max-width: var(--loginFormWidth);
-  height: 470px;
+  height: 750px;
   padding-left: 20px;
   padding-right: 20px;
-  padding-bottom: 50px;
-  padding-top: 0px;
+  padding-bottom: 100px;
+  padding-top: 10px;
   background-color: #f3e9dd;
   /* background-color: #2baed642; */
   border: 15px solid rgba(0, 0, 0, 0.05);
@@ -248,11 +359,11 @@ body {
   box-sizing: border-box;
   width: 100%;
   max-width: var(--loginFormWidth);
-  height: var(--loginFormHeight);
+  height: 780px;
   padding-left: 20px;
   padding-right: 20px;
-  padding-bottom: 50px;
-  padding-top: 0px;
+  padding-bottom: 100px;
+  padding-top: 10px;
   background-color: #f3e9dd;
   /* background-color: #2baed642; */
   border: 15px solid rgba(0, 0, 0, 0.05);
@@ -280,6 +391,11 @@ body {
 .inputField2 {
   color: #292929;
   padding-top: 16px;
+}
+
+.inputField3 {
+  color: #292929;
+  padding-top: 1px;
 }
 
 .registerLink {
@@ -314,6 +430,8 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  /* position: relative; */
+  margin-top: 15px;
   /* background-color: red; */
 }
 .input2 {
@@ -333,7 +451,7 @@ body {
 }
 
 .submitButton {
-  /* padding-top: 16px; */
+  /*padding-top: 16px;*/
 }
 h4 {
   /* font-family: "Trebuchet MS", sans-serif; */
@@ -357,10 +475,10 @@ h2 {
   /* background-color: blue; */
 }
 .titleText2 {
-  font-size: 32px;
+  font-size: 28px;
   font-family: "Trebuchet MS", sans-serif;
-  line-height: 32px;
-  text-align: center;
+  line-height: 28px;
+  /* text-align: center; */
   font-weight: bolder;
   flex-grow: 1;
 }
@@ -373,9 +491,11 @@ h2 {
   font-weight: bold;
   border: solid 2px rgba(0, 0, 0, 0.05);
   border-radius: 4px;
-  margin-top: 16px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   /* background: #fff; */
-  background: #dab88b;
+  background: #a54bff85;
+  /* background: #7e43e2; */
   cursor: pointer;
 }
 .btn2 {
@@ -393,36 +513,81 @@ h2 {
   cursor: pointer;
 }
 
-a {
+.loginFormContainer a {
   transition: text-shadow 0.5s ease;
   color: #4f89bb;
   text-decoration: none;
-  /* transition: all .25s ease-out; */
 }
-a:visited {
+.loginFormContainer a:visited {
   color: #4f89bb;
 
-  /* color: #121212; */
 }
-a:hover {
-  /* color: #121212; */
-  /* font-size: .8em; */
-  /* font-size: 21px; */
-  /* padding: 0px; */
-  /* Transform: scale(1.2px); */
-  text-shadow: 0px 0px 25px #6e6861;
-  /* text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); */
-  /* text-shadow: 0 2px 2px #dfdfdf, 
-      -2px 5px 1px #b8b8b8, 
-      -4px 8px 0px #979797, 
-      -6px 11px 0px #747474,
-      -8px 14px 0px #565656,
-      -10px 17px 0px #343434,
-      -12px 20px 0px #171717,
-      -14px 23px 0px #000; */
+.loginFormContainer a:hover {
+  text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+.loginFormContainerFirst a {
+  transition: text-shadow 0.5s ease;
+  color: #4f89bb;
+  text-decoration: none;
+}
+.loginFormContainerFirst a:visited {
+  color: #4f89bb;
 
-  /* text-shadow: 2px 7px 5px rgba(0,0,0,0.3),  */
-  /* 0px -4px 10px rgba(255,255,255,0.3); */
-  /* text-shadow: 2px 2px 5px slategray; */
+}
+.loginFormContainerFirst a:hover {
+  text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 }
 /*# sourceMappingURL=Login.css.map */
+
+.select {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 15px;
+  width: 100%;
+}    .select select {
+      font-family: 'Arial';
+      display: inline-block;
+      width: 100%;
+      cursor: pointer;
+      padding: 8px 17px;
+      outline: 0;
+      border: 5px solid #877777;
+      border-radius: 19px;
+      background: #ffffff;
+      color: #000000;
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+  }
+      .select select::-ms-expand {
+          display: none;
+      }
+      .select select:hover,
+      .select select:focus {
+          color: #000000;
+          background: #ffffff;
+      }
+      .select select:disabled {
+          opacity: 0.2;
+          pointer-events: none;
+      }
+.select_arrow {
+  position: absolute;
+  top: 16px;
+  right: 21px;
+  width: 0px;
+  height: 0px;
+  border: solid #7b7b7b;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+}
+.select select:hover ~ .select_arrow,
+.select select:focus ~ .select_arrow {
+  border-color: #000000;
+}
+.select select:disabled ~ .select_arrow {
+  border-top-color: #cccccc;
+}

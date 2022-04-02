@@ -20,23 +20,23 @@ function RegisterAs()
 
   useEffect(() => {
     // Update the document title using the browser API
-    document.documentElement.style.setProperty("--loginFormHeight", "280px");
-    document.documentElement.style.setProperty("--loginFormWidth", "400px");
+    document.documentElement.style.setProperty("--loginFormHeight", "245px");
+    document.documentElement.style.setProperty("--loginFormWidth", "350px");
   });
 
 
     return (
-      <div className="loginFormContainer">
+      <>
         <div className="titleBar">
-          <Navi destination="/" />
+          <Navi destination="/Login" />
           <div className="titleText">Register as</div>
         </div>{" "}
-        <h4 style={{ marginBottom: "35px", marginTop: "35px" }}></h4>
+        {/* <h4 style={{ marginBottom: "35px", marginTop: "35px" }}></h4> */}
         <div className="buttonsRegister">
           <Link to="/Register" state={{ role: "student" }}>
             <button
               style={{ marginTop: "0px", marginBottom: "06px" }}
-              className="btn2"
+              className="btnLogin"
             >
               Student
             </button>
@@ -44,13 +44,13 @@ function RegisterAs()
           <Link to="/Register" state={{ role: "staff" }}>
             <button
               style={{ marginTop: "6px", marginBottom: "06px" }}
-              className="btn2"
+              className="btnLogin"
             >
               Advisor/Professor
             </button>
           </Link>
         </div>
-      </div>
+        </>
     );
 }
 

@@ -2,7 +2,7 @@ import "./Login.css";
 import UserStore from "../../stores/UserStore";
 import React from "react";
 
-class InputField2 extends React.Component {
+class InputField3 extends React.Component {
   render() {
     return (
       // <div className="inputField2">
@@ -13,10 +13,9 @@ class InputField2 extends React.Component {
       //       onChange={(e) => this.props.onChange(e.target.value)} />
       // </div>
 
-      <div className="inputField2">
+      <div className="inputField3">
         <div className="form__group field">
           <input
-            style={{padding: "0px"}}
             name="name"
             id="name"
             className="form__field"
@@ -34,4 +33,4 @@ class InputField2 extends React.Component {
   }
 }
 
-export default InputField2;
+export default InputField3;
