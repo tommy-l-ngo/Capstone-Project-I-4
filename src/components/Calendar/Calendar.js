@@ -33,28 +33,31 @@ export function Calendar() {
             notes: meetNotes
         });
         console.log("Meeting added");
-    }
+    }// handleDateClick
 
-    function handleDisplayMeetings(){
-        console.log("Meetings:");
-
-        // get meetings of userEUID from database
-        get(ref(db, "calendars/" + userEUID)).then((snapshot) => {
+    // get calendar events of userEUID from database
+    get(ref(db, "calendars/" + userEUID)).then((snapshot) => {
         if (snapshot.exists()) {
-            console.log(snapshot.val(),snapshot.size);
+            //loop through calendar events from user
+            var events = []
+            snapshot.forEach(function (snapshot){
+                var evDate = snapshot.val().date;
+                var evTitle = snapshot.val().time + " -- " + snapshot.val().title;
+                var event = { title: evTitle, date: evDate };
+                events.push(event)
+            })
+            setUserEvents(events);
         } else {
             console.log("No data available");
         }
         }).catch((error) => {
         console.error(error);
         });
-    }
-    
 
     return (<div style={{backgroundColor: 'white' }}>
         <>
             <Navbar />
-            <button onClick={handleDisplayMeetings}>TEST BUTTON</button>
+            <button>TEST BUTTON</button>
             <FullCalendar
                 plugins={[dayGridPlugin, interactionPlugin]}
                 initialView="dayGridMonth"
