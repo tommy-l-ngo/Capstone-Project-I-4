@@ -30,7 +30,8 @@ export function Calendar() {
             time: meetTime,
             project: meetProj,
             title: meetTitle,
-            notes: meetNotes
+            notes: meetNotes,
+            type: "meeting"
         });
 
         // add meeting to guest calendars in database
@@ -42,7 +43,8 @@ export function Calendar() {
                 time: meetTime,
                 project: meetProj,
                 title: meetTitle,
-                notes: meetNotes
+                notes: meetNotes,
+                type: "meeting"
             });
         }
 
