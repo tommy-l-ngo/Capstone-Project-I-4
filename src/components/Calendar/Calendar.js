@@ -14,7 +14,7 @@ export function Calendar() {
         // FIX ME: Custom pop-up box should be used instead of generic window prompt
         // meeting details
         const meetHost = userEUID;
-        const meetGuests = "exa0011, exa0013";
+        const meetGuests = ["exa0011", "exa0013"];
         const meetDate = selection.dateStr;
         const meetTime = "12:00";
         const meetProj = "Project 1"
@@ -22,7 +22,7 @@ export function Calendar() {
         const meetNotes = "None";
         const meetID = meetDate+"_"+meetTime+"_"+meetProj;// prevents duplicate meetings
         
-        // add meeting to database
+        // add meeting to host calendar in database
         set(ref(db, "calendars/" + userEUID + "/" + meetID), {
             host: meetHost,
             guests: meetGuests,
@@ -32,6 +32,20 @@ export function Calendar() {
             title: meetTitle,
             notes: meetNotes
         });
+
+        // add meeting to guest calendars in database
+        for (var i=0; i<meetGuests.length; i++){
+            set(ref(db, "calendars/" + meetGuests[i] + "/" + meetID), {
+                host: meetHost,
+                guests: meetGuests,
+                date: meetDate,
+                time: meetTime,
+                project: meetProj,
+                title: meetTitle,
+                notes: meetNotes
+            });
+        }
+
         console.log("Meeting added");
     }// handleDateClick
 
