@@ -46,13 +46,10 @@ export default function ({ isOpen, onClose}) {
         }
     }
 
-<<<<<<< HEAD
     function cancelSubmit() {
         onClose();
     }
 
-=======
->>>>>>> 0f67049caebe6ac985b6a4a193408c2aa085346e
     // FIXME: Form, please style accordingly.
     return (
         <Modal isOpen={isOpen} onClose={onClose}>
@@ -87,10 +84,7 @@ export default function ({ isOpen, onClose}) {
                         <input placeholder="Notes" value={meetNotes} onChange={(e) => setNotes(e.target.value)} />
                     </div>
                     <button onClick={onSubmit}>Submit</button>
-<<<<<<< HEAD
                     <button onClick={cancelSubmit}>Cancel</button>
-=======
->>>>>>> 0f67049caebe6ac985b6a4a193408c2aa085346e
                 </form>
             </Container>
         </Modal>
