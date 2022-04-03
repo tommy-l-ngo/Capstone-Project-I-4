@@ -32,7 +32,7 @@ export default class CreateProject extends Component {
 
     constructor(props) {
         super(props)
-        this.state = { projectName: '',description: '', task: '', date: '' }
+        this.state = { projectName: '',description: '', task: '', date: '' , formValues: [{ tasks: ""}]}
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
         this.add_project = this.add_project.bind(this); 
@@ -68,6 +68,7 @@ export default class CreateProject extends Component {
         
         const {projectName, description, task, date } = this.state
         event.preventDefault()
+        alert(JSON.stringify(this.state.formValues));
         alert(`
             ____Your Details____\n
             Project : ${projectName}
@@ -90,6 +91,23 @@ export default class CreateProject extends Component {
         })
         
     }
+    handleChanges(i, e) {
+        let formValues = this.state.formValues;
+        formValues[i][e.target.name] = e.target.value;
+        this.setState({ formValues });
+      }
+
+      addFormFields() {
+        this.setState(({
+          formValues: [...this.state.formValues, { tasks: "" }]
+        }))
+      }
+    
+      removeFormFields(i) {
+        let formValues = this.state.formValues;
+        formValues.splice(i, 1);
+        this.setState({ formValues });
+      }
 
     render() {
         
@@ -149,6 +167,21 @@ export default class CreateProject extends Component {
                                         </Form.Control>
                                     </Form.Group>
                                     {/*this task field may change based on our scope later*/}
+                                    
+                                    {this.state.formValues.map((element, index) => (
+                                        <div className="form-inline" key={index}>
+                                            <label>Task</label>
+                                            <input type="text" name="tasks" value={element.tasks || ""} onChange={e => this.handleChanges(index, e)} />
+                                            {
+                                                index ? 
+                                                <button type="button"  className="button remove" onClick={() => this.removeFormFields(index)}>Remove</button> 
+                                                : null
+                                            }
+                                        </div>
+                                    ))}
+                                    <div className="button-section">
+                                        <button className="button add" type="button" onClick={() => this.addFormFields()}>Add</button>
+                                    </div>
 
                                     <Form.Group id="date">
                                         <Form.Label htmlFor="date"></Form.Label>
