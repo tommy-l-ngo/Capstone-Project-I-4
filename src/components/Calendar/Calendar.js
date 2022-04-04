@@ -7,6 +7,8 @@ import { getDatabase, set, ref, get } from "firebase/database";
 import Modal from 'react-modal';
 import "react-datetime/css/react-datetime.css";
 import AddMeeting from "./AddMeeting"
+import timeGridPlugin from "@fullcalendar/timegrid";
+
 
 export function Calendar() {
     const [modalOpen, setModalOpen] = useState(false);
@@ -85,18 +87,27 @@ export function Calendar() {
     return (
         <div style={{ backgroundColor: 'white' }}>
             <Navbar />
-            <button onClick={() => setModalOpen(true)}>Add Event</button>
+            <button color = "red" onClick={() => setModalOpen(true)}>Add Event</button>
             <div style={{ position: "relative", zIndex: 0, paddingTop: "20px" }}>
                 <FullCalendar
                     ref={calendarRef}
-                    plugins={[dayGridPlugin, interactionPlugin]}
+                    plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin]}
                     initialView="dayGridMonth"
                     // dateClick={handleDateclick}
                     events={userEvents}
+                    headerToolbar={{
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: "dayGridMonth,timeGridWeek,timeGridDay"
+                        
+                      }}
+                      
                 />
             </div>
             <AddMeeting isOpen={modalOpen} onClose={() => setModalOpen(false)} onEventAdded={event => onEventAdded(event)} />
         </div>
     )
 }
+
+
 
