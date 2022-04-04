@@ -122,8 +122,8 @@ input[type="password"] {
 }
 
 html {
-  background-image: url("hip-square.png");
-  background-repeat: repeat;
+  /* background-image: url("hip-square.png"); */
+  /* background-repeat: repeat; */
 }
 
 body,
@@ -229,10 +229,20 @@ body {
 
 .xBtn {
   text-align: center;
+  /* transition: text-shadow 100s; */
+  /* transition: text-shadow 0.02s; */
+   
 }
 .xBtn a:hover {
   /* font-size: 100px; */
   /* color: black; */
+  /* text-shadow: 0px 0px 2px darkgray; */
+  /* rgba(197, 110, 227, 0.5); */
+}
+
+.xBtn a:click {
+  text-shadow: 0px 0px 20px darkgray;
+
 }
 .loginForm2 {
   /* opacity: 0; */
@@ -426,7 +436,7 @@ a {
   /* left: 10px; */
   /* top: 10px; */
   font-size: 32px;
-  transition: all .5s;
+  transition: font-size .5s, text-shadow .25s;
   text-align: center;
 }
 
@@ -444,7 +454,7 @@ a {
   height:32px;
   /* border-radius: 100px; */
   /* background:red; */
-  transition: all .25s;
+  transition: transform .25s;
   /* background:red; */
 }
 .xButton {
@@ -455,7 +465,7 @@ a {
   /* box-shadow: 0px 0px, ; */
   /* background:black; */
   /* color:rgb(65, 65, 65); */
-  text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.5);
+  /* text-shadow: 0px 0px 100px rgba(0, 0, 0, 0.5); */
 }
 .xBtn:hover .xButton{
   color:rgb(112, 112, 112);
