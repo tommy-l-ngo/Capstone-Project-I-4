@@ -5,13 +5,6 @@ import React from "react";
 class InputField3 extends React.Component {
   render() {
     return (
-      // <div className="inputField2">
-      //   <input className="input2"
-      //       type={this.props.type}
-      //       placeholder={this.props.placeholder}
-      //       value={this.props.value}
-      //       onChange={(e) => this.props.onChange(e.target.value)} />
-      // </div>
 
       <div className="inputField3">
         <div className="form__group field">

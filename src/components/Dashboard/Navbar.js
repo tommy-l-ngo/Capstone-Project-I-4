@@ -48,8 +48,10 @@ function Navbar() {
                   Log in
                 </button>
               </Link>
-
-              <button className="navbar-login-box2">Register</button>
+              <Link
+                to="/RegisterAs"
+                onClick={() => {fadeIn = true}}
+              >              <button className="navbar-login-box2">Register</button></Link>
             </div>
           </div>
 

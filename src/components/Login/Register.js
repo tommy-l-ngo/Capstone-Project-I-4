@@ -49,11 +49,11 @@ export default function Register() {
 
   function newUser() {
     try {
-      if (department.length == 0) {
+      if (department.length == 0 && userRole !== "student") {
 
         throw Error('Please enter a deperament of study');
       }
-      else if (userEUID == 0) {
+      else if (userEUID == "") {
 
         throw Error('Please enter your euid');
       }
@@ -159,9 +159,11 @@ export default function Register() {
 
 
   useEffect(() => {
-    // Update the document title using the browser API
-    document.documentElement.style.setProperty("--loginFormHeight", "680px");
-    document.documentElement.style.setProperty("--loginFormWidth", "350px");
+    // Update popup height
+    if (userRole == "student") 
+      document.documentElement.style.setProperty("--loginFormHeight", "650px");
+    else
+      document.documentElement.style.setProperty("--loginFormHeight", "680px");
   });
 
 
@@ -204,7 +206,6 @@ export default function Register() {
                     id="departmentName"
                     name="departmentName"
                     placeholder={placeholder}
-                    required
                     onChange={(e) => setDepartment(e.target.value)}
                   />
 
@@ -218,8 +219,9 @@ export default function Register() {
                     id="userEUID"
                     name="userEUID"
                     placeholder="eUID"
-                    required
-                    onChange={(e) => setUserEUID(e.target.value)}
+                    onChange={(e) => {
+                      setUserEUID(e);
+                    }}
                   />
                 </Form.Group>
 
@@ -231,7 +233,7 @@ export default function Register() {
                     name="userEmail"
                     placeholder="Email"
                     required
-                    onChange={(e) => setUserEmail(e.target.value)}
+                    onChange={(e) => setUserEmail(e)}
                   />
                 </Form.Group>
 
@@ -243,7 +245,7 @@ export default function Register() {
                     name="userFirstName"
                     placeholder="First Name"
                     required
-                    onChange={(e) => setUserFirstName(e.target.value)}
+                    onChange={(e) => setUserFirstName(e)}
                   />
                 </Form.Group>
 
@@ -255,31 +257,31 @@ export default function Register() {
                     name="userLastName"
                     placeholder="Last Name"
                     required
-                    onChange={(e) => setUserLastName(e.target.value)}
+                    onChange={(e) => setUserLastName(e)}
                   />
                 </Form.Group>
 
                 <Form.Group id="password">
                   <Form.Label htmlFor="userPassowrd"></Form.Label>
                   <InputField3
-                    type="text"
+                    type="password"
                     id="userPassword"
                     name="userPassowrd"
                     placeholder="Password"
                     required
-                    onChange={(e) => setUserPassword(e.target.value)}
+                    onChange={(e) => setUserPassword(e)}
                   />
                 </Form.Group>
 
                 <Form.Group id="confirmPassword">
                   <Form.Label htmlFor="userConfirmPassword"></Form.Label>
                   <InputField3
-                    type="text"
+                    type="password"
                     id="userConfirmPassword"
                     name="userConfirmPassword"
                     placeholder="Confirm Password"
                     required
-                    onChange={(e) => setUserConfirmPassword(e.target.value)}
+                    onChange={(e) => setUserConfirmPassword(e)}
                   />
                 </Form.Group>
                 {data.role == "student" ? (
@@ -290,7 +292,7 @@ export default function Register() {
                     <select
                       name="userRole"
                       required
-                      onChange={(e) => setUserRole(e.target.value)}
+                      onChange={(e) => setUserRole(e)}
                     >
                       <option value="" selected disabled hidden>
                         Select Role

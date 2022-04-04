@@ -3,6 +3,7 @@ import "./Login.css";
 import React, { useState, useEffect } from "react";
 import InputField from "./InputField";
 import InputField2 from "./InputField2";
+import InputField3 from "./InputField3";
 import SubmitButton from "./SubmitButton";
 import Forgot from "./Forgot";
 
@@ -104,6 +105,7 @@ var register;
         );
         document.documentElement.style.setProperty("--loginFormWidth", "350px");
       }
+      document.body.style.overflowY = "hidden";
   });
 
 
@@ -111,63 +113,88 @@ var register;
 
   return (
     <>
-      <div
-        className=
-        {fadeIn ? "loginForm2" : "loginForm1"}
-      >
-        {/* <Navi /> */}
+      <div className={fadeIn ? "loginForm2" : "loginForm1"}>
         <h2 style={{ lineHeight: "0px" }}>Log In</h2>
-        <InputField2
+
+        <div className="inputField2">
+          <div className="form__group field">
+            <input
+              name="user"
+              id="user"
+              className="form__field"
+              type="text"
+              placeholder="Username"
+              onChange={(e) => {
+                setUsername(e);
+                clearErrorMessage();
+              }}
+            />
+            <label for="user" class="form__label">
+              Username
+            </label>
+          </div>
+        </div>
+
+        <div className="inputField">
+          <div className="form__group field">
+            <input
+              name="pass"
+              id="pass"
+              className="form__field"
+              type="password"
+              placeholder="Password"
+              onChange={(e) => {
+                setUsername(e);
+                clearErrorMessage();
+              }}
+            />
+            <label for="pass" class="form__label">
+              Password
+            </label>
+          </div>
+        </div>
+
+        {/* <InputField
           type="text"
-          placeholder="Username"
+          id="user"
+          name="user"
+          // placeholder="Username"
           onChange={(e) => {
             setUsername(e);
             clearErrorMessage();
           }}
         />
+        <label for="user" class="form__label">
+          Username
+        </label>
         <InputField
           type="password"
-          placeholder="Password"
+          name="pass"
+          // placeholder="Password"
           onChange={(e) => {
             setPassword(e);
             clearErrorMessage();
           }}
-        />
-        {pageNum}
+        /> */}
         <div className="forgotpass">
           <Link to={"/Forgot"}>Forgot Password</Link>
-          {/* <a
-            href="javascript:;"
-            onClick={() => {
-              // goToPage(3);
-              setPageNum(3);
-            }}
-          >
-            Forgot password
-          </a> */}
-        </div>{" "}
+        </div>
         <p
           id="errorMessage"
           style={{ marginTop: "10px", fontSize: "20px", color: "red" }}
         ></p>
-        {/*FIXME: change to React Link*/}
         <SubmitButton
           text="Log in"
           disabled={buttonDisabled}
           onClick={handleLoginUser}
+          style={{ fontSize: "20px" }}
         />
         <p style={{ marginBottom: "0px", fontSize: "20px" }}>
           Don't have an account?
         </p>
         <div className="registerLink">
-          {/* <Link style={{ lineHeight: "22px" }} to={"/RegisterAs"}> */}
-          {/* <a href="javascript:;" onClick={() => setPageNum(1)}> */}
           <Link to="/RegisterAs">Sign Up</Link>
-          {/* </a> */}
-          {/* </Link> */}
         </div>
-        {/*<Link to={"/Register"}>Sign Up</Link>*/}{" "}
-        {/*FIXME: change to React Link*/}
       </div>
     </>
   );

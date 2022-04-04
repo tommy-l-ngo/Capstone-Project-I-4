@@ -12,3 +12,7 @@
     justify-content: center;
     font-size: 3rem;
 }
+
+body {
+    overflow-y: scroll;
+}
