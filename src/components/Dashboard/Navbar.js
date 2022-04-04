@@ -42,14 +42,22 @@ function Navbar() {
             <div>
               <Link
                 to="/Login"
-                onClick={() => {fadeIn = true}}
+                onClick={() => {
+                  fadeIn = true;
+                }}
               >
                 <button className="navbar-login-box" onClick={handleClickLogin}>
                   Log in
                 </button>
               </Link>
-
-              <button className="navbar-login-box2">Register</button>
+              <Link
+                to="/RegisterAs"
+                onClick={() => {
+                  fadeIn = true;
+                }}
+              >
+                <button className="navbar-login-box2">Register</button>
+              </Link>
             </div>
           </div>
 

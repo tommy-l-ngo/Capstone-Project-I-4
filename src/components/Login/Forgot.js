@@ -1,9 +1,7 @@
 import React, { useEffect } from "react";
-import InputField from "./InputField";
+import InputField3 from "./InputField3";
 import { Navi } from "./Navi";
 import SubmitButton from "./SubmitButton";
-
-
 
 export default function Forgot() {
   //document.documentElement.style.setProperty("--loginFormHeight", "300px");
@@ -16,18 +14,18 @@ export default function Forgot() {
 
   return (
     <>
-        {/* <div className="forgotContainer"> */}
-          <div className="titleBar">
-            <Navi destination="/Login" />
-            <div className="titleText2">Forgot Password</div>
-          </div>
-          <div className="loginFormContentForgot">
-            <div className="emailInput">
-              <InputField type="text" placeholder="Email" />
-            </div>
-            <SubmitButton text="Reset Password" />
-          </div>
-        {/* </div> */}
-      </>
+      {/* <div className="forgotContainer"> */}
+      <div className="titleBar">
+        <Navi destination="/Login" />
+        <div className="titleText2">Forgot Password</div>
+      </div>
+      <div className="loginFormContentForgot">
+        <div className="emailInput">
+          <InputField3 type="text" placeholder="Email" />
+        </div>
+        <SubmitButton text="Reset Password" />
+      </div>
+      {/* </div> */}
+    </>
   );
 }

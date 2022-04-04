@@ -23,20 +23,16 @@ export default function LoginPopup() {
     if (fadeIn == true) {
       cName = "loginFormContainerFirst";
       // alert("t,"+cName);
-    }
-    else {
+    } else {
       cName = "loginFormContainer";
       // alert("f,"+cName);
     }
     setFade(false);
   });
 
-
   return (
     <div className={fadeIn ? "loginFormContainerFirst" : "loginFormContainer"}>
-      <div
-        className={fadeIn ? "containerFirst" : "container"}
-      >
+      <div className="container">
         <LoginForm />
         {/* {pageContent} */}
       </div>

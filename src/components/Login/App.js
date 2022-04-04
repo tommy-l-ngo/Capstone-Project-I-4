@@ -1,12 +1,16 @@
 import "./Login.css";
 //import UserStore from "../../stores/UserStore";
 import React from "react";
-import { observer } from 'mobx-react';
+import { observer } from "mobx-react";
 import LoginPopup from "./LoginPopup";
 import SubmitButton from "./SubmitButton";
 import Forgot from "./Forgot";
 import Register from "./Register";
-import {Routes as Switch, Route, HashRouter as Router} from "react-router-dom";
+import {
+  Routes as Switch,
+  Route,
+  HashRouter as Router,
+} from "react-router-dom";
 import CreateProject from "../Create-project/CreateProject";
 import EditProject from "../Create-project/EditProject";
 import Home from "../Dashboard/pages/Home";
@@ -97,32 +101,26 @@ class App extends React.Component {
         );
       }
       */
-      return (
-        <main> 
+    return (
+      <main>
+        <div className="App">
+          <Router>
+            <Switch>
+              <Route path="/" element={<Home />} exact />
+              <Route path="/Forgot" element={<HomeForgotPopup />} />
+              <Route path="/Register" element={<HomeRegisterPopup />} />
+              <Route path="/RegisterAs" element={<HomeRegisterAsPopup />} />
 
-          <div className="App">
-            
-            <Router>
-              <Switch>
-              
-                <Route path="/" element={<Home/>} exact/>
-                <Route path="/Forgot" element={<HomeForgotPopup/>} />
-                <Route path="/Register" element={<HomeRegisterPopup/>} />
-                <Route path='/RegisterAs' element={<HomeRegisterAsPopup/>}/>
-                
-                <Route path="/Login" element={<HomeLoginPopup/>} exact />
-                <Route path="/Home" element={<Home/>} />
-                <Route path="/CreateProject" element={<CreateProject/>} />
-                <Route path="/EditProject" element={<EditProject/>} />
-              </Switch>
-            </Router>
-            </div>
-            
-          
-        </main>
-        
-      );
-    }
+              <Route path="/Login" element={<HomeLoginPopup />} exact />
+              <Route path="/Home" element={<Home />} />
+              <Route path="/CreateProject" element={<CreateProject />} />
+              <Route path="/EditProject" element={<EditProject />} />
+            </Switch>
+          </Router>
+        </div>
+      </main>
+    );
   }
+}
 
 export default observer(App);
