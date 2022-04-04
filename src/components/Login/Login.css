@@ -123,8 +123,8 @@ input[type="password"] {
 }
 
 html {
-  background-image: url("hip-square.png");
-  background-repeat: repeat;
+  /* background-image: url("hip-square.png"); */
+  /* background-repeat: repeat; */
 }
 
 body,
@@ -199,7 +199,7 @@ body {
 .loginForm1 {
       width: 100%;
   height: 100%;
-
+  
   white-space: nowrap;
 
   font-size: 28px;  
@@ -212,7 +212,39 @@ body {
   /* animation: fadeInContent 1s; */
   /* animation-delay: .5s; */
 }
+.loginForm1 a:hover {
+  /* font-size: 100px; */
+}
+.loginForm2 a {
+  /* color:black; */
+}
+.loginForm2 a:visited {
+  /* color:black; */
+}
+.loginForm2 a:hover {
+  /* font-size: 100px; */
+  /* color:black; */
+  /* transform: scale(1.3); */
+/* transform: scale(1.5); */
+}
 
+.xBtn {
+  text-align: center;
+  /* transition: text-shadow 100s; */
+  /* transition: text-shadow 0.02s; */
+   
+}
+.xBtn a:hover {
+  /* font-size: 100px; */
+  /* color: black; */
+  /* text-shadow: 0px 0px 2px darkgray; */
+  /* rgba(197, 110, 227, 0.5); */
+}
+
+.xBtn a:click {
+  text-shadow: 0px 0px 20px darkgray;
+
+}
 .loginForm2 {
   /* opacity: 0; */
         width: 100%;
@@ -232,7 +264,8 @@ body {
 }
 .container {
   white-space: nowrap;
-
+  width: 100%;
+  height: 100%;
   font-size: 28px;  
   color: slategray;
   display: flex;
@@ -244,14 +277,25 @@ body {
 
 .mainContent {
   cursor:default;
+  color: black;
 }
+
 a {
   text-decoration: none;
+}
+
+.loginFormContainerFirst a:visited {
+  /* color:black; */
+}
+.loginFormContainer a:visited {
+  /* color:black; */
 }
 .loginFormContainer {
   z-index: 1000;
   font-family: "Poppins", sans-serif;
   margin: 0;
+  transition: all 0.5s;
+
   position: fixed;
   top: 50%;
   left: 50%;
@@ -389,7 +433,62 @@ a {
   padding-bottom: 16px;
 }
 
+.xButton {
+  /* position: absolute; */
+  /* left: 10px; */
+  /* top: 10px; */
+  font-size: 32px;
+  transition: font-size .5s, text-shadow .25s;
+  text-align: center;
+}
+
+.xButton:hover {
+  /* font-size: 50px; */
+  /* padding:0px 100px 100px 100px; */
+
+}
+
+.xBtn {
+  position:absolute;
+  top: 10px;
+  left: 10px;
+  width:32px;
+  height:32px;
+  /* border-radius: 100px; */
+  /* background:red; */
+  transition: transform .25s;
+  /* background:red; */
+}
+.xButton {
+  /* border-radius: 100px; */
+}
+.xBtn:hover{
+  transform: scale(1.2);
+  /* box-shadow: 0px 0px, ; */
+  /* background:black; */
+  /* color:rgb(65, 65, 65); */
+  /* text-shadow: 0px 0px 100px rgba(0, 0, 0, 0.5); */
+}
+.xBtn:hover .xButton{
+  color:rgb(112, 112, 112);
+  
+  /* box-shadow: 0px 0px 0 px rgb(112, 112, 112); */
+
+}
+.xLink {
+  text-align: center;
+  color:grey;
+}
+
+.xLink a {
+  /* color: grey; */
+}
+.xLink a:hover {
+  /* transform: scale(1.5); */
+}
 .inputField2 {
+  /* background-color:red; */
+  width: 80%;
   color: #292929;
   padding-top: 16px;
   width: 90%;
@@ -519,29 +618,43 @@ h2 {
   cursor: pointer;
 }
 
-.loginFormContainer a {
+.forgotpass a {
   transition: text-shadow 0.5s ease;
   color: #4f89bb;
   text-decoration: none;
 }
-.loginFormContainer a:visited {
+.forgotpass a:visited {
   color: #4f89bb;
 
 }
-.loginFormContainer a:hover {
+.forgotpass a:hover {
+  text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+.registerLink a {
+  transition: text-shadow 0.5s ease;
+  color: #4f89bb;
+  text-decoration: none;
+}
+.registerLink a:visited {
+  color: #4f89bb;
+
+}
+.registerLink a:hover {
   text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 }
 .loginFormContainerFirst a {
-  transition: text-shadow 0.5s ease;
-  color: #4f89bb;
+  /* transition: text-shadow 0.5s ease; */
+  /* color: #4f89bb; */
   text-decoration: none;
 }
 .loginFormContainerFirst a:visited {
-  color: #4f89bb;
+  /* color: #4f89bb; */
 
 }
 .loginFormContainerFirst a:hover {
-  text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  /* font-size: 100px; */
+
+  /* text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); */
 }
 /*# sourceMappingURL=Login.css.map */
 

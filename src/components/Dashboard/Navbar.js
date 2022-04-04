@@ -42,7 +42,9 @@ function Navbar() {
             <div>
               <Link
                 to="/Login"
-                onClick={() => {fadeIn = true}}
+                onClick={() => {
+                  fadeIn = true;
+                }}
               >
                 <button className="navbar-login-box" onClick={handleClickLogin}>
                   Log in
@@ -50,8 +52,12 @@ function Navbar() {
               </Link>
               <Link
                 to="/RegisterAs"
-                onClick={() => {fadeIn = true}}
-              >              <button className="navbar-login-box2">Register</button></Link>
+                onClick={() => {
+                  fadeIn = true;
+                }}
+              >
+                <button className="navbar-login-box2">Register</button>
+              </Link>
             </div>
           </div>
 
@@ -85,7 +91,11 @@ function Navbar() {
                 Page 5
               </Link>
             </li>
-
+            <li className='nav-item'>
+                  <Link to='/Calendar' className='nav-links' onClick={closeMobileMenu}>
+                    Calendar
+                  </Link>
+                </li>
             <li className="nav-item">
               <Link
                 to="/logout"

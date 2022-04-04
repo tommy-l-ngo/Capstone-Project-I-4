@@ -20,7 +20,6 @@ export default function LoginPopup() {
     setFade(false);
   });
 
-
   return (
     <div className={fadeIn ? "loginFormContainerFirst" : "loginFormContainer"}>
         <LoginForm />

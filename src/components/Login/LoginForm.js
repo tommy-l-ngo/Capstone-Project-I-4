@@ -11,26 +11,22 @@ import { getDatabase, get, ref, child, set } from "firebase/database";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import RegisterAs from "./RegisterAs";
 import Register from "./Register";
-import {curPage, goToPage} from "./LoginPopup";
+import { curPage, goToPage } from "./LoginPopup";
 import back from "./back-button.png";
 import { Form, Button, Card, Container } from "react-bootstrap";
 import { fadeIn } from "../Dashboard/Navbar";
 
 export const LoginForm = (props) => {
+  const [, updateState] = React.useState();
+  const forceUpdate = React.useCallback(() => updateState({}), []);
 
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [buttonDisabled] = useState(false);
+  const navigate = useNavigate();
+  const [pageNum, setPageNum] = useState(props.pageNumber);
 
- const [, updateState] = React.useState();
- const forceUpdate = React.useCallback(() => updateState({}), []);
-
- const [username, setUsername] = useState("");
- const [password, setPassword] = useState("");
- const [buttonDisabled] = useState(false);
- const navigate = useNavigate();
- const [pageNum, setPageNum] = useState(props.pageNumber);
-
-var register;
-
-
+  var register;
 
   function clearErrorMessage() {
     var error = document.getElementById("errorMessage");
@@ -70,46 +66,17 @@ var register;
       });
   }
 
-
-
   useEffect(() => {
-      // alert(3);
+    // alert(3);
 
     // Update the document title using the browser API
     // if ()
     document.documentElement.style.setProperty("--loginFormHeight", "450px");
     document.documentElement.style.setProperty("--loginFormWidth", "350px");
-    // alert (pageNum);
-      if (pageNum == 0) {
-        // alert(0);
-        document.documentElement.style.setProperty(
-          "--loginFormHeight",
-          "450px"
-        );
-        document.documentElement.style.setProperty("--loginFormWidth", "350px");
-      } else if (pageNum == 1) {
-        document.documentElement.style.setProperty(
-          "--loginFormHeight",
-          "300px"
-        );
-      } else if (pageNum == 2) {
-        document.documentElement.style.setProperty(
-          "--loginFormHeight",
-          "450px"
-        );
-        document.documentElement.style.setProperty("--loginFormWidth", "350px");
-      } else if (pageNum == 3) {
-        document.documentElement.style.setProperty(
-          "--loginFormHeight",
-          "250px"
-        );
-        document.documentElement.style.setProperty("--loginFormWidth", "350px");
-      }
+
+
       document.body.style.overflowY = "hidden";
   });
-
-
-
 
   return (
     <>
