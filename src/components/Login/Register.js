@@ -206,7 +206,7 @@ export default function Register() {
                     id="departmentName"
                     name="departmentName"
                     placeholder={placeholder}
-                    onChange={(e) => setDepartment(e.target.value)}
+                    onChange={(e) => setDepartment(e)}
                   />
 
                   {/* </Form.Control> */}
