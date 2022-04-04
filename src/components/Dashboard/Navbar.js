@@ -91,7 +91,11 @@ function Navbar() {
                 Page 5
               </Link>
             </li>
-
+            <li className='nav-item'>
+                  <Link to='/Calendar' className='nav-links' onClick={closeMobileMenu}>
+                    Calendar
+                  </Link>
+                </li>
             <li className="nav-item">
               <Link
                 to="/logout"
