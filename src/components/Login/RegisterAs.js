@@ -22,6 +22,8 @@ function RegisterAs()
     // Update the document title using the browser API
     document.documentElement.style.setProperty("--loginFormHeight", "245px");
     document.documentElement.style.setProperty("--loginFormWidth", "350px");
+      document.body.style.overflowY = "hidden";
+
   });
 
 
