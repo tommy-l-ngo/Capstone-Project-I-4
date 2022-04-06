@@ -11,7 +11,13 @@ export default function Forgot() {
     eUID: "",
     email: "",
   };
-
+  // window.Email.send({
+  //   SecureToken: "a7c5f1f2-ca00-46d0-9d0e-b60a0946efc5",
+  //   To: "isaiahbugarin@gmail.com",
+  //   From: "isaiahbugarin@gmail.com",
+  //   Subject: "This is the subject",
+  //   Body: "And this is the body",
+  // }).then((message) => alert("mail has been sent sucessfully"));
   const [userEmail, setEmail] = useState("");
   const [error, setError] = useState(null);
 
@@ -22,6 +28,11 @@ export default function Forgot() {
   });
 
   //const db = require("firebase");
+
+
+
+
+
 
   function HandleResetPass() {
     const dbRef = ref(getDatabase());

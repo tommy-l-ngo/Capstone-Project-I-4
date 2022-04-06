@@ -1,8 +1,22 @@
 import React, { Component, useState, useEffect } from "react";
 import { Form, Button, Card, Container } from "react-bootstrap";
 import "../../firebase";
+
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  updateProfile,
+} from "firebase/auth";
+
 import { getDatabase, set, ref } from "firebase/database";
-import { BrowserRouter as Router, Switch, Link, useNavigate, useLocation } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Link,
+  useNavigate,
+  useLocation,
+} from "react-router-dom";
 import LoginPopup from "./LoginPopup";
 import SubmitButton from "./SubmitButton";
 import "./Login.css";
@@ -11,107 +25,92 @@ import "./RegisterAs";
 import InputField2 from "./InputField2";
 import InputField3 from "./InputField3";
 import InputField from "./InputField";
-//import {useLocation} from 'react-router-dom';
 
 export default function Register() {
-  // get role from previous page
+  // Firebase auth
+  const auth = getAuth();
   const location = useLocation();
   const data = location.state;
+  // get role from previous page
   console.log("role:", data.role);
   let placeholder = "";
-  let regDesign = ""
-  if (data.role == "student")
-  {
+  let regDesign = "";
+  if (data.role == "student") {
     placeholder = "Major";
     regDesign = "RegisterFormContainerStudent";
-  }
-  else
-  {
+  } else {
     placeholder = "Department Name";
     regDesign = "RegisterFormContainerStaff";
   }
 
-
-
   const [department, setDepartment] = useState("");
+
+  const [user, setUser] = useState("");
   const [userEUID, setUserEUID] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [userFirstName, setUserFirstName] = useState("");
   const [userLastName, setUserLastName] = useState("");
-  const [userPassowrd, setUserPassword] = useState("");
+  const [userPassword, setUserPassword] = useState("");
   const [userConfirmPassword, setUserConfirmPassword] = useState("");
   const [userRole, setUserRole] = useState(data.role);
   const navigate = useNavigate();
 
   const [error, setError] = useState(null);
 
-
-
   function newUser() {
     try {
       if (department.length == 0 && userRole !== "student") {
-
-        throw Error('Please enter a deperament of study');
-      }
-      else if (userEUID == "") {
-
-        throw Error('Please enter your euid');
-      }
-      else if (userEmail == 0) {
-
-        throw Error('Please enter a Email Address.');
-      }
-      else if (userEmail < 6) {
-
-        throw Error('Please enter a valid Email Address.');
-      }
-      else if (userFirstName == 0) {
-
-        throw Error('Please enter your first name.');
-      }
-      else if (userLastName == 0) {
-
-        throw Error('Please enter your last name.');
-      }
-      else if (userPassowrd.length == 0) {
-        throw Error('Please enter your Password ')
-      }
-      else if (userPassowrd.length < 8) {
-        throw Error('Password must be at least 8 character')
-      }
-      else if (userPassowrd.search (/[0-9]/) == -1 ) {
-        throw Error('Password must contain at least 1 number')
-      }
-      else if (userPassowrd.search (/[a-z]/) == -1 ) {
-        throw Error('Password must contain at least 1 lower case letter')
-      }
-      else if (userPassowrd.search (/[A-Z]/) == -1 ) {
-        throw Error('Password must contain at least 1 upper case letter')
-      }
-      
-      
-      else if (userPassowrd !== userConfirmPassword) {
-        throw Error('Password does not match');
-      }
-
-
-
-
-
-      else {
-
-
-
+        throw Error("Please enter a deperament of study");
+      } else if (userEUID == "") {
+        throw Error("Please enter your euid");
+      } else if (userEmail == 0) {
+        throw Error("Please enter a Email Address.");
+      } else if (userEmail < 6) {
+        throw Error("Please enter a valid Email Address.");
+      } else if (userFirstName == 0) {
+        throw Error("Please enter your first name.");
+      } else if (userLastName == 0) {
+        throw Error("Please enter your last name.");
+      } else if (userPassword.length == 0) {
+        throw Error("Please enter your Password ");
+      } else if (userPassword.length < 8) {
+        throw Error("Password must be at least 8 character");
+      } else if (userPassword.search(/[0-9]/) == -1) {
+        throw Error("Password must contain at least 1 number");
+      } else if (userPassword.search(/[a-z]/) == -1) {
+        throw Error("Password must contain at least 1 lower case letter");
+      } else if (userPassword.search(/[A-Z]/) == -1) {
+        throw Error("Password must contain at least 1 upper case letter");
+      } else if (userPassword !== userConfirmPassword) {
+        throw Error("Password does not match");
+      } else {
         const db = getDatabase();
 
+        // Create User via Firebase
+        createUserWithEmailAndPassword(auth, userEmail, userPassword)
+          .then((userCredential) => {
+            // Signed in
+            setUser(userCredential.user);
+
+            // alert("Created " + user);
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            alert(errorMessage);
+          });
+
+
+          // Add user to realtime database
         set(ref(db, "users/" + userEUID), {
+          uid: user.uid,
           department: department,
           eUID: userEUID,
           email: userEmail,
           firstName: userFirstName,
           lastName: userLastName,
-          password: userPassowrd,
-          role: userRole
+          password: userPassword,
+          role: userRole,
         });
 
         navigate("/");
@@ -119,13 +118,10 @@ export default function Register() {
         // .catch((error) => {
         //     console.log("Data failed: " + error);
         // });
-
       }
-    }
-    catch (err) {
+    } catch (err) {
       console.log(err.code);
       setError(err.message);
-
     }
 
     //let error = document.getElementById("errorMessage");
@@ -156,16 +152,13 @@ export default function Register() {
         }
         */
 
-
-
   useEffect(() => {
     // Update popup height
-    if (userRole == "student") 
+    if (userRole == "student")
       document.documentElement.style.setProperty("--loginFormHeight", "650px");
     else
       document.documentElement.style.setProperty("--loginFormHeight", "680px");
   });
-
 
   return (
     <div>
@@ -220,6 +213,7 @@ export default function Register() {
                     name="userEUID"
                     placeholder="eUID"
                     onChange={(e) => {
+                      // alert(e);
                       setUserEUID(e);
                     }}
                   />
@@ -311,5 +305,4 @@ export default function Register() {
       {/* </div> */}
     </div>
   );
-
 }

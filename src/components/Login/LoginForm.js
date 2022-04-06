@@ -6,6 +6,7 @@ import InputField2 from "./InputField2";
 import InputField3 from "./InputField3";
 import SubmitButton from "./SubmitButton";
 import Forgot from "./Forgot";
+import { getAuth, signInWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
 
 import { getDatabase, get, ref, child, set } from "firebase/database";
 import { Link, useNavigate, useLocation } from "react-router-dom";
@@ -16,16 +17,23 @@ import back from "./back-button.png";
 import { Form, Button, Card, Container } from "react-bootstrap";
 import { fadeIn } from "../Dashboard/Navbar";
 
+export var userGlobal;
+
+export function getUserGlobal() {
+  return userGlobal;
+}
+export function setUserGlobal(e) {
+  userGlobal = e;
+}
 export const LoginForm = (props) => {
-  const [, updateState] = React.useState();
-  const forceUpdate = React.useCallback(() => updateState({}), []);
+  const auth = getAuth(); // Firebase auth
 
   const [username, setUsername] = useState("");
+  const [user, setUser] = useState(""); // Firebase user auth
   const [password, setPassword] = useState("");
   const [buttonDisabled] = useState(false);
   const navigate = useNavigate();
   const [pageNum, setPageNum] = useState(props.pageNumber);
-
   var register;
 
   function clearErrorMessage() {
@@ -45,25 +53,43 @@ export const LoginForm = (props) => {
   }
 
   function handleLoginUser() {
-    const dbRef = ref(getDatabase());
-
-    get(child(dbRef, "users/" + username))
-      .then((snapshot) => {
-        if (snapshot.exists()) {
-          //check password
-          if (snapshot.child("password").val() === password) {
-            console.log("Password Match");
-            navigate("/Home");
-          } else {
-            invalidLoginMessageEmpty();
-          }
-        } else {
-          invalidLoginMessage();
-        }
+    // alert("hi");
+    // alert(username +', ' + password);
+    signInWithEmailAndPassword(auth, username, password)
+      .then((userCredential) => {
+        // Signed in
+        setUser(userCredential.user);
+        userGlobal = user;
+        sendEmailVerification(userCredential.user);
+        navigate("/");
+        // alert("Logged in " + userCredential.user.email);
+        // ...
       })
       .catch((error) => {
-        console.error(error);
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        alert("Error: " + errorMessage);
       });
+
+    // const dbRef = ref(getDatabase());
+
+    // get(child(dbRef, "users/" + username))
+    //   .then((snapshot) => {
+    //     if (snapshot.exists()) {
+    //       //check password
+    //       if (snapshot.child("password").val() === password) {
+    //         console.log("Password Match");
+    //         navigate("/Home");
+    //       } else {
+    //         invalidLoginMessageEmpty();
+    //       }
+    //     } else {
+    //       invalidLoginMessage();
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     console.error(error);
+    //   });
   }
 
   useEffect(() => {
@@ -74,8 +100,7 @@ export const LoginForm = (props) => {
     document.documentElement.style.setProperty("--loginFormHeight", "450px");
     document.documentElement.style.setProperty("--loginFormWidth", "350px");
 
-
-      document.body.style.overflowY = "hidden";
+    document.body.style.overflowY = "hidden";
   });
 
   return (
@@ -92,7 +117,7 @@ export const LoginForm = (props) => {
               type="text"
               placeholder="Username"
               onChange={(e) => {
-                setUsername(e);
+                setUsername(e.target.value);
                 clearErrorMessage();
               }}
             />
@@ -111,7 +136,7 @@ export const LoginForm = (props) => {
               type="password"
               placeholder="Password"
               onChange={(e) => {
-                setUsername(e);
+                setPassword(e.target.value);
                 clearErrorMessage();
               }}
             />

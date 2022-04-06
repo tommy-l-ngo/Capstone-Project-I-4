@@ -312,9 +312,9 @@ a {
   /* background-color: #f3e9dd; */
   background-color: rgb(245, 245, 245);
   /* background-color: #2baed642; */
-  border: 15px solid rgba(0, 0, 0, 0.15);
+  border: 10px solid rgba(0, 0, 0, 0.15);
   /* border: 15px solid #DAB88B; */
-  border-radius: 50px;
+  border-radius: 25px;
   box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.3);
   opacity: 1;
   overflow: hidden;
@@ -345,9 +345,9 @@ a {
   /* background-color: #f3e9dd; */
   background-color: rgb(245, 245, 245);
   /* background-color: #2baed642; */
-  border: 15px solid rgba(0, 0, 0, 0.15);
+  border: 10px solid rgba(0, 0, 0, 0.15);
   /* border: 15px solid #DAB88B; */
-  border-radius: 50px;
+  border-radius: 25px;
   box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.3);
   animation: fadein .5s;
   /* transition: font-size .25s; */
