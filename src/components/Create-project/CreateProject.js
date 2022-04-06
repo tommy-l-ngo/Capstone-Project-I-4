@@ -3,18 +3,12 @@ import { Form, Button, Card, Container, InputGroup, FormControl } from "react-bo
 import firebase from "firebase/compat/app"
 import {getDatabase, ref, set} from "firebase/database"
 import { initializeApp } from "firebase/app";
+import MultiSelect from "./MultiSelect";
 
 
       
       
   
-    
-    
-    
-      
-  
-    
-    
 
  const firebaseConfig = {
     apiKey: "AIzaSyAu1kdEKPqTfL1XIjDF2l8rfG53FcdtVSM",
@@ -32,20 +26,10 @@ export default class CreateProject extends Component {
 
     constructor(props) {
         super(props)
-        this.state = { projectName: '',description: '', task: '', date: '' , formValues: [{ tasks: ""}]}
+        this.state = { projectName: '', description: '', /*task: '',*/ date: '', formValues: [{ tasks: "" }], students: null }
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
         this.add_project = this.add_project.bind(this); 
-        
-        
-        
-    
-        
-       
-        
-        
-        
-        
     }
     
     add_project(project_name,project_description,project_tasks,project_date) 
@@ -66,7 +50,7 @@ export default class CreateProject extends Component {
 
     handleSubmit(event) {
         
-        const {projectName, description, task, date } = this.state
+        const {projectName, description, task, date, students } = this.state
         event.preventDefault()
         alert(JSON.stringify(this.state.formValues));
         alert(`
@@ -75,6 +59,7 @@ export default class CreateProject extends Component {
             Description : ${description}
             Task : ${task}
             Date : ${date}
+            Student : ${students}
         `)
         
         this.add_project(this.state.projectName,this.state.description,this.state.task,this.state.date);
@@ -83,13 +68,20 @@ export default class CreateProject extends Component {
     }
 
     handleChange(event){
-        this.setState({
-          // Computed property names
-          // keys of the objects are computed dynamically
-          [event.target.name] : event.target.value
-          
-        })
+             this.setState({
+                [event.target.name] : event.target.value
         
+         }
+        
+       )
+        
+    }
+    
+    handleStudentsChange(listOfStudents){
+        this.setState({
+          students : listOfStudents
+        }
+       )
     }
     handleChanges(i, e) {
         let formValues = this.state.formValues;
@@ -123,11 +115,7 @@ export default class CreateProject extends Component {
                                 <div className="w-100 text-center mt-2 text-danger" id="errorMessage"></div>
                                 <h3 style={{ lineHeight: '0px' }}></h3>
 
-                                <Form onSubmit={this.handleSubmit}>
-                                {/*<InputGroup size="sm" className="mb-3">
-    <InputGroup.Text id="inputGroup-sizing-sm">Small</InputGroup.Text>
-    <FormControl aria-label="Small" aria-describedby="inputGroup-sizing-sm" />
-        </InputGroup>*/}            
+                                <Form onSubmit={this.handleSubmit}>  
                                     <Form.Group id="projectName">
                                         <Form.Label htmlFor="projectName" ></Form.Label>
                                         <Form.Control 
@@ -153,20 +141,7 @@ export default class CreateProject extends Component {
                                             required>
                                         </Form.Control>
                                     </Form.Group>
-
-                                    <Form.Group id="task">
-                                        <Form.Label htmlFor="task" ></Form.Label>
-                                        <Form.Control 
-                                            type="text" 
-                                            id="task" 
-                                            name="task" 
-                                            placeholder="Tasks" 
-                                            value = {this.state.task}
-                                            onChange={this.handleChange}
-                                            required>
-                                        </Form.Control>
-                                    </Form.Group>
-                                    {/*this task field may change based on our scope later*/}
+                                    
                                     
                                     {this.state.formValues.map((element, index) => (
                                         <div className="form-inline" key={index}>
@@ -195,6 +170,9 @@ export default class CreateProject extends Component {
                                             required>
                                         </Form.Control>
                                     </Form.Group>
+
+                                    <MultiSelect onChange={this.handleStudentsChange.bind(this)}/>
+
                                     <Button type="submit">Submit</Button>
                                 </Form>
                             </Card.Body>

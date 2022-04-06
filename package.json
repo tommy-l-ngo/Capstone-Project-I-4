@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "-": "^0.0.1",
     "@fullcalendar/daygrid": "^5.10.1",
     "@fullcalendar/interaction": "^5.10.1",
     "@fullcalendar/react": "^5.10.1",
@@ -26,6 +27,7 @@
     "react-router-dom": "^6.2.2",
     "react-scripts": "5.0.0",
     "stream": "0.0.2",
+    "react-select": "^5.2.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
