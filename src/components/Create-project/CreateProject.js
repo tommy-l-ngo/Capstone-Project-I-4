@@ -9,13 +9,6 @@ import MultiSelect from "./MultiSelect";
       
       
   
-    
-    
-    
-      
-  
-    
-    
 
  const firebaseConfig = {
     apiKey: "AIzaSyAu1kdEKPqTfL1XIjDF2l8rfG53FcdtVSM",
@@ -33,7 +26,7 @@ export default class CreateProject extends Component {
 
     constructor(props) {
         super(props)
-        this.state = { projectName: '',description: '', /*task: '',*/ date: '' , formValues: [{ tasks: ""}], students: null}
+        this.state = { projectName: '', description: '', /*task: '',*/ date: '', formValues: [{ tasks: "" }], students: null }
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
         this.add_project = this.add_project.bind(this); 
@@ -83,14 +76,12 @@ export default class CreateProject extends Component {
        )
         
     }
+    
     handleStudentsChange(listOfStudents){
         this.setState({
           students : listOfStudents
-        
         }
-        
        )
-        console.log(listOfStudents)
     }
     handleChanges(i, e) {
         let formValues = this.state.formValues;
@@ -150,19 +141,6 @@ export default class CreateProject extends Component {
                                             required>
                                         </Form.Control>
                                     </Form.Group>
-
-                                    {/*<Form.Group id="task">
-                                        <Form.Label htmlFor="task" ></Form.Label>
-                                        <Form.Control 
-                                            type="text" 
-                                            id="task" 
-                                            name="task" 
-                                            placeholder="Tasks" 
-                                            value = {this.state.task}
-                                            onChange={this.handleChange}
-                                            required>
-                                        </Form.Control>
-                                     </Form.Group>*/}
                                     
                                     
                                     {this.state.formValues.map((element, index) => (
@@ -193,7 +171,7 @@ export default class CreateProject extends Component {
                                         </Form.Control>
                                     </Form.Group>
 
-                                    <MultiSelect handleOnChange={this.handleStudentsChange}/>
+                                    <MultiSelect onChange={this.handleStudentsChange.bind(this)}/>
 
                                     <Button type="submit">Submit</Button>
                                 </Form>

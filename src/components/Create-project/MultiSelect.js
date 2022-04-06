@@ -8,12 +8,13 @@ const options=[
 ]
 // put student names from database here ^
 
-function MultiSelect(handleOnChange){
+function MultiSelect(props){
+ //console.log("this is handle props", handleOnChange)
     return <div>
         <Select
         isMulti 
         options={options}
-        onChange={handleOnChange}
+        onChange={props.onChange}
         />
     </div>
 }
