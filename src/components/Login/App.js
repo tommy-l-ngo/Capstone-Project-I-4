@@ -20,6 +20,8 @@ import { HomeForgotPopup } from "../Dashboard/pages/HomeForgotPopup";
 import { HomeRegisterAsPopup } from "../Dashboard/pages/HomeRegisterAsPopup";
 import { HomeRegisterPopup } from "../Dashboard/pages/HomeRegisterPopup";
 import { Calendar } from "../Calendar/Calendar";
+import { AuthProvider } from "./AuthContext";
+import { ProtectedRoute } from "./ProtectedRoute";
 class App extends React.Component {
   /*
   App2() {
@@ -102,23 +104,27 @@ class App extends React.Component {
         );
       }
       */
+
+      
     return (
       <main>
         <div className="App">
+          <AuthProvider>
           <Router>
             <Switch>
-              <Route path="/" element={<Home />} exact />
+            <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} exact />
               <Route path="/Forgot" element={<HomeForgotPopup />} />
               <Route path="/Register" element={<HomeRegisterPopup />} />
               <Route path="/RegisterAs" element={<HomeRegisterAsPopup />} />
 
               <Route path="/Login" element={<HomeLoginPopup />} exact />
-              <Route path="/Home" element={<Home />} />
-              <Route path="/CreateProject" element={<CreateProject />} />
-              <Route path="/EditProject" element={<EditProject />} />
-              <Route path="/Calendar" element={<Calendar />} />
+              <Route path="/Home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+              <Route path="/CreateProject" element={<ProtectedRoute><CreateProject /></ProtectedRoute>} />
+              <Route path="/EditProject" element={<ProtectedRoute><EditProject /></ProtectedRoute>} />
+              <Route path="/Calendar" element={<ProtectedRoute><Calendar /></ProtectedRoute>} />
             </Switch>
           </Router>
+          </AuthProvider>
         </div>
       </main>
     );
