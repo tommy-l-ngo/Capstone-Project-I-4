@@ -92,13 +92,16 @@ export default function Forgot() {
   }
 
   return (
-    <>
-      {/* <div className="forgotContainer"> */}
+
+  
+    <div className="loginFormContentForgot">
+      
       <div className="titleBar">
         <Navi destination="/Login" />
         <div className="titleText2">Forgot Password</div>
       </div>
-      <div className="loginFormContentForgot">
+
+      
         {error && (
           <p
             style={{
@@ -136,8 +139,9 @@ export default function Forgot() {
           />
         </div>
         <SubmitButton text="Reset Password" onClick={HandleResetPass} />
-      </div>
-      {/* </div> */}
-    </>
+      
+     </div> 
+   
+    
   );
 }

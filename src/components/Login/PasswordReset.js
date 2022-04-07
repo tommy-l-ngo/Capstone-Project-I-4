@@ -6,7 +6,7 @@ import InputField2 from "./InputField2";
 import InputField3 from "./InputField3";
 import SubmitButton from "./SubmitButton";
 import Forgot from "./Forgot";
-import { getAuth, signInWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, sendEmailVerification, confirmPasswordReset, verifyPasswordResetCode } from "firebase/auth";
 
 import { getDatabase, get, ref, child, set } from "firebase/database";
 import { Link, useNavigate, useLocation } from "react-router-dom";
@@ -24,28 +24,50 @@ export function PasswordReset(props){
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
+  const [processing, setProcessing] = useState(false);
+  const [validUrl, setValidUrl] = useState(false);
   const [buttonDisabled] = useState(false);
-  const navigate = useNavigate();
   const [pageNum, setPageNum] = useState(props.pageNumber);
   var register;
+  let navigate = useNavigate();
 
-  
+useEffect( () => {
+    if(success || processing)
+    {
+      return;
+    }
+    console.log("props.url = " + props.url);
+    const url = props.url;
+    const reg = /Code=(.+)&api/;
+    try{
+        const m = url.match(reg);
+        if(m == null){
+            throw Error();
+        }
+        const code = m[1];
+        console.log(code);
+        const auth = getAuth();
 
-  function clearErrorMessage() {
-    var error = document.getElementById("errorMessage");
-    error.textContent = "";
-  }
-
-  function invalidLoginMessage() {
-    var error = document.getElementById("errorMessage");
-    error.textContent = "Invalid Login";
-    console.log("Invalid Login");
-  }
-  function invalidLoginMessageEmpty() {
-    var error = document.getElementById("errorMessage");
-    error.textContent = "Username and Password are required";
-    console.log("Username and Password are required");
-  }
+        verifyPasswordResetCode(auth, code).then( () => {
+          console.log("valid reset code");
+          setValidUrl(true);
+          setError("");
+        }).catch( (err) => {
+          console.log(err.message);
+          setValidUrl(false);
+          setError(err.message);
+        })
+    }
+    catch(err)
+    {
+        err.message = "Invalid url link. Nice try.";
+        console.log(err.message);
+        setValidUrl(false);
+        setError(err.message);
+    }
+})
+    
 
   
 
@@ -71,21 +93,30 @@ export function PasswordReset(props){
         throw Error("Password does not match");
       } 
       else {
-        const url = window.location.href;
-        const reg = /Code=(.+)/;
-        try{
+            const url = props.url;
+            const reg = /Code=(.+)&api/;
             const m = url.match(reg);
             if(m == null){
-                throw Error("regex match failed");
+                throw Error("Regex match failed.");
             }
-            
             const code = m[1];
+            //console.log(code);
+            const auth = getAuth();
+            confirmPasswordReset(auth, code, password).then(() => {
+              console.log("password reset was successful");
+              setSuccess(true);
+              setError("");
+              setTimeout(() => {navigate("/Home");}, 3000);
+              
+            }).catch(() => {
+              console.log("password reset unsuccessful");
+              setSuccess(false);
+              setError("Reset was unsucessful")
+            })
+
         }
-        catch(err)
-        {
-            console.log(err.message);
-        }
-      }
+        
+      
     } catch (err) {
       console.log(err.code);
       setError(err.message);
@@ -114,70 +145,102 @@ export function PasswordReset(props){
 
   return (
     <>
-      <div className="passResetFormContainer">
-        <h2 style={{ lineHeight: "40px", fontSize:"36px" }}>Password Reset</h2>
+      {(validUrl) ? 
+      (
+        <>
+          <div className="passResetFormContainer">
+            <h2 style={{ lineHeight: "40px", fontSize:"36px" }}>Password Reset</h2>
 
-        {error && (
-          <p
-            style={{
-              marginTop: "10px",
-              fontSize: "20px",
-              color: "red",
-            }}
-          >
-            {error}
-          </p>
-        )}
+            {error && (
+              <p
+                style={{
+                  marginTop: "10px",
+                  fontSize: "20px",
+                  color: "red",
+                }}
+              >
+                {error}
+              </p>
+            )}
 
-        <div className="inputField2">
-          <div className="form__group field">
-            <input
-              name="user"
-              id="user"
-              className="form__field"
-              type="text"
-              placeholder="New Password"
-              onChange={(e) => {
-                setPassword(e.target.value);
-                clearErrorMessage();
-              }}
+            {success && (
+              <p
+                style={{
+                  marginTop: "10px",
+                  fontSize: "20px",
+                  color: "Green",
+                }}
+              >
+                Reset was Successful! Redirecting...
+              </p>
+            )}
+
+            <div className="inputField2">
+              <div className="form__group field">
+                <input
+                  name="user"
+                  id="user"
+                  className="form__field"
+                  type="password"
+                  placeholder="New Password"
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    setProcessing(true);
+                  }}
+                />
+                <label for="user" class="form__label">
+                  New Password
+                </label>
+              </div>
+            </div>
+
+            <div className="inputField">
+              <div className="form__group field">
+                <input
+                  name="pass"
+                  id="pass"
+                  className="form__field"
+                  type="password"
+                  placeholder="Confirm Password"
+                  onChange={(e) => {
+                    setConfirmPassword(e.target.value);
+                    setProcessing(true);
+                  }}
+                />
+                <label for="pass" class="form__label">
+                  Confirm Password
+                </label>
+              </div>
+            </div>
+            
+            <p
+              id="errorMessage"
+              style={{ marginTop: "10px", fontSize: "20px", color: "red" }}
+            ></p>
+            <SubmitButton
+              text="Reset Passowrd"
+              disabled={buttonDisabled}
+              onClick={HandleResetPass}
+              style={{ fontSize: "20px" }}
             />
-            <label for="user" class="form__label">
-              New Password
-            </label>
           </div>
-        </div>
-
-        <div className="inputField">
-          <div className="form__group field">
-            <input
-              name="pass"
-              id="pass"
-              className="form__field"
-              type="password"
-              placeholder="Confirm Password"
-              onChange={(e) => {
-                setConfirmPassword(e.target.value);
-                clearErrorMessage();
+        </>)
+          :
+          (
+            <div className="passwordResetFormContainer">
+            {error && (
+            <p
+              style={{
+                marginTop: "10px",
+                fontSize: "20px",
+                color: "red",
               }}
-            />
-            <label for="pass" class="form__label">
-              Confirm Password
-            </label>
+            >
+              {error}
+            </p>)}
           </div>
-        </div>
-        
-        <p
-          id="errorMessage"
-          style={{ marginTop: "10px", fontSize: "20px", color: "red" }}
-        ></p>
-        <SubmitButton
-          text="Reset Passowrd"
-          disabled={buttonDisabled}
-          onClick={HandleResetPass}
-          style={{ fontSize: "20px" }}
-        />
-      </div>
+          )}
     </>
+    
   );
 };

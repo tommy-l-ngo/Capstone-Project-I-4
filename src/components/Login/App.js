@@ -23,6 +23,7 @@ import { Calendar } from "../Calendar/Calendar";
 import { AuthProvider } from "./AuthContext";
 import { ProtectedRoute } from "./ProtectedRoute";
 import { PasswordReset } from "./PasswordReset";
+import { PageRedirect } from "./PageRedirect";
 class App extends React.Component {
   /*
   App2() {
@@ -118,6 +119,7 @@ class App extends React.Component {
               <Route path="/Register" element={<HomeRegisterPopup />} />
               <Route path="/RegisterAs" element={<HomeRegisterAsPopup />} />
               <Route path="/PasswordReset" element={<PasswordReset />} />
+              <Route path="/PageRedirect" element={<PageRedirect />} />
 
               <Route path="/Login" element={<HomeLoginPopup />} exact />
               <Route path="/Home" element={<ProtectedRoute><Home /></ProtectedRoute>} />

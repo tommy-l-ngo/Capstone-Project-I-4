@@ -67,7 +67,7 @@ export const LoginForm = (props) => {
         //console.log("user = " + user);
         //console.log("userGlobal = " + userGlobal);
 
-        sendEmailVerification(userCredential.user);
+        //sendEmailVerification(userCredential.user);
         navigate("/");
         // alert("Logged in " + userCredential.user.email);
         // ...

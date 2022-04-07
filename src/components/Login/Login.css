@@ -158,9 +158,36 @@ html,
   /* background-color: green; */
 }
 .loginFormContentForgot {
-  /* padding: 20px; */
-    position: relative;
-  top: -10px;
+  z-index: 1000;
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  transition: all 0.5s;
+
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  box-sizing: border-box;
+  width: 100%;
+  max-width: var(--loginFormWidth);
+  height: auto;
+  padding-left: 20px;
+  padding-right: 20px;
+  /* padding-bottom: 20px; */
+  padding-top: 10px;
+  /* background-color: #f3e9dd; */
+  background-color: rgb(245, 245, 245);
+  /* background-color: #2baed642; */
+  border: 10px solid rgba(0, 0, 0, 0.15);
+  /* border: 15px solid #DAB88B; */
+  border-radius: 25px;
+  box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.3);
+  opacity: 1;
+  overflow: hidden;
+  /* animation: fadein .5s; */
+  /* transition: font-size .25s; */
+  /* transition: min-height .5s; */
 }
 
 body {
