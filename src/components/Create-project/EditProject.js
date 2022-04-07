@@ -4,6 +4,7 @@ import { Form, Button, Card, Container, InputGroup, FormControl } from "react-bo
 import firebase from "firebase/compat/app"
 import { ref, set} from "firebase/database"
 import { initializeApp } from "firebase/app";
+import MultiSelect from "./MultiSelect";
 
 
 const firebaseConfig = {
@@ -21,7 +22,7 @@ export default class EditProject extends Component {
 
     constructor(props) {
         super(props)
-        this.state = { projectName: '', description: '', task: '', date: '', formValues: [{ tasks: ""}]}
+        this.state = { projectName: '', description: '', task: '', date: '', formValues: [{ tasks: ""}], students: null}
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
         this.edit_project = this.edit_project.bind(this); 
@@ -38,7 +39,7 @@ export default class EditProject extends Component {
         }); 
     }
     handleSubmit(event) {
-        const { projectName, description, task, date } = this.state
+        const { projectName, description, task, date, students } = this.state
         event.preventDefault()
         alert(JSON.stringify(this.state.formValues));
         alert(`
@@ -47,18 +48,23 @@ export default class EditProject extends Component {
             Description : ${description}
             Task : ${task}
             Date : ${date}
+            Student : ${students}
         `)
         this.edit_project(this.state.projectName,this.state.description,this.state.task,this.state.date);
     }
 
     handleChange(event){
         this.setState({
-          // Computed property names
-          // keys of the objects are computed dynamically
           [event.target.name] : event.target.value
         })
     }
     
+    handleStudentsChange(listOfStudents){
+        this.setState({
+          students : listOfStudents
+        }
+       )
+    }    
     handleChanges(i, e) {
         let formValues = this.state.formValues;
         formValues[i][e.target.name] = e.target.value;
@@ -90,11 +96,6 @@ export default class EditProject extends Component {
                                 <h3 style={{ lineHeight: '0px' }}></h3>
 
                                 <Form onSubmit={this.handleSubmit}>
-                                {/*<InputGroup size="sm" className="mb-3">
-    <InputGroup.Text id="inputGroup-sizing-sm">Small</InputGroup.Text>
-    <FormControl aria-label="Small" aria-describedby="inputGroup-sizing-sm" />
-        </InputGroup>*/}
-        
                                     <Form.Group id="projectName">
                                         <Form.Label htmlFor="projectName" ></Form.Label>
                                         <Form.Control 
@@ -161,6 +162,9 @@ export default class EditProject extends Component {
                                             required>
                                         </Form.Control>
                                     </Form.Group>
+
+                                    <MultiSelect onChange={this.handleStudentsChange.bind(this)}/>
+                                    
                                     <Button type="submit">Submit</Button>
                                 </Form>
                             </Card.Body>
