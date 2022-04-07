@@ -331,7 +331,7 @@ a {
   box-sizing: border-box;
   width: 100%;
   max-width: var(--loginFormWidth);
-  height: var(--loginFormHeight);
+  height: auto;
   padding-left: 20px;
   padding-right: 20px;
   /* padding-bottom: 20px; */
@@ -364,7 +364,7 @@ a {
   box-sizing: border-box;
   width: 100%;
   max-width: var(--loginFormWidth);
-  height: var(--loginFormHeight);
+  height: auto;
   padding-left: 20px;
   padding-right: 20px;
   /* padding-bottom: 20px; */
@@ -426,7 +426,7 @@ a {
     100%  { opacity: 1; }
 }
 
-.RegisterFormContainerStudent {
+.RegisterFormContainer {
   font-family: "Poppins", sans-serif;
   margin: 0;
   transition: all 0.5s;
@@ -438,11 +438,10 @@ a {
   box-sizing: border-box;
   width: 100%;
   max-width: var(--loginFormWidth);
-  height: 750px;
+  height: auto;
   padding-left: 20px;
   padding-right: 20px;
-  padding-bottom: 100px;
-  padding-top: 10px;
+  
   background-color: #f3e9dd;
   /* background-color: #2baed642; */
   border: 15px solid rgba(0, 0, 0, 0.05);

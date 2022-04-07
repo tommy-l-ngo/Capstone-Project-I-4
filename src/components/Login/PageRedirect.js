@@ -1,5 +1,6 @@
 import React from 'react';
 import { useEffect, useState } from "react";
+import { EmailVerified } from './EmailVerified';
 import { PasswordReset } from "./PasswordReset";
 
 
@@ -9,13 +10,14 @@ import { PasswordReset } from "./PasswordReset";
 export function PageRedirect()
 {
     const [redirectToResetPassPage, setRedirectToResetPassPage] = useState(false);
+    const [redirectToEmailVerified, setRedirectToEmailVerified] = useState(false);
     
-    console.log("PageRedirect");
+    //console.log("PageRedirect");
 
     useEffect(() => {
         const url = window.location.href;
         const reg = /mode=(.+)&oob/;
-        console.log("url = " + url);
+        //console.log("url = " + url);
         try{
             const m = url.match(reg);
             if(m == null){
@@ -26,7 +28,11 @@ export function PageRedirect()
             if(mode == "resetPassword")
             {
                 setRedirectToResetPassPage(true);
-                console.log("resetPassword");
+                //console.log("resetPassword");
+            }
+            else if(mode == "verifyEmail")
+            {
+                setRedirectToEmailVerified(true);
             }
         }
         catch(err)
@@ -41,6 +47,9 @@ export function PageRedirect()
         <>
             {redirectToResetPassPage && 
                 <PasswordReset url={window.location.href}/>
+            }
+            {redirectToEmailVerified && 
+                <EmailVerified url={window.location.href}/>
             }
         </>
     )

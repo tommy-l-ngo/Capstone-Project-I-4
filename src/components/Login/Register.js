@@ -7,6 +7,7 @@ import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   updateProfile,
+  sendEmailVerification
 } from "firebase/auth";
 
 import { getDatabase, set, ref } from "firebase/database";
@@ -26,7 +27,7 @@ import InputField2 from "./InputField2";
 import InputField3 from "./InputField3";
 import InputField from "./InputField";
 
-export default function Register() {
+export default function Register(props) {
   // Firebase auth
   const auth = getAuth();
   const location = useLocation();
@@ -43,6 +44,8 @@ export default function Register() {
     regDesign = "RegisterFormContainerStaff";
   }
 
+  const [success, setSuccess] = useState(false);
+
   const [department, setDepartment] = useState("");
 
   const [user, setUser] = useState("");
@@ -56,6 +59,7 @@ export default function Register() {
   const navigate = useNavigate();
 
   const [error, setError] = useState(null);
+  const [emailSent, setEmailSent] = useState(false);
 
   function newUser() {
     try {
@@ -91,6 +95,27 @@ export default function Register() {
           .then((userCredential) => {
             // Signed in
             setUser(userCredential.user);
+            sendEmailVerification(userCredential.user).then( () => {
+              console.log("Verification Email Sent");
+              setError("");
+              setSuccess(true);
+
+            }
+            ).catch((err) => {
+              console.log(err.message);
+              setError(err.message);
+            })
+
+            set(ref(db, "users/" + userEUID), {
+              uid: user.uid,
+              department: department,
+              eUID: userEUID,
+              email: userEmail,
+              firstName: userFirstName,
+              lastName: userLastName,
+              password: userPassword,
+              role: userRole,
+            });
 
             // alert("Created " + user);
           })
@@ -102,18 +127,9 @@ export default function Register() {
 
 
           // Add user to realtime database
-        set(ref(db, "users/" + userEUID), {
-          uid: user.uid,
-          department: department,
-          eUID: userEUID,
-          email: userEmail,
-          firstName: userFirstName,
-          lastName: userLastName,
-          password: userPassword,
-          role: userRole,
-        });
+        
 
-        navigate("/");
+        //navigate("/");
 
         // .catch((error) => {
         //     console.log("Data failed: " + error);
@@ -162,147 +178,162 @@ export default function Register() {
 
   return (
     <div>
-      {/* <div className={regDesign}> */}
-      <div className="titleBar">
-        <Navi destination="/Login" />
-        <div className="titleText">Registration</div>
-      </div>
-      <Container className="d-flex align-item-center justify-content-center">
-        <div
-          className="w-100"
-          // style={{ maxWidth: "400px" }}
-        >
-          <Card className="register">
-            <Card.Body style={{ width: "100%" }}>
-              {error && (
-                <p
-                  style={{
-                    marginTop: "10px",
-                    fontSize: "20px",
-                    color: "red",
-                  }}
-                >
-                  {error}
-                </p>
-              )}
-
-              <div
-                className="w-100 text-center mt-2 text-danger"
-                id="errorMessage"
-              ></div>
-
-              <Form>
-                <Form.Group id="department">
-                  <Form.Label htmlFor="departmentName"></Form.Label>
-                  <InputField3
-                    // type="text"
-                    id="departmentName"
-                    name="departmentName"
-                    placeholder={placeholder}
-                    onChange={(e) => setDepartment(e)}
-                  />
-
-                  {/* </Form.Control> */}
-                </Form.Group>
-
-                <Form.Group id="eUID">
-                  <Form.Label htmlFor="userEUID"></Form.Label>
-                  <InputField3
-                    type="text"
-                    id="userEUID"
-                    name="userEUID"
-                    placeholder="eUID"
-                    onChange={(e) => {
-                      // alert(e);
-                      setUserEUID(e);
-                    }}
-                  />
-                </Form.Group>
-
-                <Form.Group id="email">
-                  <Form.Label htmlFor="userEmail"></Form.Label>
-                  <InputField3
-                    type="text"
-                    id="userEmail"
-                    name="userEmail"
-                    placeholder="Email"
-                    required
-                    onChange={(e) => setUserEmail(e)}
-                  />
-                </Form.Group>
-
-                <Form.Group id="firstName">
-                  <Form.Label htmlFor="userFirstName"></Form.Label>
-                  <InputField3
-                    type="text"
-                    id="userFirstlName"
-                    name="userFirstName"
-                    placeholder="First Name"
-                    required
-                    onChange={(e) => setUserFirstName(e)}
-                  />
-                </Form.Group>
-
-                <Form.Group id="lastName">
-                  <Form.Label htmlFor="userLastName"></Form.Label>
-                  <InputField3
-                    type="text"
-                    id="userLastlName"
-                    name="userLastName"
-                    placeholder="Last Name"
-                    required
-                    onChange={(e) => setUserLastName(e)}
-                  />
-                </Form.Group>
-
-                <Form.Group id="password">
-                  <Form.Label htmlFor="userPassowrd"></Form.Label>
-                  <InputField3
-                    type="password"
-                    id="userPassword"
-                    name="userPassowrd"
-                    placeholder="Password"
-                    required
-                    onChange={(e) => setUserPassword(e)}
-                  />
-                </Form.Group>
-
-                <Form.Group id="confirmPassword">
-                  <Form.Label htmlFor="userConfirmPassword"></Form.Label>
-                  <InputField3
-                    type="password"
-                    id="userConfirmPassword"
-                    name="userConfirmPassword"
-                    placeholder="Confirm Password"
-                    required
-                    onChange={(e) => setUserConfirmPassword(e)}
-                  />
-                </Form.Group>
-                {data.role == "student" ? (
-                  () => setUserRole(data.role)
-                ) : (
-                  <Form.Group id="Role">
-                    <Form.Label htmlFor="userRole"></Form.Label>
-                    <select
-                      name="userRole"
-                      required
-                      onChange={(e) => setUserRole(e)}
-                    >
-                      <option value="" selected disabled hidden>
-                        Select Role
-                      </option>
-                      <option value="professor">Professor</option>
-                      <option value="advisor">Advisor</option>
-                    </select>
-                  </Form.Group>
-                )}
-              </Form>
-            </Card.Body>
-            <SubmitButton text="Submit" onClick={newUser} />
-          </Card>
+      {(!success) && (
+        <>
+          <div className="titleBar">
+          <Navi destination="/Login" />
+          <div className="titleText">Registration</div>
         </div>
-      </Container>
-      {/* </div> */}
+        <Container className="d-flex align-item-center justify-content-center">
+          <div
+            className="w-100"
+            // style={{ maxWidth: "400px" }}
+          >
+            <Card className="register">
+              <Card.Body style={{ width: "100%" }}>
+                {error && (
+                  <p
+                    style={{
+                      marginTop: "10px",
+                      fontSize: "20px",
+                      color: "red",
+                    }}
+                  >
+                    {error}
+                  </p>
+                )}
+  
+  
+                <div
+                  className="w-100 text-center mt-2 text-danger"
+                  id="errorMessage"
+                ></div>
+  
+                <Form>
+                  <Form.Group id="department">
+                    <Form.Label htmlFor="departmentName"></Form.Label>
+                    <InputField3
+                      // type="text"
+                      id="departmentName"
+                      name="departmentName"
+                      placeholder={placeholder}
+                      onChange={(e) => setDepartment(e)}
+                    />
+  
+                    {/* </Form.Control> */}
+                  </Form.Group>
+  
+                  <Form.Group id="eUID">
+                    <Form.Label htmlFor="userEUID"></Form.Label>
+                    <InputField3
+                      type="text"
+                      id="userEUID"
+                      name="userEUID"
+                      placeholder="eUID"
+                      onChange={(e) => {
+                        // alert(e);
+                        setUserEUID(e);
+                      }}
+                    />
+                  </Form.Group>
+  
+                  <Form.Group id="email">
+                    <Form.Label htmlFor="userEmail"></Form.Label>
+                    <InputField3
+                      type="text"
+                      id="userEmail"
+                      name="userEmail"
+                      placeholder="Email"
+                      required
+                      onChange={(e) => setUserEmail(e)}
+                    />
+                  </Form.Group>
+  
+                  <Form.Group id="firstName">
+                    <Form.Label htmlFor="userFirstName"></Form.Label>
+                    <InputField3
+                      type="text"
+                      id="userFirstlName"
+                      name="userFirstName"
+                      placeholder="First Name"
+                      required
+                      onChange={(e) => setUserFirstName(e)}
+                    />
+                  </Form.Group>
+  
+                  <Form.Group id="lastName">
+                    <Form.Label htmlFor="userLastName"></Form.Label>
+                    <InputField3
+                      type="text"
+                      id="userLastlName"
+                      name="userLastName"
+                      placeholder="Last Name"
+                      required
+                      onChange={(e) => setUserLastName(e)}
+                    />
+                  </Form.Group>
+  
+                  <Form.Group id="password">
+                    <Form.Label htmlFor="userPassowrd"></Form.Label>
+                    <InputField3
+                      type="password"
+                      id="userPassword"
+                      name="userPassowrd"
+                      placeholder="Password"
+                      required
+                      onChange={(e) => setUserPassword(e)}
+                    />
+                  </Form.Group>
+  
+                  <Form.Group id="confirmPassword">
+                    <Form.Label htmlFor="userConfirmPassword"></Form.Label>
+                    <InputField3
+                      type="password"
+                      id="userConfirmPassword"
+                      name="userConfirmPassword"
+                      placeholder="Confirm Password"
+                      required
+                      onChange={(e) => setUserConfirmPassword(e)}
+                    />
+                  </Form.Group>
+                  {data.role == "student" ? (
+                    () => setUserRole(data.role)
+                  ) : (
+                    <Form.Group id="Role">
+                      <Form.Label htmlFor="userRole"></Form.Label>
+                      <select
+                        name="userRole"
+                        required
+                        onChange={(e) => setUserRole(e)}
+                      >
+                        <option value="" selected disabled hidden>
+                          Select Role
+                        </option>
+                        <option value="professor">Professor</option>
+                        <option value="advisor">Advisor</option>
+                      </select>
+                    </Form.Group>
+                  )}
+                </Form>
+              </Card.Body>
+              <SubmitButton text="Submit" onClick={newUser} />
+            </Card>
+          </div>
+        </Container>
+        {/* </div> */}
+        </>
+      )}
+
+      {success && 
+        (<p
+        style={{
+          fontSize: "20px",
+          color: "Green",
+        }}
+      >
+        Verification Email Sent! Check inbox.
+      </p>)}
+      
     </div>
   );
 }

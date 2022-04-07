@@ -35,6 +35,7 @@ export const LoginForm = (props) => {
   const navigate = useNavigate();
   const [pageNum, setPageNum] = useState(props.pageNumber);
   var register;
+  const [error, setError] = useState("");
 
   function clearErrorMessage() {
     var error = document.getElementById("errorMessage");
@@ -60,6 +61,7 @@ export const LoginForm = (props) => {
     signInWithEmailAndPassword(auth, username, password)
       .then((userCredential) => {
         // Signed in
+        setError("");
         setUser(userCredential.user);
         userGlobal = userCredential.user;
 
@@ -75,7 +77,8 @@ export const LoginForm = (props) => {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        alert("Error: " + errorMessage);
+        //alert("Error: " + errorMessage);
+        setError("Invalid Username or Password");
       });
 
     // const dbRef = ref(getDatabase());
@@ -113,7 +116,18 @@ export const LoginForm = (props) => {
   return (
     <>
       <div className={fadeIn ? "loginForm2" : "loginForm1"}>
-        <h2 style={{ lineHeight: "0px" }}>Log In</h2>
+        <h2>Log In</h2>
+
+        {error && (
+            <p
+              style={{
+                marginTop: "10px",
+                fontSize: "20px",
+                color: "red",
+              }}
+            >
+              {error}
+            </p>)}
 
         <div className="inputField2">
           <div className="form__group field">

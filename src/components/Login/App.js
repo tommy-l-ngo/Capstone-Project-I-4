@@ -24,6 +24,7 @@ import { AuthProvider } from "./AuthContext";
 import { ProtectedRoute } from "./ProtectedRoute";
 import { PasswordReset } from "./PasswordReset";
 import { PageRedirect } from "./PageRedirect";
+import { sendSignInLinkToEmail } from "@firebase/auth";
 class App extends React.Component {
   /*
   App2() {
