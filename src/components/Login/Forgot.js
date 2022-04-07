@@ -4,6 +4,7 @@ import { Navi } from "./Navi";
 import InputField3 from "./InputField3";
 import SubmitButton from "./SubmitButton";
 import { getDatabase, get, ref, child } from "firebase/database";
+import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 
 export default function Forgot() {
   //document.documentElement.style.setProperty("--loginFormHeight", "300px");
@@ -20,6 +21,7 @@ export default function Forgot() {
   // }).then((message) => alert("mail has been sent sucessfully"));
   const [userEmail, setEmail] = useState("");
   const [error, setError] = useState(null);
+  const [emailSent, setEmailSent] = useState(false);
 
   useEffect(() => {
     // Update the document title using the browser API
@@ -60,13 +62,31 @@ export default function Forgot() {
       })
       .then((match) => {
         try {
-          if (!match) {
+          if (match)
+          {
+            setError("");
+            const auth = getAuth();
+            sendPasswordResetEmail(auth, user.email)
+              .then(() => {
+                setEmailSent(true);
+                console.log("Password reset email sent!");
+              })
+              .catch((error) => {
+                setEmailSent(false);
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                // ..
+              });
+          }
+          else
+          {
             throw Error("Email does not exist in system");
           }
-          setError("");
-        } catch (err) {
+        } 
+        catch (err) {
           console.log(err.code);
           setError(err.message);
+          setEmailSent(false);
         }
       });
   }
@@ -90,6 +110,19 @@ export default function Forgot() {
             {error}
           </p>
         )}
+
+        {emailSent && (
+          <p
+            style={{
+              marginTop: "10px",
+              fontSize: "20px",
+              color: "green",
+            }}
+          >
+            Password reset email sent!
+          </p>
+        )}
+
         <div
           className="w-100 text-center mt-2 text-danger"
           id="errorMessage"
