@@ -48,7 +48,7 @@ export default function Register(props) {
 
   const [department, setDepartment] = useState("");
 
-  const [user, setUser] = useState("");
+  const [user, setUser] = useState(null);
   const [userEUID, setUserEUID] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [userFirstName, setUserFirstName] = useState("");
@@ -107,7 +107,7 @@ export default function Register(props) {
             })
 
             set(ref(db, "users/" + userEUID), {
-              uid: user.uid,
+              uid: userCredential.user.uid,
               department: department,
               eUID: userEUID,
               email: userEmail,
