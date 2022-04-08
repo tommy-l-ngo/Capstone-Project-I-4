@@ -136,14 +136,14 @@ export const LoginForm = (props) => {
               id="user"
               className="form__field"
               type="text"
-              placeholder="Username"
+              placeholder="Email"
               onChange={(e) => {
                 setUsername(e.target.value);
                 clearErrorMessage();
               }}
             />
             <label for="user" class="form__label">
-              Username
+              Email
             </label>
           </div>
         </div>

@@ -181,7 +181,7 @@ export default function Register(props) {
       {(!success) && (
         <>
           <div className="titleBar">
-          <Navi destination="/Login" />
+          <Navi destination="/RegisterAs" />
           <div className="titleText">Registration</div>
         </div>
         <Container className="d-flex align-item-center justify-content-center">
