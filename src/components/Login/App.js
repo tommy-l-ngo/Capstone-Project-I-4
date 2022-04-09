@@ -25,6 +25,7 @@ import { ProtectedRoute } from "./ProtectedRoute";
 import { PasswordReset } from "./PasswordReset";
 import { PageRedirect } from "./PageRedirect";
 import { sendSignInLinkToEmail } from "@firebase/auth";
+import ProjectPage from "../Projects/ProjectPage";
 class App extends React.Component {
   /*
   App2() {
@@ -127,6 +128,7 @@ class App extends React.Component {
               <Route path="/CreateProject" element={<ProtectedRoute><CreateProject /></ProtectedRoute>} />
               <Route path="/EditProject" element={<ProtectedRoute><EditProject /></ProtectedRoute>} />
               <Route path="/Calendar" element={<ProtectedRoute><Calendar /></ProtectedRoute>} />
+              <Route path='/Projects/:id' element={props => (<ProtectedRoute><ProjectPage {...props} /></ProtectedRoute>)} />
             </Switch>
           </Router>
           </AuthProvider>
