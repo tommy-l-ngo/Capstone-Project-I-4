@@ -128,7 +128,7 @@ class App extends React.Component {
               <Route path="/CreateProject" element={<ProtectedRoute><CreateProject /></ProtectedRoute>} />
               <Route path="/EditProject" element={<ProtectedRoute><EditProject /></ProtectedRoute>} />
               <Route path="/Calendar" element={<ProtectedRoute><Calendar /></ProtectedRoute>} />
-              <Route path='/Projects/:id' element={props => (<ProtectedRoute><ProjectPage {...props} /></ProtectedRoute>)} />
+              <Route path="/Projects/:id" exact element={<ProjectPage />} />
             </Switch>
           </Router>
           </AuthProvider>

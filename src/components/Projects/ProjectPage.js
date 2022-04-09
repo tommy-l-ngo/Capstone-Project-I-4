@@ -1,20 +1,43 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import '../Dashboard/Dashboard.css';
-import Navbar from '../Dashboard/Navbar'
+import Navbar from '../Dashboard/Navbar';
 import data from '../Dashboard/data';
+import { Link, useParams } from 'react-router-dom';
 
-export default class ProjectPage extends Component {
+function ProjectPage() {
+    const { id } = useParams();
+    console.log(id)
+    
+    const getData = data.cardData[id - 1];
+
+    console.warn(getData);
+    return (
+        <div>
+            <Navbar />
+            <h1>{getData.text}</h1>
+            <h3>{getData.label}</h3>
+            <p>{getData.desc}</p>
+        </div>
+  );
+}
+/*
+class ProjectPage extends Component {
     render() {
         let getId = this.props.match.params.id;
-
+        const id = this.props.match.params.id;
+        console.log(id)
         const getData = data.cardData[getId - 1];
 
         console.warn(getData);
         return (
             <div>
                 <Navbar />
-                <h1>Project Details</h1>
+                <h1>{getData.text}</h1>
+                <h3>{getData.label}</h3>
+                <p>{getData.desc}</p>
             </div>
         )
     }
 }
+*/
+export default ProjectPage;
