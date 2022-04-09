@@ -31,46 +31,7 @@ export function PasswordReset(props){
   const [pageNum, setPageNum] = useState(props.pageNumber);
   var register;
   let navigate = useNavigate();
-
-useEffect( () => {
-    if(success || processing)
-    {
-      return;
-    }
-    console.log("props.url = " + props.url);
-    const url = props.url;
-    const reg = /Code=(.+)&api/;
-    try{
-        const m = url.match(reg);
-        if(m == null){
-            throw Error();
-        }
-        const code = m[1];
-        console.log(code);
-        const auth = getAuth();
-
-        verifyPasswordResetCode(auth, code).then( () => {
-          console.log("valid reset code");
-          setValidUrl(true);
-          setError("");
-        }).catch( (err) => {
-          console.log(err.message);
-          setValidUrl(false);
-          setError(err.message);
-        })
-    }
-    catch(err)
-    {
-        err.message = "Invalid url link. Nice try.";
-        console.log(err.message);
-        setValidUrl(false);
-        setError(err.message);
-    }
-})
     
-
-  
-
 
   function HandleResetPass() {
     try {
@@ -93,14 +54,7 @@ useEffect( () => {
         throw Error("Password does not match");
       } 
       else {
-            const url = props.url;
-            const reg = /Code=(.+)&api/;
-            const m = url.match(reg);
-            if(m == null){
-                throw Error("Regex match failed.");
-            }
-            const code = m[1];
-            //console.log(code);
+            const code = props.code;
             const auth = getAuth();
             confirmPasswordReset(auth, code, password).then(() => {
               console.log("password reset was successful");
@@ -145,8 +99,6 @@ useEffect( () => {
 
   return (
     <>
-      {(validUrl) ? 
-      (
         <>
           <div className="passResetFormContainer">
             <h2 style={{ lineHeight: "40px", fontSize:"36px" }}>Password Reset</h2>
@@ -175,71 +127,57 @@ useEffect( () => {
               </p>
             )}
 
-            <div className="inputField2">
-              <div className="form__group field">
-                <input
-                  name="user"
-                  id="user"
-                  className="form__field"
-                  type="password"
-                  placeholder="New Password"
-                  onChange={(e) => {
-                    setPassword(e.target.value);
-                    setProcessing(true);
-                  }}
-                />
-                <label for="user" class="form__label">
-                  New Password
-                </label>
+            {!success && (
+            <>
+              <div className="inputField2">
+                <div className="form__group field">
+                  <input
+                    name="user"
+                    id="user"
+                    className="form__field"
+                    type="password"
+                    placeholder="New Password"
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                    }}
+                  />
+                  <label for="user" class="form__label">
+                    New Password
+                  </label>
+                </div>
               </div>
-            </div>
 
-            <div className="inputField">
-              <div className="form__group field">
-                <input
-                  name="pass"
-                  id="pass"
-                  className="form__field"
-                  type="password"
-                  placeholder="Confirm Password"
-                  onChange={(e) => {
-                    setConfirmPassword(e.target.value);
-                    setProcessing(true);
-                  }}
-                />
-                <label for="pass" class="form__label">
-                  Confirm Password
-                </label>
+              <div className="inputField">
+                <div className="form__group field">
+                  <input
+                    name="pass"
+                    id="pass"
+                    className="form__field"
+                    type="password"
+                    placeholder="Confirm Password"
+                    onChange={(e) => {
+                      setConfirmPassword(e.target.value);
+                    }}
+                  />
+                  <label for="pass" class="form__label">
+                    Confirm Password
+                  </label>
+                </div>
               </div>
-            </div>
-            
-            <p
-              id="errorMessage"
-              style={{ marginTop: "10px", fontSize: "20px", color: "red" }}
-            ></p>
-            <SubmitButton
-              text="Reset Passowrd"
-              disabled={buttonDisabled}
-              onClick={HandleResetPass}
-              style={{ fontSize: "20px" }}
-            />
+              
+              <p
+                id="errorMessage"
+                style={{ marginTop: "10px", fontSize: "20px", color: "red" }}
+              ></p>
+              <SubmitButton
+                text="Reset Passowrd"
+                disabled={buttonDisabled}
+                onClick={HandleResetPass}
+                style={{ fontSize: "20px" }}
+              />
+            </>)}
           </div>
-        </>)
-          :
-          (
-            <div className="passwordResetFormContainer">
-            {error && (
-            <p
-              style={{
-                marginTop: "10px",
-                fontSize: "20px",
-                color: "red",
-              }}
-            >
-              {error}
-            </p>)}
-          </div>
-          )}
+        </>
     </>
     
   );

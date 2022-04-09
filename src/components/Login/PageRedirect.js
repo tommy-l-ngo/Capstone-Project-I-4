@@ -1,7 +1,9 @@
+import { checkActionCode, getAuth, OperationType } from '@firebase/auth';
 import React from 'react';
 import { useEffect, useState } from "react";
 import { EmailVerified } from './EmailVerified';
 import { PasswordReset } from "./PasswordReset";
+import { parseActionCodeURL } from "@firebase/auth";
 
 
 
@@ -14,42 +16,74 @@ export function PageRedirect()
     
     //console.log("PageRedirect");
 
-    useEffect(() => {
-        const url = window.location.href;
-        const reg = /mode=(.+)&oob/;
-        //console.log("url = " + url);
+    const [validUrl, setValidUrl] = useState(false);
+    const [error, setError] = useState("");
+    const [actionCode, setActionCode] = useState("");
+
+    useEffect( () => {
+        //console.log("window.location.href = " + window.location.href);
+        const actionUrl = parseActionCodeURL(window.location.href);
         try{
-            const m = url.match(reg);
-            if(m == null){
-                throw Error("Regex match failed.");
+            if(actionUrl == null){
+                throw Error();
             }
-            const mode = m[1];
-            console.log("mode = " + mode);
-            if(mode == "resetPassword")
-            {
-                setRedirectToResetPassPage(true);
-                //console.log("resetPassword");
-            }
-            else if(mode == "verifyEmail")
-            {
-                setRedirectToEmailVerified(true);
-            }
+
+            const auth = getAuth()
+            checkActionCode(auth, actionUrl.code).then( () => {
+                //valid code
+                setValidUrl(true);
+                setError("");
+                const action = actionUrl.operation;
+                if(action == "PASSWORD_RESET")
+                {
+                    setRedirectToResetPassPage(true);
+                }
+                else if(action == "VERIFY_EMAIL")
+                {
+                    setRedirectToEmailVerified(true);
+                }
+                setActionCode(actionUrl.code);
+            }).catch( (err) => {
+                err.message = "Invalid url link code.";
+                console.log(err.message);
+                setValidUrl(false);
+                setRedirectToEmailVerified(false);
+                setRedirectToResetPassPage(false);
+                setError(err.message);
+            })
+            
         }
         catch(err)
         {
+            err.message = "Invalid url link.";
             console.log(err.message);
+            setValidUrl(false);
+            setRedirectToEmailVerified(false);
+            setRedirectToResetPassPage(false);
+            setError(err.message);
         }
-
     })
-
 
     return(
         <>
+            {!validUrl &&
+                <div className="loginFormContainer">
+                    <p
+                        style={{
+                        fontSize: "20px",
+                        color: "Red",
+                        }}
+                    >
+                        {error}
+                    </p>
+                </div>
+            }
+            
             {redirectToResetPassPage && 
-                <PasswordReset url={window.location.href}/>
+                <PasswordReset code={actionCode}/>
             }
             {redirectToEmailVerified && 
-                <EmailVerified url={window.location.href}/>
+                <EmailVerified code={actionCode}/>
             }
         </>
     )

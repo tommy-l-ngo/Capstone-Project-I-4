@@ -119,7 +119,6 @@ class App extends React.Component {
               <Route path="/Forgot" element={<HomeForgotPopup />} />
               <Route path="/Register" element={<HomeRegisterPopup />} />
               <Route path="/RegisterAs" element={<HomeRegisterAsPopup />} />
-              <Route path="/PasswordReset" element={<PasswordReset />} />
               <Route path="/PageRedirect" element={<PageRedirect />} />
 
               <Route path="/Login" element={<HomeLoginPopup />} exact />

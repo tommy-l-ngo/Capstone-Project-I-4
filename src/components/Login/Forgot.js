@@ -94,12 +94,14 @@ export default function Forgot() {
   return (
 
   
-    <div className="loginFormContentForgot">
+    <div className="loginFormContainer">
       
-      <div className="titleBar">
-        <Navi destination="/Login" />
-        <div className="titleText2">Forgot Password</div>
-      </div>
+      {!emailSent && (
+        <div className="titleBar">
+          <Navi destination="/Login" />
+          <div className="titleText2">Forgot Password</div>
+        </div>
+      )}
 
       
         {error && (
@@ -126,19 +128,22 @@ export default function Forgot() {
           </p>
         )}
 
-        <div
-          className="w-100 text-center mt-2 text-danger"
-          id="errorMessage"
-        ></div>
+        {!emailSent && (
+          <>
+            <div
+              className="w-100 text-center mt-2 text-danger"
+              id="errorMessage"
+            ></div>
 
-        <div className="emailInput">
-          <InputField2
-            type="text"
-            placeholder="Email"
-            onChange={(e) => setEmail(e)}
-          />
-        </div>
-        <SubmitButton text="Reset Password" onClick={HandleResetPass} />
+            <div className="emailInput">
+              <InputField2
+                type="text"
+                placeholder="Email"
+                onChange={(e) => setEmail(e)}
+              />
+            </div>
+            <SubmitButton text="Reset Password" onClick={HandleResetPass} />
+        </>)}
       
      </div> 
    
