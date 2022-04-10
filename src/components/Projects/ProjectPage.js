@@ -3,6 +3,8 @@ import '../Dashboard/Dashboard.css';
 import Navbar from '../Dashboard/Navbar';
 import data from '../Dashboard/data';
 import { Link, useParams } from 'react-router-dom';
+import './ProjectPage.css';
+import Comments from "../Comments/Comments";
 
 function ProjectPage() {
     const { id } = useParams();
@@ -14,9 +16,16 @@ function ProjectPage() {
     return (
         <div>
             <Navbar />
-            <h1>{getData.text}</h1>
-            <h3>{getData.label}</h3>
-            <p>{getData.desc}</p>
+            <div className='project_details'>
+                <h1>{getData.text}</h1>
+                <h3>{getData.label}</h3>
+                <p>{getData.desc}</p>
+            </div>
+            <div className='project_comments'>
+                <Comments
+                currentUserId="1"
+                />
+            </div>
         </div>
   );
 }

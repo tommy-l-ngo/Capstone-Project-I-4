@@ -1,0 +1,31 @@
+.project_details {
+    float: left;
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+.project_details>h1 {
+    font-size: 45px;
+    text-align: left;
+}
+
+.project_details>h3 {
+    font-size: 24px;
+    text-align: left;
+    margin-left: 2px;
+}
+
+.project_details>p {
+    font-size: 20px;
+    margin-top: 20px;
+    text-align: left;
+}
+
+.project_comments {
+    background-color: rgb(247, 247, 247);
+    border: 0.5px solid;
+    width: 400px;
+    float: right;
+    margin-top: 20px;
+    margin-right: 20px;
+}
