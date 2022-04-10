@@ -1,30 +1,40 @@
 import Modal from 'react-modal';
-import Datetime from 'react-datetime';
 import React, { useState } from 'react'
 import { Container } from "react-bootstrap";
 import { getDatabase, set, ref} from "firebase/database";
+import DatePicker from "react-datepicker"
+import TimePicker from 'react-time-picker'
+import "react-datepicker/dist/react-datepicker.css"
 
 // Exports data to database
 export default function ({ isOpen, onClose}) {
+    const [meetDate, setMeetDate] = useState(new Date());
+    const [meetEndDate, setMeetEndDate] = useState(new Date());
     const [meetHost, setHost] = useState(" ");
     const [meetGuests, setGuests] = useState([]);
-    const [meetDate, setMeetDate] = useState(new Date());
-    const [meetTime, setMeetTime] = useState(new Date());
     const [meetProj, setProj] = useState(" ");
+    const [meetTime, setTime] = useState('10:00');
     const [meetTitle, setTitle] = useState(" ");
     const [meetNotes, setNotes] = useState(" ");
-    const meetID = meetDate + "_" + meetTime + "_" + meetProj;
+
+    let meetDateISO = meetDate.toISOString();
+    let meetEndDateISO = meetEndDate.toISOString();
+
+    const startDate = meetDateISO.substring(0, 10);
+    const endDate = meetEndDateISO.substring(0, 10);
+    const meetID = startDate + "_" + meetTime + "_" + meetProj;
 
     const db = getDatabase();
     const userEUID = "exa0012"; //FIX ME: Still strying to figure out how to add the current user euid.
 
     function onSubmit() {
         set(ref(db, "calendars/" + userEUID + "/" + meetID), {
+            date: startDate,
+            endDate: endDate,
             host: meetHost,
             guests: meetGuests,
-            date: meetDate,
-            time: meetTime,
             project: meetProj,
+            time: meetTime,
             title: meetTitle,
             notes: meetNotes,
             type: "meeting"
@@ -32,18 +42,18 @@ export default function ({ isOpen, onClose}) {
         onClose();
 
          // add meeting to guest calendars in database
-         for (var i=0; i<meetGuests.length; i++){
-            set(ref(db, "calendars/" + meetGuests[i] + "/" + meetID), {
-                host: meetHost,
-                guests: meetGuests,
-                date: meetDate,
-                time: meetTime,
-                project: meetProj,
-                title: meetTitle,
-                notes: meetNotes,
-                type: "meeting"
-            });
-        }
+        //  for (var i=0; i<meetGuests.length; i++){
+        //     set(ref(db, "calendars/" + meetGuests[i] + "/" + meetID), {
+        //         host: meetHost,
+        //         guests: meetGuests,
+        //         date: meetDate,
+        //         endDate: meetEndDate,
+        //         project: meetProj,
+        //         title: meetTitle,
+        //         notes: meetNotes,
+        //         type: "meeting"
+        //     });
+        // }
     }
 
     function cancelSubmit() {
@@ -54,22 +64,30 @@ export default function ({ isOpen, onClose}) {
     return (
         <Modal isOpen={isOpen} onClose={onClose}>
             <Container className="d-flex align-item-center justify-content-center">
+                {/* <DatePickerButton /> */}
                 <form onSubmit={onSubmit} style={{ margin: "50px" }}>
                     <div>
                         <h6>Host</h6>
-                        <input placeholder="Host" value={meetHost} onChange={(e) => setHost(e.target.value)} />
+                        <input placeholder="Host" value={meetHost} onChange={(e) => setHost(e.target.value)} dateFormat='dd/MM/yyyy' />
                     </div>
                     <div>
                         <h6>Guests</h6>
                         <input placeholder="Guests" value={meetGuests} onChange={(e) => setGuests(e.target.value)} />
                     </div>
                     <div>
-                        <h6>Date</h6>
-                        <Datetime value={meetDate} onChange={date => setMeetDate(date)} />
+                        <h6>Start Date</h6>
+                         <DatePicker selected={meetDate} onChange={date => setMeetDate(date)}/> 
+                        {/* <Datetime value={meetDate} onChange={date => setMeetDate(date)} /> */}
+                    </div>
+                    <div>
+                        <h6>End Date</h6>
+                        <DatePicker selected={meetEndDate} onChange={date => setMeetEndDate(date)}/>
+
+                        {/* <Datetime value={meetEndDate} onChange={date => setMeetEndDate(date)} /> */}
                     </div>
                     <div>
                         <h6>Time</h6>
-                        <Datetime value={meetTime} onChange={date => setMeetTime(date)} />
+                        <TimePicker selected={meetTime} onChange={time => setTime(time)}/>
                     </div>
                     <div>
                         <h6>Project</h6>
