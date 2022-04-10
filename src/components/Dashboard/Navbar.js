@@ -104,29 +104,6 @@ function Navbar() {
             </li>
 
             <li className="nav-item">
-              <Link to="/page2" className="nav-links" onClick={closeMobileMenu}>
-                Page 2
-              </Link>
-            </li>
-
-            <li className="nav-item">
-              <Link to="/page3" className="nav-links" onClick={closeMobileMenu}>
-                Page 3
-              </Link>
-            </li>
-
-            <li className="nav-item">
-              <Link to="/page4" className="nav-links" onClick={closeMobileMenu}>
-                Page 4
-              </Link>
-            </li>
-
-            <li className="nav-item">
-              <Link to="/page5" className="nav-links" onClick={closeMobileMenu}>
-                Page 5
-              </Link>
-            </li>
-            <li className="nav-item">
               <Link
                 to="/Calendar"
                 className="nav-links"
@@ -135,6 +112,7 @@ function Navbar() {
                 Calendar
               </Link>
             </li>
+            
             <li className="nav-item">
               <Link
                 to="/#"
