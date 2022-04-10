@@ -41,7 +41,7 @@ export default function Register(props) {
     regDesign = "RegisterFormContainerStudent";
   } else {
     placeholder = "Department Name";
-    regDesign = "RegisterFormContainerStaff";
+    //regDesign = "RegisterFormContainerStaff";
   }
 
   const [success, setSuccess] = useState(false);
@@ -309,24 +309,6 @@ export default function Register(props) {
                       onChange={(e) => setUserConfirmPassword(e)}
                     />
                   </Form.Group>
-                  {data.role == "student" ? (
-                    () => setUserRole(data.role)
-                  ) : (
-                    <Form.Group id="Role">
-                      <Form.Label htmlFor="userRole"></Form.Label>
-                      <select
-                        name="userRole"
-                        required
-                        onChange={(e) => setUserRole(e)}
-                      >
-                        <option value="" selected disabled hidden>
-                          Select Role
-                        </option>
-                        <option value="professor">Professor</option>
-                        <option value="advisor">Advisor</option>
-                      </select>
-                    </Form.Group>
-                  )}
                 </Form>
               </Card.Body>
               <SubmitButton text="Submit" onClick={newUser} />

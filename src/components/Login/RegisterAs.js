@@ -43,7 +43,7 @@ function RegisterAs()
               Student
             </button>
           </Link>
-          <Link to="/Register" state={{ role: "staff" }}>
+          <Link to="/Register" state={{ role: "advisor" }}>
             <button
               style={{ marginTop: "6px", marginBottom: "06px" }}
               className="btnLogin"
