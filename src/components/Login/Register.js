@@ -99,13 +99,24 @@ export default function Register(props) {
               console.log("Verification Email Sent");
               setError("");
               setSuccess(true);
-
             }
             ).catch((err) => {
               console.log(err.message);
               setError(err.message);
-            })
+            });
 
+            // set display name for user (euid)
+            updateProfile(auth.currentUser, {
+              "displayName": userEUID
+            }).then(() => {
+              console.log("Profile Updated, displayName:" + user.displayName);
+            }).catch((error) => {
+              // An error occurred
+              // ...
+              console.log(error);
+            });
+
+            //console.log("userRole:", userRole);
             set(ref(db, "users/" + userEUID), {
               uid: userCredential.user.uid,
               department: department,
@@ -116,6 +127,8 @@ export default function Register(props) {
               password: userPassword,
               role: userRole,
             });
+            
+            
 
             // alert("Created " + user);
           })

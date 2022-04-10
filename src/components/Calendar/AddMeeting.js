@@ -1,10 +1,11 @@
 import Modal from 'react-modal';
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { Container } from "react-bootstrap";
 import { getDatabase, set, ref} from "firebase/database";
-import DatePicker from "react-datepicker"
-import TimePicker from 'react-time-picker'
-import "react-datepicker/dist/react-datepicker.css"
+import DatePicker from "react-datepicker";
+import TimePicker from 'react-time-picker';
+import "react-datepicker/dist/react-datepicker.css";
+import { getAuth, auth } from "firebase/auth";
 
 // Exports data to database
 export default function ({ isOpen, onClose}) {
@@ -25,13 +26,14 @@ export default function ({ isOpen, onClose}) {
     const meetID = startDate + "_" + meetTime + "_" + meetProj;
 
     const db = getDatabase();
+    
     const userEUID = "exa0012"; //FIX ME: Still strying to figure out how to add the current user euid.
 
     function onSubmit() {
         set(ref(db, "calendars/" + userEUID + "/" + meetID), {
             date: startDate,
             endDate: endDate,
-            host: meetHost,
+            host: userEUID,
             guests: meetGuests,
             project: meetProj,
             time: meetTime,
@@ -68,7 +70,7 @@ export default function ({ isOpen, onClose}) {
                 <form onSubmit={onSubmit} style={{ margin: "50px" }}>
                     <div>
                         <h6>Host</h6>
-                        <input placeholder="Host" value={meetHost} onChange={(e) => setHost(e.target.value)} dateFormat='dd/MM/yyyy' />
+                        <input placeholder={userEUID} value={userEUID} disabled="true"/*onChange={(e) => setHost(e.target.value)} dateFormat='dd/MM/yyyy'*/ />
                     </div>
                     <div>
                         <h6>Guests</h6>

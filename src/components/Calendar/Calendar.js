@@ -7,16 +7,28 @@ import { getDatabase, set, ref, get } from "firebase/database";
 import "react-datetime/css/react-datetime.css";
 import AddMeeting from "./AddMeeting"
 import timeGridPlugin from "@fullcalendar/timegrid";
-
+import { getAuth, auth, onAuthStateChanged } from "firebase/auth";//
 
 
 export function Calendar() {
+    const user = getAuth().currentUser;
+    if (user !== null) {
+    // The user object has basic properties such as display name, email, etc.
+        const email = user.email;
+        const uid = user.uid;
+        //console.log("email:", email)
+    }
+    else
+    {
+        //console.log("No User");
+    }
     const db = getDatabase();
-
     const [modalOpen, setModalOpen] = useState(false);
     const calendarRef = React.useRef();
     const [userEUID, setUserEUID] = useState("exa0012"); //FIX ME: replace with logged in user
     const [userEvents, setUserEvents] = useState(" ");
+    console.log("displayName:", user.displayName)
+
 
     // get calendar events of userEUID from database
     get(ref(db, "calendars/" + userEUID)).then((snapshot) => {
@@ -34,7 +46,8 @@ export function Calendar() {
             })
             setUserEvents(eventList);
         } else {
-            console.log("No data available");
+            console.log("No calendar data available");
+            let eventList = [];
         }
     }).catch((error) => {
         console.error(error);
