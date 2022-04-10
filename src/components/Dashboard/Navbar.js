@@ -67,7 +67,7 @@ function Navbar() {
           </div>
           {User ? (
             <div className="navbar-logout-container">
-              <div>Welcome, {User.email}</div>
+              <div>Welcome, {User.displayName}</div>
               <div className="logOutBtn">
                 <button className="navbar-login-box" onClick={handleLogout}>
                   Log Out
