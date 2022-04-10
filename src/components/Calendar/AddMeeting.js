@@ -1,11 +1,19 @@
 import Modal from 'react-modal';
 import React, { useState } from 'react';
 import { Container } from "react-bootstrap";
-import { getDatabase, set, ref} from "firebase/database";
+import { getDatabase, set, ref, get} from "firebase/database";
 import DatePicker from "react-datepicker";
 import TimePicker from 'react-time-picker';
 import "react-datepicker/dist/react-datepicker.css";
 import { getAuth, auth } from "firebase/auth";
+import Select from 'react-select';
+
+function getCurrentUser()
+{
+    const user = getAuth().currentUser;
+    return user;
+}
+
 
 // Exports data to database
 export default function ({ isOpen, onClose}) {
@@ -18,6 +26,8 @@ export default function ({ isOpen, onClose}) {
     const [meetTitle, setTitle] = useState(" ");
     const [meetNotes, setNotes] = useState(" ");
 
+    
+
     let meetDateISO = meetDate.toISOString();
     let meetEndDateISO = meetEndDate.toISOString();
 
@@ -26,8 +36,24 @@ export default function ({ isOpen, onClose}) {
     const meetID = startDate + "_" + meetTime + "_" + meetProj;
 
     const db = getDatabase();
+    let projectList = []
+    const userEUID = getCurrentUser;
     
-    const userEUID = "exa0012"; //FIX ME: Still strying to figure out how to add the current user euid.
+    get(ref(db, "projects/")).then((snapshot) => {
+        if (snapshot.exists()) {
+            //loop through projects
+            
+            snapshot.forEach( (snap) => {
+                projectList.push(snap.key);
+            })
+            //console.log("Project List:", projectList);
+        } else {
+            console.log("No project data available");
+            let projectList = [];
+        }
+    }).catch((error) => {
+        console.error(error);
+    });
 
     function onSubmit() {
         set(ref(db, "calendars/" + userEUID + "/" + meetID), {
@@ -93,7 +119,7 @@ export default function ({ isOpen, onClose}) {
                     </div>
                     <div>
                         <h6>Project</h6>
-                        <input placeholder="Project" value={meetProj} onChange={(e) => setProj(e.target.value)} />
+                        <Select placeholder="Project" options = {projectList} />
                     </div>
                     <div>
                         <h6>Title</h6>
