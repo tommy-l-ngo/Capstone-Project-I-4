@@ -4,6 +4,7 @@ import firebase from "firebase/compat/app"
 import {getDatabase, ref, set} from "firebase/database"
 import { initializeApp } from "firebase/app";
 import MultiSelect from "./MultiSelect";
+import DatePicker from "react-datepicker";
 
 
       
@@ -70,11 +71,8 @@ export default class CreateProject extends Component {
     handleChange(event){
              this.setState({
                 [event.target.name] : event.target.value
-        
          }
-        
        )
-        
     }
     
     handleStudentsChange(listOfStudents){
@@ -115,6 +113,7 @@ export default class CreateProject extends Component {
                                 <div className="w-100 text-center mt-2 text-danger" id="errorMessage"></div>
                                 <h3 style={{ lineHeight: '0px' }}></h3>
 
+                                <h6>Project name</h6>
                                 <Form onSubmit={this.handleSubmit}>  
                                     <Form.Group id="projectName">
                                         <Form.Label htmlFor="projectName" ></Form.Label>
@@ -122,30 +121,31 @@ export default class CreateProject extends Component {
                                             type="text" 
                                             id="projectName" 
                                             name="projectName" 
-                                            placeholder="Project Name" 
+                                            // placeholder="Project Name" 
                                             value = {this.state.projectName}
                                             onChange={this.handleChange}
                                             required>
                                         </Form.Control>
                                     </Form.Group>
 
+                                    <h6>Description</h6>
                                     <Form.Group id="description">
                                         <Form.Label htmlFor="description" ></Form.Label>
                                         <Form.Control 
                                             type="text" 
                                             id="description" 
                                             name="description" 
-                                            placeholder="Description" 
+                                            // placeholder="Ddick" 
                                             value = {this.state.description}
                                             onChange={this.handleChange}
                                             required>
                                         </Form.Control>
                                     </Form.Group>
                                     
-                                    
+                                    <h6>Tasks</h6>
                                     {this.state.formValues.map((element, index) => (
                                         <div className="form-inline" key={index}>
-                                            <label>Task</label>
+                                            {/* <label>Task</label> */}
                                             <input type="text" name="tasks" value={element.tasks || ""} onChange={e => this.handleChanges(index, e)} />
                                             {
                                                 index ? 
@@ -158,7 +158,10 @@ export default class CreateProject extends Component {
                                         <button className="button add" type="button" onClick={() => this.addFormFields()}>Add</button>
                                     </div>
 
-                                    <Form.Group id="date">
+
+                                    
+                                    
+                                    {/* <Form.Group id="date">
                                         <Form.Label htmlFor="date"></Form.Label>
                                         <Form.Control 
                                             type="text" 
@@ -169,8 +172,8 @@ export default class CreateProject extends Component {
                                             onChange={this.handleChange}
                                             required>
                                         </Form.Control>
-                                    </Form.Group>
-
+                                    </Form.Group> */}
+                                    <h6>Select Students</h6>
                                     <MultiSelect onChange={this.handleStudentsChange.bind(this)}/>
 
                                     <Button type="submit">Submit</Button>
