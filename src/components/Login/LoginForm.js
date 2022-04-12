@@ -119,15 +119,16 @@ export const LoginForm = (props) => {
         <h2>Log In</h2>
 
         {error && (
-            <p
-              style={{
-                marginTop: "10px",
-                fontSize: "20px",
-                color: "red",
-              }}
-            >
-              {error}
-            </p>)}
+          <p
+            style={{
+              marginTop: "10px",
+              fontSize: "20px",
+              color: "red",
+            }}
+          >
+            {error}
+          </p>
+        )}
 
         <div className="inputField2">
           <div className="form__group field">
@@ -142,7 +143,7 @@ export const LoginForm = (props) => {
                 clearErrorMessage();
               }}
             />
-            <label for="user" class="form__label">
+            <label htmlFor="user" className="form__label">
               Email
             </label>
           </div>
@@ -161,7 +162,7 @@ export const LoginForm = (props) => {
                 clearErrorMessage();
               }}
             />
-            <label for="pass" class="form__label">
+            <label htmlFor="pass" className="form__label">
               Password
             </label>
           </div>
@@ -177,7 +178,7 @@ export const LoginForm = (props) => {
             clearErrorMessage();
           }}
         />
-        <label for="user" class="form__label">
+        <label htmlFor="user" className="form__label">
           Username
         </label>
         <InputField
