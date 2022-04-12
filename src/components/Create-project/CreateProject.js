@@ -1,10 +1,11 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import { Form, Button, Card, Container, InputGroup, FormControl } from "react-bootstrap";
 import firebase from "firebase/compat/app"
 import {getDatabase, ref, set} from "firebase/database"
 import { initializeApp } from "firebase/app";
 import MultiSelect from "./MultiSelect";
-import DatePicker from "react-datepicker";
+import Picker from "./Picker";
+
 
 
       
@@ -22,16 +23,17 @@ import DatePicker from "react-datepicker";
     measurementId: "G-X8E63KZMT3"
   };
 
-
+  
 export default class CreateProject extends Component {
-
+    
     constructor(props) {
         super(props)
-        this.state = { projectName: '', description: '', /*task: '',*/ date: '', formValues: [{ tasks: "" }], students: null }
+        this.state = { projectName: '', description: '', /*task: '',*/ date: Date(), formValues: [{ tasks: "" }], students: null }
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
         this.add_project = this.add_project.bind(this); 
     }
+    
     
     add_project(project_name,project_description,project_tasks,project_date) 
     {
@@ -81,6 +83,11 @@ export default class CreateProject extends Component {
         }
        )
     }
+    handleDateChange(pickDate){
+        this.setState({
+            date : pickDate
+        })
+    }
     handleChanges(i, e) {
         let formValues = this.state.formValues;
         formValues[i][e.target.name] = e.target.value;
@@ -100,9 +107,6 @@ export default class CreateProject extends Component {
       }
 
     render() {
-        
-       
-        
         return (
             <div>
                 <Container className="d-flex align-item-center justify-content-center">
@@ -135,7 +139,7 @@ export default class CreateProject extends Component {
                                             type="text" 
                                             id="description" 
                                             name="description" 
-                                            // placeholder="Ddick" 
+                                            // placeholder="Description" 
                                             value = {this.state.description}
                                             onChange={this.handleChange}
                                             required>
@@ -159,7 +163,9 @@ export default class CreateProject extends Component {
                                     </div>
 
 
+                                    <h6>Due Date</h6>
                                     
+                                    <Picker onChange={this.handleDateChange.bind(this)}/>
                                     
                                     {/* <Form.Group id="date">
                                         <Form.Label htmlFor="date"></Form.Label>
