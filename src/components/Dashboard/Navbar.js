@@ -4,6 +4,8 @@ import "./Navbar.css";
 import LoginPopup from "../Login/LoginPopup";
 import { userGlobal, getUserGlobal } from "../Login/LoginForm";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { getDatabase, set, get, ref, child } from "firebase/database";
+
 export var fadeIn = false;
 export function setFade(b) {
   fadeIn = b;
@@ -15,6 +17,9 @@ export function getFade() {
 const auth = getAuth();
 
 function Navbar() {
+  const dbRef = ref(getDatabase());
+  const [userEUID, setUserEUID] = useState("");
+
   const [click, setClick] = useState(false);
   const [User, setUser] = useState("");
   const [clickLogin, setClickLogin] = useState(false);
@@ -24,6 +29,7 @@ function Navbar() {
   const closeMobileMenu = () => setClick(false);
   const handleClickLogin = () => setClickLogin(!clickLogin);
   const handleClickReg = () => setClickReg(!clickReg);
+  const [welcomeName, setWelcomeName] = useState("");
 
   const auth = getAuth();
 
@@ -45,14 +51,54 @@ function Navbar() {
       setUser(user);
       const uid = user.uid; // Current user's Unique ID (NOT related to EUID)
 
+      get(child(dbRef, "users"))
+        .then((snapShot) => {
+          let match = false;
+          if (snapShot.exists()) {
+            console.log("User uID: " + uid);
+
+            match = snapShot.forEach((curr) => {
+              const ID = curr.ref._path.pieces_[1];
+              //console.log(curr.ref._path.pieces_[1]);
+              //console.log(snapShot.child(ID).child("email").val());
+              let currUID = snapShot.child(ID).child("uid").val();
+              //console.log(curr);
+              //IDs.push(ID);
+              if (currUID === uid) {
+                // user1 = { eUID: ID, email: currEmail };
+                setUserEUID(ID);
+                setWelcomeName(ID);
+
+                return true;
+              }
+            });
+            return match;
+            //console.log(IDs);
+            //console.log(userEmail);
+          }
+        })
+        .then((match) => {
+          try {
+            if (match) {
+              // setError("Email already exists. Try logging in.");
+              // setButtonDisabled(true);
+              // throw Error("Email does not exist in system");
+            } else {
+              setWelcomeName(User.email);
+              // setError("");
+              // setButtonDisabled(false);
+            }
+          } catch (err) {
+            console.log(err.code);
+            // setError(err.message);
+          }
+        });
     } else {
       setUser("");
     }
   });
 
-  useEffect(() => {
-
-  });
+  useEffect(() => {});
 
   return (
     <>
@@ -112,7 +158,7 @@ function Navbar() {
                 Calendar
               </Link>
             </li>
-            
+
             <li className="nav-item">
               <Link
                 to="/#"

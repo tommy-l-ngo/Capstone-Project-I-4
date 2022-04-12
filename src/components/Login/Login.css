@@ -191,7 +191,8 @@ html,
 }
 
 body {
-  background-image: url(hip-square.png);
+  /* background:#fff; */
+  background-image: url(white-waves.webp);
   background-repeat: repeat;
 }
 .forgotpass {

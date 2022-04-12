@@ -1,169 +1,266 @@
 import { getDatabase, update } from "firebase/database";
 import React, { Component } from "react";
-import { Form, Button, Card, Container, InputGroup, FormControl } from "react-bootstrap";
-import firebase from "firebase/compat/app"
-import { ref, set} from "firebase/database"
+import {
+  Form,
+  Button,
+  Card,
+  Container,
+  InputGroup,
+  FormControl,
+} from "react-bootstrap";
+import firebase from "firebase/compat/app";
+import { ref, set } from "firebase/database";
+import "./CreateProject.css";
 import { initializeApp } from "firebase/app";
+import Navbar from "../Dashboard/Navbar";
 import MultiSelect from "./MultiSelect";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-
 const firebaseConfig = {
-    apiKey: "AIzaSyAu1kdEKPqTfL1XIjDF2l8rfG53FcdtVSM",
-    authDomain: "capstone-i4.firebaseapp.com",
-    databaseURL: "https://capstone-i4-default-rtdb.firebaseio.com",
-    projectId: "capstone-i4",
-    storageBucket: "capstone-i4.appspot.com",
-    messagingSenderId: "768427043765",
-    appId: "1:768427043765:web:6643185734fe346ddd07fc",
-    measurementId: "G-X8E63KZMT3"
-  };
+  apiKey: "AIzaSyAu1kdEKPqTfL1XIjDF2l8rfG53FcdtVSM",
+  authDomain: "capstone-i4.firebaseapp.com",
+  databaseURL: "https://capstone-i4-default-rtdb.firebaseio.com",
+  projectId: "capstone-i4",
+  storageBucket: "capstone-i4.appspot.com",
+  messagingSenderId: "768427043765",
+  appId: "1:768427043765:web:6643185734fe346ddd07fc",
+  measurementId: "G-X8E63KZMT3",
+};
 
 export default class EditProject extends Component {
-
-    constructor(props) {
-        super(props)
-        this.state = { projectName: '', description: '', date: new Date(), formValues: [{ tasks: ""}], students: null}
-        this.handleChange = this.handleChange.bind(this)
-        this.handleSubmit = this.handleSubmit.bind(this)
-        this.edit_project = this.edit_project.bind(this); 
-        
-    }
-    edit_project(project_name,project_description,project_tasks,project_date)
-    {   
-        const db = getDatabase(); 
-        set(ref(db, "projects/" + project_name ), {
-            description:project_description,
-            tasks:project_tasks,
-            date:project_date,
-        
-        }); 
-    }
-    handleSubmit(event) {
-        const { projectName, description, task, date, students } = this.state
-        event.preventDefault()
-        alert(JSON.stringify(this.state.formValues));
-        alert(`
+  constructor(props) {
+    super(props);
+    this.state = {
+      projectName: "",
+      description: "",
+      task: "",
+      date: "",
+      formValues: [{ tasks: "" }],
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.edit_project = this.edit_project.bind(this);
+  }
+  edit_project(project_name, project_description, project_tasks, project_date) {
+    const db = getDatabase();
+    set(ref(db, "projects/" + project_name), {
+      description: project_description,
+      tasks: project_tasks,
+      date: project_date,
+    });
+  }
+  handleSubmit(event) {
+    const { projectName, description, task, date } = this.state;
+    event.preventDefault();
+    alert(JSON.stringify(this.state.formValues));
+    alert(`
             ____Your Details____\n
             Title : ${projectName}
             Description : ${description}
             Task : ${task}
             Date : ${date}
-            Student : ${students}
-        `)
-        this.edit_project(this.state.projectName,this.state.description,this.state.task,this.state.date);
-    }
+        `);
+    this.edit_project(
+      this.state.projectName,
+      this.state.description,
+      this.state.task,
+      this.state.date
+    );
+  }
 
-    handleChange(event){
-        this.setState({
-          [event.target.name] : event.target.value
-        })
-    }
-    
-    handleStudentsChange(listOfStudents){
-        this.setState({
-          students : listOfStudents
-        }
-       )
-    }    
+  handleChange(event) {
+    this.setState({
+      // Computed property names
+      // keys of the objects are computed dynamically
+      [event.target.name]: event.target.value,
+    });
+  }
+  handleStudentsChange(listOfStudents) {
+    this.setState({
+      students: listOfStudents,
+    });
+  }
 
-    selectDate=(e)=>
-    {
-        this.setState({date:e})
-    }
+  handleChanges(i, e) {
+    let formValues = this.state.formValues;
+    formValues[i][e.target.name] = e.target.value;
+    this.setState({ formValues });
+  }
 
-    handleChanges(i, e) {
-        let formValues = this.state.formValues;
-        formValues[i][e.target.name] = e.target.value;
-        this.setState({ formValues });
-      }
-    
-      addFormFields() {
-        this.setState(({
-          formValues: [...this.state.formValues, { tasks: "" }]
-        }))
-      }
-    
-      removeFormFields(i) {
-        let formValues = this.state.formValues;
-        formValues.splice(i, 1);
-        this.setState({ formValues });
-      }
+  addFormFields() {
+    this.setState({
+      formValues: [...this.state.formValues, { tasks: "" }],
+    });
+  }
 
-    render() {
-        return (
-            
-            <div>
-                <Container className="d-flex align-item-center justify-content-center">
-                    <div className="w-100" style={{ maxWidth: "400px" }}>
-                        <Card className="editProject">
-                            <Card.Body>
-                                <h1>Edit Project</h1>
-                                <div className="w-100 text-center mt-2 text-danger" id="errorMessage"></div>
-                                <h3 style={{ lineHeight: '0px' }}></h3>
+  removeFormFields(i) {
+    let formValues = this.state.formValues;
+    formValues.splice(i, 1);
+    this.setState({ formValues });
+  }
 
-                                <h6>Project name</h6>
-                                <Form onSubmit={this.handleSubmit}>
-                                    <Form.Group id="projectName">
-                                        <Form.Label htmlFor="projectName" ></Form.Label>
-                                        <Form.Control 
-                                            type="text" 
-                                            id="projectName" 
-                                            name="projectName" 
-                                            placeholder="Project Name" 
-                                            value = {this.state.projectName}
-                                            onChange={this.handleChange}
-                                            required>
-                                        </Form.Control>
-                                    </Form.Group>
-                                    
-                                    <h6>Description</h6>
-                                    <Form.Group id="description">
-                                        <Form.Label htmlFor="description" ></Form.Label>
-                                        <Form.Control 
-                                            type="text" 
-                                            id="description" 
-                                            name="description" 
-                                            placeholder="Description" 
-                                            value = {this.state.description}
-                                            onChange={this.handleChange}
-                                            required>
-                                        </Form.Control>
-                                    </Form.Group>
+  render() {
+    return (
+      <div>
+        <Navbar />
+        <div className="cp-box">
+          {/* <Container className="d-flex align-item-center justify-content-center"> */}
+          <div className="w-100" style={{ maxWidth: "400px" }}>
+            <Card className="editProject">
+              <Card.Body>
+                <h1>Edit Project</h1>
+                <div
+                  className="w-100 text-center mt-2 text-danger"
+                  id="errorMessage"
+                ></div>
+                <h3 style={{ lineHeight: "0px" }}></h3>
 
+                <Form onSubmit={this.handleSubmit}>
+                  {/*<InputGroup size="sm" className="mb-3">
+    <InputGroup.Text id="inputGroup-sizing-sm">Small</InputGroup.Text>
+    <FormControl aria-label="Small" aria-describedby="inputGroup-sizing-sm" />
+        </InputGroup>*/}
 
-                                    <h6>Tasks</h6>
-                                    {this.state.formValues.map((element, index) => (
-                                        <div className="form-inline" key={index}>
-                                            <input type="text" name="tasks" value={element.tasks || ""} onChange={e => this.handleChanges(index, e)} />
-                                            {
-                                                index ? 
-                                                <button type="button"  className="button remove" onClick={() => this.removeFormFields(index)}>Remove</button> 
-                                                : null
-                                            }
-                                        </div>
-                                    ))}
-                                    <div className="button-section">
-                                        <button className="button add" type="button" onClick={() => this.addFormFields()}>Add</button>
-                                    </div>
-
-                                    <h6>Due Date</h6>
-                                    <DatePicker 
-                                        selected={this.state.date} 
-                                        onChange={this.selectDate}                                    
-                                    > </DatePicker>
-
-                                    <h6>Select Students</h6>
-                                    <MultiSelect onChange={this.handleStudentsChange.bind(this)}/>
-                                    
-                                    <Button type="submit">Submit</Button>
-                                </Form>
-                            </Card.Body>
-                        </Card>
+                  <Form.Group id="projectName">
+                    {/* <Form.Label htmlFor="projectName">Project Name</Form.Label> */}
+                    {/* <div className="inputField2"> */}
+                    <div className="form__group field">
+                      <input
+                        name="projectName"
+                        id="projectName"
+                        className="form__field"
+                        type="text"
+                        placeholder="Project Name"
+                        onChange={this.handleChange}
+                        required
+                      />
+                      <label htmlFor="projectName" className="form__label">
+                        Project Name
+                      </label>
+                      {/* </div> */}
                     </div>
-                </Container>
-            </div>
-        )
-    }
+                    {/* <Form.Control
+                          type="text"
+                          id="projectName"
+                          name="projectName"
+                          placeholder="Project Name"
+                          value={this.state.projectName}
+                          onChange={this.handleChange}
+                          required
+                        ></Form.Control> */}
+                  </Form.Group>
+
+                  <Form.Group id="description">
+                    <div className="form__group field">
+                      <input
+                        id="description"
+                        name="description"
+                        className="form__field"
+                        placeholder="Description"
+                        // value={this.state.description}
+                        onChange={this.handleChange}
+                        required
+                      />
+                      <label htmlFor="description" className="form__label">
+                        Description
+                      </label>
+                    </div>
+
+                    {/* <Form.Label htmlFor="description"></Form.Label>
+                        <Form.Control
+                          type="text"
+                          id="description"
+                          name="description"
+                          placeholder="Description"
+                          value={this.state.description}
+                          onChange={this.handleChange}
+                          required
+                        ></Form.Control> */}
+                  </Form.Group>
+
+                  {this.state.formValues.map((element, index) => (
+                    <div className="form-inline" key={index}>
+                      <div className="form__group field">
+                        <input
+                          id="tasks"
+                          name="tasks"
+                          className="form__field"
+                          placeholder="Task"
+                          value={element.tasks || ""}
+                          onChange={(e) => this.handleChanges(index, e)}
+                        />
+                        <label htmlFor="tasks" className="form__label">
+                          Task
+                        </label>
+                      </div>
+
+                      {/* <label>Task</label>
+                          <input
+                            type="text"
+                            name="tasks"
+                            value={element.tasks || ""}
+                            onChange={(e) => this.handleChanges(index, e)}
+                          /> */}
+                      {index ? (
+                        <button
+                          type="button"
+                          className="button remove"
+                          onClick={() => this.removeFormFields(index)}
+                        >
+                          Remove
+                        </button>
+                      ) : null}
+                    </div>
+                  ))}
+                  <div className="button-section">
+                    <button
+                      className="button add"
+                      type="button"
+                      onClick={() => this.addFormFields()}
+                    >
+                      Add
+                    </button>
+                  </div>
+
+                  <Form.Group id="date">
+                    <div className="form__group field">
+                      <input
+                        id="date"
+                        name="date"
+                        className="form__field"
+                        placeholder="Date"
+                        value={this.state.date}
+                        onChange={this.handleChange}
+                      />
+                      <label htmlFor="date" className="form__label">
+                        Date
+                      </label>
+                    </div>
+
+                    {/* <Form.Label htmlFor="date"></Form.Label>
+                        <Form.Control
+                          type="text"
+                          id="date"
+                          name="date"
+                          placeholder="Due Date"
+                          value={this.state.date}
+                          onChange={this.handleChange}
+                          required
+                        ></Form.Control> */}
+                  </Form.Group>
+                  <MultiSelect
+                    onChange={this.handleStudentsChange.bind(this)}
+                  />
+
+                  <Button type="submit">Submit</Button>
+                </Form>
+              </Card.Body>
+            </Card>
+          </div>
+          {/* </Container> */}
+        </div>
+      </div>
+    );
+  }
 }
