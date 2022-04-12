@@ -14,6 +14,8 @@ import "./CreateProject.css";
 import { initializeApp } from "firebase/app";
 import Navbar from "../Dashboard/Navbar";
 import MultiSelect from "./MultiSelect";
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAu1kdEKPqTfL1XIjDF2l8rfG53FcdtVSM",
@@ -33,7 +35,7 @@ export default class EditProject extends Component {
       projectName: "",
       description: "",
       task: "",
-      date: "",
+      date: new Date(),
       formValues: [{ tasks: "" }],
     };
     this.handleChange = this.handleChange.bind(this);
@@ -79,6 +81,10 @@ export default class EditProject extends Component {
       students: listOfStudents,
     });
   }
+
+  selectDate=(e)=>{
+    this.setState({date:e})
+}
 
   handleChanges(i, e) {
     let formValues = this.state.formValues;
@@ -223,14 +229,21 @@ export default class EditProject extends Component {
 
                   <Form.Group id="date">
                     <div className="form__group field">
-                      <input
+                      <DatePicker
+                        id="date"
+                        name="date"
+                        className="form__field"
+                        selected={this.state.date}
+                        onChange={this.selectDate}
+                      />
+                      {/* <input
                         id="date"
                         name="date"
                         className="form__field"
                         placeholder="Date"
                         value={this.state.date}
                         onChange={this.handleChange}
-                      />
+                      /> */}
                       <label htmlFor="date" className="form__label">
                         Date
                       </label>
