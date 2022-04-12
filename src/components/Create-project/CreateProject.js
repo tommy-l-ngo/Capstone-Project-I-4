@@ -4,7 +4,8 @@ import firebase from "firebase/compat/app"
 import {getDatabase, ref, set} from "firebase/database"
 import { initializeApp } from "firebase/app";
 import MultiSelect from "./MultiSelect";
-import Picker from "./Picker";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 
 
@@ -28,10 +29,12 @@ export default class CreateProject extends Component {
     
     constructor(props) {
         super(props)
-        this.state = { projectName: '', description: '', /*task: '',*/ date: Date(), formValues: [{ tasks: "" }], students: null }
+        this.state = { projectName: '', description: '', date: new Date(), formValues: [{ tasks: "" }], students: null }
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
-        this.add_project = this.add_project.bind(this); 
+        this.add_project = this.add_project.bind(this);
+
+        
     }
     
     
@@ -83,11 +86,12 @@ export default class CreateProject extends Component {
         }
        )
     }
-    handleDateChange(pickDate){
-        this.setState({
-            date : pickDate
-        })
-    }
+    
+    selectDate=(e)=>
+        {
+            this.setState({date:e})
+        }
+
     handleChanges(i, e) {
         let formValues = this.state.formValues;
         formValues[i][e.target.name] = e.target.value;
@@ -149,7 +153,6 @@ export default class CreateProject extends Component {
                                     <h6>Tasks</h6>
                                     {this.state.formValues.map((element, index) => (
                                         <div className="form-inline" key={index}>
-                                            {/* <label>Task</label> */}
                                             <input type="text" name="tasks" value={element.tasks || ""} onChange={e => this.handleChanges(index, e)} />
                                             {
                                                 index ? 
@@ -164,8 +167,10 @@ export default class CreateProject extends Component {
 
 
                                     <h6>Due Date</h6>
-                                    
-                                    <Picker onChange={this.handleDateChange.bind(this)}/>
+                                    <DatePicker 
+                                        selected={this.state.date} 
+                                        onChange={this.selectDate}                                    
+                                    > </DatePicker>
                                     
                                     {/* <Form.Group id="date">
                                         <Form.Label htmlFor="date"></Form.Label>

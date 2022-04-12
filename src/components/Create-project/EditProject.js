@@ -5,6 +5,8 @@ import firebase from "firebase/compat/app"
 import { ref, set} from "firebase/database"
 import { initializeApp } from "firebase/app";
 import MultiSelect from "./MultiSelect";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 
 const firebaseConfig = {
@@ -22,7 +24,7 @@ export default class EditProject extends Component {
 
     constructor(props) {
         super(props)
-        this.state = { projectName: '', description: '', task: '', date: '', formValues: [{ tasks: ""}], students: null}
+        this.state = { projectName: '', description: '', date: new Date(), formValues: [{ tasks: ""}], students: null}
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
         this.edit_project = this.edit_project.bind(this); 
@@ -65,6 +67,12 @@ export default class EditProject extends Component {
         }
        )
     }    
+
+    selectDate=(e)=>
+    {
+        this.setState({date:e})
+    }
+
     handleChanges(i, e) {
         let formValues = this.state.formValues;
         formValues[i][e.target.name] = e.target.value;
@@ -95,6 +103,7 @@ export default class EditProject extends Component {
                                 <div className="w-100 text-center mt-2 text-danger" id="errorMessage"></div>
                                 <h3 style={{ lineHeight: '0px' }}></h3>
 
+                                <h6>Project name</h6>
                                 <Form onSubmit={this.handleSubmit}>
                                     <Form.Group id="projectName">
                                         <Form.Label htmlFor="projectName" ></Form.Label>
@@ -109,6 +118,7 @@ export default class EditProject extends Component {
                                         </Form.Control>
                                     </Form.Group>
                                     
+                                    <h6>Description</h6>
                                     <Form.Group id="description">
                                         <Form.Label htmlFor="description" ></Form.Label>
                                         <Form.Control 
@@ -122,22 +132,10 @@ export default class EditProject extends Component {
                                         </Form.Control>
                                     </Form.Group>
 
-                                    <Form.Group id="task">
-                                        <Form.Label htmlFor="task" ></Form.Label>
-                                        <Form.Control 
-                                            type="text" 
-                                            id="task" 
-                                            name="task" 
-                                            placeholder="Tasks" 
-                                            value = {this.state.task}
-                                            onChange={this.handleChange}
-                                            required>
-                                        </Form.Control>
-                                    </Form.Group>
-                                    {/*this task field may change based on our scope later*/}
+
+                                    <h6>Tasks</h6>
                                     {this.state.formValues.map((element, index) => (
                                         <div className="form-inline" key={index}>
-                                            <label>Task</label>
                                             <input type="text" name="tasks" value={element.tasks || ""} onChange={e => this.handleChanges(index, e)} />
                                             {
                                                 index ? 
@@ -150,19 +148,13 @@ export default class EditProject extends Component {
                                         <button className="button add" type="button" onClick={() => this.addFormFields()}>Add</button>
                                     </div>
 
-                                    <Form.Group id="date">
-                                        <Form.Label htmlFor="date"></Form.Label>
-                                        <Form.Control 
-                                            type="text" 
-                                            id="date" 
-                                            name="date" 
-                                            placeholder="Due Date" 
-                                            value = {this.state.date}
-                                            onChange={this.handleChange}
-                                            required>
-                                        </Form.Control>
-                                    </Form.Group>
+                                    <h6>Due Date</h6>
+                                    <DatePicker 
+                                        selected={this.state.date} 
+                                        onChange={this.selectDate}                                    
+                                    > </DatePicker>
 
+                                    <h6>Select Students</h6>
                                     <MultiSelect onChange={this.handleStudentsChange.bind(this)}/>
                                     
                                     <Button type="submit">Submit</Button>
