@@ -1,5 +1,5 @@
 import Navbar from "../Dashboard/Navbar"
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from "@fullcalendar/interaction" // needed for dayClick
@@ -24,17 +24,18 @@ export function Calendar() {
     {
         console.log("No User");
     }
+
     const db = getDatabase();
     const [modalOpen, setModalOpen] = useState(false);
     const calendarRef = React.useRef();
-    const [userEUID, setUserEUID] = useState(user.displayName); //FIX ME: replace with logged in user
-    const [userEvents, setUserEvents] = useState(" ");
+    const [userEUID, setUserEUID] = useState(user.displayName);
+    const [userEvents, setUserEvents] = useState("");
+    let eventList = [];
 
     // get calendar events of userEUID from database
     get(ref(db, "calendars/" + userEUID)).then((snapshot) => {
         if (snapshot.exists()) {
             //loop through calendar events from user
-            let eventList = []
             snapshot.forEach( (eventShot) => {
                 var evMeetDate = eventShot.val().date;
                 var evMeetEndDate = eventShot.val().endDate;
@@ -42,21 +43,31 @@ export function Calendar() {
                 let evTime = eventShot.val().time;
                 var evTitle = evTime + " " + eventShot.val().title + " " + evProject;
                 var event = { title: evTitle, start: evMeetDate, end: evMeetEndDate};
-                eventList.push(event)
+                eventList.push(event);
             })
-            setUserEvents(eventList);
         } else {
             console.log("No calendar data available");
-            let eventList = [];
         }
     }).catch((error) => {
         console.error(error);
     });
 
+    /*
+    useEffect(() => {
+        console.log("set");
+        setUserEvents(eventList); // FIX ME: Not rendering
+    },[]);
+    */
+    function showEvents()
+    {
+        setUserEvents(eventList);
+    }
+
     return (
         <div style={{ backgroundColor: 'white' }}>
             <Navbar />
             <button color = "red" onClick={() => setModalOpen(true)}>Add Event</button>
+            <button onClick={() => showEvents()}>Show Events</button>
             <div style={{ position: "relative", zIndex: 0, paddingTop: "20px" }}>
                 <FullCalendar
                     ref={calendarRef}

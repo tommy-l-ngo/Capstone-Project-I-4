@@ -9,6 +9,7 @@ import { getAuth, auth } from "firebase/auth";
 
 // Exports data to database
 export default function ({ isOpen, onClose}) {
+    const user = getAuth().currentUser;
     const [meetDate, setMeetDate] = useState(new Date());
     const [meetEndDate, setMeetEndDate] = useState(new Date());
     const [meetHost, setHost] = useState(" ");
@@ -27,7 +28,7 @@ export default function ({ isOpen, onClose}) {
 
     const db = getDatabase();
     
-    const userEUID = "exa0012"; //FIX ME: Still strying to figure out how to add the current user euid.
+    const userEUID = user.displayName; //FIX ME: Still strying to figure out how to add the current user euid.
 
     function onSubmit() {
         set(ref(db, "calendars/" + userEUID + "/" + meetID), {
@@ -43,7 +44,7 @@ export default function ({ isOpen, onClose}) {
         });
         onClose();
 
-         // add meeting to guest calendars in database
+          // add meeting to guest calendars in database
         //  for (var i=0; i<meetGuests.length; i++){
         //     set(ref(db, "calendars/" + meetGuests[i] + "/" + meetID), {
         //         host: meetHost,
@@ -64,13 +65,13 @@ export default function ({ isOpen, onClose}) {
 
     // FIXME: Form, please style accordingly.
     return (
-        <Modal isOpen={isOpen} onClose={onClose}>
+        <Modal isOpen={isOpen} onClose={onClose} ariaHideApp={false}>
             <Container className="d-flex align-item-center justify-content-center">
                 {/* <DatePickerButton /> */}
                 <form onSubmit={onSubmit} style={{ margin: "50px" }}>
                     <div>
                         <h6>Host</h6>
-                        <input placeholder={userEUID} value={userEUID} disabled="true"/*onChange={(e) => setHost(e.target.value)} dateFormat='dd/MM/yyyy'*/ />
+                        <input placeholder={userEUID} value={userEUID} disabled="true" />
                     </div>
                     <div>
                         <h6>Guests</h6>
