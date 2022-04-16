@@ -29,45 +29,41 @@ export function Calendar() {
     const [modalOpen, setModalOpen] = useState(false);
     const calendarRef = React.useRef();
     const [userEUID, setUserEUID] = useState(user.displayName);
-    const [userEvents, setUserEvents] = useState("");
+    const [userEvents, setUserEvents] = useState([]);
     let eventList = [];
 
-    // get calendar events of userEUID from database
-    get(ref(db, "calendars/" + userEUID)).then((snapshot) => {
-        if (snapshot.exists()) {
-            //loop through calendar events from user
-            snapshot.forEach( (eventShot) => {
-                var evMeetDate = eventShot.val().date;
-                var evMeetEndDate = eventShot.val().endDate;
-                let evProject = eventShot.val().project;
-                let evTime = eventShot.val().time;
-                var evTitle = evTime + " " + eventShot.val().title + " " + evProject;
-                var event = { title: evTitle, start: evMeetDate, end: evMeetEndDate};
-                eventList.push(event);
-            })
-        } else {
-            console.log("No calendar data available");
-        }
-    }).catch((error) => {
-        console.error(error);
-    });
-
-    /*
+    function getCalendarEUID(){
+        // get calendar events of userEUID from database
+        get(ref(db, "calendars/" + userEUID)).then((snapshot) => {
+            if (snapshot.exists()) {
+                //loop through calendar events from user
+                snapshot.forEach( (eventShot) => {
+                    var evMeetDate = eventShot.val().date;
+                    var evMeetEndDate = eventShot.val().endDate;
+                    let evProject = eventShot.val().project;
+                    let evTime = eventShot.val().time;
+                    var evTitle = evTime + " " + eventShot.val().title + " " + evProject;
+                    var event = { title: evTitle, start: evMeetDate, end: evMeetEndDate};
+                    eventList.push(event);
+                })
+                console.log(eventList);
+                setUserEvents(eventList);
+            } else {
+                console.log("No calendar data available");
+            }
+        }).catch((error) => {
+            console.error(error);
+        });
+    }//getCalendarEUID()
+    
     useEffect(() => {
-        console.log("set");
-        setUserEvents(eventList); // FIX ME: Not rendering
-    },[]);
-    */
-    function showEvents()
-    {
-        setUserEvents(eventList);
-    }
+        getCalendarEUID();
+    },[modalOpen]);
 
     return (
         <div style={{ backgroundColor: 'white' }}>
             <Navbar />
             <button color = "red" onClick={() => setModalOpen(true)}>Add Event</button>
-            <button onClick={() => showEvents()}>Show Events</button>
             <div style={{ position: "relative", zIndex: 0, paddingTop: "20px" }}>
                 <FullCalendar
                     ref={calendarRef}
@@ -83,7 +79,7 @@ export function Calendar() {
                       }}     
                 />
             </div>
-            <AddMeeting isOpen={modalOpen} onClose={() => setModalOpen(false)}  />
+            <AddMeeting isOpen={modalOpen} onClose={() => setModalOpen(false)}/>
         </div>
     )
 }

@@ -52,7 +52,6 @@ export default function ({ isOpen, onClose}) {
             notes: meetNotes,
             type: "meeting"
         });
-        onClose();
 
         // add meeting to guest calendars in database
         for (var i=0; i<meetGuests.length; i++){
@@ -67,6 +66,7 @@ export default function ({ isOpen, onClose}) {
                 type: "meeting"
             });
         }
+        onClose();
     }//onSubmit()
 
     function cancelSubmit() {
