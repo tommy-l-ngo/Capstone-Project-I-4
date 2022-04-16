@@ -58,7 +58,7 @@ export function Calendar() {
     
     useEffect(() => {
         getCalendarEUID();
-    },[modalOpen]);
+    },[modalOpen]); //executes on both page load and modalOpen change
 
     return (
         <div style={{ backgroundColor: 'white' }}>
