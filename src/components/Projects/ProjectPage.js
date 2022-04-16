@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Button } from '../Dashboard/Button';
+import { useState } from 'react';
 import '../Dashboard/Dashboard.css';
 import Navbar from '../Dashboard/Navbar';
 import data from '../Dashboard/data';
@@ -12,7 +14,7 @@ function ProjectPage() {
     
     const getData = data.cardData[id - 1];
 
-    console.warn(getData);
+    console.warn(getData); 
     return (
         <div>
             <Navbar />
@@ -25,6 +27,16 @@ function ProjectPage() {
                 <Comments
                 currentUserId="1"
                 />
+            </div>
+            <div className = "task_btn">
+            <Button
+                page="Tasks"
+                className="btns"
+                buttonStyle="btn--primary"
+                buttonSize="btn--medium"
+            >
+                Tasks
+            </Button>
             </div>
         </div>
   );
