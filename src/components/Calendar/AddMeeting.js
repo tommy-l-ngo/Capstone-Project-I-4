@@ -6,13 +6,15 @@ import DatePicker from "react-datepicker";
 import TimePicker from 'react-time-picker';
 import "react-datepicker/dist/react-datepicker.css";
 import { getAuth, auth } from "firebase/auth";
+import MultiSelect from "../Create-project/MultiSelect";
 
 // Exports data to database
 export default function ({ isOpen, onClose}) {
     const user = getAuth().currentUser;
+    const userEUID = user.displayName;
     const [meetDate, setMeetDate] = useState(new Date());
     const [meetEndDate, setMeetEndDate] = useState(new Date());
-    const [meetHost, setHost] = useState(" ");
+    //const [meetHost, setHost] = useState(" ");
     const [meetGuests, setGuests] = useState([]);
     const [meetProj, setProj] = useState(" ");
     const [meetTime, setTime] = useState('10:00');
@@ -26,10 +28,18 @@ export default function ({ isOpen, onClose}) {
     const endDate = meetEndDateISO.substring(0, 10);
     const meetID = startDate + "_" + meetTime + "_" + meetProj;
 
-    const db = getDatabase();
-    
-    const userEUID = user.displayName; //FIX ME: Still strying to figure out how to add the current user euid.
+    // use MultiSelect to select students (guests)
+    function handleStudentSelect(ev)
+    {
+        let studentList = []
+        for (let i in ev)
+        {
+            studentList.push(ev[i].value);
+        }
+        setGuests(studentList);
+    }
 
+    const db = getDatabase();
     function onSubmit() {
         set(ref(db, "calendars/" + userEUID + "/" + meetID), {
             date: startDate,
@@ -44,20 +54,20 @@ export default function ({ isOpen, onClose}) {
         });
         onClose();
 
-          // add meeting to guest calendars in database
-        //  for (var i=0; i<meetGuests.length; i++){
-        //     set(ref(db, "calendars/" + meetGuests[i] + "/" + meetID), {
-        //         host: meetHost,
-        //         guests: meetGuests,
-        //         date: meetDate,
-        //         endDate: meetEndDate,
-        //         project: meetProj,
-        //         title: meetTitle,
-        //         notes: meetNotes,
-        //         type: "meeting"
-        //     });
-        // }
-    }
+        // add meeting to guest calendars in database
+        for (var i=0; i<meetGuests.length; i++){
+            set(ref(db, "calendars/" + meetGuests[i] + "/" + meetID), {
+                host: userEUID,
+                guests: meetGuests,
+                date: meetDate,
+                endDate: meetEndDate,
+                project: meetProj,
+                title: meetTitle,
+                notes: meetNotes,
+                type: "meeting"
+            });
+        }
+    }//onSubmit()
 
     function cancelSubmit() {
         onClose();
@@ -75,7 +85,7 @@ export default function ({ isOpen, onClose}) {
                     </div>
                     <div>
                         <h6>Guests</h6>
-                        <input placeholder="Guests" value={meetGuests} onChange={(e) => setGuests(e.target.value)} />
+                        <MultiSelect onChange={(e) => handleStudentSelect(e)}/>
                     </div>
                     <div>
                         <h6>Start Date</h6>
@@ -104,6 +114,7 @@ export default function ({ isOpen, onClose}) {
                         <h6>Notes</h6>
                         <input placeholder="Notes" value={meetNotes} onChange={(e) => setNotes(e.target.value)} />
                     </div>
+                    
                     <button onClick={onSubmit}>Submit</button>
                     <button onClick={cancelSubmit}>Cancel</button>
                 </form>
