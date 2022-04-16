@@ -56,11 +56,12 @@ export default function ({ isOpen, onClose}) {
         // add meeting to guest calendars in database
         for (var i=0; i<meetGuests.length; i++){
             set(ref(db, "calendars/" + meetGuests[i] + "/" + meetID), {
+                date: startDate,
+                endDate: endDate,
                 host: userEUID,
                 guests: meetGuests,
-                date: meetDate,
-                endDate: meetEndDate,
                 project: meetProj,
+                time: meetTime,
                 title: meetTitle,
                 notes: meetNotes,
                 type: "meeting"
