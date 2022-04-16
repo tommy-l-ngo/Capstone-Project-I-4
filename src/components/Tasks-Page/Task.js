@@ -136,16 +136,7 @@ export default function Task(props) {
         >
           X
         </button>
-        {collapsed && (
-          <button
-            onClick={() => {
-              setFormAction("delete");
-            }}
-            className="button delete"
-          >
-            X
-          </button>
-        )}
+        
       </form>
       <button onClick={handleMoveRight} className="button moveTask">
         &#187;
