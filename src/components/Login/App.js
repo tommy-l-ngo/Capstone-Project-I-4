@@ -13,6 +13,7 @@ import {
 } from "react-router-dom";
 import CreateProject from "../Create-project/CreateProject";
 import EditProject from "../Create-project/EditProject";
+import Tasks from "../Tasks-Page/Tasks";
 import Home from "../Dashboard/pages/Home";
 import RegisterAs from "./RegisterAs";
 import HomeLoginPopup from "../Dashboard/pages/HomeLoginPopup";
@@ -128,6 +129,7 @@ class App extends React.Component {
               <Route path="/EditProject" element={<ProtectedRoute><EditProject /></ProtectedRoute>} />
               <Route path="/Calendar" element={<ProtectedRoute><Calendar /></ProtectedRoute>} />
               <Route path="/Projects/:id" exact element={<ProtectedRoute><ProjectPage /></ProtectedRoute>} />
+              <Route path="/Tasks" element={<ProtectedRoute><Tasks /></ProtectedRoute>} />
             </Switch>
           </Router>
           </AuthProvider>
