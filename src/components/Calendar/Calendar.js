@@ -43,7 +43,7 @@ export function Calendar() {
                     let evProject = eventShot.val().project;
                     let evTime = eventShot.val().time;
                     var evTitle = evTime + " " + eventShot.val().title + " " + evProject;
-                    var event = { title: evTitle, start: evMeetDate, end: evMeetEndDate};
+                    var event = { title: evTitle, start: evMeetDate, end: evMeetEndDate, id:eventShot.key};
                     eventList.push(event);
                 })
                 console.log(eventList);
@@ -55,6 +55,20 @@ export function Calendar() {
             console.error(error);
         });
     }//getCalendarEUID()
+
+    function eventClickFunc(ev)
+    {   
+        var eventKey = ev.event.id;
+        // loop through userEvents, look for matching key(event id)
+        for (var i=0; i<userEvents.length; i++){
+            if (userEvents[i].id == eventKey)
+            {
+                console.log(userEvents[i]);
+                alert(userEvents[i].id);
+                break;
+            }
+        }
+    }//eventClickFunc()
     
     useEffect(() => {
         getCalendarEUID();
@@ -76,7 +90,8 @@ export function Calendar() {
                         center: 'title',
                         right: "dayGridMonth,timeGridWeek,timeGridDay"
                         
-                      }}     
+                      }}
+                    eventClick={(e) => eventClickFunc(e)}
                 />
             </div>
             <AddMeeting isOpen={modalOpen} onClose={() => setModalOpen(false)}/>
