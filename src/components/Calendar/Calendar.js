@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from "@fullcalendar/interaction" // needed for dayClick
-import { getDatabase, set, ref, get } from "firebase/database";
+import { getDatabase, set, ref, get, update, remove } from "firebase/database";
 import "react-datetime/css/react-datetime.css";
 import AddMeeting from "./AddMeeting"
 import timeGridPlugin from "@fullcalendar/timegrid";
@@ -55,7 +55,24 @@ export function Calendar() {
             console.error(error);
         });
     }//getCalendarEUID()
+    
+    function updateCalendarEUID(){
+        update(ref(db, "calendars/" + userEUID),{
+            date: startDate,
+            endDate: endDate,
+            guests: meetGuests,
+            project: meetProj,
+            time: meetTime,
+            title: meetTitle,
+             notes: meetNotes
+        }
+        )
+    }
+    function deleteCalendarEUID(){
+        remove(ref(db, "calendars/" + userEUID))
 
+    }
+    
     function eventClickFunc(ev)
     {   
         var eventKey = ev.event.id;
@@ -65,6 +82,7 @@ export function Calendar() {
             {
                 console.log(userEvents[i]);
                 alert(userEvents[i].id);
+                deleteCalendarEUID(eventKey);
                 break;
             }
         }
