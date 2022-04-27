@@ -1,15 +1,18 @@
 import Modal from 'react-modal';
 import React, { useState, useEffect } from 'react';
 import { Container } from "react-bootstrap";
-import { getDatabase, get, ref} from "firebase/database";
+import { getDatabase, get, ref, update, remove } from "firebase/database";
 import DatePicker from "react-datepicker";
 import TimePicker from 'react-time-picker';
 import "react-datepicker/dist/react-datepicker.css";
 import { getAuth, auth } from "firebase/auth";
 import MultiSelect from "../Create-project/MultiSelect";
 
+
 // Exports data to database
 export default function ({ isOpen, onClose, data}) {
+    
+    const db = getDatabase();
     const user = getAuth().currentUser;
     const userEUID = user.displayName;
     const [meetDate, setMeetDate] = useState(new Date());
@@ -66,6 +69,16 @@ export default function ({ isOpen, onClose, data}) {
 
    
     function onSubmit() {
+        update(ref(db, "calendars/" + userEUID+"/"+meetID),{
+            date: startDate,
+            endDate: endDate,
+            guests: meetGuests,
+            project: meetProj,
+            time: meetTime,
+            title: meetTitle,
+             notes: meetNotes
+        }
+        )
         /*
         set(ref(db, "calendars/" + userEUID + "/" + meetID), {
             date: startDate,
@@ -100,6 +113,13 @@ export default function ({ isOpen, onClose, data}) {
     function cancelSubmit() {
         onClose();
     }
+
+    
+    function deleteCalendarEUID(){
+        remove(ref(db, "calendars/" + userEUID))
+        onClose();
+    }
+    
 
     useEffect(() => {
         console.log("HEllo");
@@ -150,6 +170,8 @@ export default function ({ isOpen, onClose, data}) {
                     </div>
                     
                     <button onClick={onSubmit}>Submit</button>
+                    
+                    <button onClick={deleteCalendarEUID}>Delete</button>
                     <button onClick={cancelSubmit}>Cancel</button>
                 </form>
             </Container>
