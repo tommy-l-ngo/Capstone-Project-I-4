@@ -8,6 +8,7 @@ import "react-datetime/css/react-datetime.css";
 import AddMeeting from "./AddMeeting"
 import timeGridPlugin from "@fullcalendar/timegrid";
 import { getAuth, auth, onAuthStateChanged } from "firebase/auth";
+import EditMeeting from "./EditMeeting"
 
 
 export function Calendar() {
@@ -27,10 +28,12 @@ export function Calendar() {
 
     const db = getDatabase();
     const [modalOpen, setModalOpen] = useState(false);
+    const [modalOpen2, setModalOpen2] = useState(false);
     const calendarRef = React.useRef();
     const [userEUID, setUserEUID] = useState(user.displayName);
     const [userEvents, setUserEvents] = useState([]);
     let eventList = [];
+    const [modalData, setModalData] = useState("");
 
     function getCalendarEUID(){
         // get calendar events of userEUID from database
@@ -56,6 +59,7 @@ export function Calendar() {
         });
     }//getCalendarEUID()
     
+    /*
     function updateCalendarEUID(){
         update(ref(db, "calendars/" + userEUID),{
             date: startDate,
@@ -72,6 +76,7 @@ export function Calendar() {
         remove(ref(db, "calendars/" + userEUID))
 
     }
+    */
     
     function eventClickFunc(ev)
     {   
@@ -80,9 +85,10 @@ export function Calendar() {
         for (var i=0; i<userEvents.length; i++){
             if (userEvents[i].id == eventKey)
             {
-                console.log(userEvents[i]);
-                alert(userEvents[i].id);
-                deleteCalendarEUID(eventKey);
+                console.log(userEvents[i].id);
+                setModalData(eventKey);
+                setModalOpen2(true);
+                //deleteCalendarEUID(eventKey);
                 break;
             }
         }
@@ -113,6 +119,7 @@ export function Calendar() {
                 />
             </div>
             <AddMeeting isOpen={modalOpen} onClose={() => setModalOpen(false)}/>
+            <EditMeeting isOpen={modalOpen2} onClose={() => setModalOpen2(false)} data={modalData}/>
         </div>
     )
 }
