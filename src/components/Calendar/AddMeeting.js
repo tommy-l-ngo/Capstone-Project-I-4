@@ -14,7 +14,6 @@ export default function ({ isOpen, onClose}) {
     const userEUID = user.displayName;
     const [meetDate, setMeetDate] = useState(new Date());
     const [meetEndDate, setMeetEndDate] = useState(new Date());
-    //const [meetHost, setHost] = useState(" ");
     const [meetGuests, setGuests] = useState([]);
     const [meetProj, setProj] = useState(" ");
     const [meetTime, setTime] = useState('10:00');

@@ -31,9 +31,7 @@ export default function ({ isOpen, onClose, data}) {
     const endDate = meetEndDateISO.substring(0, 10);
     const meetID = startDate + "_" + meetTime + "_" + meetProj;
 
-    console.log("Event key:", data)
     const eventKey = data;
-
     
     function getMeetingDetails()
     {
@@ -49,7 +47,6 @@ export default function ({ isOpen, onClose, data}) {
                 setNotes(snapshot.val().notes)
             } else {
                 console.log("Meeting not found");
-                console.log("calendars/" + userEUID + eventKey);
             }
         }).catch((error) => {
             console.error(error);
@@ -69,7 +66,7 @@ export default function ({ isOpen, onClose, data}) {
 
    
     function onSubmit() {
-        update(ref(db, "calendars/" + userEUID+"/"+meetID),{
+        update(ref(db, "calendars/" + userEUID+"/" + eventKey),{
             date: startDate,
             endDate: endDate,
             guests: meetGuests,
@@ -79,34 +76,6 @@ export default function ({ isOpen, onClose, data}) {
              notes: meetNotes
         }
         )
-        /*
-        set(ref(db, "calendars/" + userEUID + "/" + meetID), {
-            date: startDate,
-            endDate: endDate,
-            host: userEUID,
-            guests: meetGuests,
-            project: meetProj,
-            time: meetTime,
-            title: meetTitle,
-            notes: meetNotes,
-            type: "meeting"
-        });
-
-        // add meeting to guest calendars in database
-        for (var i=0; i<meetGuests.length; i++){
-            set(ref(db, "calendars/" + meetGuests[i] + "/" + meetID), {
-                date: startDate,
-                endDate: endDate,
-                host: userEUID,
-                guests: meetGuests,
-                project: meetProj,
-                time: meetTime,
-                title: meetTitle,
-                notes: meetNotes,
-                type: "meeting"
-            });
-        }
-        */
         onClose();
     }//onSubmit()
 
@@ -122,7 +91,6 @@ export default function ({ isOpen, onClose, data}) {
     
 
     useEffect(() => {
-        console.log("HEllo");
         getMeetingDetails();
     },[isOpen]);
 
