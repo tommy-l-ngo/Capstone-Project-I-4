@@ -73,22 +73,20 @@ export default function ({ isOpen, onClose, data}) {
             project: meetProj,
             time: meetTime,
             title: meetTitle,
-             notes: meetNotes
+            notes: meetNotes
         }
         )
         onClose();
     }//onSubmit()
-
+    
+    function deleteCalendarEUID(){
+        remove(ref(db, "calendars/" + userEUID+"/" + eventKey))
+        onClose();
+    }
+    
     function cancelSubmit() {
         onClose();
     }
-
-    
-    function deleteCalendarEUID(){
-        remove(ref(db, "calendars/" + userEUID))
-        onClose();
-    }
-    
 
     useEffect(() => {
         getMeetingDetails();
