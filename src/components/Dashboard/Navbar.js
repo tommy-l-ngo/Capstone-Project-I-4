@@ -21,7 +21,7 @@ function Navbar() {
   const [userEUID, setUserEUID] = useState("");
 
   const [click, setClick] = useState(false);
-  const [User, setUser] = useState("");
+  const [User, setUser] = useState(null);
   const [clickLogin, setClickLogin] = useState(false);
   const [clickReg, setClickReg] = useState(false);
   const [dName, setDName] = useState("");
@@ -67,7 +67,8 @@ function Navbar() {
               if (currUID === uid) {
                 // user1 = { eUID: ID, email: currEmail };
                 setUserEUID(ID);
-                setWelcomeName(ID);
+                const name = snapShot.child(ID).child("firstName").val();
+                setWelcomeName(name);
 
                 return true;
               }
@@ -113,7 +114,7 @@ function Navbar() {
           </div>
           {User ? (
             <div className="navbar-logout-container">
-              <div>Welcome, {User.displayName}</div>
+              <div>Welcome, &nbsp;{welcomeName}</div>
               <div className="logOutBtn">
                 <button className="navbar-login-box" onClick={handleLogout}>
                   Log Out
