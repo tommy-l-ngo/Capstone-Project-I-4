@@ -6,7 +6,7 @@ export const getComments = async () => {
         username: "Tommy",
         userId: "1",
         parentId: null,
-        createdAt: "2021-08-16T23:00:33.010+02:00",
+        createdAt: "2022-05-01T23:00:33.010+02:00",
       },
       {
         id: "2",
@@ -14,7 +14,7 @@ export const getComments = async () => {
         username: "Brandon",
         userId: "2",
         parentId: null,
-        createdAt: "2021-08-16T23:00:33.010+02:00",
+        createdAt: "2022-05-01T23:00:33.010+02:00",
       },
       {
         id: "3",
@@ -22,7 +22,7 @@ export const getComments = async () => {
         username: "Brandon",
         userId: "2",
         parentId: "1",
-        createdAt: "2021-08-16T23:00:33.010+02:00",
+        createdAt: "2022-05-01T23:00:33.010+02:00",
       },
       {
         id: "4",
@@ -30,7 +30,7 @@ export const getComments = async () => {
         username: "Brandon",
         userId: "2",
         parentId: "2",
-        createdAt: "2021-08-16T23:00:33.010+02:00",
+        createdAt: "2022-05-01T23:00:33.010+02:00",
       },
     ];
   };
@@ -41,7 +41,7 @@ export const getComments = async () => {
       body: text,
       parentId,
       userId: "1",
-      username: "John",
+      username: "Tommy",
       createdAt: new Date().toISOString(),
     };
   };
