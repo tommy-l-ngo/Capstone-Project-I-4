@@ -125,8 +125,9 @@ export default class CreateProject extends Component {
                   id="errorMessage"
                 ></div>
                 <h3 style={{ lineHeight: "0px" }}></h3>
-
-                <Form onSubmit={this.handleSubmit}>
+ 
+                <Form onSubmit={this.handleSubmit}> {/* line for handling submit action */}
+                  {/* field for inputting project name */}
                   <Form.Group id="projectName">
                     <div className="form__group field">
                       <input
@@ -144,6 +145,7 @@ export default class CreateProject extends Component {
                     </div>
                   </Form.Group>
 
+                  {/* field for description */}
                   <Form.Group id="description">
                     <div className="form__group field">
                       <input
@@ -160,6 +162,7 @@ export default class CreateProject extends Component {
                     </div>
                   </Form.Group>
 
+                  {/* field for tasks */}
                   {this.state.formValues.map((element, index) => (
                     <div className="form-inline" key={index}>
                       <div className="form__group field">
@@ -175,6 +178,7 @@ export default class CreateProject extends Component {
                           Task
                         </label>
                       </div>
+                      {/* ability to remove task */}
                       {index ? (
                         <button
                           type="button"
@@ -186,6 +190,7 @@ export default class CreateProject extends Component {
                       ) : null}
                     </div>
                   ))}
+                  {/* ability to add tasks */}
                   <div className="button-section">
                     <button
                       className="button add"
@@ -195,10 +200,11 @@ export default class CreateProject extends Component {
                       Add
                     </button>
                   </div>
-
+                  
+                  {/* field for due date */}
                   <Form.Group id="date">
                     <div className="form__group field">
-                      <DatePicker
+                      <DatePicker /* using datepicker for selecting duedate from calendar */
                       id="date"
                       name="date"
                       className="form__field"
@@ -210,10 +216,18 @@ export default class CreateProject extends Component {
                       </label>
                     </div>
                   </Form.Group>
-
+                  
+                  {/* field for selecting students to add */}
+                  <Form.Group id="students">
+                    <div className="form__group field">
                   <MultiSelect
                     onChange={this.handleStudentsChange.bind(this)}
                   />
+                  <label htmlFor="students" className="form__label">
+                        Add student(s) to project
+                      </label>
+                  </div>
+                  </Form.Group>
 
                   <Button type="submit">Submit</Button>
                 </Form>
