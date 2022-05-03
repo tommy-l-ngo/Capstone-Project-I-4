@@ -69,6 +69,7 @@ export default class EditProject extends Component {
     );
   }
 
+  //handle change for project name and description
   handleChange(event) {
     this.setState({
       // Computed property names
@@ -76,28 +77,29 @@ export default class EditProject extends Component {
       [event.target.name]: event.target.value,
     });
   }
+   //handle change for multiselect of students
   handleStudentsChange(listOfStudents) {
     this.setState({
       students: listOfStudents,
     });
   }
-
+  //handle change for due date
   selectDate=(e)=>{
     this.setState({date:e})
 }
-
+  //handle change for task field
   handleChanges(i, e) {
     let formValues = this.state.formValues;
     formValues[i][e.target.name] = e.target.value;
     this.setState({ formValues });
   }
-
+  //function to add another task to fill out
   addFormFields() {
     this.setState({
       formValues: [...this.state.formValues, { tasks: "" }],
     });
   }
-
+  //function to remove task 
   removeFormFields(i) {
     let formValues = this.state.formValues;
     formValues.splice(i, 1);
@@ -120,15 +122,9 @@ export default class EditProject extends Component {
                 ></div>
                 <h3 style={{ lineHeight: "0px" }}></h3>
 
-                <Form onSubmit={this.handleSubmit}>
-                  {/*<InputGroup size="sm" className="mb-3">
-    <InputGroup.Text id="inputGroup-sizing-sm">Small</InputGroup.Text>
-    <FormControl aria-label="Small" aria-describedby="inputGroup-sizing-sm" />
-        </InputGroup>*/}
-
+                <Form onSubmit={this.handleSubmit}> {/* line for handling submit action */}
+                  {/* field for inputting project name */}
                   <Form.Group id="projectName">
-                    {/* <Form.Label htmlFor="projectName">Project Name</Form.Label> */}
-                    {/* <div className="inputField2"> */}
                     <div className="form__group field">
                       <input
                         name="projectName"
@@ -142,19 +138,10 @@ export default class EditProject extends Component {
                       <label htmlFor="projectName" className="form__label">
                         Project Name
                       </label>
-                      {/* </div> */}
                     </div>
-                    {/* <Form.Control
-                          type="text"
-                          id="projectName"
-                          name="projectName"
-                          placeholder="Project Name"
-                          value={this.state.projectName}
-                          onChange={this.handleChange}
-                          required
-                        ></Form.Control> */}
                   </Form.Group>
 
+                  {/* field for description */}
                   <Form.Group id="description">
                     <div className="form__group field">
                       <input
@@ -162,7 +149,6 @@ export default class EditProject extends Component {
                         name="description"
                         className="form__field"
                         placeholder="Description"
-                        // value={this.state.description}
                         onChange={this.handleChange}
                         required
                       />
@@ -170,19 +156,9 @@ export default class EditProject extends Component {
                         Description
                       </label>
                     </div>
-
-                    {/* <Form.Label htmlFor="description"></Form.Label>
-                        <Form.Control
-                          type="text"
-                          id="description"
-                          name="description"
-                          placeholder="Description"
-                          value={this.state.description}
-                          onChange={this.handleChange}
-                          required
-                        ></Form.Control> */}
                   </Form.Group>
 
+                  {/* field for tasks */}
                   {this.state.formValues.map((element, index) => (
                     <div className="form-inline" key={index}>
                       <div className="form__group field">
@@ -198,14 +174,7 @@ export default class EditProject extends Component {
                           Task
                         </label>
                       </div>
-
-                      {/* <label>Task</label>
-                          <input
-                            type="text"
-                            name="tasks"
-                            value={element.tasks || ""}
-                            onChange={(e) => this.handleChanges(index, e)}
-                          /> */}
+                      {/* ability to remove task */}
                       {index ? (
                         <button
                           type="button"
@@ -217,6 +186,7 @@ export default class EditProject extends Component {
                       ) : null}
                     </div>
                   ))}
+                  {/* ability to add tasks */}
                   <div className="button-section">
                     <button
                       className="button add"
@@ -227,49 +197,40 @@ export default class EditProject extends Component {
                     </button>
                   </div>
 
+                  {/* field for due date */}
                   <Form.Group id="date">
                     <div className="form__group field">
-                      <DatePicker
+                      <DatePicker /* using datepicker for selecting duedate from calendar */
                         id="date"
                         name="date"
                         className="form__field"
                         selected={this.state.date}
                         onChange={this.selectDate}
                       />
-                      {/* <input
-                        id="date"
-                        name="date"
-                        className="form__field"
-                        placeholder="Date"
-                        value={this.state.date}
-                        onChange={this.handleChange}
-                      /> */}
                       <label htmlFor="date" className="form__label">
-                        Date
+                        Due Date
                       </label>
                     </div>
-
-                    {/* <Form.Label htmlFor="date"></Form.Label>
-                        <Form.Control
-                          type="text"
-                          id="date"
-                          name="date"
-                          placeholder="Due Date"
-                          value={this.state.date}
-                          onChange={this.handleChange}
-                          required
-                        ></Form.Control> */}
                   </Form.Group>
+
+                  {/* field for selecting students to add */}
+                  <Form.Group id="students">
+                    <div className="form__group field">
                   <MultiSelect
                     onChange={this.handleStudentsChange.bind(this)}
                   />
+                  <label htmlFor="students" className="form__label">
+                        Add student(s) to project
+                      </label>
+                  </div>
+                  </Form.Group>
 
                   <Button type="submit">Submit</Button>
                 </Form>
               </Card.Body>
             </Card>
           </div>
-          {/* </Container> */}
+
         </div>
       </div>
     );
