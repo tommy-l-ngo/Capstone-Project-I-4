@@ -74,33 +74,36 @@ export default class CreateProject extends Component {
     );
   }
 
+  //handle change for project name and description
   handleChange(event) {
     this.setState({
       [event.target.name]: event.target.value,
     });
   }
 
+  //handle change for multiselect of students
   handleStudentsChange(listOfStudents) {
     this.setState({
       students: listOfStudents,
     });
   }
+  //handle change for due date
   selectDate=(e)=>{
       this.setState({date:e})
   }
-
+  //handle change for task field
   handleChanges(i, e) {
     let formValues = this.state.formValues;
     formValues[i][e.target.name] = e.target.value;
     this.setState({ formValues });
   }
-
+  //function to add another task to fill out
   addFormFields() {
     this.setState({
       formValues: [...this.state.formValues, { tasks: "" }],
     });
   }
-
+  //function to remove task 
   removeFormFields(i) {
     let formValues = this.state.formValues;
     formValues.splice(i, 1);
@@ -125,8 +128,6 @@ export default class CreateProject extends Component {
 
                 <Form onSubmit={this.handleSubmit}>
                   <Form.Group id="projectName">
-                    {/* <Form.Label htmlFor="projectName">Project Name</Form.Label> */}
-                    {/* <div className="inputField2"> */}
                     <div className="form__group field">
                       <input
                         name="projectName"
@@ -140,17 +141,7 @@ export default class CreateProject extends Component {
                       <label htmlFor="projectName" className="form__label">
                         Project Name
                       </label>
-                      {/* </div> */}
                     </div>
-                    {/* <Form.Control
-                          type="text"
-                          id="projectName"
-                          name="projectName"
-                          placeholder="Project Name"
-                          value={this.state.projectName}
-                          onChange={this.handleChange}
-                          required
-                        ></Form.Control> */}
                   </Form.Group>
 
                   <Form.Group id="description">
@@ -160,7 +151,6 @@ export default class CreateProject extends Component {
                         name="description"
                         className="form__field"
                         placeholder="Description"
-                        // value={this.state.description}
                         onChange={this.handleChange}
                         required
                       />
@@ -168,17 +158,6 @@ export default class CreateProject extends Component {
                         Description
                       </label>
                     </div>
-
-                    {/* <Form.Label htmlFor="description"></Form.Label>
-                        <Form.Control
-                          type="text"
-                          id="description"
-                          name="description"
-                          placeholder="Description"
-                          value={this.state.description}
-                          onChange={this.handleChange}
-                          required
-                        ></Form.Control> */}
                   </Form.Group>
 
                   {this.state.formValues.map((element, index) => (
@@ -196,14 +175,6 @@ export default class CreateProject extends Component {
                           Task
                         </label>
                       </div>
-
-                      {/* <label>Task</label>
-                          <input
-                            type="text"
-                            name="tasks"
-                            value={element.tasks || ""}
-                            onChange={(e) => this.handleChanges(index, e)}
-                          /> */}
                       {index ? (
                         <button
                           type="button"
@@ -234,29 +205,10 @@ export default class CreateProject extends Component {
                       selected={this.state.date}
                       onChange={this.selectDate}
                       />
-                      {/* <input
-                        id="date"
-                        name="date"
-                        className="form__field"
-                        placeholder="Date"
-                        value={this.state.date}
-                        onChange={this.handleChange}
-                      /> */}
                       <label htmlFor="date" className="form__label">
-                        Date
+                        Due Date
                       </label>
                     </div>
-
-                    {/* <Form.Label htmlFor="date"></Form.Label>
-                        <Form.Control
-                          type="text"
-                          id="date"
-                          name="date"
-                          placeholder="Due Date"
-                          value={this.state.date}
-                          onChange={this.handleChange}
-                          required
-                        ></Form.Control> */}
                   </Form.Group>
 
                   <MultiSelect
