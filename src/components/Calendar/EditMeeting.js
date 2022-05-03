@@ -29,7 +29,7 @@ export default function ({ isOpen, onClose, data}) {
 
     const startDate = meetDateISO.substring(0, 10);
     const endDate = meetEndDateISO.substring(0, 10);
-    const meetID = startDate + "_" + meetTime + "_" + meetProj;
+    //const meetID = startDate + "_" + meetTime + "_" + meetProj;
 
     const eventKey = data;
     
@@ -39,12 +39,11 @@ export default function ({ isOpen, onClose, data}) {
         const db = getDatabase();
         get(ref(db, "calendars/" + userEUID + "/" + eventKey)).then((snapshot) => {
             if (snapshot.exists()) {
-
-                //setMeetDate(snapshot.val().date);
-                //setMeetEndDate(snapshot.val().endDate);
+                // FIX ME: load all information into modal
                 setProj(snapshot.val().project);
                 setTitle(snapshot.val().title);
-                setNotes(snapshot.val().notes)
+                setNotes(snapshot.val().notes);
+                //handleStudentLoad(snapshot.val().guests);
             } else {
                 console.log("Meeting not found");
             }
@@ -56,7 +55,7 @@ export default function ({ isOpen, onClose, data}) {
     // use MultiSelect to select students (guests)
     function handleStudentSelect(ev)
     {
-        let studentList = []
+        let studentList = [];
         for (let i in ev)
         {
             studentList.push(ev[i].value);
@@ -64,6 +63,17 @@ export default function ({ isOpen, onClose, data}) {
         setGuests(studentList);
     }
 
+    /*
+    function handleStudentLoad(guestList)
+    {
+        let studentList = [];
+        for (let i =0; i<guestList.length; i++)
+        {
+            studentList.push(guestList[i]);
+        }
+        setGuests(studentList);
+    }
+    */
    
     function onSubmit() {
         update(ref(db, "calendars/" + userEUID+"/" + eventKey),{
