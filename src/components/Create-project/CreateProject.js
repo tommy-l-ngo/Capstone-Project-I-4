@@ -16,6 +16,7 @@ import MultiSelect from "./MultiSelect";
 import Navbar from "../Dashboard/Navbar";
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
+import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAu1kdEKPqTfL1XIjDF2l8rfG53FcdtVSM",
@@ -44,11 +45,22 @@ export default class CreateProject extends Component {
   }
 
   add_project(project_name, project_description, project_tasks, project_date) {
+    // get current user details from auth
+    const user = getAuth().currentUser;
+    if (user !== null) {
+    // The user object has basic properties such as display name, email, etc.
+        const email = user.email;
+        const displayName = user.displayName; // (euid)
+    }
+    else
+    {
+        console.log("No User");
+    }
     const db = getDatabase();
     set(ref(db, "projects/" + project_name), {
-      user_id: "pkv0024",
+      user_id: user.displayName,
       description: project_description,
-      tasks: project_tasks,
+      //tasks: project_tasks,
       date: project_date,
     });
   }
