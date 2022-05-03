@@ -1,3 +1,24 @@
+import { getAuth } from "firebase/auth";
+import { getDatabase, get, child, ref} from "firebase/database";
+
+const dbRef = ref(getDatabase());
+const user = getAuth().currentUser;
+var name = "No user";
+  get(child(dbRef, "users"))
+    .then((snapShot) => {
+      let match = false;
+      if (snapShot.exists()) {
+
+        match = snapShot.forEach((curr) => {
+          const ID = curr.ref._path.pieces_[1];
+          let currUID = snapShot.child(ID).child("uid").val();
+          if (currUID === user.uid) {
+            name = snapShot.child(ID).child("firstName").val();
+          }
+        });
+      }
+    })
+
 export const getComments = async () => {
     return [
       {
@@ -35,13 +56,14 @@ export const getComments = async () => {
     ];
   };
   
-  export const createComment = async (text, parentId = null) => {
+  export const createComment = async (text, parentId = null) => { 
+  const user = getAuth().currentUser;
     return {
       id: Math.random().toString(36).substr(2, 9),
       body: text,
       parentId,
-      userId: "1",
-      username: "Tommy",
+      userId: user.displayName,
+      username: name,
       createdAt: new Date().toISOString(),
     };
   };
