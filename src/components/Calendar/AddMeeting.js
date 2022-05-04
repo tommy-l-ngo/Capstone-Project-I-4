@@ -7,6 +7,7 @@ import TimePicker from 'react-time-picker';
 import "react-datepicker/dist/react-datepicker.css";
 import { getAuth, auth } from "firebase/auth";
 import MultiSelect from "../Create-project/MultiSelect";
+import './EditMeeting.css';
 
 // Exports data to database
 export default function ({ isOpen, onClose}) {
@@ -75,7 +76,20 @@ export default function ({ isOpen, onClose}) {
 
     // FIXME: Form, please style accordingly.
     return (
-        <Modal isOpen={isOpen} onClose={onClose} ariaHideApp={false}>
+        <Modal isOpen={isOpen} onClose={onClose} ariaHideApp={false}
+        style={{
+            content: {
+                position: 'fixed',
+                top: '150px',
+                left: '600px',
+                right: '600px',
+                bottom: '100px',
+                borderRadius: '20px',
+                border: '10px solid #ccc',  
+            }
+            } 
+            
+            }>
             <Container className="d-flex align-item-center justify-content-center">
                 {/* <DatePickerButton /> */}
                 <form onSubmit={onSubmit} style={{ margin: "50px" }}>
@@ -115,8 +129,8 @@ export default function ({ isOpen, onClose}) {
                         <input placeholder="Notes" value={meetNotes} onChange={(e) => setNotes(e.target.value)} />
                     </div>
                     
-                    <button onClick={onSubmit}>Submit</button>
-                    <button onClick={cancelSubmit}>Cancel</button>
+                    <button class = "addsubmit" onClick={onSubmit}>Submit</button>
+                    <button class = "addcancel" onClick={cancelSubmit}>Cancel</button>
                 </form>
             </Container>
         </Modal>
