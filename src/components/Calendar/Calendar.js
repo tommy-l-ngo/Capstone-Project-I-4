@@ -9,6 +9,7 @@ import AddMeeting from "./AddMeeting"
 import timeGridPlugin from "@fullcalendar/timegrid";
 import { getAuth, auth, onAuthStateChanged } from "firebase/auth";
 import EditMeeting from "./EditMeeting"
+import './EditMeeting.css'
 
 
 export function Calendar() {
@@ -101,7 +102,7 @@ export function Calendar() {
     return (
         <div style={{ backgroundColor: 'white' }}>
             <Navbar />
-            <button color = "red" onClick={() => setModalOpen(true)}>Add Event</button>
+            <button class="addevent" color = "red" onClick={() => setModalOpen(true)}>Add Event</button>
             <div style={{ position: "relative", zIndex: 0, paddingTop: "20px" }}>
                 <FullCalendar
                     ref={calendarRef}
