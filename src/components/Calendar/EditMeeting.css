@@ -1,0 +1,101 @@
+.modalx{
+    z-index: 5;
+    background-color: #051f42fa;
+}
+
+.addevent{
+    
+    position: relative;
+    top:0px;
+    right: 0px;
+    width: 10%;
+    color: #fdfafa;
+    padding: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    border: solid 2px rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    background-color: #051f42fa;
+}
+  .submit{
+    position: relative;
+    right: 50px;
+    width: 50%;
+    color: #565656;
+    padding: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    border: solid 2px rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    background-color: #a54bff85;
+    
+  }
+  .delete{
+    
+    position: relative;
+    right: 40px;
+    width: 50%;
+    color: #565656;
+    padding: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    border: solid 2px rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    background-color: rgba(251, 255, 2, 0.4);
+  }
+  .cancel{
+    position: relative;
+    top: 0px; right: 30px;
+    width: 50%;
+    color: #565656;
+    padding: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    border: solid 2px rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    background-color: rgba(250, 37, 9, 0.4);
+  }
+  .addsubmit{
+    position: relative;
+    right: 7px;
+    width: 50%;
+    color: #565656;
+    padding: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    border: solid 2px rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    background-color: #a54bff85;
+  }
+
+  .addcancel{
+    position: relative;
+    top: 0px; left: 7px;
+    width: 50%;
+    color: #565656;
+    padding: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    border: solid 2px rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    background-color: rgba(250, 37, 9, 0.4);
+  }
+  
