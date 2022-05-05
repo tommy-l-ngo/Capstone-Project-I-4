@@ -11,6 +11,9 @@ const dbRef = ref(getDatabase());
 const user = getAuth().currentUser;
 var name = "No user";
 var currUserID;
+
+getAuth().onAuthStateChanged(function(user) {
+  if (user) {
   get(child(dbRef, "users"))
     .then((snapShot) => {
       let match = false;
@@ -26,8 +29,14 @@ var currUserID;
         });
       }
     })
+  } else {
+    // No user is signed in.
+  }
+});
     // Grabs projects from database
     let projects = [];
+    getAuth().onAuthStateChanged(function(user) {
+      if (user) {
     get(child(dbRef, "projects"))
     .then((snapShot) => {
       let projmatch = false;
@@ -54,7 +63,10 @@ var currUserID;
         });
       }
     })
-
+  } else {
+    // No user is signed in.
+  }
+});
 
 function Cards() {
     // This maps out all of the projects pertaining to the user

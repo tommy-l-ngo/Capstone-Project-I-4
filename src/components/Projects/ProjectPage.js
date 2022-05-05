@@ -61,7 +61,7 @@ function ProjectPage() {
             </div>
             <div className='project_comments'>
                 {currUserID == undefined ? 
-                (<Comments currentUserId={0}/*{user.uid}*/  />) : 
+                (<Comments currentUserId={0} />) : 
                 (<Comments currentUserId={user.uid}  />)
                 }
             </div>
