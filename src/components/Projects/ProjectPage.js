@@ -13,6 +13,7 @@ import { getDatabase, get, child, ref} from "firebase/database";
 const dbRef = ref(getDatabase());
 const user = getAuth().currentUser;
 var name = "No user";
+var currUserID;
   get(child(dbRef, "users"))
     .then((snapShot) => {
       let match = false;
@@ -22,6 +23,7 @@ var name = "No user";
           const ID = curr.ref._path.pieces_[1];
           let currUID = snapShot.child(ID).child("uid").val();
           if (currUID === user.uid) {
+            currUserID = snapShot.child(ID).child("eUID").val();
             name = snapShot.child(ID).child("firstName").val();
           }
         });
@@ -58,9 +60,10 @@ function ProjectPage() {
                     </Button>
             </div>
             <div className='project_comments'>
-                <Comments
-                    currentUserId={user.uid}
-                />
+                {currUserID == undefined ? 
+                (<Comments currentUserId={0}/*{user.uid}*/  />) : 
+                (<Comments currentUserId={user.uid}  />)
+                }
             </div>
             </div>
         </div>

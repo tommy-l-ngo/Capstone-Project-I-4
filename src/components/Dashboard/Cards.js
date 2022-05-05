@@ -2,6 +2,58 @@ import React, { useState, useEffect } from "react";
 import CardItem from './CardItem';
 import './Cards.css';
 import data from "./data"
+import { getAuth } from "firebase/auth";
+import { getDatabase, get, child, ref} from "firebase/database";
+import { Col } from "react-bootstrap";
+
+const dbRef = ref(getDatabase());
+const user = getAuth().currentUser;
+var name = "No user";
+var currUserID;
+  get(child(dbRef, "users"))
+    .then((snapShot) => {
+      let match = false;
+      if (snapShot.exists()) {
+
+        match = snapShot.forEach((curr) => {
+          const ID = curr.ref._path.pieces_[1];
+          let currUID = snapShot.child(ID).child("uid").val();
+          if (currUID === user.uid) {
+              currUserID = snapShot.child(ID).child("eUID").val();
+            name = snapShot.child(ID).child("firstName").val();
+          }
+        });
+      }
+    })
+    
+    let projects = [];
+    get(child(dbRef, "projects"))
+    .then((snapShot) => {
+      let projmatch = false;
+      if (snapShot.exists()) {
+
+        projmatch = snapShot.forEach((subSnap) => {
+            console.log(currUserID);
+            console.log(subSnap.val().user_id);
+            if (subSnap.val().user_id === currUserID)
+            {
+            projects.push({
+                id: subSnap.val().project_id,
+                text: subSnap.val().project_name,
+                desc: subSnap.val().description,
+                label: subSnap.val().date,
+                src: "images/img-1.png"
+                //path: `/Projects/${subSnap.val().project_id}`
+            })
+        }
+          //const ID = curr.ref._path.pieces_[1];
+          //let currUID = snapShot.child(ID).child("uid").val();
+          //if (currUID === user.uid) {
+            //name = snapShot.child(ID).child("firstName").val();
+        });
+      }
+    })
+
 
 function Cards() {
     // This maps out all of the projects pertaining to the user
@@ -23,29 +75,24 @@ function Cards() {
                                 />
                             )
                         })}
-                        {/*{cards.length === 0 ? (
-                            <h3>No current projects!</h3>
-                            ) : (
-                            cards.map(
-                            ({
-                            id,
-                            projectName,
-                            date,
-                            description,
-                            tasks,
-                            user_id,
-                        }) => (
-                            <CardItem 
-                            key={id} 
-                            src="images/img-1.png"
-                            text={projectName} 
-                            desc={description} 
-                            label="CSCE 1030"
-                            path={`/Projects/${id}`}
-                            />
-                        )
-                        )
-                        )}*/}
+                        {/*projects.length === 0 ? (
+                            <h4>No current projects!</h4>
+                            ) : */(projects.map((item, index)=>{
+                            
+                            return(
+                                /*<div className="col-12  col-lg-4">*/
+                                <CardItem 
+                                key={index} 
+                                src={item.src} 
+                                text={item.text} 
+                                desc={item.desc} 
+                                label={item.label} 
+                                path={`/Projects/${item.id}`}
+                                />
+                                /*</div>*/
+                            )
+                        }))}
+                        
                     </ul>
                 </div>
             </div>

@@ -64,6 +64,7 @@
 }
   
 .cards__item__pic-wrap::after {
+    opacity: 0;
     content: attr(data-label);
     position: absolute;
     bottom: 0;
