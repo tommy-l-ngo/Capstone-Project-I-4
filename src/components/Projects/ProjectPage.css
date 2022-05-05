@@ -1,7 +1,8 @@
 .project_details {
     float: left;
     margin-top: 20px;
-    margin-left: 20px;
+    margin-left: 25px;
+    margin-right: 25px;
 }
 
 .project_details>h1 {
@@ -13,6 +14,8 @@
     font-size: 24px;
     text-align: left;
     margin-left: 2px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid;
 }
 
 .project_details>p {

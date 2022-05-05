@@ -7,8 +7,8 @@ import "./Navbar";
 function HeroSection() {
   return (
     <div className="hero-container">
-      <h1>Ph.D. Scheduler Mock Dashboard</h1>
-      <p>WORK IN PROGRESS</p>
+      <h1>Ph.D. Student Scheduler</h1>
+      <p>Create a Project</p>
       <div className="hero-btns">
         <Button
           page="CreateProject"
