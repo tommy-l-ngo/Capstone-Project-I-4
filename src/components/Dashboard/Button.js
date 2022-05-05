@@ -6,6 +6,10 @@ const STYLES = ['btn--primary', 'btn--outline'];
 
 const SIZES = ['btn--medium', 'btn--large'];
 
+const scrollToTop = () => {
+    window.scrollTo(0, 0)
+}
+
 export const Button = ({
     children, 
     type, 
@@ -18,7 +22,7 @@ export const Button = ({
     const checkButtonSize = SIZES.includes(buttonSize) ? buttonSize : SIZES[0];
 
     return (
-        <Link to={`/${page}`} className='btn-mobile'>
+        <Link onClick={scrollToTop} to={`/${page}`} className='btn-mobile'>
             <button
                 className={`btn ${checkButtonStyle} ${checkButtonSize}`}
                 onClick={onClick}

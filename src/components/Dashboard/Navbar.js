@@ -101,14 +101,18 @@ function Navbar() {
 
   useEffect(() => {});
 
+  const scrollToTop = () => {
+    window.scrollTo(0, 0)
+  }
+
   return (
     <>
       <nav className="navbar">
         <div className="navbar-container">
-          <Link to="/" className="navbar-title" onClick={closeMobileMenu}>
+          <Link to="/" className="navbar-title" onClick={function(event){ closeMobileMenu(); scrollToTop()}}>
             Mock Dashboard
           </Link>
-          <Link to="/" className="navbar-logo" onClick={closeMobileMenu}></Link>
+          <Link to="/" className="navbar-logo" onClick={function(event){ closeMobileMenu(); scrollToTop()}}></Link>
           <div className="menu-icon" onClick={handleClick}>
             <i className={click ? "fas fa-times" : "fas fa-bars"} />
           </div>
