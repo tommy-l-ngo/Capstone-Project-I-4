@@ -101,7 +101,7 @@ function Navbar() {
 
   useEffect(() => {});
 
-  const scrollToTop = () => {
+  const scrollToTop = () => { //Code to make page scroll to top
     window.scrollTo(0, 0)
   }
 

@@ -6,7 +6,7 @@ const STYLES = ['btn--primary', 'btn--outline'];
 
 const SIZES = ['btn--medium', 'btn--large'];
 
-const scrollToTop = () => {
+const scrollToTop = () => { //Code to make page scroll to top
     window.scrollTo(0, 0)
 }
 
