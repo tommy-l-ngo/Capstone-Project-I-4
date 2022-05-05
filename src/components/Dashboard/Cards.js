@@ -6,6 +6,7 @@ import { getAuth } from "firebase/auth";
 import { getDatabase, get, child, ref} from "firebase/database";
 import { Col } from "react-bootstrap";
 
+// User authentification
 const dbRef = ref(getDatabase());
 const user = getAuth().currentUser;
 var name = "No user";
@@ -14,7 +15,7 @@ var currUserID;
     .then((snapShot) => {
       let match = false;
       if (snapShot.exists()) {
-
+            // Grabs user id
         match = snapShot.forEach((curr) => {
           const ID = curr.ref._path.pieces_[1];
           let currUID = snapShot.child(ID).child("uid").val();
@@ -25,13 +26,13 @@ var currUserID;
         });
       }
     })
-    
+    // Grabs projects from database
     let projects = [];
     get(child(dbRef, "projects"))
     .then((snapShot) => {
       let projmatch = false;
       if (snapShot.exists()) {
-
+        // Matches projects that belong to user
         projmatch = snapShot.forEach((subSnap) => {
             console.log(currUserID);
             console.log(subSnap.val().user_id);
