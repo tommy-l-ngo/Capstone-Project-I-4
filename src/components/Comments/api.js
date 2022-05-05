@@ -4,6 +4,8 @@ import { getDatabase, get, child, ref} from "firebase/database";
 const dbRef = ref(getDatabase());
 const user = getAuth().currentUser;
 var name = "No user";
+getAuth().onAuthStateChanged(function(user) {
+  if (user) {
   get(child(dbRef, "users"))
     .then((snapShot) => {
       let match = false;
@@ -18,6 +20,10 @@ var name = "No user";
         });
       }
     })
+  } else {
+    // No user is signed in.
+  }
+});
 
 export const getComments = async () => {
     return [
