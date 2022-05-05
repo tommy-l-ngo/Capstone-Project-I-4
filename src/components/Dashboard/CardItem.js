@@ -6,6 +6,11 @@ function CardItem(props) {          //Code to make page scroll to top
         window.scrollTo(0, 0)
     }
 
+    // props.path - Path to redirect to
+    // props.label - Subtext
+    // props.src - image for project
+    // props.text - Project title
+    // props.desc - project description
   return (
     <>
         <li className='cards__item'>

@@ -21,6 +21,7 @@ export const Button = ({
     const checkButtonStyle = STYLES.includes(buttonStyle) ? buttonStyle : STYLES[0];
     const checkButtonSize = SIZES.includes(buttonSize) ? buttonSize : SIZES[0];
 
+    // The button includes an onClick link to *PAGE* and describes the button type
     return (
         <Link onClick={scrollToTop} to={`/${page}`} className='btn-mobile'>
             <button

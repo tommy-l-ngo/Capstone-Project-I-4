@@ -56,6 +56,7 @@ export const getComments = async () => {
     ];
   };
   
+  // Creates the comment with id, text, parent, user, name, and date created
   export const createComment = async (text, parentId = null) => { 
   const user = getAuth().currentUser;
     return {
@@ -68,10 +69,12 @@ export const getComments = async () => {
     };
   };
   
+  // Updates the comments in the comment section
   export const updateComment = async (text) => {
     return { text };
   };
   
+  // Deleting comments
   export const deleteComment = async () => {
     return {};
   };

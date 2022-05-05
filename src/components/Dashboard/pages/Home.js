@@ -60,7 +60,7 @@ function Home() {
     });
 
 
-
+//Home page has the navigation bar, the hero section, and the projects (cards)
     return (
         <>
             <Navbar />

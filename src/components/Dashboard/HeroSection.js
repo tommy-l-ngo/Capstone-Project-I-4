@@ -5,6 +5,7 @@ import "./HeroSection.css";
 import "./Navbar";
 
 function HeroSection() {
+  // This hero section contains the website header as well as the create project and edit projects tab
   return (
     <div className="hero-container">
       <h1>Ph.D. Student Scheduler</h1>

@@ -1,6 +1,7 @@
 import CommentForm from "./CommentForm";
 import './Comments.css';
 
+// Format for individual comments
 const Comment = ({
   comment,
   replies,

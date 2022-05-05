@@ -4,7 +4,7 @@ import './Cards.css';
 import data from "./data"
 
 function Cards() {
-
+    // This maps out all of the projects pertaining to the user
   return (
         <div className='cards'>
             <h1>Current Projects</h1>
