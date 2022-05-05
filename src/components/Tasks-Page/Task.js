@@ -71,6 +71,15 @@ export default function Task(props) {
         &#171;
       </button>
       <form onSubmit={handleSubmit} className={collapsed ? "collapsed" : ""}>
+        <button
+          onClick={() => {
+            setFormAction("delete");
+          }}
+          className="button delete"
+        >
+          X
+        </button>
+
         <input
           type="text"
           className="title input"
@@ -95,7 +104,7 @@ export default function Task(props) {
               type="radio"
               name="urgency"
             />
-            low
+            Low
           </label>
           <label
             className={`medium ${urgencyLevel === "medium" ? "selected" : ""}`}
@@ -106,7 +115,7 @@ export default function Task(props) {
               type="radio"
               name="urgency"
             />
-            medium
+             Medium
           </label>
           <label
             className={`high ${urgencyLevel === "high" ? "selected" : ""}`}
@@ -117,7 +126,7 @@ export default function Task(props) {
               type="radio"
               name="urgency"
             />
-            high
+             High
           </label>
         </div>
         <button
@@ -128,15 +137,6 @@ export default function Task(props) {
         >
           {collapsed ? "Edit" : "Save"}
         </button>
-        <button
-          onClick={() => {
-            setFormAction("delete");
-          }}
-          className="button delete"
-        >
-          X
-        </button>
-        
       </form>
       <button onClick={handleMoveRight} className="button moveTask">
         &#187;

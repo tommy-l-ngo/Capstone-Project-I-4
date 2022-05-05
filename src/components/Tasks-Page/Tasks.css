@@ -44,6 +44,7 @@
     align-items: flex-end;
     border: 1px solid gray;
     border-radius: 0.25rem;
+    /* background:red; */
   }
 
   h3 {
@@ -98,6 +99,7 @@
   }
   
   .task form.collapsed .urgencyLabels {
+    /* margin-top: 100px; */
       margin-bottom: 0;
       margin-right: 1rem;
     }
@@ -120,6 +122,10 @@
   .task form.collapsed .button {
       padding: 0.025rem 0.5rem;
   }
+
+.urgencyLabels {
+  padding-bottom: 25px;
+}
 
   .button {
     border: solid black;
@@ -152,6 +158,14 @@
     border-color: darkred;
   }
   
+  .button.delete {
+    position: relative;
+    top: -20px;
+    left: -140px;
+    width: 50px;
+    /* position: absolute; */
+
+  }
     
   @media only screen and (max-width: 75rem) {
     section {
