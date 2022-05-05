@@ -14,6 +14,8 @@ const dbRef = ref(getDatabase());
 const user = getAuth().currentUser;
 var name = "No user";
 var currUserID;
+getAuth().onAuthStateChanged(function(user) {
+  if (user) {
   get(child(dbRef, "users"))
     .then((snapShot) => {
       let match = false;
@@ -29,6 +31,10 @@ var currUserID;
         });
       }
     })
+  } else {
+    // No user is signed in.
+  }
+});
 
 function ProjectPage() {
     //Gets Project Id
