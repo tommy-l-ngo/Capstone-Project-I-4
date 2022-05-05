@@ -75,6 +75,8 @@ export default function Forgot() {
                 setEmailSent(false);
                 const errorCode = error.code;
                 const errorMessage = error.message;
+                console.log(errorMessage)
+                setError("User does not exist in system")
                 // ..
               });
           }
@@ -84,7 +86,7 @@ export default function Forgot() {
           }
         } 
         catch (err) {
-          console.log(err.code);
+          console.log(err.message);
           setError(err.message);
           setEmailSent(false);
         }
