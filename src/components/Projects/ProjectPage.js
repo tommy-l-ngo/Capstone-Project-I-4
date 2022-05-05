@@ -9,9 +9,11 @@ import './ProjectPage.css';
 import Comments from "../Comments/Comments";
 
 function ProjectPage() {
+    //Gets Project Id
     const { id } = useParams();
     console.log(id)
     
+    //Gets data based on project Id
     const getData = data.cardData[id - 1];
 
     console.warn(getData);
