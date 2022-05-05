@@ -187,7 +187,7 @@ export default class CreateProject extends Component {
                           onChange={(e) => this.handleChanges(index, e)}
                         />
                         <label htmlFor="tasks" className="form__label">
-                          Task
+                          Task (Optional)
                         </label>
                       </div>
                       {/* ability to remove task */}
