@@ -63,7 +63,7 @@ export const getComments = async () => {
       id: Math.random().toString(36).substr(2, 9),
       body: text,
       parentId,
-      userId: user.displayName,
+      userId: user.uid,
       username: name,
       createdAt: new Date().toISOString(),
     };

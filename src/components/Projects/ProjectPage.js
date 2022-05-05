@@ -7,6 +7,26 @@ import data from '../Dashboard/data';
 import { Link, useParams } from 'react-router-dom';
 import './ProjectPage.css';
 import Comments from "../Comments/Comments";
+import { getAuth } from "firebase/auth";
+import { getDatabase, get, child, ref} from "firebase/database";
+
+const dbRef = ref(getDatabase());
+const user = getAuth().currentUser;
+var name = "No user";
+  get(child(dbRef, "users"))
+    .then((snapShot) => {
+      let match = false;
+      if (snapShot.exists()) {
+
+        match = snapShot.forEach((curr) => {
+          const ID = curr.ref._path.pieces_[1];
+          let currUID = snapShot.child(ID).child("uid").val();
+          if (currUID === user.uid) {
+            name = snapShot.child(ID).child("firstName").val();
+          }
+        });
+      }
+    })
 
 function ProjectPage() {
     //Gets Project Id
@@ -39,7 +59,7 @@ function ProjectPage() {
             </div>
             <div className='project_comments'>
                 <Comments
-                    currentUserId="1"
+                    currentUserId={user.uid}
                 />
             </div>
             </div>
