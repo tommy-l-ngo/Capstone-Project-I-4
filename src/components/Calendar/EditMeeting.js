@@ -2,6 +2,7 @@ import Modal from 'react-modal';
 import React, { useState, useEffect } from 'react';
 import { Container } from "react-bootstrap";
 import { getDatabase, get, ref, update, remove } from "firebase/database";
+import {Link} from "react-router-dom";
 import DatePicker from "react-datepicker";
 import TimePicker from 'react-time-picker';
 import "react-datepicker/dist/react-datepicker.css";
@@ -104,66 +105,103 @@ export default function ({ isOpen, onClose, data}) {
 
     // FIXME: Form, please style accordingly.
     return (
-        <Modal  isOpen={isOpen} onClose={onClose} ariaHideApp={false}
-           style={{
-            content: {
-                position: 'fixed',
-                top: '150px',
-                left: '600px',
-                right: '600px',
-                bottom: '100px',
-                borderRadius: '20px',
-                border: '10px solid #ccc',  
-            }
-            } 
-            
-            }>
-            <Container className="d-flex align-item-center justify-content-center">
-                {/* <DatePickerButton /> */}
-                <form onSubmit={onSubmit} style={{ margin: "50px" }}>
-                    <h>Edit Meeting</h>
-                    <div>
-                        <h6>Host</h6>
-                        <input placeholder={userEUID} value={userEUID} disabled="true" />
-                    </div>
-                    <div>
-                        <h6>Guests</h6>
-                        <MultiSelect onChange={(e) => handleStudentSelect(e)}/>
-                    </div>
-                    <div>
-                        <h6>Start Date</h6>
-                         <DatePicker selected={meetDate} onChange={date => setMeetDate(date)}/> 
-                        {/* <Datetime value={meetDate} onChange={date => setMeetDate(date)} /> */}
-                    </div>
-                    <div>
-                        <h6>End Date</h6>
-                        <DatePicker selected={meetEndDate} onChange={date => setMeetEndDate(date)}/>
+      <Modal
+        isOpen={isOpen}
+        onClose={onClose}
+        ariaHideApp={false}
+        style={{
+          content: {
+            position: "fixed",
+            borderRadius: "20px",
+            border: "10px solid #ccc",
+            top: "50%",
+            left: "50%",
+            msTransform: "translate(-50%, -50%)",
+            transform: "translate(-50%, -50%)",
+            height: "615px",
+            width: "500px",
+          },
+        }}
+      >
+        <div className="xBtn">
+          <Link to="/Calendar" className="xLink" onClick={onClose}>
+            <i className="fas fa-times xButton" />
+          </Link>
+        </div>
+        <Container className="d-flex align-item-center justify-content-center">
+          {/* <DatePickerButton /> */}
+          <form onSubmit={onSubmit} style={{ margin: "50px" }}>
+            <h style={{ paddingBottom: "50px" }}>Edit Meeting</h>
 
-                        {/* <Datetime value={meetEndDate} onChange={date => setMeetEndDate(date)} /> */}
-                    </div>
-                    <div>
-                        <h6>Time</h6>
-                        <TimePicker selected={meetTime} onChange={time => setTime(time)}/>
-                    </div>
-                    <div>
-                        <h6>Project</h6>
-                        <input placeholder="Project" value={meetProj} onChange={(e) => setProj(e.target.value)} />
-                    </div>
-                    <div>
-                        <h6>Title</h6>
-                        <input placeholder="Title" value={meetTitle} onChange={(e) => setTitle(e.target.value)} />
-                    </div>
-                    <div>
-                        <h6>Notes</h6>
-                        <input placeholder="Notes" value={meetNotes} onChange={(e) => setNotes(e.target.value)} />
-                    </div>
-                    
-                    <button class = "submit" onClick={onSubmit}>Submit</button>
-                    
-                    <button class = "delete" onClick={deleteCalendarEUID}>Delete</button>
-                    <button class = "cancel" onClick={cancelSubmit}>Cancel</button>
-                </form>
-            </Container>
-        </Modal>
-    )
+            <div>
+              <h6>Host</h6>
+              <input placeholder={userEUID} value={userEUID} disabled="true" />
+            </div>
+            <div>
+              <h6>Guests</h6>
+              <MultiSelect onChange={(e) => handleStudentSelect(e)} />
+            </div>
+            <div>
+              <h6>Start Date</h6>
+              <DatePicker
+                selected={meetDate}
+                onChange={(date) => setMeetDate(date)}
+              />
+              {/* <Datetime value={meetDate} onChange={date => setMeetDate(date)} /> */}
+            </div>
+            <div>
+              <h6>End Date</h6>
+              <DatePicker
+                selected={meetEndDate}
+                onChange={(date) => setMeetEndDate(date)}
+              />
+
+              {/* <Datetime value={meetEndDate} onChange={date => setMeetEndDate(date)} /> */}
+            </div>
+            <div>
+              <h6>Time</h6>
+              <TimePicker
+                selected={meetTime}
+                onChange={(time) => setTime(time)}
+              />
+            </div>
+            <div>
+              <h6>Project</h6>
+              <input
+                placeholder="Project"
+                value={meetProj}
+                onChange={(e) => setProj(e.target.value)}
+              />
+            </div>
+            <div>
+              <h6>Title</h6>
+              <input
+                placeholder="Title"
+                value={meetTitle}
+                onChange={(e) => setTitle(e.target.value)}
+              />
+            </div>
+            <div>
+              <h6>Notes</h6>
+              <input
+                placeholder="Notes"
+                value={meetNotes}
+                onChange={(e) => setNotes(e.target.value)}
+              />
+            </div>
+
+            <button class="submit" onClick={onSubmit}>
+              Submit
+            </button>
+
+            <button class="delete" onClick={deleteCalendarEUID}>
+              Delete
+            </button>
+            <button class="cancel" onClick={cancelSubmit}>
+              Cancel
+            </button>
+          </form>
+        </Container>
+      </Modal>
+    );
 }
