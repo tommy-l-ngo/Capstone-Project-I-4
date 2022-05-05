@@ -10,6 +10,7 @@ import Comments from "../Comments/Comments";
 import { getAuth } from "firebase/auth";
 import { getDatabase, get, child, ref} from "firebase/database";
 
+// Gets current user
 const dbRef = ref(getDatabase());
 const user = getAuth().currentUser;
 var name = "No user";
@@ -68,7 +69,7 @@ function ProjectPage() {
             <div className='project_comments'>
                 {currUserID == undefined ? 
                 (<Comments currentUserId={0} />) : 
-                (<Comments currentUserId={user.uid}  />)
+                (<Comments currentUserId={currUserID}  />)
                 }
             </div>
             </div>

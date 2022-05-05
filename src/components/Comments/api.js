@@ -4,6 +4,7 @@ import { getDatabase, get, child, ref} from "firebase/database";
 const dbRef = ref(getDatabase());
 const user = getAuth().currentUser;
 var name = "No user";
+var currUserID;
 getAuth().onAuthStateChanged(function(user) {
   if (user) {
   get(child(dbRef, "users"))
@@ -15,6 +16,7 @@ getAuth().onAuthStateChanged(function(user) {
           const ID = curr.ref._path.pieces_[1];
           let currUID = snapShot.child(ID).child("uid").val();
           if (currUID === user.uid) {
+            currUserID = snapShot.child(ID).child("eUID").val();
             name = snapShot.child(ID).child("firstName").val();
           }
         });
@@ -69,7 +71,7 @@ export const getComments = async () => {
       id: Math.random().toString(36).substr(2, 9),
       body: text,
       parentId,
-      userId: user.uid,
+      userId: currUserID,
       username: name,
       createdAt: new Date().toISOString(),
     };
