@@ -14,29 +14,32 @@ function ProjectPage() {
     
     const getData = data.cardData[id - 1];
 
-    console.warn(getData); 
+    console.warn(getData);
     return (
         <div>
             <Navbar />
             <div className='project_details'>
                 <h1>{getData.text}</h1>
                 <h3>{getData.label}</h3>
+                
                 <p>{getData.desc}</p>
+            </div>
+            <div className='rightsection'>
+            <div className = "task_btn">
+                    <Button
+                        page="Tasks"
+                        className="btns"
+                        buttonStyle="btn--primary"
+                        buttonSize="btn--medium"
+            >   
+                        Tasks
+                    </Button>
             </div>
             <div className='project_comments'>
                 <Comments
-                currentUserId="1"
+                    currentUserId="1"
                 />
             </div>
-            <div className = "task_btn">
-            <Button
-                page="Tasks"
-                className="btns"
-                buttonStyle="btn--primary"
-                buttonSize="btn--medium"
-            >
-                Tasks
-            </Button>
             </div>
         </div>
   );

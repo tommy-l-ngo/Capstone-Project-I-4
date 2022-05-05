@@ -29,3 +29,16 @@
     margin-top: 20px;
     margin-right: 20px;
 }
+
+.task_btn {
+    border: 0.5px solid;
+    border-radius: 5px 5px 5px 5px;
+    /*float: right;*/
+    margin-right: 20px;
+    margin-top: 20px;
+    background-color: white;
+}
+
+.rightsection {
+    float: right;
+}
