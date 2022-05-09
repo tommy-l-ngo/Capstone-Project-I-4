@@ -7,10 +7,12 @@ export default function Task(props) {
   const [collapsed, setCollapsed] = useState(task.isCollapsed);
   const [formAction, setFormAction] = useState("");
 
+  //sets the urgency for the task
   function setUrgency(event) {
     setUrgencyLevel(event.target.attributes.urgency.value);
   }
 
+  //handles adding in a new task
   function handleSubmit(event) {
     event.preventDefault();
 
@@ -37,6 +39,7 @@ export default function Task(props) {
     }
   }
 
+  //makes it so that the user can move a task to the left
   function handleMoveLeft() {
     let newStatus = "";
 
@@ -51,6 +54,7 @@ export default function Task(props) {
     }
   }
 
+  //makes it so that the user can move a task to the left
   function handleMoveRight() {
     let newStatus = "";
 

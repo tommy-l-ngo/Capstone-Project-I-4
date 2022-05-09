@@ -10,6 +10,7 @@ function Tasks() {
     loadTasksFromLocalStorage();
   }, []);
 
+  //creates the skeleton for creating a new task
   function addEmptyTask(status) {
     const lastTask = tasks[tasks.length - 1];
 
@@ -31,6 +32,7 @@ function Tasks() {
     ]);
   }
 
+  //adds newly added task into storage 
   function addTask(taskToAdd) {
     let filteredTasks = tasks.filter((task) => {
       return task.id !== taskToAdd.id;
@@ -43,6 +45,7 @@ function Tasks() {
     saveTasksToLocalStorage(newTaskList);
   }
 
+  //removes tasks from storage and the screen
   function deleteTask(taskId) {
     let filteredTasks = tasks.filter((task) => {
       return task.id !== taskId;
@@ -53,6 +56,7 @@ function Tasks() {
     saveTasksToLocalStorage(filteredTasks);
   }
 
+  //adds the ability to change where the task is listed
   function moveTask(id, newStatus) {
     let task = tasks.filter((task) => {
       return task.id === id;
@@ -71,6 +75,7 @@ function Tasks() {
     saveTasksToLocalStorage(newTaskList);
   }
 
+  //function for saving tasks to storage
   function saveTasksToLocalStorage(tasks) {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }
@@ -87,7 +92,7 @@ function Tasks() {
 
   return (
     <div>
-    <Navbar />
+    <Navbar /> 
     <h1>Task Management</h1>
     <div className="tasks">
       <main>
