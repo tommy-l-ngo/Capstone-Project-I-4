@@ -51,30 +51,19 @@ export default function ({ isOpen, onClose, data}) {
         }).catch((error) => {
             console.error(error);
         });
-    }
+    }// getMeetingDetails()
 
     // use MultiSelect to select students (guests)
     function handleStudentSelect(ev)
     {
+      // take ev paramenter and set meeting guests
         let studentList = [];
         for (let i in ev)
         {
             studentList.push(ev[i].value);
         }
         setGuests(studentList);
-    }
-
-    /*
-    function handleStudentLoad(guestList)
-    {
-        let studentList = [];
-        for (let i =0; i<guestList.length; i++)
-        {
-            studentList.push(guestList[i]);
-        }
-        setGuests(studentList);
-    }
-    */
+    }// handleStudentSelect()
    
     function onSubmit() {
         update(ref(db, "calendars/" + userEUID+"/" + eventKey),{
@@ -93,17 +82,16 @@ export default function ({ isOpen, onClose, data}) {
     function deleteCalendarEUID(){
         remove(ref(db, "calendars/" + userEUID+"/" + eventKey))
         onClose();
-    }
+    }// getCalendarEUID()
     
     function cancelSubmit() {
         onClose();
-    }
+    }// cancelSubmit()
 
     useEffect(() => {
         getMeetingDetails();
     },[isOpen]);
 
-    // FIXME: Form, please style accordingly.
     return (
       <Modal
         isOpen={isOpen}

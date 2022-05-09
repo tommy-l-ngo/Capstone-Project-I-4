@@ -32,6 +32,7 @@ export default function ({ isOpen, onClose}) {
     // use MultiSelect to select students (guests)
     function handleStudentSelect(ev)
     {
+        // take ev paramenter and set meeting guests
         let studentList = []
         for (let i in ev)
         {
@@ -40,6 +41,7 @@ export default function ({ isOpen, onClose}) {
         setGuests(studentList);
     }
 
+    // add meeting to database
     const db = getDatabase();
     function onSubmit() {
         set(ref(db, "calendars/" + userEUID + "/" + meetID), {
@@ -52,7 +54,7 @@ export default function ({ isOpen, onClose}) {
             title: meetTitle,
             notes: meetNotes,
             type: "meeting"
-        });
+        });// set
 
         // add meeting to guest calendars in database
         for (var i=0; i<meetGuests.length; i++){
@@ -67,15 +69,14 @@ export default function ({ isOpen, onClose}) {
                 notes: meetNotes,
                 type: "meeting"
             });
-        }
+        }// for()
         onClose();
     }//onSubmit()
 
     function cancelSubmit() {
         onClose();
-    }
+    }// cancelSubmit()
 
-    // FIXME: Form, please style accordingly.
     return (
       <Modal
         isOpen={isOpen}
