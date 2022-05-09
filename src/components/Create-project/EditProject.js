@@ -28,7 +28,7 @@ const firebaseConfig = {
   measurementId: "G-X8E63KZMT3",
 };
 
-export default class EditProject extends Component {
+export default class EditProject extends Component { // sets all feilds to blank
   constructor(props) {
     super(props);
     this.state = {
@@ -42,7 +42,7 @@ export default class EditProject extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.edit_project = this.edit_project.bind(this);
   }
-  edit_project(project_name, project_description, project_tasks, project_date) {
+  edit_project(project_name, project_description, project_tasks, project_date) { //updates inputted fields to database
     const db = getDatabase();
     set(ref(db, "projects/" + project_name), {
       description: project_description,
@@ -50,10 +50,11 @@ export default class EditProject extends Component {
       date: project_date,
     });
   }
-  handleSubmit(event) {
+
+  handleSubmit(event) {//this will handle what happens whne the submit button is pressed
     const { projectName, description, task, date } = this.state;
     event.preventDefault();
-    alert(JSON.stringify(this.state.formValues));
+    alert(JSON.stringify(this.state.formValues));// displays all inputted values
     alert(`
             ____Your Details____\n
             Title : ${projectName}
@@ -61,7 +62,7 @@ export default class EditProject extends Component {
             Task : ${task}
             Date : ${date}
         `);
-    this.edit_project(
+    this.edit_project( //puts inputted values to database
       this.state.projectName,
       this.state.description,
       this.state.task,
@@ -131,7 +132,7 @@ export default class EditProject extends Component {
                         id="projectName"
                         className="form__field"
                         type="text"
-                        placeholder="Project Name"
+                        placeholder="Project Name (must be the same name)"
                         onChange={this.handleChange}
                         required
                       />
