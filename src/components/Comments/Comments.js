@@ -15,6 +15,8 @@ const Comments = ({ commentsUrl, currentUserId }) => {
   const rootComments = backendComments.filter(
     (backendComment) => backendComment.parentId === null
   );
+
+  // Getting comment replies
   const getReplies = (commentId) =>
     backendComments
       .filter((backendComment) => backendComment.parentId === commentId)
@@ -22,6 +24,8 @@ const Comments = ({ commentsUrl, currentUserId }) => {
         (a, b) =>
           new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
       );
+  
+  // Adding a new comment
   const addComment = (text, parentId) => {
     createCommentApi(text, parentId).then((comment) => {
       setBackendComments([comment, ...backendComments]);
@@ -29,6 +33,7 @@ const Comments = ({ commentsUrl, currentUserId }) => {
     });
   };
 
+  // Updating a comment
   const updateComment = (text, commentId) => {
     updateCommentApi(text).then(() => {
       const updatedBackendComments = backendComments.map((backendComment) => {
@@ -41,6 +46,7 @@ const Comments = ({ commentsUrl, currentUserId }) => {
       setActiveComment(null);
     });
   };
+  // Deleting a comment
   const deleteComment = (commentId) => {
     if (window.confirm("Are you sure you want to remove comment?")) {
       deleteCommentApi().then(() => {

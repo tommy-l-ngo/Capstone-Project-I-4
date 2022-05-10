@@ -1,6 +1,7 @@
 import { useState } from "react";
 import './Comments.css';
 
+// This is the form for the comments
 const CommentForm = ({
   handleSubmit,
   submitLabel,
