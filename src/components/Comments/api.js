@@ -1,6 +1,7 @@
 import { getAuth } from "firebase/auth";
 import { getDatabase, get, child, ref} from "firebase/database";
 
+// Get the current user information
 const dbRef = ref(getDatabase());
 const user = getAuth().currentUser;
 var name = "No user";
@@ -12,12 +13,12 @@ getAuth().onAuthStateChanged(function(user) {
       let match = false;
       if (snapShot.exists()) {
 
-        match = snapShot.forEach((curr) => {
+        match = snapShot.forEach((curr) => {  //Run through database
           const ID = curr.ref._path.pieces_[1];
           let currUID = snapShot.child(ID).child("uid").val();
-          if (currUID === user.uid) {
-            currUserID = snapShot.child(ID).child("eUID").val();
-            name = snapShot.child(ID).child("firstName").val();
+          if (currUID === user.uid) { // If current user = a user in the database
+            currUserID = snapShot.child(ID).child("eUID").val();  // Pull EUID from database
+            name = snapShot.child(ID).child("firstName").val(); // Pull Name from database
           }
         });
       }
@@ -27,6 +28,7 @@ getAuth().onAuthStateChanged(function(user) {
   }
 });
 
+// Hardcoded comments for demo
 export const getComments = async () => {
     return [
       {
