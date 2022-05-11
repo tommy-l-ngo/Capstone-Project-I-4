@@ -32,7 +32,7 @@ export function PasswordReset(props){
   var register;
   let navigate = useNavigate();
     
-
+//function called to validate and reset password on submit of password and conform password
   function HandleResetPass() {
     try {
         if (password.length == 0) {
@@ -54,6 +54,7 @@ export function PasswordReset(props){
         throw Error("Password does not match");
       } 
       else {
+        //password is valid so resets password and redirects to login page on success
             const code = props.code;
             const auth = getAuth();
             confirmPasswordReset(auth, code, password).then(() => {

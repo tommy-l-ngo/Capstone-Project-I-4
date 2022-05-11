@@ -55,6 +55,7 @@ export const LoginForm = (props) => {
 
   //console.log(window.location.href);
 
+  //Function handles logging in user on submit
   function handleLoginUser() {
     // alert("hi");
     // alert(username +', ' + password);

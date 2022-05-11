@@ -8,7 +8,7 @@ import { parseActionCodeURL } from "@firebase/auth";
 
 
 
-
+//This basically acts as a hub page for password resetting and email verification
 export function PageRedirect()
 {
     const [redirectToResetPassPage, setRedirectToResetPassPage] = useState(false);
@@ -34,6 +34,8 @@ export function PageRedirect()
                 setValidUrl(true);
                 setError("");
                 const action = actionUrl.operation;
+                
+                //determines what to redirect to based in action mode
                 if(action == "PASSWORD_RESET")
                 {
                     setRedirectToResetPassPage(true);

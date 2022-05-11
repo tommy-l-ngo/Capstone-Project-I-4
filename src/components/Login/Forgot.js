@@ -35,17 +35,18 @@ export default function Forgot() {
 
 
 
-
+//function called for reset password process on submit of email
   function HandleResetPass() {
     const dbRef = ref(getDatabase());
+    //getting snapshot of all entries in "users" table
     get(child(dbRef, "users"))
       .then((snapShot) => {
         let match = false;
         if (snapShot.exists()) {
+          //iterate through each entry of "users" table snapshot
           match = snapShot.forEach((curr) => {
-            const ID = curr.ref._path.pieces_[1];
-            //console.log(curr.ref._path.pieces_[1]);
-            //console.log(snapShot.child(ID).child("email").val());
+            const ID = curr.ref._path.pieces_[1]; //access the euid of the current entry
+
             let currEmail = snapShot.child(ID).child("email").val();
             //console.log(curr);
             //IDs.push(ID);
@@ -62,6 +63,7 @@ export default function Forgot() {
       })
       .then((match) => {
         try {
+          //if match was successful, sends password reset email to the matched user's email
           if (match)
           {
             setError("");
