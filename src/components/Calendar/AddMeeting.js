@@ -136,6 +136,8 @@ export default function ({ isOpen, onClose}) {
               <TimePicker
                 selected={meetTime}
                 onChange={(time) => setTime(time)}
+                value={meetTime}
+                clearIcon = {""} // FIX ME: clear icon still present
               />
             </div>
             <div>
@@ -156,7 +158,8 @@ export default function ({ isOpen, onClose}) {
             </div>
             <div>
               <h6>Notes</h6>
-              <input
+              <textarea
+                style={{ textAlign: "left"}}
                 placeholder="Notes"
                 value={meetNotes}
                 onChange={(e) => setNotes(e.target.value)}

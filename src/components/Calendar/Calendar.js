@@ -43,7 +43,7 @@ export function Calendar() {
                     var evMeetEndDate = eventShot.val().endDate;
                     let evProject = eventShot.val().project;
                     let evTime = eventShot.val().time;
-                    var evTitle = evTime + " " + eventShot.val().title + " " + evProject;
+                    var evTitle = evTime + "-" + eventShot.val().title + "," + evProject;
                     var event = { title: evTitle, start: evMeetDate, end: evMeetEndDate, id:eventShot.key};
                     eventList.push(event);
                 })
@@ -81,7 +81,7 @@ export function Calendar() {
     return (
         <div style={{ backgroundColor: 'white' }}>
             <Navbar />
-            <button class="addevent" color = "red" onClick={() => setModalOpen(true)}>Add Event</button>
+            <button class="addevent" color = "red" onClick={() => setModalOpen(true)}>Add Meeting</button>
             <div style={{ position: "relative", zIndex: 0, paddingTop: "20px" }}>
                 <FullCalendar
                     ref={calendarRef}

@@ -44,6 +44,7 @@ export default function ({ isOpen, onClose, data}) {
                 setProj(snapshot.val().project);
                 setTitle(snapshot.val().title);
                 setNotes(snapshot.val().notes);
+                setTime(snapshot.val().time);
                 //handleStudentLoad(snapshot.val().guests);
             } else {
                 console.log("Meeting not found");
@@ -151,6 +152,8 @@ export default function ({ isOpen, onClose, data}) {
               <TimePicker
                 selected={meetTime}
                 onChange={(time) => setTime(time)}
+                value={meetTime}
+                clearIcon = {""} // FIX ME: clear icon still present
               />
             </div>
             <div>
