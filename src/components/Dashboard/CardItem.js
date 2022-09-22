@@ -17,6 +17,9 @@ function CardItem(props) {          //Code to make page scroll to top
             <Link className='cards__item__link' to={props.path} onClick={scrollToTop}>
                 <figure className='cards__item__pic-wrap' data-label={props.label}>
                     <img src={props.src} alt='Project Image' className='cards__item__img' />
+                    <Link className="card-edit" to={"/EditProject"} oncClick={scrollToTop}>
+                        <i class="fas fa-bars"></i>
+                    </Link>
                 </figure>
                 <div className='cards__item__info'>
                     <h5 className='cards__item__text'>{props.text}</h5>

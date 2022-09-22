@@ -19,14 +19,7 @@ function HeroSection() {
         >
           Create Project
         </Button>
-        <Button
-          page="EditProject"
-          className="btns"
-          buttonStyle="btn--outline"
-          buttonSize="btn--large"
-        >
-          Edit Projects
-        </Button>
+        
       </div>
     </div>
   );

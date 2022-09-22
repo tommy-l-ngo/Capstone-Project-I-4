@@ -408,3 +408,13 @@
 .dim {
   /* box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.3); */
 }
+
+.card-edit {
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 55px;
+  transform: translate(100%, 60%);
+  font-size: 1.8rem;
+  cursor: pointer;
+}
