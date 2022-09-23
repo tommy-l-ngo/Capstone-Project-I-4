@@ -137,7 +137,7 @@ export default function ({ isOpen, onClose}) {
                 selected={meetTime}
                 onChange={(time) => setTime(time)}
                 value={meetTime}
-                clearIcon = {""} // FIX ME: clear icon still present
+                clearIcon = {null}
               />
             </div>
             <div>
