@@ -174,7 +174,7 @@ export default function ({ isOpen, onClose, data}) {
             </div>
             <div>
               <h6>Notes</h6>
-              <input
+              <textarea
                 placeholder="Notes"
                 value={meetNotes}
                 onChange={(e) => setNotes(e.target.value)}
