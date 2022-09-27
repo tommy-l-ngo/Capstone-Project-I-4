@@ -126,12 +126,11 @@ export default function ({ isOpen, onClose}) {
             {error}
           </p>
         )}
-  
-  
         <div
           className="w-100 text-center mt-2 text-danger"
           id="errorMessage"
         ></div>
+        
         <div className="xBtn">
           <Link to="/Calendar" className="xLink" onClick={onClose}>
             <i className="fas fa-times xButton" />
