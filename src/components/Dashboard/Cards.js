@@ -49,11 +49,12 @@ getAuth().onAuthStateChanged(function(user) {
             {
             projects.push({
                 id: subSnap.val().project_id,
-                text: subSnap.val().project_name,
+                text: subSnap.val().name,
                 desc: subSnap.val().description,
                 label: subSnap.val().date,
                 src: "images/img-1.png"
                 //path: `/Projects/${subSnap.val().project_id}`
+                
             })
         }
           //const ID = curr.ref._path.pieces_[1];
@@ -100,7 +101,7 @@ function Cards() {
                                 text={item.text} 
                                 desc={item.desc} 
                                 label={item.label} 
-                                path={`/Projects/${item.id}`}
+                                path={`/Projects/${item.text}`}
                                 />
                                 /*</div>*/
                             )

@@ -58,6 +58,7 @@ export default class CreateProject extends Component {
     }
     const db = getDatabase();
     set(ref(db, "projects/" + project_name), {
+      name: project_name,
       user_id: user.displayName,
       description: project_description,
       //tasks: project_tasks,
