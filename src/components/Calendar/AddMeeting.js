@@ -29,6 +29,8 @@ export default function ({ isOpen, onClose}) {
     const endDate = meetEndDateISO.substring(0, 10);
     const meetID = startDate + "_" + meetTime + "_" + meetProj;
 
+    const [error, setError] = useState(null);
+
     // use MultiSelect to select students (guests)
     function handleStudentSelect(ev)
     {
@@ -44,33 +46,50 @@ export default function ({ isOpen, onClose}) {
     // add meeting to database
     const db = getDatabase();
     function onSubmit() {
-        set(ref(db, "calendars/" + userEUID + "/" + meetID), {
-            date: startDate,
-            endDate: endDate,
-            host: userEUID,
-            guests: meetGuests,
-            project: meetProj,
-            time: meetTime,
-            title: meetTitle,
-            notes: meetNotes,
-            type: "meeting"
-        });// set
+      
+      try{
+      
+        if (startDate > endDate) {
+          throw Error("Invalid date range");
+        }
+        else if (meetProj == 0) {
+          throw Error("Enter project name"); }
+        else if (meetTitle == 0) {
+          throw Error("Enter title"); }
+        else{
+          set(ref(db, "calendars/" + userEUID + "/" + meetID), {
+              date: startDate,
+              endDate: endDate,
+              host: userEUID,
+              guests: meetGuests,
+              project: meetProj,
+              time: meetTime,
+              title: meetTitle,
+              notes: meetNotes,
+              type: "meeting"
+          });// set
 
-        // add meeting to guest calendars in database
-        for (var i=0; i<meetGuests.length; i++){
-            set(ref(db, "calendars/" + meetGuests[i] + "/" + meetID), {
-                date: startDate,
-                endDate: endDate,
-                host: userEUID,
-                guests: meetGuests,
-                project: meetProj,
-                time: meetTime,
-                title: meetTitle,
-                notes: meetNotes,
-                type: "meeting"
-            });
-        }// for()
-        onClose();
+          // add meeting to guest calendars in database
+          for (var i=0; i<meetGuests.length; i++){
+              set(ref(db, "calendars/" + meetGuests[i] + "/" + meetID), {
+                  date: startDate,
+                  endDate: endDate,
+                  host: userEUID,
+                  guests: meetGuests,
+                  project: meetProj,
+                  time: meetTime,
+                  title: meetTitle,
+                  notes: meetNotes,
+                  type: "meeting"
+              });
+          }// for()
+          onClose();
+        }// else
+    } catch (err) {
+      console.log(err.code);
+      setError(err.message);
+    }
+        
     }//onSubmit()
 
     function cancelSubmit() {
@@ -96,6 +115,23 @@ export default function ({ isOpen, onClose}) {
           },
         }}
       >
+          {error && (
+          <p
+            style={{
+              marginTop: "10px",
+              fontSize: "20px",
+              color: "red",
+            }}
+          >
+            {error}
+          </p>
+        )}
+  
+  
+        <div
+          className="w-100 text-center mt-2 text-danger"
+          id="errorMessage"
+        ></div>
         <div className="xBtn">
           <Link to="/Calendar" className="xLink" onClick={onClose}>
             <i className="fas fa-times xButton" />
