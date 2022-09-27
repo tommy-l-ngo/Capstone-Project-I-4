@@ -16,6 +16,7 @@ import Navbar from "../Dashboard/Navbar";
 import MultiSelect from "./MultiSelect";
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
+import data from '../Dashboard/data';
 
 const firebaseConfig = {
   apiKey: "AIzaSyAu1kdEKPqTfL1XIjDF2l8rfG53FcdtVSM",
@@ -106,7 +107,15 @@ export default class EditProject extends Component { // sets all feilds to blank
     formValues.splice(i, 1);
     this.setState({ formValues });
   }
-
+  /*
+  componentDidMount(x) {
+    const { id } = this.props.match.params;
+    this.fetchData(id);
+    //Gets data based on project Id
+    const getData = data.cardData[id - 1];
+    console.warn(getData);
+  }*/
+  
   render() {
     return (
       <div>
@@ -133,6 +142,7 @@ export default class EditProject extends Component { // sets all feilds to blank
                         className="form__field"
                         type="text"
                         placeholder="Project Name (must be the same name)"
+                        value="Test Project"
                         onChange={this.handleChange}
                         required
                       />
@@ -150,6 +160,7 @@ export default class EditProject extends Component { // sets all feilds to blank
                         name="description"
                         className="form__field"
                         placeholder="Description"
+                        value="This is a project description."
                         onChange={this.handleChange}
                         required
                       />
