@@ -99,6 +99,7 @@ export default function ({ isOpen, onClose, data}) {
     
     function deleteCalendarEUID(){
         remove(ref(db, "calendars/" + userEUID+"/" + eventKey))
+        window.location.reload(false);
         onClose();
     }// getCalendarEUID()
     
