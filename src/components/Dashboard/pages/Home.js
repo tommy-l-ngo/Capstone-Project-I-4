@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import '../Dashboard.css';
 import Cards from '../Cards';
 import HeroSection from '../HeroSection';
@@ -52,7 +52,6 @@ function Home() {
         // Update the document title using the browser API
         document.body.style.overflowY = "scroll";
     });
-
 
 //Home page has the navigation bar, the hero section, and the projects (cards)
     return (

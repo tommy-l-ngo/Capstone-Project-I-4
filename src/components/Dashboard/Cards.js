@@ -4,16 +4,17 @@ import './Cards.css';
 import data from "./data"
 import { getAuth } from "firebase/auth";
 import { getDatabase, get, child, ref} from "firebase/database";
-import { Col } from "react-bootstrap";
 
 // User authentification
 const dbRef = ref(getDatabase());
 const user = getAuth().currentUser;
 var name = "No user";
 var currUserID;
+var loggedIn = false;
 
 getAuth().onAuthStateChanged(function(user) {
   if (user) {
+    loggedIn = true;
   get(child(dbRef, "users"))
     .then((snapShot) => {
       let match = false;
@@ -31,6 +32,7 @@ getAuth().onAuthStateChanged(function(user) {
     })
   } else {
     // No user is signed in.
+    loggedIn = false;
   }
 });
     // Grabs projects from database
@@ -56,6 +58,7 @@ getAuth().onAuthStateChanged(function(user) {
                 //path: `/Projects/${subSnap.val().project_id}`
                 
             })
+
         }
           //const ID = curr.ref._path.pieces_[1];
           //let currUID = snapShot.child(ID).child("uid").val();
@@ -66,11 +69,12 @@ getAuth().onAuthStateChanged(function(user) {
     })
   } else {
     // No user is signed in.
+    
   }
 });
 
 function Cards() {
-    // This maps out all of the projects pertaining to the user
+    if (loggedIn === true){
   return (
         <div className='cards'>
             <h1>Current Projects</h1>
@@ -114,8 +118,20 @@ function Cards() {
         </div>
     )
 }
-/*
-
-                        
-*/
+if(loggedIn === false)
+{
+  return (
+    <div className='cards'>
+        <h1>Current Projects</h1>
+        <div className='cards__container'>
+            <div className='cards__wrapper'>
+                <ul className='cards__items'>
+                    <h4>No Current Projects.</h4>
+                </ul>
+            </div>
+        </div>
+    </div>
+  )
+}
+}
 export default Cards;

@@ -25,8 +25,9 @@ import { AuthProvider } from "./AuthContext";
 import { ProtectedRoute } from "./ProtectedRoute";
 import { PasswordReset } from "./PasswordReset";
 import { PageRedirect } from "./PageRedirect";
-import { sendSignInLinkToEmail } from "@firebase/auth";
+import { getAuth, sendSignInLinkToEmail } from "@firebase/auth";
 import ProjectPage from "../Projects/ProjectPage";
+
 class App extends React.Component {
   /*
   App2() {
@@ -89,6 +90,7 @@ class App extends React.Component {
   */
 
   render() {
+    
     /*
     if (UserStore.loading) {
       return (
