@@ -38,7 +38,7 @@ getAuth().onAuthStateChanged(function(user) {
 
 // Grabs projects from database
 let projects = [];
-  getAuth().onAuthStateChanged(function(user) {
+getAuth().onAuthStateChanged(function(user) {
     if (user) {
       get(child(dbRef, "projects"))
       .then((snapShot) => {
