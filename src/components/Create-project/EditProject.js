@@ -142,7 +142,6 @@ export default class EditProject extends Component { // sets all feilds to blank
                         className="form__field"
                         type="text"
                         placeholder="Project Name (must be the same name)"
-                        value="Test Project"
                         onChange={this.handleChange}
                         required
                       />
@@ -160,7 +159,6 @@ export default class EditProject extends Component { // sets all feilds to blank
                         name="description"
                         className="form__field"
                         placeholder="Description"
-                        value="This is a project description."
                         onChange={this.handleChange}
                         required
                       />

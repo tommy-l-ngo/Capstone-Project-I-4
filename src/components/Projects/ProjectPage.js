@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+//import React, { Component } from 'react';
 import { Button } from '../Dashboard/Button';
-import { useState, useEffect } from 'react';
+//import { useState, useEffect } from 'react';
 import '../Dashboard/Dashboard.css';
 import Navbar from '../Dashboard/Navbar';
 import data from '../Dashboard/data';
-import { Link, useParams, useLocation } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import './ProjectPage.css';
 import Comments from "../Comments/Comments";
 import { getAuth } from "firebase/auth";
@@ -15,10 +15,9 @@ const dbRef = ref(getDatabase());
 const user = getAuth().currentUser;
 var name = "No user";
 var currUserID;
-var loggedIn = false;
+
 getAuth().onAuthStateChanged(function(user) {
   if (user) {
-    loggedIn = true;
     get(child(dbRef, "users"))
     .then((snapShot) => {
       let match = false;
@@ -36,7 +35,7 @@ getAuth().onAuthStateChanged(function(user) {
     })
   } else {
     // No user is signed in.
-    loggedIn = false;
+
   }
 });
 
@@ -57,7 +56,7 @@ get(child(dbRef, "projects"))
         const fullPath = window.location.href;
         const projectPath = fullPath.replace("http://localhost:3000/#/Projects/", '');
         //console.log('path', projectPath);
-        //if(!subSnap.val().name) return
+        if(!subSnap.val().name) return
         const path_withSpaces = subSnap.val().name;
         const projectName = path_withSpaces.replace(/ /g, '_');
         console.log('projectPath', projectPath);
@@ -89,7 +88,7 @@ function ProjectPage() {
     //Gets data based on project Id
     const getData = data.cardData[id - 1];
     
-    console.warn(getData);
+    //console.warn(getData);
 
     const location = useLocation();
     const fullDataPath = location.pathname;
@@ -131,7 +130,7 @@ function ProjectPage() {
                 </Button>
         </div>
         <div className='project_comments'>
-            {currUserID == undefined ? 
+            {currUserID === undefined ? 
             (<Comments currentUserId={0} />) : 
             (<Comments currentUserId={currUserID}  />)
             }
@@ -165,7 +164,7 @@ function ProjectPage() {
                     </Button>
             </div>
             <div className='project_comments'>
-                {currUserID == undefined ? 
+                {currUserID === undefined ? 
                 (<Comments currentUserId={0} />) : 
                 (<Comments currentUserId={currUserID}  />)
                 }
