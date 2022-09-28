@@ -15,47 +15,48 @@ var loggedIn = false;
 getAuth().onAuthStateChanged(function(user) {
   if (user) {
     loggedIn = true;
-  get(child(dbRef, "users"))
+    get(child(dbRef, "users"))
     .then((snapShot) => {
-      let match = false;
-      if (snapShot.exists()) {
-            // Grabs user id
-        match = snapShot.forEach((curr) => {
-          const ID = curr.ref._path.pieces_[1];
-          let currUID = snapShot.child(ID).child("uid").val();
-          if (currUID === user.uid) {
-              currUserID = snapShot.child(ID).child("eUID").val();
-            name = snapShot.child(ID).child("firstName").val();
-          }
-        });
-      }
-    })
+    let match = false;
+    if (snapShot.exists()) {
+      // Grabs user id
+      match = snapShot.forEach((curr) => {
+        const ID = curr.ref._path.pieces_[1];
+        let currUID = snapShot.child(ID).child("uid").val();
+        if (currUID === user.uid) {
+          currUserID = snapShot.child(ID).child("eUID").val();
+          name = snapShot.child(ID).child("firstName").val();
+        }
+      });
+    }
+  })
   } else {
     // No user is signed in.
     loggedIn = false;
   }
 });
-    // Grabs projects from database
-    let projects = [];
-    getAuth().onAuthStateChanged(function(user) {
-      if (user) {
-        get(child(dbRef, "projects"))
-        .then((snapShot) => {
+
+// Grabs projects from database
+let projects = [];
+  getAuth().onAuthStateChanged(function(user) {
+    if (user) {
+      get(child(dbRef, "projects"))
+      .then((snapShot) => {
         let projmatch = false;
         if (snapShot.exists()) {
           // Matches projects that belong to user
-            projmatch = snapShot.forEach((subSnap) => {
-              console.log(currUserID);
-              console.log(subSnap.val().user_id);
-              if (subSnap.val().user_id === currUserID)
-              {
-                projects.push({
-                  id: subSnap.val().project_id,
-                  text: subSnap.val().name,
-                  desc: subSnap.val().description,
-                  label: subSnap.val().date,
-                  src: "images/img-1.png"
-                  //path: `/Projects/${subSnap.val().project_id}`  
+          projmatch = snapShot.forEach((subSnap) => {
+            console.log(currUserID);
+            console.log(subSnap.val().user_id);
+            if (subSnap.val().user_id === currUserID)
+            {
+              projects.push({
+                id: subSnap.val().project_id,
+                text: subSnap.val().name,
+                desc: subSnap.val().description,
+                label: subSnap.val().date,
+                src: "images/img-1.png"
+                //path: `/Projects/${subSnap.val().project_id}`  
               })
             }
           //const ID = curr.ref._path.pieces_[1];
@@ -67,7 +68,6 @@ getAuth().onAuthStateChanged(function(user) {
       })
     } else {
     // No user is signed in.
-
   }
 });
 
