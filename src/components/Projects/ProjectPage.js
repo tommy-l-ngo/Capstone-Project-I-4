@@ -4,7 +4,7 @@ import { useState } from 'react';
 import '../Dashboard/Dashboard.css';
 import Navbar from '../Dashboard/Navbar';
 import data from '../Dashboard/data';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useLocation } from 'react-router-dom';
 import './ProjectPage.css';
 import Comments from "../Comments/Comments";
 import { getAuth } from "firebase/auth";
@@ -37,23 +37,75 @@ getAuth().onAuthStateChanged(function(user) {
   }
 });
 
+let projects = [];
+get(child(dbRef, "projects"))
+.then((snapShot) => {
+  let projmatch = false;
+  if (snapShot.exists()) {
+    // Matches projects that belong to user
+    projmatch = snapShot.forEach((subSnap) => {
+        //console.log('Curent URL', window.location.href);
+        //const location = useLocation();
+        //console.log('pathname', location.pathname);
+        const fullPath = window.location.href;
+        const projectPath = fullPath.replace("http://localhost:3000/#/Projects/", '');
+        console.log('path', projectPath);
+        const path_withSpaces = subSnap.val().name;
+        const projectName = path_withSpaces.replace(/ /g, '_');
+        console.log(projectPath);
+        console.log(projectName);
+        if (projectPath === projectName)
+        {
+          projects.push({
+            id: subSnap.val().project_id,
+            text: subSnap.val().name,
+            desc: subSnap.val().description,
+            label: subSnap.val().date,
+            src: "images/img-1.png"
+        })
+    }
+      //const ID = curr.ref._path.pieces_[1];
+      //let currUID = snapShot.child(ID).child("uid").val();
+      //if (currUID === user.uid) {
+        //name = snapShot.child(ID).child("firstName").val();
+    });
+  }
+});  
+
 function ProjectPage() {
+    /*
     //Gets Project Id
     const { id } = useParams();
-    console.log(id)
+    console.log(id);
     
     //Gets data based on project Id
     const getData = data.cardData[id - 1];
-
-    console.warn(getData);
+    */
+    /*
+    const location = useLocation();
+    //console.log('pathname', location.pathname);
+    const fullPath = location.pathname;
+    const project = fullPath.replace("/Projects/", '');
+    console.log('path', project);
+    */
+    //console.warn(getData);
     return (
         <div>
             <Navbar />
             <div className='project_details'>
-                <h1>{getData.text}</h1>
+                {(projects.map((item, index)=>{
+                  return(
+                    <div className='project_details'>
+                      <h1>{item.text}</h1>
+                      <h3>{item.desc}</h3>
+                      <p>THIS IS RANDOM TEXT. WOO!</p>
+                    </div>
+                  )
+                }))}
+                {/*<h1>{getData.text}</h1>
                 <h3>{getData.label}</h3>
                 
-                <p>{getData.desc}</p>
+                <p>{getData.desc}</p>*/}
             </div>
             <div className='rightsection'>
             <div className = "task_btn">

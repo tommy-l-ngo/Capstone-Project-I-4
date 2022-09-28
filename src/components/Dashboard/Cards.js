@@ -92,7 +92,8 @@ function Cards() {
                         {/*projects.length === 0 ? (
                             <h4>No current projects!</h4>
                             ) : */(projects.map((item, index)=>{
-                            
+                              const path_withSpaces = item.text;
+                              const project_path = path_withSpaces.replace(/ /g, '_');
                             return(
                                 /*<div className="col-12  col-lg-4">*/
                                 <CardItem 
@@ -101,7 +102,7 @@ function Cards() {
                                 text={item.text} 
                                 desc={item.desc} 
                                 label={item.label} 
-                                path={`/Projects/${item.text}`}
+                                path={`/Projects/${project_path}`}
                                 />
                                 /*</div>*/
                             )
