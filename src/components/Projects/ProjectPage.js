@@ -57,7 +57,7 @@ get(child(dbRef, "projects"))
         const fullPath = window.location.href;
         const projectPath = fullPath.replace("http://localhost:3000/#/Projects/", '');
         //console.log('path', projectPath);
-        if(!subSnap.val().name) return
+        //if(!subSnap.val().name) return
         const path_withSpaces = subSnap.val().name;
         const projectName = path_withSpaces.replace(/ /g, '_');
         console.log('projectPath', projectPath);
