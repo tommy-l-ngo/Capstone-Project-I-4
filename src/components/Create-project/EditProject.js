@@ -17,6 +17,7 @@ import MultiSelect from "./MultiSelect";
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import data from '../Dashboard/data';
+import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAu1kdEKPqTfL1XIjDF2l8rfG53FcdtVSM",
@@ -29,6 +30,33 @@ const firebaseConfig = {
   measurementId: "G-X8E63KZMT3",
 };
 
+
+//const user = getAuth().currentUser;
+
+/*getAuth().onAuthStateChanged(function(user) {
+  if (user) {
+    loggedIn = true;
+    get(child(dbRef, "users"))
+    .then((snapShot) => {
+    let match = false;
+    if (snapShot.exists()) {
+      // Grabs user id
+      match = snapShot.forEach((curr) => {
+        const ID = curr.ref._path.pieces_[1];
+        let currUID = snapShot.child(ID).child("uid").val();
+        if (currUID === user.uid) {
+          currUserID = snapShot.child(ID).child("eUID").val();
+          name = snapShot.child(ID).child("firstName").val();
+        }
+      });
+    }
+  })
+  } else {
+    // No user is signed in.
+    loggedIn = false;
+  }
+});*/
+
 export default class EditProject extends Component { // sets all feilds to blank
   constructor(props) {
     super(props);
@@ -38,17 +66,31 @@ export default class EditProject extends Component { // sets all feilds to blank
       task: "",
       date: new Date(),
       formValues: [{ tasks: "" }],
+      //user_id: user,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.edit_project = this.edit_project.bind(this);
   }
+
   edit_project(project_name, project_description, project_tasks, project_date) { //updates inputted fields to database
+    const user = getAuth().currentUser;
+    if (user !== null) {
+    // The user object has basic properties such as display name, email, etc.
+        const email = user.email;
+        const displayName = user.displayName; // (euid)
+    }
+    else
+    {
+        console.log("No User");
+    }
     const db = getDatabase();
     set(ref(db, "projects/" + project_name), {
+      name: project_name,
       description: project_description,
-      tasks: project_tasks,
+      //tasks: project_tasks,
       date: project_date,
+      user_id: user.displayName,
     });
   }
 
@@ -67,7 +109,8 @@ export default class EditProject extends Component { // sets all feilds to blank
       this.state.projectName,
       this.state.description,
       this.state.task,
-      this.state.date
+      this.state.date,
+      this.state.user_id
     );
   }
 
