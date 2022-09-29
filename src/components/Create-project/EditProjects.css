@@ -107,12 +107,32 @@ input[type="date"] {
     text-align: left;
 }
 
+.edit-field::placeholder {
+    color: #868686 !important;
+    opacity: 100 !important;
+}
+
+.edit-label {
+    position: absolute;
+    top: 0;
+    display: block;
+    transition: 0.2s;
+    font-size: 1rem;
+    color: #868686;
+    /* color: #CB9CFA; */
+    font-weight: 700;
+}
+
+.edit-field:focus ~ .edit-label {
+    color: #8c6cad;
+}
+
 .ep-inputField {
     color: #292929;
   
     padding-top: 16px;
     padding-bottom: 16px;
-  }
+}
 
 .btn {
     width: 100%;

@@ -11,6 +11,7 @@ import {
 import firebase from "firebase/compat/app";
 import { ref, set } from "firebase/database";
 import "./CreateProject.css";
+import "./EditProjects.css"
 import { initializeApp } from "firebase/app";
 import Navbar from "../Dashboard/Navbar";
 import MultiSelect from "./MultiSelect";
@@ -29,33 +30,6 @@ const firebaseConfig = {
   appId: "1:768427043765:web:6643185734fe346ddd07fc",
   measurementId: "G-X8E63KZMT3",
 };
-
-
-//const user = getAuth().currentUser;
-
-/*getAuth().onAuthStateChanged(function(user) {
-  if (user) {
-    loggedIn = true;
-    get(child(dbRef, "users"))
-    .then((snapShot) => {
-    let match = false;
-    if (snapShot.exists()) {
-      // Grabs user id
-      match = snapShot.forEach((curr) => {
-        const ID = curr.ref._path.pieces_[1];
-        let currUID = snapShot.child(ID).child("uid").val();
-        if (currUID === user.uid) {
-          currUserID = snapShot.child(ID).child("eUID").val();
-          name = snapShot.child(ID).child("firstName").val();
-        }
-      });
-    }
-  })
-  } else {
-    // No user is signed in.
-    loggedIn = false;
-  }
-});*/
 
 export default class EditProject extends Component { // sets all feilds to blank
   constructor(props) {
@@ -174,7 +148,7 @@ export default class EditProject extends Component { // sets all feilds to blank
                   id="errorMessage"
                 ></div>
                 <h3 style={{ lineHeight: "0px" }}></h3>
-
+                
                 <Form onSubmit={this.handleSubmit}> {/* line for handling submit action */}
                   {/* field for inputting project name */}
                   <Form.Group id="projectName">
@@ -182,14 +156,14 @@ export default class EditProject extends Component { // sets all feilds to blank
                       <input
                         name="projectName"
                         id="projectName"
-                        className="form__field"
+                        className="edit-field form__field"
                         type="text"
-                        placeholder="Project Name (must be the same name)"
+                        placeholder="Prefilled name"
                         onChange={this.handleChange}
                         required
                       />
-                      <label htmlFor="projectName" className="form__label">
-                        Project Name
+                      <label htmlFor="projectName" className="edit-label">
+                        Project Name (must be the same name)
                       </label>
                     </div>
                   </Form.Group>
@@ -200,12 +174,12 @@ export default class EditProject extends Component { // sets all feilds to blank
                       <input
                         id="description"
                         name="description"
-                        className="form__field"
-                        placeholder="Description"
+                        className="edit-field form__field"
+                        placeholder="prefilled desc"
                         onChange={this.handleChange}
                         required
                       />
-                      <label htmlFor="description" className="form__label">
+                      <label htmlFor="description" className="edit-label">
                         Description
                       </label>
                     </div>
@@ -218,12 +192,12 @@ export default class EditProject extends Component { // sets all feilds to blank
                         <input
                           id="tasks"
                           name="tasks"
-                          className="form__field"
+                          className="edit-field form__field"
                           placeholder="Task"
                           value={element.tasks || ""}
                           onChange={(e) => this.handleChanges(index, e)}
                         />
-                        <label htmlFor="tasks" className="form__label">
+                        <label htmlFor="tasks" className="edit-label">
                           Task (Optional)
                         </label>
                       </div>
@@ -256,11 +230,11 @@ export default class EditProject extends Component { // sets all feilds to blank
                       <DatePicker /* using datepicker for selecting duedate from calendar */
                         id="date"
                         name="date"
-                        className="form__field"
+                        className="edit-field form__field"
                         selected={this.state.date}
                         onChange={this.selectDate}
                       />
-                      <label htmlFor="date" className="form__label">
+                      <label htmlFor="date" className="edit-label">
                         Due Date
                       </label>
                     </div>
@@ -272,7 +246,7 @@ export default class EditProject extends Component { // sets all feilds to blank
                   <MultiSelect
                     onChange={this.handleStudentsChange.bind(this)}
                   />
-                  <label htmlFor="students" className="form__label">
+                  <label htmlFor="students" className="edit-label">
                         Add student(s) to project
                       </label>
                   </div>

@@ -60,7 +60,7 @@
   transition: border-color 0.2s;
 }
 .form__field::placeholder {
-  color: transparent;
+  opacity: 0;
 }
 .form__field:placeholder-shown ~ .form__label {
   font-size: 1.3rem;
