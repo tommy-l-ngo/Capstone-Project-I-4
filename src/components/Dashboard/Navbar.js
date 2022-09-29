@@ -5,6 +5,7 @@ import LoginPopup from "../Login/LoginPopup";
 import { userGlobal, getUserGlobal } from "../Login/LoginForm";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { getDatabase, set, get, ref, child } from "firebase/database";
+//import ReactSwitch from "react-switch";
 
 export var fadeIn = false;
 export function setFade(b) {
@@ -105,9 +106,15 @@ function Navbar() {
     window.scrollTo(0, 0)
   }
 
+  const [theme, setTheme] = useState("Light Mode");
+  function handleButtonClick() {
+    setTheme((curr) => (curr === "Light Mode" ? "Dark Mode" : "Light Mode"));
+    //window.location.reload(false);
+  }
+
   return (
     <>
-      <nav className="navbar">
+      <nav className="navbar" id={localStorage.getItem('currTheme')}>
         <div className="navbar-container">
           <Link to="/" className="navbar-title" onClick={function(event){ closeMobileMenu(); scrollToTop()}}>
             Ph.D. Scheduler
@@ -161,6 +168,16 @@ function Navbar() {
                 onClick={closeMobileMenu}
               >
                 Calendar
+              </Link>
+            </li>
+
+            <li className="nav-item">
+              <Link
+                to="/#"
+                className="nav-links-mobile"
+                onClick={handleButtonClick}
+              >
+                {theme}
               </Link>
             </li>
 

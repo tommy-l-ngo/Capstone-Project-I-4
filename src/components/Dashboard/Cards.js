@@ -36,9 +36,11 @@ getAuth().onAuthStateChanged(function(user) {
   }
 });
 
+
 // Grabs projects from database
 let projects = [];
 getAuth().onAuthStateChanged(function(user) {
+  console.log('hi')
     if (user) {
       get(child(dbRef, "projects"))
       .then((snapShot) => {
@@ -70,10 +72,33 @@ getAuth().onAuthStateChanged(function(user) {
     // No user is signed in.
   }
 });
-
+/*
+function getCurrentUser(auth) {
+  return new Promise((resolve, reject) => {
+     const unsubscribe = auth.onAuthStateChanged(user => {
+        unsubscribe();
+        resolve(user);
+     }, reject);
+  });
+}
+*/
 function Cards() {
+  //On reload
+  /*useEffect(() => {
+    window.onbeforeunload = function() {
+        getCurrentUser();
+        return true;
+    };
+  
+    return () => {
+        window.onbeforeunload = null;
+    };
+  }, []);
+  */
+  //getCurrentUser();
+
     if (loggedIn === true){
-  return (
+  return !projects ? null : (
         <div className='cards'>
             <h1>Current Projects</h1>
             <div className='cards__container'>
@@ -119,7 +144,7 @@ function Cards() {
 if(loggedIn === false)
 {
   return (
-    <div className='cards'>
+    <div className='cards' id={localStorage.getItem('currTheme')}>
         <h1>Current Projects</h1>
         <div className='cards__container'>
             <div className='cards__wrapper'>
