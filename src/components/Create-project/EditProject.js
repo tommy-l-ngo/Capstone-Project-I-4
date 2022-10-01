@@ -86,6 +86,7 @@ export default class EditProject extends Component { // sets all feilds to blank
       this.state.date,
       this.state.user_id
     );
+    window.location="/";
   }
 
   //handle change for project name and description

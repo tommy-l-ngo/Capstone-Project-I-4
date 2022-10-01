@@ -85,6 +85,7 @@ export default class CreateProject extends Component {
       this.state.task,
       this.state.date
     );
+    window.location="/";
   }
 
   //handle change for project name and description
