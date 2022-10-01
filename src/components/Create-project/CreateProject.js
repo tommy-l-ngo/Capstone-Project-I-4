@@ -2,10 +2,7 @@ import React, { Component } from "react";
 import {
   Form,
   Button,
-  Card,
-  Container,
-  InputGroup,
-  FormControl,
+  Card
 } from "react-bootstrap";
 import "./CreateProject.css";
 import "../Login/Login.css";
