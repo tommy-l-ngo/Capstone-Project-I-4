@@ -2,10 +2,7 @@ import React, { Component } from "react";
 import {
   Form,
   Button,
-  Card,
-  Container,
-  InputGroup,
-  FormControl,
+  Card
 } from "react-bootstrap";
 import "./CreateProject.css";
 import "../Login/Login.css";
@@ -17,6 +14,8 @@ import Navbar from "../Dashboard/Navbar";
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import { getAuth } from "firebase/auth";
+
+//add function here to ensure connection to database before rendering of page
 
 const firebaseConfig = {
   apiKey: "AIzaSyAu1kdEKPqTfL1XIjDF2l8rfG53FcdtVSM",
