@@ -15,6 +15,8 @@ import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import { getAuth } from "firebase/auth";
 
+//add function here to ensure connection to database before rendering of page
+
 const firebaseConfig = {
   apiKey: "AIzaSyAu1kdEKPqTfL1XIjDF2l8rfG53FcdtVSM",
   authDomain: "capstone-i4.firebaseapp.com",
