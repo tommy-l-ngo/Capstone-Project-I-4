@@ -108,7 +108,7 @@ input[type="date"] {
 }
 
 .edit-field::placeholder {
-    color: #868686 !important;
+    color: /*#868686*/ black !important;
     opacity: 100 !important;
 }
 
