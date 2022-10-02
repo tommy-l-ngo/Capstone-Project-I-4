@@ -2,7 +2,10 @@ import React, { Component } from "react";
 import {
   Form,
   Button,
-  Card
+  Card,
+  Container,
+  InputGroup,
+  FormControl,
 } from "react-bootstrap";
 import "./CreateProject.css";
 import "../Login/Login.css";
@@ -14,8 +17,6 @@ import Navbar from "../Dashboard/Navbar";
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import { getAuth } from "firebase/auth";
-
-//add function here to ensure connection to database before rendering of page
 
 const firebaseConfig = {
   apiKey: "AIzaSyAu1kdEKPqTfL1XIjDF2l8rfG53FcdtVSM",
@@ -43,7 +44,7 @@ export default class CreateProject extends Component {
     this.add_project = this.add_project.bind(this);
   }
 
-  add_project(project_name, project_description, project_tasks, project_date) {
+  add_project(project_name, project_description, project_tasks, project_date,students) {
     // get current user details from auth
     const user = getAuth().currentUser;
     if (user !== null) {
@@ -60,7 +61,7 @@ export default class CreateProject extends Component {
       name: project_name,
       user_id: user.displayName,
       description: project_description,
-      //tasks: project_tasks,
+      tasks: project_tasks,
       date: project_date,
     });
   }
@@ -75,16 +76,16 @@ export default class CreateProject extends Component {
             Description : ${description}
             Task : ${task}
             Date : ${date}
-            Student : ${students}
+            Student : ${JSON.stringify(students)}
         `);
 
     this.add_project(
       this.state.projectName,
       this.state.description,
       this.state.task,
-      this.state.date
+      JSON.stringify(this.state.date),
+      JSON.stringify(this.state.students)
     );
-    window.location="/";
   }
 
   //handle change for project name and description
