@@ -1,5 +1,4 @@
 import "./Login.css";
-//import UserStore from "../../stores/UserStore";
 import React from "react";
 import { observer } from "mobx-react";
 import LoginPopup from "./LoginPopup";
@@ -28,54 +27,81 @@ import { PageRedirect } from "./PageRedirect";
 import { getAuth, sendSignInLinkToEmail } from "@firebase/auth";
 import ProjectPage from "../Projects/ProjectPage";
 
+/* ------- Login Component -------- */
 class App extends React.Component {
-
-
   render() {
-    
-    
-    if (UserStore.loading) {
-      return (
-        <div className="app">
-          <div className="container">Loading...</div>
-        </div>
-      );
-    } else {
-
-      if (UserStore.isLoggedIn) {
-        return (
-          <div className="app">
-            <div className="container">
-              Logged in as {UserStore.username}
-              <SubmitButton text={'Log Out'} disabled='false' onClick={() => this.doLogOut()} />
-            </div>
-          </div>
-        );
-      }
-      
-
-      
     return (
       <main>
         <div className="App">
           <AuthProvider>
-          <Router>
-            <Switch>
-            <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} exact />
-              <Route path="/Forgot" element={<HomeForgotPopup />} />
-              <Route path="/Register" element={<HomeRegisterPopup />} />
-              <Route path="/RegisterAs" element={<HomeRegisterAsPopup />} />
-              <Route path="/PageRedirect" element={<PageRedirect />} />
+            <Router>
+              <Switch>
+                <Route
+                  path="/"
+                  element={
+                    <ProtectedRoute>
+                      <Home />
+                    </ProtectedRoute>
+                  }
+                  exact
+                />
+                <Route path="/Forgot" element={<HomeForgotPopup />} />
+                <Route path="/Register" element={<HomeRegisterPopup />} />
+                <Route path="/RegisterAs" element={<HomeRegisterAsPopup />} />
+                <Route path="/PageRedirect" element={<PageRedirect />} />
 
-              <Route path="/Login" element={<HomeLoginPopup />} exact />
-              <Route path="/Home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
-              <Route path="/CreateProject" element={<ProtectedRoute><CreateProject /></ProtectedRoute>} />
-              <Route path="/EditProject" element={<ProtectedRoute><EditProject /></ProtectedRoute>} />
-              <Route path="/Calendar" element={<ProtectedRoute><Calendar /></ProtectedRoute>} />
-              <Route path="/Projects/:id" exact element={<ProtectedRoute><ProjectPage /></ProtectedRoute>} />
-              <Route path="/Tasks" element={<ProtectedRoute><Tasks /></ProtectedRoute>} />
-            </Switch>
-          </Router>
+                <Route path="/Login" element={<HomeLoginPopup />} exact />
+                <Route
+                  path="/Home"
+                  element={
+                    <ProtectedRoute>
+                      <Home />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/CreateProject"
+                  element={
+                    <ProtectedRoute>
+                      <CreateProject />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/EditProject"
+                  element={
+                    <ProtectedRoute>
+                      <EditProject />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/Calendar"
+                  element={
+                    <ProtectedRoute>
+                      <Calendar />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/Projects/:id"
+                  exact
+                  element={
+                    <ProtectedRoute>
+                      <ProjectPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/Tasks"
+                  element={
+                    <ProtectedRoute>
+                      <Tasks />
+                    </ProtectedRoute>
+                  }
+                />
+              </Switch>
+            </Router>
           </AuthProvider>
         </div>
       </main>
@@ -83,4 +109,4 @@ class App extends React.Component {
   }
 }
 
-// export default observer(App);
+export default observer(App);
