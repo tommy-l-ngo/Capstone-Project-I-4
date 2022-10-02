@@ -29,69 +29,11 @@ import { getAuth, sendSignInLinkToEmail } from "@firebase/auth";
 import ProjectPage from "../Projects/ProjectPage";
 
 class App extends React.Component {
-  /*
-  App2() {
-    return (
-        <Router>
-        <div>
-            <Routes>
-            <Route path="/Register" element={<Register/>} />
-            </Routes>
-        </div>
-        </Router>
-        );
-  }
-  */
-  /*
-  async doLogOut() {
-    try {
-      let res = await fetch("/logout", {
-        method: "post",
-        headers: {
 
-          'Accept': "application/json",
-          'Content-Type': "application/json"
-        },
-      });
-
-      let result = await res.json();
-      if (result && result.success) {
-        UserStore.isLoggedIn = false;
-        UserStore.username = "";
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  }
-  async componentDidMount() {
-    try {
-      let res = await fetch("/isLoggedIn", {
-        method: "post",
-        headers: {
-          'Accept': "application/json",
-          'Content-Type': "application/json"
-        },
-      });
-
-      let result = await res.json();
-      if (result && result.success) {
-        UserStore.loading = false;
-        UserStore.isLoggedIn = true;
-        UserStore.username = result.username;
-      } else {
-        UserStore.loading = false;
-        UserStore.isLoggedIn = false;
-      }
-    } catch (e) {
-      UserStore.loading = false;
-      UserStore.isLoggedIn = false;
-    }
-  }
-  */
 
   render() {
     
-    /*
+    
     if (UserStore.loading) {
       return (
         <div className="app">
@@ -110,7 +52,7 @@ class App extends React.Component {
           </div>
         );
       }
-      */
+      
 
       
     return (
@@ -141,4 +83,4 @@ class App extends React.Component {
   }
 }
 
-export default observer(App);
+// export default observer(App);
