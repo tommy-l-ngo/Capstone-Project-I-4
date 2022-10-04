@@ -11,7 +11,7 @@ import {
   Route,
   HashRouter as Router,
 } from "react-router-dom";
-import CreateProject from "../Create-project/CreateProject";
+import {CreateProject} from "../Create-project/CreateProject";
 import EditProject from "../Create-project/EditProject";
 import Tasks from "../Tasks-Page/Tasks";
 import Home from "../Dashboard/pages/Home";

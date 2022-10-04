@@ -5,6 +5,7 @@ import LoginPopup from "../Login/LoginPopup";
 import { userGlobal, getUserGlobal } from "../Login/LoginForm";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { getDatabase, set, get, ref, child } from "firebase/database";
+import { prettyDOM } from "@testing-library/dom";
 
 export var fadeIn = false;
 export function setFade(b) {
@@ -68,7 +69,7 @@ function Navbar() {
                 // user1 = { eUID: ID, email: currEmail };
                 setUserEUID(ID);
                 const name = snapShot.child(ID).child("firstName").val();
-                setWelcomeName(name);
+                setWelcomeName("Welcome,  " + name);
 
                 return true;
               }
@@ -118,7 +119,7 @@ function Navbar() {
           </div>
           {User ? (
             <div className="navbar-logout-container">
-              <div>Welcome, &nbsp;{welcomeName}</div>
+              <div>{welcomeName}</div>
               <div className="logOutBtn">
                 <button className="navbar-login-box" onClick={handleLogout}>
                   Log Out
