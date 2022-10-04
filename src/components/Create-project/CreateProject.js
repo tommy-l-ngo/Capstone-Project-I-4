@@ -40,9 +40,15 @@ export function CreateProject(props)
         students: null,
       });
 
-      const navigate = useNavigate();
-
-    function add_project(project_name, project_description, project_tasks, project_date)
+  add_project(project_name, project_description, project_tasks, project_date,students) {
+    // get current user details from auth
+    const user = getAuth().currentUser;
+    if (user !== null) {
+    // The user object has basic properties such as display name, email, etc.
+        const email = user.email;
+        const displayName = user.displayName; // (euid)
+    }
+    else
     {
         // get current user details from auth
         const user = getAuth().currentUser;
@@ -64,30 +70,37 @@ export function CreateProject(props)
         });
         console.log("after adding to db");
     }
+    const db = getDatabase();
+    set(ref(db, "projects/" + project_name), {
+      name: project_name,
+      user_id: user.displayName,
+      description: project_description,
+      tasks: project_tasks,
+      date: project_date,
+    });
+  }
 
-    function handleSubmit(event) {
-        const { projectName, description, task, date, students } = projInfo;
-        event.preventDefault();
-        alert(JSON.stringify(projInfo.formValues));
-        alert(`
-                ____Your Details____\n
-                Project : ${projectName}
-                Description : ${description}
-                Task : ${task}
-                Date : ${date}
-                Student : ${students}
-            `);
-    
-        add_project(
-          projInfo.projectName,
-          projInfo.description,
-          projInfo.task,
-          projInfo.date
-        );
+  handleSubmit(event) {
+    const { projectName, description, task, date, students } = this.state;
+    event.preventDefault();
+    alert(JSON.stringify(this.state.formValues));
+    alert(`
+            ____Your Details____\n
+            Project : ${projectName}
+            Description : ${description}
+            Task : ${task}
+            Date : ${date}
+            Student : ${JSON.stringify(students)}
+        `);
 
-        navigate("/"); 
-        console.log("navigating");
-      }
+    this.add_project(
+      this.state.projectName,
+      this.state.description,
+      this.state.task,
+      JSON.stringify(this.state.date),
+      JSON.stringify(this.state.students)
+    );
+  }
 
       function handleChange(event) {
         let updatedValue = {[event.target.name]: event.target.value};
@@ -251,4 +264,15 @@ export function CreateProject(props)
               </div>
             ); 
 
-};
+                  <Button type="submit">Submit</Button>
+                </Form>
+              </Card.Body>
+            </Card>
+          </div>
+          {/* </Container> */}
+        </div>
+      </div>
+    );
+  }
+}
+

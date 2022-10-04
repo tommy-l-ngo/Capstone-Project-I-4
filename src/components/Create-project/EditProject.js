@@ -11,11 +11,14 @@ import {
 import firebase from "firebase/compat/app";
 import { ref, set } from "firebase/database";
 import "./CreateProject.css";
+import "./EditProjects.css"
 import { initializeApp } from "firebase/app";
 import Navbar from "../Dashboard/Navbar";
 import MultiSelect from "./MultiSelect";
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
+import data from '../Dashboard/data';
+import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAu1kdEKPqTfL1XIjDF2l8rfG53FcdtVSM",
@@ -37,17 +40,31 @@ export default class EditProject extends Component { // sets all feilds to blank
       task: "",
       date: new Date(),
       formValues: [{ tasks: "" }],
+      //user_id: user,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.edit_project = this.edit_project.bind(this);
   }
+
   edit_project(project_name, project_description, project_tasks, project_date) { //updates inputted fields to database
+    const user = getAuth().currentUser;
+    if (user !== null) {
+    // The user object has basic properties such as display name, email, etc.
+        const email = user.email;
+        const displayName = user.displayName; // (euid)
+    }
+    else
+    {
+        console.log("No User");
+    }
     const db = getDatabase();
     set(ref(db, "projects/" + project_name), {
+      name: project_name,
       description: project_description,
-      tasks: project_tasks,
+      //tasks: project_tasks,
       date: project_date,
+      user_id: user.displayName,
     });
   }
 
@@ -66,8 +83,10 @@ export default class EditProject extends Component { // sets all feilds to blank
       this.state.projectName,
       this.state.description,
       this.state.task,
-      this.state.date
+      this.state.date,
+      this.state.user_id
     );
+    window.location="/";
   }
 
   //handle change for project name and description
@@ -106,7 +125,15 @@ export default class EditProject extends Component { // sets all feilds to blank
     formValues.splice(i, 1);
     this.setState({ formValues });
   }
-
+  /*
+  componentDidMount(x) {
+    const { id } = this.props.match.params;
+    this.fetchData(id);
+    //Gets data based on project Id
+    const getData = data.cardData[id - 1];
+    console.warn(getData);
+  }*/
+  
   render() {
     return (
       <div>
@@ -122,7 +149,7 @@ export default class EditProject extends Component { // sets all feilds to blank
                   id="errorMessage"
                 ></div>
                 <h3 style={{ lineHeight: "0px" }}></h3>
-
+                
                 <Form onSubmit={this.handleSubmit}> {/* line for handling submit action */}
                   {/* field for inputting project name */}
                   <Form.Group id="projectName">
@@ -130,14 +157,14 @@ export default class EditProject extends Component { // sets all feilds to blank
                       <input
                         name="projectName"
                         id="projectName"
-                        className="form__field"
+                        className="edit-field form__field"
                         type="text"
-                        placeholder="Project Name (must be the same name)"
+                        placeholder="Prefilled name"
                         onChange={this.handleChange}
                         required
                       />
-                      <label htmlFor="projectName" className="form__label">
-                        Project Name
+                      <label htmlFor="projectName" className="edit-label">
+                        Project Name (must be the same name)
                       </label>
                     </div>
                   </Form.Group>
@@ -148,12 +175,12 @@ export default class EditProject extends Component { // sets all feilds to blank
                       <input
                         id="description"
                         name="description"
-                        className="form__field"
-                        placeholder="Description"
+                        className="edit-field form__field"
+                        placeholder="prefilled desc"
                         onChange={this.handleChange}
                         required
                       />
-                      <label htmlFor="description" className="form__label">
+                      <label htmlFor="description" className="edit-label">
                         Description
                       </label>
                     </div>
@@ -166,12 +193,12 @@ export default class EditProject extends Component { // sets all feilds to blank
                         <input
                           id="tasks"
                           name="tasks"
-                          className="form__field"
+                          className="edit-field form__field"
                           placeholder="Task"
                           value={element.tasks || ""}
                           onChange={(e) => this.handleChanges(index, e)}
                         />
-                        <label htmlFor="tasks" className="form__label">
+                        <label htmlFor="tasks" className="edit-label">
                           Task (Optional)
                         </label>
                       </div>
@@ -204,11 +231,11 @@ export default class EditProject extends Component { // sets all feilds to blank
                       <DatePicker /* using datepicker for selecting duedate from calendar */
                         id="date"
                         name="date"
-                        className="form__field"
+                        className="edit-field form__field"
                         selected={this.state.date}
                         onChange={this.selectDate}
                       />
-                      <label htmlFor="date" className="form__label">
+                      <label htmlFor="date" className="edit-label">
                         Due Date
                       </label>
                     </div>
@@ -220,7 +247,7 @@ export default class EditProject extends Component { // sets all feilds to blank
                   <MultiSelect
                     onChange={this.handleStudentsChange.bind(this)}
                   />
-                  <label htmlFor="students" className="form__label">
+                  <label htmlFor="students" className="edit-label">
                         Add student(s) to project
                       </label>
                   </div>

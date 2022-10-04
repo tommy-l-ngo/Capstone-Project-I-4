@@ -4,73 +4,101 @@ import './Cards.css';
 import data from "./data"
 import { getAuth } from "firebase/auth";
 import { getDatabase, get, child, ref} from "firebase/database";
-import { Col } from "react-bootstrap";
 
 // User authentification
 const dbRef = ref(getDatabase());
 const user = getAuth().currentUser;
 var name = "No user";
 var currUserID;
+var loggedIn = false;
 
 getAuth().onAuthStateChanged(function(user) {
   if (user) {
-  get(child(dbRef, "users"))
+    loggedIn = true;
+    get(child(dbRef, "users"))
     .then((snapShot) => {
-      let match = false;
-      if (snapShot.exists()) {
-            // Grabs user id
-        match = snapShot.forEach((curr) => {
-          const ID = curr.ref._path.pieces_[1];
-          let currUID = snapShot.child(ID).child("uid").val();
-          if (currUID === user.uid) {
-              currUserID = snapShot.child(ID).child("eUID").val();
-            name = snapShot.child(ID).child("firstName").val();
-          }
-        });
-      }
-    })
+    let match = false;
+    if (snapShot.exists()) {
+      // Grabs user id
+      match = snapShot.forEach((curr) => {
+        const ID = curr.ref._path.pieces_[1];
+        let currUID = snapShot.child(ID).child("uid").val();
+        if (currUID === user.uid) {
+          currUserID = snapShot.child(ID).child("eUID").val();
+          name = snapShot.child(ID).child("firstName").val();
+        }
+      });
+    }
+  })
   } else {
     // No user is signed in.
+    loggedIn = false;
   }
 });
-    // Grabs projects from database
-    let projects = [];
-    getAuth().onAuthStateChanged(function(user) {
-      if (user) {
-    get(child(dbRef, "projects"))
-    .then((snapShot) => {
-      let projmatch = false;
-      if (snapShot.exists()) {
-        // Matches projects that belong to user
-        projmatch = snapShot.forEach((subSnap) => {
+
+
+// Grabs projects from database
+let projects = [];
+getAuth().onAuthStateChanged(function(user) {
+  console.log('hi')
+    if (user) {
+      get(child(dbRef, "projects"))
+      .then((snapShot) => {
+        let projmatch = false;
+        if (snapShot.exists()) {
+          // Matches projects that belong to user
+          projmatch = snapShot.forEach((subSnap) => {
             console.log(currUserID);
             console.log(subSnap.val().user_id);
             if (subSnap.val().user_id === currUserID)
             {
-            projects.push({
+              projects.push({
                 id: subSnap.val().project_id,
-                text: subSnap.val().project_name,
+                text: subSnap.val().name,
                 desc: subSnap.val().description,
                 label: subSnap.val().date,
                 src: "images/img-1.png"
-                //path: `/Projects/${subSnap.val().project_id}`
-            })
-        }
+                //path: `/Projects/${subSnap.val().project_id}`  
+              })
+            }
           //const ID = curr.ref._path.pieces_[1];
           //let currUID = snapShot.child(ID).child("uid").val();
           //if (currUID === user.uid) {
             //name = snapShot.child(ID).child("firstName").val();
-        });
-      }
-    })
-  } else {
+          });
+        }
+      })
+    } else {
     // No user is signed in.
   }
 });
-
+/*
+function getCurrentUser(auth) {
+  return new Promise((resolve, reject) => {
+     const unsubscribe = auth.onAuthStateChanged(user => {
+        unsubscribe();
+        resolve(user);
+     }, reject);
+  });
+}
+*/
 function Cards() {
-    // This maps out all of the projects pertaining to the user
-  return (
+  //On reload
+  /*useEffect(() => {
+    window.onbeforeunload = function() {
+        getCurrentUser();
+        return true;
+    };
+  
+    return () => {
+        window.onbeforeunload = null;
+    };
+  }, []);
+  */
+  //getCurrentUser();
+
+    if (loggedIn === true){
+  return !projects ? null : (
         <div className='cards'>
             <h1>Current Projects</h1>
             <div className='cards__container'>
@@ -91,7 +119,8 @@ function Cards() {
                         {/*projects.length === 0 ? (
                             <h4>No current projects!</h4>
                             ) : */(projects.map((item, index)=>{
-                            
+                              const path_withSpaces = item.text;
+                              const project_path = path_withSpaces.replace(/ /g, '_');
                             return(
                                 /*<div className="col-12  col-lg-4">*/
                                 <CardItem 
@@ -100,7 +129,7 @@ function Cards() {
                                 text={item.text} 
                                 desc={item.desc} 
                                 label={item.label} 
-                                path={`/Projects/${item.id}`}
+                                path={`/Projects/${project_path}`}
                                 />
                                 /*</div>*/
                             )
@@ -112,8 +141,20 @@ function Cards() {
         </div>
     )
 }
-/*
-
-                        
-*/
+if(loggedIn === false)
+{
+  return (
+    <div className='cards' id={localStorage.getItem('currTheme')}>
+        <h1>Current Projects</h1>
+        <div className='cards__container'>
+            <div className='cards__wrapper'>
+                <ul className='cards__items'>
+                    <h4>No Current Projects.</h4>
+                </ul>
+            </div>
+        </div>
+    </div>
+  )
+}
+}
 export default Cards;

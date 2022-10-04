@@ -31,6 +31,7 @@ export default function ({ isOpen, onClose, data}) {
     const startDate = meetDateISO.substring(0, 10);
     const endDate = meetEndDateISO.substring(0, 10);
     //const meetID = startDate + "_" + meetTime + "_" + meetProj;
+    const [error, setError] = useState(null);
 
     const eventKey = data;
     
@@ -44,6 +45,7 @@ export default function ({ isOpen, onClose, data}) {
                 setProj(snapshot.val().project);
                 setTitle(snapshot.val().title);
                 setNotes(snapshot.val().notes);
+                setTime(snapshot.val().time);
                 //handleStudentLoad(snapshot.val().guests);
             } else {
                 console.log("Meeting not found");
@@ -66,6 +68,17 @@ export default function ({ isOpen, onClose, data}) {
     }// handleStudentSelect()
    
     function onSubmit() {
+      try{
+      
+        if (startDate > endDate) {
+          throw Error("Invalid date range");
+        }
+        else if (meetProj == 0) {
+          throw Error("Enter project name"); }
+        else if (meetTitle == 0) {
+          throw Error("Enter title"); }
+        else{
+
         update(ref(db, "calendars/" + userEUID+"/" + eventKey),{
             date: startDate,
             endDate: endDate,
@@ -77,10 +90,16 @@ export default function ({ isOpen, onClose, data}) {
         }
         )
         onClose();
+      }
+    } catch (err) {
+      console.log(err.code);
+      setError(err.message);
+    }
     }//onSubmit()
     
     function deleteCalendarEUID(){
         remove(ref(db, "calendars/" + userEUID+"/" + eventKey))
+        window.location.reload();
         onClose();
     }// getCalendarEUID()
     
@@ -111,6 +130,23 @@ export default function ({ isOpen, onClose, data}) {
           },
         }}
       >
+
+      {error && (
+          <p
+            style={{
+              marginTop: "10px",
+              fontSize: "20px",
+              color: "red",
+            }}
+          >
+            {error}
+          </p>
+        )}
+        <div
+          className="w-100 text-center mt-2 text-danger"
+          id="errorMessage"
+        ></div>
+
         <div className="xBtn">
           <Link to="/Calendar" className="xLink" onClick={onClose}>
             <i className="fas fa-times xButton" />
@@ -151,6 +187,8 @@ export default function ({ isOpen, onClose, data}) {
               <TimePicker
                 selected={meetTime}
                 onChange={(time) => setTime(time)}
+                value={meetTime}
+                clearIcon = {null} 
               />
             </div>
             <div>
@@ -171,7 +209,7 @@ export default function ({ isOpen, onClose, data}) {
             </div>
             <div>
               <h6>Notes</h6>
-              <input
+              <textarea
                 placeholder="Notes"
                 value={meetNotes}
                 onChange={(e) => setNotes(e.target.value)}
