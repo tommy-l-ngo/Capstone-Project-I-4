@@ -10,101 +10,122 @@ const dbRef = ref(getDatabase());
 const user = getAuth().currentUser;
 var name = "No user";
 var currUserID;
-var loggedIn = false;
+//var loggedIn = false;
 
-getAuth().onAuthStateChanged(function(user) {
-  if (user) {
-    loggedIn = true;
-    get(child(dbRef, "users"))
-    .then((snapShot) => {
-    let match = false;
-    if (snapShot.exists()) {
-      // Grabs user id
-      match = snapShot.forEach((curr) => {
-        const ID = curr.ref._path.pieces_[1];
-        let currUID = snapShot.child(ID).child("uid").val();
-        if (currUID === user.uid) {
-          currUserID = snapShot.child(ID).child("eUID").val();
-          name = snapShot.child(ID).child("firstName").val();
-        }
-      });
-    }
-  })
-  } else {
-    // No user is signed in.
-    loggedIn = false;
-  }
-});
+//let projects = [];
 
 
-// Grabs projects from database
-let projects = [];
-getAuth().onAuthStateChanged(function(user) {
-  console.log('hi')
-    if (user) {
-      get(child(dbRef, "projects"))
-      .then((snapShot) => {
-        let projmatch = false;
+
+
+
+function Cards() {
+
+  //Need to use stateful variables, not just regular variables
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [projects, setProjects] = useState([]);
+
+  /*
+  Everything is encapsualted in useEffect so that the onAuthStateChanged
+  listener is set only once at and by providing an empty dependency array to useEffect(), 
+  we tell it to run the callback only once, when the component initially renders, 
+  so the auth listener is set only once. Without useEffect() here, an infinite loop occurs.
+  */
+  useEffect(() => {
+
+    var unsubcribe = getAuth().onAuthStateChanged(function(user) {
+      console.log("loop starts here");
+      if (user) {
+        setLoggedIn(true);
+        currUserID = user.displayName;
+        /*
+        //No need for all this anymore since we have displayName now
+
+        get(child(dbRef, "users"))
+        .then((snapShot) => {
+        let match = false;
         if (snapShot.exists()) {
-          // Matches projects that belong to user
-          projmatch = snapShot.forEach((subSnap) => {
-            console.log(currUserID);
-            console.log(subSnap.val().user_id);
-            if (subSnap.val().user_id === currUserID)
-            {
-              projects.push({
-                id: subSnap.val().project_id,
-                text: subSnap.val().name,
-                desc: subSnap.val().description,
-                label: subSnap.val().date,
-                src: "images/img-1.png"
-                //path: `/Projects/${subSnap.val().project_id}`  
-              })
+          // Grabs user id
+          match = snapShot.forEach((curr) => {
+            const ID = curr.ref._path.pieces_[1];
+            let currUID = snapShot.child(ID).child("uid").val();
+            if (currUID === user.uid) {
+              currUserID = snapShot.child(ID).child("eUID").val();
+              name = snapShot.child(ID).child("firstName").val();
             }
-          //const ID = curr.ref._path.pieces_[1];
-          //let currUID = snapShot.child(ID).child("uid").val();
-          //if (currUID === user.uid) {
-            //name = snapShot.child(ID).child("firstName").val();
           });
         }
       })
-    } else {
-    // No user is signed in.
-  }
-});
-/*
-function getCurrentUser(auth) {
-  return new Promise((resolve, reject) => {
-     const unsubscribe = auth.onAuthStateChanged(user => {
-        unsubscribe();
-        resolve(user);
-     }, reject);
-  });
-}
-*/
-function Cards() {
-  //On reload
-  /*useEffect(() => {
-    window.onbeforeunload = function() {
-        getCurrentUser();
-        return true;
-    };
+      */
+      } else {
+        // No user is signed in.
+        setLoggedIn(false);
+      }
+    
+    
+      // Grabs projects from database
+
+      console.log('hi')
+        if (user) {
+          get(child(dbRef, "projects"))
+          .then((snapShot) => {
+            let projmatch = false;
+            if (snapShot.exists()) {
+              // Matches projects that belong to user
+              projmatch = snapShot.forEach((subSnap) => {
+                console.log(currUserID);
+                console.log(subSnap.val().user_id);
+                if (subSnap.val().user_id === currUserID)
+                {
+                    let project = {
+                    id: subSnap.val().project_id,
+                    text: subSnap.val().name,
+                    desc: subSnap.val().description,
+                    label: subSnap.val().date,
+                    src: "images/img-1.png"
+                    //path: `/Projects/${subSnap.val().project_id}`  
+                  };
+                  setProjects((projects) => [...projects, project]); //adding found project to array of user's projects
+                }
+              //const ID = curr.ref._path.pieces_[1];
+              //let currUID = snapShot.child(ID).child("uid").val();
+              //if (currUID === user.uid) {
+                //name = snapShot.child(ID).child("firstName").val();
+              });
+            }
+          })
+        } else {
+        // No user is signed in.
+      }
+    /*
+    function getCurrentUser(auth) {
+      return new Promise((resolve, reject) => {
+         const unsubscribe = auth.onAuthStateChanged(user => {
+            unsubscribe();
+            resolve(user);
+         }, reject);
+      });
+    }
+    */
+    })
   
-    return () => {
-        window.onbeforeunload = null;
-    };
+    //unsubcribe();
+
   }, []);
-  */
-  //getCurrentUser();
+  
+
 
     if (loggedIn === true){
-  return !projects ? null : (
+      return (
         <div className='cards'>
             <h1>Current Projects</h1>
             <div className='cards__container'>
                 <div className='cards__wrapper'>
                     <ul className='cards__items'>
-                        {data.cardData.map((item, index)=>{
+                        {/*
+                        
+                        //***data.cardData discarded as there is no longer need to display test projects***
+
+                        data.cardData.map((item, index)=>{
                             return(
                                 <CardItem 
                                 key={index} 
@@ -115,14 +136,17 @@ function Cards() {
                                 path={`/Projects/${item.id}`}
                                 />
                             )
-                        })}
+                        })
+                        */}
                         {/*projects.length === 0 ? (
                             <h4>No current projects!</h4>
-                            ) : */(projects.map((item, index)=>{
+                            ) : */
+                            /*
+                            (projects.map((item, index)=>{
                               const path_withSpaces = item.text;
                               const project_path = path_withSpaces.replace(/ /g, '_');
                             return(
-                                /*<div className="col-12  col-lg-4">*/
+                               
                                 <CardItem 
                                 key={index} 
                                 src={item.src} 
@@ -131,9 +155,33 @@ function Cards() {
                                 label={item.label} 
                                 path={`/Projects/${project_path}`}
                                 />
-                                /*</div>*/
                             )
-                        }))}
+                        }))*/}
+
+
+                            {projects.length ? 
+                              (
+                                projects.map((item, index)=>{
+                                  const path_withSpaces = item.text;
+                                  const project_path = path_withSpaces.replace(/ /g, '_');
+                                return(
+                                   
+                                    <CardItem 
+                                    key={index} 
+                                    src={item.src} 
+                                    text={item.text} 
+                                    desc={item.desc} 
+                                    label={item.label} 
+                                    path={`/Projects/${project_path}`}
+                                    />
+                                )
+                                })
+                              ) 
+                              : 
+                              (
+                                <h4>Nothing to see here. Go create some projects!</h4>
+                              )}
+                            
                         
                     </ul>
                 </div>

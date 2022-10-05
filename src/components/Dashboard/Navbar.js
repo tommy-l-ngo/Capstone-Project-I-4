@@ -44,63 +44,65 @@ function Navbar() {
       });
   }
 
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      // User is signed in, see docs for a list of available properties
-      // https://firebase.google.com/docs/reference/js/firebase.User
-      // user.getIdToken(true);
-      setUser(user);
-      const uid = user.uid; // Current user's Unique ID (NOT related to EUID)
+  useEffect(() => {
 
-      get(child(dbRef, "users"))
-        .then((snapShot) => {
-          let match = false;
-          if (snapShot.exists()) {
-            console.log("User uID: " + uid);
-
-            match = snapShot.forEach((curr) => {
-              const ID = curr.ref._path.pieces_[1];
-              //console.log(curr.ref._path.pieces_[1]);
-              //console.log(snapShot.child(ID).child("email").val());
-              let currUID = snapShot.child(ID).child("uid").val();
-              //console.log(curr);
-              //IDs.push(ID);
-              if (currUID === uid) {
-                // user1 = { eUID: ID, email: currEmail };
-                setUserEUID(ID);
-                const name = snapShot.child(ID).child("firstName").val();
-                setWelcomeName("Welcome,  " + name);
-
-                return true;
-              }
-            });
-            return match;
-            //console.log(IDs);
-            //console.log(userEmail);
-          }
-        })
-        .then((match) => {
-          try {
-            if (match) {
-              // setError("Email already exists. Try logging in.");
-              // setButtonDisabled(true);
-              // throw Error("Email does not exist in system");
-            } else {
-              setWelcomeName(User.email);
-              // setError("");
-              // setButtonDisabled(false);
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User is signed in, see docs for a list of available properties
+        // https://firebase.google.com/docs/reference/js/firebase.User
+        // user.getIdToken(true);
+        setUser(user);
+        const uid = user.uid; // Current user's Unique ID (NOT related to EUID)
+  
+        get(child(dbRef, "users"))
+          .then((snapShot) => {
+            let match = false;
+            if (snapShot.exists()) {
+              console.log("User uID: " + uid);
+  
+              match = snapShot.forEach((curr) => {
+                const ID = curr.ref._path.pieces_[1];
+                //console.log(curr.ref._path.pieces_[1]);
+                //console.log(snapShot.child(ID).child("email").val());
+                let currUID = snapShot.child(ID).child("uid").val();
+                //console.log(curr);
+                //IDs.push(ID);
+                if (currUID === uid) {
+                  // user1 = { eUID: ID, email: currEmail };
+                  setUserEUID(ID);
+                  const name = snapShot.child(ID).child("firstName").val();
+                  setWelcomeName("Welcome,  " + name);
+  
+                  return true;
+                }
+              });
+              return match;
+              //console.log(IDs);
+              //console.log(userEmail);
             }
-          } catch (err) {
-            console.log(err.code);
-            // setError(err.message);
-          }
-        });
-    } else {
-      setUser("");
-    }
-  });
+          })
+          .then((match) => {
+            try {
+              if (match) {
+                // setError("Email already exists. Try logging in.");
+                // setButtonDisabled(true);
+                // throw Error("Email does not exist in system");
+              } else {
+                setWelcomeName(User.email);
+                // setError("");
+                // setButtonDisabled(false);
+              }
+            } catch (err) {
+              console.log(err.code);
+              // setError(err.message);
+            }
+          });
+      } else {
+        setUser("");
+      }
+    });
+  }, []);
 
-  useEffect(() => {});
 
   const scrollToTop = () => { //Code to make page scroll to top
     window.scrollTo(0, 0)

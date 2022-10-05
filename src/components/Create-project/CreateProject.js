@@ -36,19 +36,13 @@ export function CreateProject(props)
         projectName: "",
         description: "",
         date: new Date(),
-        formValues: [{ tasks: "" }],
-        students: null,
+        tasks: [""], //tasks is an array of strings
+        students: [], //list of involved students' euids as an array of strings 
       });
 
-  add_project(project_name, project_description, project_tasks, project_date,students) {
-    // get current user details from auth
-    const user = getAuth().currentUser;
-    if (user !== null) {
-    // The user object has basic properties such as display name, email, etc.
-        const email = user.email;
-        const displayName = user.displayName; // (euid)
-    }
-    else
+      const navigate = useNavigate();
+
+    function add_project(project_name, project_description, project_tasks, project_date, project_students)
     {
         // get current user details from auth
         const user = getAuth().currentUser;
@@ -63,52 +57,55 @@ export function CreateProject(props)
         }
         const db = getDatabase();
         set(ref(db, "projects/" + project_name), {
+          name: project_name,
           user_id: user.displayName,
           description: project_description,
-          //tasks: project_tasks,
+          tasks: project_tasks,
           date: project_date,
+          students: project_students
+        }).then(() => {
+          navigate("/Home"); //navigate back to homepage after adding new project 
+          //console.log("navigating");
         });
-        console.log("after adding to db");
+ 
     }
-    const db = getDatabase();
-    set(ref(db, "projects/" + project_name), {
-      name: project_name,
-      user_id: user.displayName,
-      description: project_description,
-      tasks: project_tasks,
-      date: project_date,
-    });
-  }
 
-  handleSubmit(event) {
-    const { projectName, description, task, date, students } = this.state;
-    event.preventDefault();
-    alert(JSON.stringify(this.state.formValues));
-    alert(`
-            ____Your Details____\n
-            Project : ${projectName}
-            Description : ${description}
-            Task : ${task}
-            Date : ${date}
-            Student : ${JSON.stringify(students)}
-        `);
+    function handleSubmit(event) {
+        const { projectName, description, tasks, date, students } = projInfo;
+        event.preventDefault();
+        //alert(JSON.stringify(projInfo.tasks));
+        alert(`
+                ____New Project Details____\n
+                Project : ${projectName}
+                Description : ${description}
+                Tasks : ${tasks.join(", ")}
+                Date : ${date}
+                Students : ${students.join(", ")}
+            `);
+    
+        add_project(
+          projInfo.projectName,
+          projInfo.description,
+          projInfo.tasks,
+          JSON.stringify(projInfo.date),
+          projInfo.students
+        );
 
-    this.add_project(
-      this.state.projectName,
-      this.state.description,
-      this.state.task,
-      JSON.stringify(this.state.date),
-      JSON.stringify(this.state.students)
-    );
-  }
+        
+      }
 
       function handleChange(event) {
         let updatedValue = {[event.target.name]: event.target.value};
-        setProjInfo({...projInfo, ...updatedValue});
+        setProjInfo({...projInfo, ...updatedValue}); //setting new value
       }
 
       function handleStudentsChange(listOfStudents) {
-        let updatedValue = {students: listOfStudents};
+        let updatedList = [];
+        listOfStudents.forEach((student) => { 
+          updatedList = [...updatedList, student.value]; //getting an array of students' ids
+        });
+
+        let updatedValue = {students: updatedList};
         setProjInfo({...projInfo, ...updatedValue});
       }
 
@@ -118,22 +115,21 @@ export function CreateProject(props)
         }
 
        function handleChanges(i, e) {
-            let formValues = projInfo.formValues;
-            formValues[i][e.target.name] = e.target.value;
-            setProjInfo({ formValues });
+            let tasks = projInfo.tasks; //getting list of tasks
+            tasks[i] = e.target.value; //modifying specific task in list
+            setProjInfo({ ...projInfo, tasks }); //adding new list with modified task
             //this.props.push()
           }
 
          function addFormFields() {
-            setProjInfo({
-              formValues: [...projInfo.formValues, { tasks: "" }],
-            });
+           let tasks = [...projInfo.tasks, ""]; //adding an empty task
+            setProjInfo({...projInfo, tasks});
           }
 
         function removeFormFields(i) {
-            let formValues = projInfo.formValues;
-            formValues.splice(i, 1);
-            setProjInfo({ formValues });
+            let tasks = projInfo.tasks;
+            tasks.splice(i, 1); //removing a task
+            setProjInfo({...projInfo, tasks});
           }
 
             return (
@@ -188,7 +184,7 @@ export function CreateProject(props)
                           </Form.Group>
         
                           {/* field for tasks */}
-                          {projInfo.formValues.map((element, index) => (
+                          {projInfo.tasks.map((element, index) => (
                             <div className="form-inline" key={index}>
                               <div className="form__group field">
                                 <input
@@ -196,7 +192,6 @@ export function CreateProject(props)
                                   name="tasks"
                                   className="form__field"
                                   placeholder="Task"
-                                  value={element.tasks || ""}
                                   onChange={(e) => handleChanges(index, e)}
                                 />
                                 <label htmlFor="tasks" className="form__label">
@@ -264,15 +259,4 @@ export function CreateProject(props)
               </div>
             ); 
 
-                  <Button type="submit">Submit</Button>
-                </Form>
-              </Card.Body>
-            </Card>
-          </div>
-          {/* </Container> */}
-        </div>
-      </div>
-    );
-  }
-}
-
+};
