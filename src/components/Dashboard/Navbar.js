@@ -44,6 +44,10 @@ function Navbar() {
       });
   }
 
+  /*
+    Encapsulated within useEffect to set listener only once and prevent infinite loop. 
+    Refer to comment in CreateProject.js for explanation
+  */
   useEffect(() => {
 
     onAuthStateChanged(auth, (user) => {
