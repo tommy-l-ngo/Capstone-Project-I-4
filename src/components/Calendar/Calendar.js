@@ -84,6 +84,7 @@ export function Calendar() {
             <button class="addevent" color = "red" onClick={() => setModalOpen(true)}>Add Meeting</button>
             <div style={{ position: "relative", zIndex: 0, paddingTop: "20px" }}>
                 <FullCalendar
+                    aspectRatio={2.7}
                     ref={calendarRef}
                     plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin]}
                     initialView="dayGridMonth"
