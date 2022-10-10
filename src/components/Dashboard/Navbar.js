@@ -176,6 +176,16 @@ function Navbar() {
                 Calendar
               </Link>
             </li>
+            
+            <li className="nav-item">
+              <Link
+                to="/Todo"
+                className="nav-links"
+                onClick={closeMobileMenu}
+              >
+                To-do
+              </Link>
+            </li>
 
             <li className="nav-item">
               <Link

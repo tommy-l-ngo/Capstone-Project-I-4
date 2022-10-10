@@ -26,6 +26,7 @@ import { PasswordReset } from "./PasswordReset";
 import { PageRedirect } from "./PageRedirect";
 import { getAuth, sendSignInLinkToEmail } from "@firebase/auth";
 import ProjectPage from "../Projects/ProjectPage";
+import { Todolist } from "../Todo/Todo-list";
 
 /* ------- Login Component -------- */
 class App extends React.Component {
@@ -80,6 +81,14 @@ class App extends React.Component {
                   element={
                     <ProtectedRoute>
                       <Calendar />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/Todo"
+                  element={
+                    <ProtectedRoute>
+                      <Todolist />
                     </ProtectedRoute>
                   }
                 />
