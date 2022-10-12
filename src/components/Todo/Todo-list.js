@@ -1,5 +1,5 @@
 import { toHaveFocus } from "@testing-library/jest-dom/dist/matchers";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Navbar from "../Dashboard/Navbar"
 import { Todo } from "./Todo";
 import { TodoForm } from "./Todo-Form";
@@ -16,23 +16,34 @@ export function Todolist(props,{data}){
     const [setId] = useState(" ")
     const [setText] = useState(" ")
     const [input, setIput]= useState(props.edit ? props.edit.value :'');
-    //Fix Me connect databse
 
-    /*function getTodo(){get(ref(db, "todos/" + userEUID + "/" + todoid)).then((snapshot) =>{
+    function getTodo(){
+        get(ref(db, "todos/" + userEUID + "/")).then((snapshot) =>{
         if(snapshot.exists()){
-            setId(snapshot.val().id)
-            setText(snapshot.val().Text)
+            snapshot.forEach( (eventShot) => {
+                var tdid = eventShot.val().id;
+                var tdtext = eventShot.val().text;
+                var todo = {id: tdid, text: tdtext}
+                todos.push(todo);
+            })
+            setTodos(todos); // add todos to ui list
+            console.log(todos);
         }
-    })}*/
+        else{
+            console.log("No todos");
+        }
+    })}
     
     //add todo
     const addTodo = todo =>{
         if (!todo.text || /^\s*$/.test(todo.text)){
             return
         }
-        const newTodos = [todo, ...todos];
-        setTodos(newTodos);
-        console.log(...todos) 
+        var newTodo = {id: todoid, text: todo.text}
+        todos.push(newTodo);
+        setTodos(todos);
+        console.log(...todos);
+        getTodo();
     }
 
     // update todo
@@ -41,16 +52,16 @@ export function Todolist(props,{data}){
             return
         }
         setTodos(prev => prev.map(item => (item.id === todoId ? newValue : item)))
-        update(ref(db,"todos/" + userEUID + "/" + todoid),{
-            text: input
-        })
+        //update(ref(db,"todos/" + userEUID + "/" + todoId),{
+        //    text: input
+        //})
     }
     
     //remove todo
     const removeTodo =id => {
-        const removeArr = [...todos].filter(todo => todo.id !== id)
-        setTodos(removeArr);
-        remove(ref(db, "todos/"+userEUID+"/"+todoid))
+        //const removeArr = [...todos].filter(todo => todo.id !== id)
+        //setTodos(removeArr);
+        remove(ref(db, "todos/"+userEUID+"/"+id))
     }
 
     //set complete todo
@@ -63,6 +74,10 @@ export function Todolist(props,{data}){
         })
         setTodos(updatedTodos)
     }
+
+    useEffect(() => {
+        getTodo();
+    },[]); // FIX ME: should run on page load
 
     return(
         <>
