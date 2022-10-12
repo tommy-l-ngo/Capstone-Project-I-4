@@ -11,7 +11,7 @@ export function Todolist(props,{data}){
     const db = getDatabase();
     const user = getAuth().currentUser;
     const userEUID = user.displayName;
-    const todoid = userEUID+"_"+ "P"
+    const todoid = userEUID+"_"+ Date.now()
     const [todos, setTodos] = useState([]);
     const [setId] = useState(" ")
     const [setText] = useState(" ")
