@@ -3,26 +3,27 @@ import { useState } from "react";
 import Navbar from "../Dashboard/Navbar"
 import { Todo } from "./Todo";
 import { TodoForm } from "./Todo-Form";
-import { getDatabase, get, ref} from "firebase/database";
+import { getDatabase, get, ref, remove, update} from "firebase/database";
 import { getAuth } from "firebase/auth";
 import './Todo.css'
 
-export function Todolist({data}){
+export function Todolist(props,{data}){
     const db = getDatabase();
     const user = getAuth().currentUser;
     const userEUID = user.displayName;
-   
+    const todoid = userEUID+"_"+ "P"
     const [todos, setTodos] = useState([]);
     const [setId] = useState(" ")
     const [setText] = useState(" ")
+    const [input, setIput]= useState(props.edit ? props.edit.value :'');
     //Fix Me connect databse
 
-    /*get(ref(db, "todos/" + userEUID + "/" + todokey)).then((snapshot) =>{
+    /*function getTodo(){get(ref(db, "todos/" + userEUID + "/" + todoid)).then((snapshot) =>{
         if(snapshot.exists()){
             setId(snapshot.val().id)
             setText(snapshot.val().Text)
         }
-    })*/
+    })}*/
     
     //add todo
     const addTodo = todo =>{
@@ -40,12 +41,16 @@ export function Todolist({data}){
             return
         }
         setTodos(prev => prev.map(item => (item.id === todoId ? newValue : item)))
+        update(ref(db,"todos/" + userEUID + "/" + todoid),{
+            text: input
+        })
     }
     
     //remove todo
     const removeTodo =id => {
         const removeArr = [...todos].filter(todo => todo.id !== id)
         setTodos(removeArr);
+        remove(ref(db, "todos/"+userEUID+"/"+todoid))
     }
 
     //set complete todo

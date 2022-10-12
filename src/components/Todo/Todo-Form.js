@@ -9,7 +9,8 @@ export function TodoForm(props){
     const [input, setIput]= useState(props.edit ? props.edit.value :'');
     const inputRef = useRef(null)
     const db =getDatabase()
-    const todoid = userEUID+"_"+ Math.floor(Math.random()*1000000)
+    const todoid = userEUID+"_"+ "P"
+    //Math.floor(Math.random()*1000000)
     useEffect(() =>{
         inputRef.current.focus()
     })
