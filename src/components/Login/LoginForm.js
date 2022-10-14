@@ -71,7 +71,16 @@ export const LoginForm = (props) => {
         //console.log("userGlobal = " + userGlobal);
 
         //sendEmailVerification(userCredential.user);
-        navigate("/");
+        if (userCredential.user.uid == "sl99ANRsAscaBU6n1mFxC6wMpk13")
+        {
+          navigate("/Admin");
+        }
+        else
+        {
+          navigate("/");
+        }
+      
+        
         // alert("Logged in " + userCredential.user.email);
         // ...
       })

@@ -27,6 +27,7 @@ import { PageRedirect } from "./PageRedirect";
 import { getAuth, sendSignInLinkToEmail } from "@firebase/auth";
 import ProjectPage from "../Projects/ProjectPage";
 import { Todolist } from "../Todo/Todo-list";
+import { AdminPage } from "../Admin/Admin";
 
 /* ------- Login Component -------- */
 class App extends React.Component {
@@ -89,6 +90,14 @@ class App extends React.Component {
                   element={
                     <ProtectedRoute>
                       <Todolist />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/Admin"
+                  element={
+                    <ProtectedRoute>
+                      <AdminPage />
                     </ProtectedRoute>
                   }
                 />
