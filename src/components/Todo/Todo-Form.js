@@ -3,6 +3,7 @@ import { getAuth } from "firebase/auth";
 import { useState, useEffect, useRef } from "react";
 import { getDatabase, set, ref} from "firebase/database";
 
+//Function input data and update data 
 export function TodoForm(props){
     const user = getAuth().currentUser;
     const userEUID = user.displayName;
@@ -10,7 +11,8 @@ export function TodoForm(props){
     const inputRef = useRef(null)
     const db =getDatabase()
     const todoid = userEUID+"_"+ Date.now()
-    //Math.floor(Math.random()*1000000)
+    //Fix me, get id from databe
+    const id = "e23223_1666098260418"
     useEffect(() =>{
         inputRef.current.focus()
     })
@@ -18,20 +20,37 @@ export function TodoForm(props){
     const handleChange =e=>{
         setIput(e.target.value)
     }
+    //Fix me add a new handleSubmit to update todo on the correct id
     const handleSubmit=e=>{
         e.preventDefault();
-        //fix me connect database
         props.onSubmit({
             id: todoid,
+            isComplete: false,
             text: input
         })
         set(ref(db, "todos/" + userEUID + "/" + todoid),{
             id: todoid,
+            isComplete: false,
             text: input
         })
 
         setIput('')
     }
+    const handleSubmitEdit=e=>{
+      e.preventDefault();
+      props.onSubmit({
+          id: id,
+          isComplete: false,
+          text: input
+      })
+      set(ref(db, "todos/" + userEUID + "/" + id),{
+          id: id,
+          isComplete: false,
+          text: input
+      })
+
+      setIput('')
+  }
     return(
         <form onSubmit={handleSubmit} className='todo-form'>
       {props.edit ? (
@@ -44,7 +63,7 @@ export function TodoForm(props){
             ref={inputRef}
             className='todo-input edit'
           />
-          <button onClick={handleSubmit} className='todo-button edit'>
+          <button onClick={handleSubmitEdit} className='todo-button edit'>
             Update
           </button>
         </>
