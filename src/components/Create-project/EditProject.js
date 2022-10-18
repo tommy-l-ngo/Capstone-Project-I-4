@@ -89,6 +89,17 @@ export default class EditProject extends Component { // sets all feilds to blank
     window.location="/";
   }
 
+  handleDelete(event) {//this will handle what happens whne the submit button is pressed
+    const { projects } = this.state;
+    event.preventDefault();
+    alert(JSON.stringify(this.state.formValues));// displays all inputted values
+    alert(`
+            ____Your Details____\n
+            Title : ${projects}
+        `);
+    window.location="/";
+  }
+
   //handle change for project name and description
   handleChange(event) {
     this.setState({
@@ -97,16 +108,22 @@ export default class EditProject extends Component { // sets all feilds to blank
       [event.target.name]: event.target.value,
     });
   }
-   //handle change for multiselect of students
+  //handle change for multiselect of students
   handleStudentsChange(listOfStudents) {
     this.setState({
       students: listOfStudents,
     });
   }
+  //handle change for multiselect of projects
+  handleProjectsChange(listOfProjects) {
+    this.setState({
+      projects: listOfProjects,
+    });
+  }
   //handle change for due date
   selectDate=(e)=>{
     this.setState({date:e})
-}
+  }
   //handle change for task field
   handleChanges(i, e) {
     let formValues = this.state.formValues;
@@ -258,7 +275,25 @@ export default class EditProject extends Component { // sets all feilds to blank
               </Card.Body>
             </Card>
           </div>
-
+          <div style={{ minWidth: "400px" }}>
+            <Card className="deleteProject">
+              <Card.Body>
+                <Form onDelete={this.handleDelete}>
+                  <Form.Group id="projects">
+                    <div className="form__group field">
+                      <MultiSelect
+                        onChange={this.handleProjectsChange.bind(this)}
+                      />
+                      <label htmlFor="projects" className="edit-label">
+                        Delete project (OPTIONAL)
+                      </label>
+                    </div>
+                  </Form.Group>
+                  <Button type="delete">Delete</Button>
+                </Form>
+              </Card.Body>
+            </Card>
+          </div>
         </div>
       </div>
     );
