@@ -39,7 +39,7 @@ export function AdminPage() {
                     var userFirst = eventShot.val().firstName;
                     var userLast = eventShot.val().lastName;
                     var userRole = eventShot.val().role;
-                    var userVals = {email: userEmail, euid: userEUID, role: userRole};
+                    var userVals = {email: userEmail, euid: userEUID, role: userRole, first: userFirst, last: userLast};
                     userDataList.push(userVals);
                 })
                 setUserData(userDataList);
@@ -76,12 +76,24 @@ export function AdminPage() {
                             <div className="table-container">
                                 {/* <div className="table-content"> */}
                                 <table className="users-table">
+                                <thead>
+                                    <tr>
+                                        <th>Email</th>
+                                        <th>EUID</th>
+                                        <th>Last Name</th>
+                                        <th>First Name</th>
+                                        <th>Role</th>
+                                    </tr>
+                                </thead>
                                 
+
                                 {userData.map((val, key) => { /* map userData array into table*/
                                     return (
                                         <tr key={key}>
                                             <td>{val.email}</td>
                                             <td>{val.euid}</td>
+                                            <td>{val.last}</td>
+                                            <td>{val.first}</td>
                                             <td>{val.role}</td>
                                             <td className="delete-user"><button className="delete-user-button">X</button></td>
                                         </tr>
