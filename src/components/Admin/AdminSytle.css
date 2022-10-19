@@ -24,7 +24,7 @@
     background-color: #C4C4C4;
     justify-content: center;
     max-height: 80%;
-    min-width: 50%;
+    min-width: 80%;
     border-radius: 18px;
 }
 
@@ -43,7 +43,7 @@
 
 #main-title {
     color: #5c6c7c;
-    font-size: 4.5em;
+    font-size: 2.5em;
     display: block;
 }
 
@@ -60,7 +60,7 @@ div.show.dropdown {
     margin-bottom: 5px;;
     color: white;
     font-weight: 600;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
 }
 
 .dropdown-menu.show {
