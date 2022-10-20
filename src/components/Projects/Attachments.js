@@ -9,9 +9,10 @@ const Attachments = () => {
     
     const fullPath = window.location.href;
     const projectPath = fullPath.substring(fullPath.lastIndexOf('/') + 1)
+    const storageRef = ref(storage, `/projects/${projectPath}/`);
 
     const listItem = () => {
-        storage().ref().child(`project/${projectPath}/`).listAll()
+        storageRef.listAll()
           .then(res => {
             res.items.forEach((item) => {
               setData(arr => [...arr, item.name]);
