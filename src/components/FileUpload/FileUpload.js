@@ -28,7 +28,7 @@ function FileUpload() {
     }
 
     const fullPath = window.location.href;
-    const projectPath = fullPath.replace("http://localhost:3000/?#/Projects/", '');
+    const projectPath = fullPath.substring(fullPath.lastIndexOf('/') + 1)
     const storageRef = ref(storage, `/projects/${projectPath}/${file.name}`);
  
     // progress can be paused and resumed. It also exposes progress updates.
@@ -57,6 +57,8 @@ function FileUpload() {
               setTimeout(() => setPercent(0), 3000);
               setSuccessMessage('File successfully uploaded!')
               setTimeout(() => document.getElementById("fileSubmit").reset(), 3000);
+              setFile('');
+              file('');
           });
         }
     );

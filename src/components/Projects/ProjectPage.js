@@ -80,7 +80,8 @@ useEffect(() => {
 
               //proj path
               const fullPath = window.location.href;
-              const projectPath = fullPath.replace("http://localhost:3000/?#/Projects/", '');
+              //const projectPath = fullPath.replace("http://localhost:3000/?#/Projects/", '');
+              const projectPath = fullPath.substring(fullPath.lastIndexOf('/') + 1)
               //console.log('path', projectPath);
               if(!subSnap.val().name) return
               const path_withSpaces = subSnap.val().name;
