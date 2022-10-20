@@ -9,13 +9,14 @@ import "../Login/Login.css";
 import firebase from "firebase/compat/app";
 import { getDatabase, ref, set } from "firebase/database";
 import { initializeApp } from "firebase/app";
+import {useForm} from "react-hook-form";
 import MultiSelect from "./MultiSelect";
 import Navbar from "../Dashboard/Navbar";
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import { getAuth } from "firebase/auth";
+import fileUpload from "./fileUpload";
 
-//add function here to ensure connection to database before rendering of page
 
 const firebaseConfig = {
   apiKey: "AIzaSyAu1kdEKPqTfL1XIjDF2l8rfG53FcdtVSM",
@@ -27,6 +28,7 @@ const firebaseConfig = {
   appId: "1:768427043765:web:6643185734fe346ddd07fc",
   measurementId: "G-X8E63KZMT3",
 };
+
 
 export default class CreateProject extends Component {
   constructor(props) {
@@ -42,6 +44,7 @@ export default class CreateProject extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.add_project = this.add_project.bind(this);
   }
+
 
   add_project(project_name, project_description, project_tasks, project_date) {
     // get current user details from auth
@@ -64,6 +67,8 @@ export default class CreateProject extends Component {
       date: project_date,
     });
   }
+
+
 
   handleSubmit(event) {
     const { projectName, description, task, date, students } = this.state;
@@ -121,6 +126,10 @@ export default class CreateProject extends Component {
     let formValues = this.state.formValues;
     formValues.splice(i, 1);
     this.setState({ formValues });
+  }
+
+  fileChange(e){
+    let files=e.target.files;
   }
 
   render() {
@@ -241,6 +250,25 @@ export default class CreateProject extends Component {
                       </label>
                   </div>
                   </Form.Group>
+
+                  
+                  <div className="form-inline">
+                    <div className="form__group field">
+                      <input type="file" onchange={(e)=>this.fileChange(e)}/>
+
+                    </div>              
+                  </div>
+                  
+
+                  {/*<Form.Group id="file">
+                    <div className="form__group field">
+                      <fileUpload/>
+                      <label  htmlFor="file" className="form__label">
+                        Upload file to project
+                      </label>
+                    </div>
+                  </Form.Group>
+                      */}
 
                   <Button type="submit">Submit</Button>
                 </Form>
