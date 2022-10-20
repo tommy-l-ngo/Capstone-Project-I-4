@@ -28,11 +28,16 @@ export function TodoForm(props){
             isComplete: false,
             text: input
         })
+        if (!input || /^\s*$/.test(input)){
+          return
+        }
+        else{
         set(ref(db, "todos/" + userEUID + "/" + todoid),{
             id: todoid,
             isComplete: false,
             text: input
         })
+      }
 
         setIput('')
     }

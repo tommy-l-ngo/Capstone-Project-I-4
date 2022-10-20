@@ -21,7 +21,7 @@ export const Todo = ({ todos, completeTodo, removeTodo, updateTodo }) => {
     if (edit.id) {
       return <TodoForm edit={edit} onSubmit={submitUpdate} />;
     }
-  
+  //print todos into list todo
     return todos.map((todo, index) => (
       <div
         className={todo.isComplete ? 'todo-row complete' : 'todo-row'}
