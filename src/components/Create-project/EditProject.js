@@ -45,6 +45,7 @@ export default class EditProject extends Component { // sets all feilds to blank
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.edit_project = this.edit_project.bind(this);
+    this.delete_project = this.delete_project.bind(this);
   }
 
   edit_project(project_name, project_description, project_tasks, project_date) { //updates inputted fields to database
@@ -66,6 +67,16 @@ export default class EditProject extends Component { // sets all feilds to blank
       date: project_date,
       user_id: user.displayName,
     });
+  }
+  delete_project()
+  {
+       const { state } = this.props.location; 
+       console.log(state);
+       alert('test');
+       const db = getDatabase() 
+       firebase.database().ref('projects/').child(state.stringify()).remove(); 
+
+
   }
 
   handleSubmit(event) {//this will handle what happens whne the submit button is pressed
@@ -98,6 +109,7 @@ export default class EditProject extends Component { // sets all feilds to blank
             Title : ${projects}
         `);
     window.location="/";
+    this.delete_project(); 
   }
 
   //handle change for project name and description
@@ -289,7 +301,7 @@ export default class EditProject extends Component { // sets all feilds to blank
                       </label>
                     </div>
                   </Form.Group>
-                  <Button type="delete">Delete</Button>
+                  <Button type="delete" >Delete</Button>
                 </Form>
               </Card.Body>
             </Card>
