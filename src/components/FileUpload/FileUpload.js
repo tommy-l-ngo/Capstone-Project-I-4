@@ -4,6 +4,8 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import Progress from './Progress';
 import './FileUpload.css'
 import '../Dashboard/Button.css'
+import Message from './Message';
+import MessageSuccess from './MessageSuccess';
 
 function FileUpload() {
 
@@ -12,13 +14,17 @@ function FileUpload() {
   // progress
   const [percent, setPercent] = useState(0)
 
+  const [message, setMessage] = useState('')
+  const [successMessage, setSuccessMessage] = useState('')
+
   function handleChange(event) {
     setFile(event.target.files[0])
   }
   
   function handleSubmit(event) {
     if (!file) {
-      alert("Please upload an image first!");
+      //alert("Please upload an image first!");
+      setMessage('No file selected')
     }
 
     const storageRef = ref(storage, `/files/${file.name}`);
@@ -34,8 +40,8 @@ function FileUpload() {
               (snapshot.bytesTransferred / snapshot.totalBytes) * 100
           );
 
-          // Clear percentage
-          setTimeout(() => setPercent(0), 10000);
+          // // Clear percentage
+          // setTimeout(() => setPercent(0), 10000);
 
           // update progress
           setPercent(percent);
@@ -45,6 +51,10 @@ function FileUpload() {
           // download url
           getDownloadURL(uploadTask.snapshot.ref).then((url) => {
               console.log(url);
+              // Clear percentage
+              setTimeout(() => setPercent(0), 3000);
+              setSuccessMessage('File successfully uploaded!')
+              setTimeout(() => document.getElementById("fileSubmit").reset(), 3000);
           });
         }
     );
@@ -52,7 +62,9 @@ function FileUpload() {
 
   return (
     <div className="File-Upload">
-        <form onSubmit={handleSubmit}>
+        {message ? <Message msg={message} /> : null}
+        {successMessage ? <MessageSuccess msg={successMessage} /> : null}
+        <form id="fileSubmit" onSubmit={handleSubmit}>
           <h4>Upload a File</h4>
           <div className='fileSelector'>
             <input type="file" onChange={handleChange}/>
