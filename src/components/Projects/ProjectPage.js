@@ -7,6 +7,7 @@ import data from '../Dashboard/data';
 import { useParams, useLocation } from 'react-router-dom';
 import './ProjectPage.css';
 import Comments from "../Comments/Comments";
+import FileUpload from "../FileUpload/FileUpload";
 import { getAuth } from "firebase/auth";
 import { getDatabase, get, child, ref} from "firebase/database";
 
@@ -162,6 +163,10 @@ function ProjectPage() {
             >   
                         Tasks
                     </Button>
+                    
+            </div>
+            <div className = "file_upload">
+                <FileUpload />
             </div>
             <div className='project_comments'>
                 {currUserID === undefined ? 

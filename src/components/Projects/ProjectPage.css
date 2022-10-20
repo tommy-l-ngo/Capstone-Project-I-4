@@ -42,6 +42,17 @@
     background-color: white;
 }
 
+.file_upload {
+    border: 0.5px solid;
+    border-radius: 5px 5px 5px 5px;
+    /*float: right;*/
+    margin-right: 20px;
+    margin-top: 20px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    background-color: white;
+}
+
 .rightsection {
     float: right;
     padding-left: 40px;
