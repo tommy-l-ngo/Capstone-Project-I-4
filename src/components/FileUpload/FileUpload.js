@@ -57,8 +57,8 @@ function FileUpload() {
               setTimeout(() => setPercent(0), 3000);
               setSuccessMessage('File successfully uploaded!')
               setTimeout(() => document.getElementById("fileSubmit").reset(), 3000);
-              setFile('');
-              file('');
+              setTimeout(() => file(''), 3000);
+              setTimeout(() => setFile(''), 3000);
           });
         }
     );
