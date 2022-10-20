@@ -1,6 +1,6 @@
 //import React, { Component } from 'react';
 import { Button } from '../Dashboard/Button';
-//import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import '../Dashboard/Dashboard.css';
 import Navbar from '../Dashboard/Navbar';
 import data from '../Dashboard/data';
@@ -17,70 +17,154 @@ const user = getAuth().currentUser;
 var name = "No user";
 var currUserID;
 
-getAuth().onAuthStateChanged(function(user) {
-  if (user) {
-    get(child(dbRef, "users"))
-    .then((snapShot) => {
-      let match = false;
-      if (snapShot.exists()) {
+// getAuth().onAuthStateChanged(function(user) {
+//   if (user) {
+//     get(child(dbRef, "users"))
+//     .then((snapShot) => {
+//       let match = false;
+//       if (snapShot.exists()) {
 
-        match = snapShot.forEach((curr) => {
-          const ID = curr.ref._path.pieces_[1];
-          let currUID = snapShot.child(ID).child("uid").val();
-          if (currUID === user.uid) {
-            currUserID = snapShot.child(ID).child("eUID").val();
-            name = snapShot.child(ID).child("firstName").val();
-          }
-        });
-      }
-    })
-  } else {
-    // No user is signed in.
+//         match = snapShot.forEach((curr) => {
+//           const ID = curr.ref._path.pieces_[1];
+//           let currUID = snapShot.child(ID).child("uid").val();
+//           if (currUID === user.uid) {
+//             currUserID = snapShot.child(ID).child("eUID").val();
+//             name = snapShot.child(ID).child("firstName").val();
+//           }
+//         });
+//       }
+//     })
+//   } else {
+//     // No user is signed in.
 
-  }
-});
+//   }
+// });
 
-let projects = [];
-get(child(dbRef, "projects"))
-.then((snapShot) => {
-  let projmatch = false;
-  if (snapShot.exists()) {
-    // Matches projects that belong to user
-    projmatch = snapShot.forEach((subSnap) => {
-        //console.log('Curent URL', window.location.href);
-        //const location = useLocation();
-        //console.log('pathname', location.pathname);
-        /*do{
-          const fullPath = window.location.href;
-          console.log('path', fullPath);
-        } while(fullPath === "http://localhost:3000/#/Login");*/
-        const fullPath = window.location.href;
-        const projectPath = fullPath.replace("http://localhost:3000/#/Projects/", '');
-        //console.log('path', projectPath);
-        if(!subSnap.val().name) return
-        const path_withSpaces = subSnap.val().name;
-        const projectName = path_withSpaces.replace(/ /g, '_');
-        console.log('projectPath', projectPath);
-        console.log('projectName', projectName);
-        if (projectPath === projectName)
-        {
-          projects.push({
-            id: subSnap.val().project_id,
-            text: subSnap.val().name,
-            desc: subSnap.val().description,
-            label: subSnap.val().date,
-            src: "images/img-1.png"
-        })
-    }
-      //const ID = curr.ref._path.pieces_[1];
-      //let currUID = snapShot.child(ID).child("uid").val();
-      //if (currUID === user.uid) {
-        //name = snapShot.child(ID).child("firstName").val();
-    });
-  }
-});  
+
 
 function ProjectPage() {
+
+  //Need to use stateful variables, not just regular variables
+const [loggedIn, setLoggedIn] = useState(false);
+const [projects, setProjects] = useState([]);
+
+/*
+Everything is encapsualted in useEffect so that the onAuthStateChanged
+listener is set only once at and by providing an empty dependency array to useEffect(), 
+we tell it to run the callback only once, when the component initially renders, 
+so the auth listener is set only once. Without useEffect() here, an infinite loop occurs.
+*/
+useEffect(() => {
+
+  var unsubcribe = getAuth().onAuthStateChanged(function(user) {
+    console.log("loop starts here");
+    if (user) {
+      setLoggedIn(true);
+      currUserID = user.displayName;
+    } else {
+      // No user is signed in.
+      setLoggedIn(false);
+    }
+  
+    // Grabs projects from database
+    console.log('hi')
+      if (user) {
+        get(child(dbRef, "projects"))
+        .then((snapShot) => {
+          let projmatch = false;
+          if (snapShot.exists()) {
+            // Matches projects that belong to user
+            projmatch = snapShot.forEach((subSnap) => {
+              console.log(currUserID);
+              console.log(subSnap.val().user_id);
+
+              //proj path
+              const fullPath = window.location.href;
+              const projectPath = fullPath.replace("http://localhost:3000/?#/Projects/", '');
+              //console.log('path', projectPath);
+              if(!subSnap.val().name) return
+              const path_withSpaces = subSnap.val().name;
+              const projectName = path_withSpaces.replace(/ /g, '_');
+              console.log('projectPath', projectPath);
+              console.log('projectName', projectName);
+
+              if (subSnap.val().user_id === currUserID && projectPath === projectName)
+              {
+                  let project = {
+                  id: subSnap.val().project_id,
+                  text: subSnap.val().name,
+                  desc: subSnap.val().description,
+                  label: subSnap.val().date,
+                  src: "images/img-1.png"
+                  //path: `/Projects/${subSnap.val().project_id}`  
+                };
+                setProjects((projects) => [...projects, project]); //adding found project to array of user's projects
+              }
+            //const ID = curr.ref._path.pieces_[1];
+            //let currUID = snapShot.child(ID).child("uid").val();
+            //if (currUID === user.uid) {
+              //name = snapShot.child(ID).child("firstName").val();
+            });
+          }
+        })
+      } else {
+      // No user is signed in.
+    }
+  /*
+  function getCurrentUser(auth) {
+    return new Promise((resolve, reject) => {
+       const unsubscribe = auth.onAuthStateChanged(user => {
+          unsubscribe();
+          resolve(user);
+       }, reject);
+    });
+  }
+  */
+  })
+
+  //unsubcribe();
+
+}, []);
+
+// let projectsList = [];
+// get(child(dbRef, "projects"))
+// .then((snapShot) => {
+//   let projmatch = false;
+//   if (snapShot.exists()) {
+//     // Matches projects that belong to user
+//     projmatch = snapShot.forEach((subSnap) => {
+//         //console.log('Curent URL', window.location.href);
+//         //const location = useLocation();
+//         //console.log('pathname', location.pathname);
+//         /*do{
+//           const fullPath = window.location.href;
+//           console.log('path', fullPath);
+//         } while(fullPath === "http://localhost:3000/#/Login");*/
+//         const fullPath = window.location.href;
+//         const projectPath = fullPath.replace("http://localhost:3000/?#/Projects/", '');
+//         //console.log('path', projectPath);
+//         if(!subSnap.val().name) return
+//         const path_withSpaces = subSnap.val().name;
+//         const projectName = path_withSpaces.replace(/ /g, '_');
+//         console.log('projectPath', projectPath);
+//         console.log('projectName', projectName);
+//         if (projectPath === projectName)
+//         {
+//           projectsList.push({
+//             id: subSnap.val().project_id,
+//             text: subSnap.val().name,
+//             desc: subSnap.val().description,
+//             label: subSnap.val().date,
+//             src: "images/img-1.png"
+//         })
+//     }
+//       //const ID = curr.ref._path.pieces_[1];
+//       //let currUID = snapShot.child(ID).child("uid").val();
+//       //if (currUID === user.uid) {
+//         //name = snapShot.child(ID).child("firstName").val();
+//     });
+//   }
+// });  
     
     //Gets Project Id
     const { id } = useParams();

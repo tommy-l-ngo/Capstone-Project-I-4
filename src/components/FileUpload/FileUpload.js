@@ -27,7 +27,9 @@ function FileUpload() {
       setMessage('No file selected')
     }
 
-    const storageRef = ref(storage, `/files/${file.name}`);
+    const fullPath = window.location.href;
+    const projectPath = fullPath.replace("http://localhost:3000/?#/Projects/", '');
+    const storageRef = ref(storage, `/projects/${projectPath}/${file.name}`);
  
     // progress can be paused and resumed. It also exposes progress updates.
     // Receives the storage reference and the file to upload.
