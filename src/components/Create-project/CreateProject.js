@@ -94,7 +94,15 @@ export function CreateProject(props)
           projInfo.students
         );
 
+                   
         
+        const fullPath = window.location.href;
+        const projectPath = fullPath.substring(fullPath.lastIndexOf('/') + 1)
+        const storageRef = ref(storage, `/projects/${projectPath}/${file.name}`);
+     
+        // progress can be paused and resumed. It also exposes progress updates.
+        // Receives the storage reference and the file to upload.
+        //const uploadTask = uploadBytesResumable(storageRef, file);
       }
 
       function handleChange(event) {
@@ -153,10 +161,6 @@ export function CreateProject(props)
             // Receives the storage reference and the file to upload.
             const uploadTask = uploadBytesResumable(storageRef, file);
           };
-         /* fileChange(e)
-          {
-            let files=e.target.files;
-          }*/
 
             return (
               <div>
@@ -277,11 +281,11 @@ export function CreateProject(props)
 
                           <div className="form-inline">
                             
-                            <form id="fileSubmit" onSubmit={fileSubmit}>
+                            <form id="fileSubmit" onSubmit={handleSubmit}>
                               <h4>Upload a File</h4>
                                 <div className='fileSelector'>
                                   <input type="file" onChange={handleChange}/>
-                                  <button className='uploadBtn' type="submit">Upload</button>
+                                  {/*<button className='uploadBtn' type="submit">Upload</button>*/}
                                 </div>
                                 
                             </form>
