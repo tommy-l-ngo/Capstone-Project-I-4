@@ -138,11 +138,11 @@ export function CreateProject(props)
           const [file, setFile] = useState()
 
   // progress
-  const [percent, setPercent] = useState(0)
+  /*const [percent, setPercent] = useState(0)*/
 
  
 
-          function handleSubmit(event) {
+          function fileSubmit(event) {
            
         
             const fullPath = window.location.href;
@@ -277,7 +277,7 @@ export function CreateProject(props)
 
                           <div className="form-inline">
                             
-                            <form id="fileSubmit" onSubmit={handleSubmit}>
+                            <form id="fileSubmit" onSubmit={fileSubmit}>
                               <h4>Upload a File</h4>
                                 <div className='fileSelector'>
                                   <input type="file" onChange={handleChange}/>
