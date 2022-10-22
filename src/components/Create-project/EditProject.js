@@ -44,6 +44,7 @@ export default class EditProject extends Component { // sets all feilds to blank
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
     this.edit_project = this.edit_project.bind(this);
     this.delete_project = this.delete_project.bind(this);
   }
@@ -70,13 +71,12 @@ export default class EditProject extends Component { // sets all feilds to blank
   }
   delete_project()
   {
-       const { state } = this.props.location; 
-       console.log(state);
+       //const { state } = this.props.location; 
+       //console.log(state);
        alert('test');
-       const db = getDatabase() 
-       firebase.database().ref('projects/').child(state.stringify()).remove(); 
-
-
+       const db = getDatabase();
+       var rmvref = firebase.database().ref('projects/Project_1');
+      rmvref.remove();  
   }
 
   handleSubmit(event) {//this will handle what happens whne the submit button is pressed
@@ -100,16 +100,17 @@ export default class EditProject extends Component { // sets all feilds to blank
     window.location="/";
   }
 
-  handleDelete(event) {//this will handle what happens whne the submit button is pressed
-    const { projects } = this.state;
-    event.preventDefault();
-    alert(JSON.stringify(this.state.formValues));// displays all inputted values
+  handleDelete(event) {//this will handle what happens whne the delete button is pressed
+    //event.preventDefault();
+    this.delete_project();
+    alert("Project Deleted");
     alert(`
             ____Your Details____\n
-            Title : ${projects}
+            Title : ${this.props.location}
         `);
+    //this.delete_project();
     window.location="/";
-    this.delete_project(); 
+     
   }
 
   //handle change for project name and description
@@ -290,19 +291,7 @@ export default class EditProject extends Component { // sets all feilds to blank
           <div style={{ minWidth: "400px" }}>
             <Card className="deleteProject">
               <Card.Body>
-                <Form onDelete={this.handleDelete}>
-                  <Form.Group id="projects">
-                    <div className="form__group field">
-                      <MultiSelect
-                        onChange={this.handleProjectsChange.bind(this)}
-                      />
-                      <label htmlFor="projects" className="edit-label">
-                        Delete project (OPTIONAL)
-                      </label>
-                    </div>
-                  </Form.Group>
-                  <Button type="delete" >Delete</Button>
-                </Form>
+                  <Button type="delete" onClick={this.handleDelete}>Delete Project</Button>
               </Card.Body>
             </Card>
           </div>
