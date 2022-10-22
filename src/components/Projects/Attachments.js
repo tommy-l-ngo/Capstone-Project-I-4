@@ -11,17 +11,22 @@ const Attachments = () => {
     const projectPath = fullPath.substring(fullPath.lastIndexOf('/') + 1)
     const storageRef = ref(storage, `/projects/${projectPath}/`);
 
-    const listItem = () => {
-        storageRef.listAll()
-          .then(res => {
-            res.items.forEach((item) => {
-              setData(arr => [...arr, item.name]);
-            })
-          })
-          .catch(err => {
-            alert(err.message);
-          })
-      }
+    // const listItem = async () => {
+    //   const res = await storageRef.list();
+    //   return await Promise.all(res.items.map(i => i.getDownloadURL()));
+    // }
+
+    // const listItem = () => {
+    //     storageRef.listAll()
+    //       .then(res => {
+    //         res.items.forEach((item) => {
+    //           setData(arr => [...arr, item.name]);
+    //         })
+    //       })
+    //       .catch(err => {
+    //         alert(err.message);
+    //       })
+    //   }
 
   return (
     <div className="img-grid">
