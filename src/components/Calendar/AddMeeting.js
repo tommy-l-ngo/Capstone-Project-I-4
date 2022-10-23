@@ -188,7 +188,6 @@ export default function ({ isOpen, onClose }) {
           <div>
             <h6>Notes</h6>
             <textarea
-              style={{ textAlign: "left" }}
               placeholder="Notes"
               value={meetNotes}
               style={{ textAlign: "left", fontWeight: "100" }}

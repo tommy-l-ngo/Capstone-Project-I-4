@@ -109,7 +109,19 @@ export default function ({ isOpen, onClose, data }) {
       isOpen={isOpen}
       onClose={onClose}
       ariaHideApp={false}
-      className="modalEdit"
+      style={{
+        content: {
+          position: "fixed",
+          borderRadius: "20px",
+          border: "10px solid #ccc",
+          top: "55%",
+          left: "50%",
+          msTransform: "translate(-50%, -50%)",
+          transform: "translate(-50%, -50%)",
+          height: "615px",
+          width: "500px",
+        },
+      }}
     >
       {error && (
         <p
