@@ -15,7 +15,6 @@ import Attachments from './Attachments';
 // Gets current user
 const dbRef = ref(getDatabase());
 const user = getAuth().currentUser;
-var name = "No user";
 
 
 
@@ -24,23 +23,19 @@ function ProjectPage() {
   //Need to use stateful variables, not just regular variables
   const [project, setProject] = useState({});
   const [currUserID, setCurrUserID] = useState("");
-
-
+  //Gets Project Id
+  const { id } = useParams();
+  //console.log(id);
   
-    
-    //Gets Project Id
-    const { id } = useParams();
-    //console.log(id);
-    
-    //Gets data based on project Id
-    const getData = data.cardData[id - 1];
-    
-    //console.warn(getData);
+  //Gets data based on project Id
+  const getData = data.cardData[id - 1];
+  
+  //console.warn(getData);
 
-    const location = useLocation();
-    const fullDataPath = location.pathname;
-    const dataPath = fullDataPath.replace("/Projects/", '');
-    const { key } = location.state;
+  const location = useLocation();
+  const fullDataPath = location.pathname;
+  const dataPath = fullDataPath.replace("/Projects/", '');
+  const { key } = location.state;
   
 /*
 Everything is encapsualted in useEffect so that the onAuthStateChanged
@@ -48,6 +43,7 @@ listener is set only once at and by providing an empty dependency array to useEf
 we tell it to run the callback only once, when the component initially renders, 
 so the auth listener is set only once. Without useEffect() here, an infinite loop occurs.
 */
+  
   useEffect(() => {
     //getting the project by key
     var unsubcribe = getAuth().onAuthStateChanged(function(user) {
@@ -71,7 +67,6 @@ so the auth listener is set only once. Without useEffect() here, an infinite loo
   })
 
   //unsubcribe();
-
   }, []);
   
     if ((dataPath === "1" || dataPath === "2" || dataPath === "3"))
@@ -143,10 +138,6 @@ so the auth listener is set only once. Without useEffect() here, an infinite loo
                       <p>Orci ac auctor augue mauris augue neque. Arcu cursus euismod quis viverra nibh cras pulvinar. Rhoncus mattis rhoncus urna neque. Vitae tempus quam pellentesque nec nam aliquam sem et tortor. Morbi enim nunc faucibus a. Sagittis id consectetur purus ut faucibus pulvinar elementum integer. Non blandit massa enim nec dui nunc mattis. Volutpat maecenas volutpat blandit aliquam etiam. Erat velit scelerisque in dictum non consectetur a. Rhoncus mattis rhoncus urna neque. Aenean pharetra magna ac placerat vestibulum. Integer enim neque volutpat ac tincidunt vitae semper. Amet porttitor eget dolor morbi non arcu. Elementum facilisis leo vel fringilla est ullamcorper eget nulla facilisi. Consectetur adipiscing elit duis tristique sollicitudin nibh sit. Cursus turpis massa tincidunt dui ut ornare.</p>
                       <Attachments />
                     </>
-                {/*<h1>{getData.text}</h1>
-                <h3>{getData.label}</h3>
-                
-                <p>{getData.desc}</p>*/}
             </div>
         </div>
   );
