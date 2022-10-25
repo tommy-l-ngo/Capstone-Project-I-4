@@ -1,3 +1,4 @@
+import { getDatabase, update } from "firebase/database";
 import React, { Component } from "react";
 import {
   Form,
@@ -7,15 +8,16 @@ import {
   InputGroup,
   FormControl,
 } from "react-bootstrap";
-import "./CreateProject.css";
-import "../Login/Login.css";
 import firebase from "firebase/compat/app";
-import { getDatabase, ref, set } from "firebase/database";
+import { ref, set } from "firebase/database";
+import "./CreateProject.css";
+import "./EditProjects.css"
 import { initializeApp } from "firebase/app";
-import MultiSelect from "./MultiSelect";
 import Navbar from "../Dashboard/Navbar";
+import MultiSelect from "./MultiSelect";
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
+import data from '../Dashboard/data';
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
@@ -29,23 +31,25 @@ const firebaseConfig = {
   measurementId: "G-X8E63KZMT3",
 };
 
-export default class CreateProject extends Component {
+export default class EditProject extends Component { // sets all feilds to blank
   constructor(props) {
     super(props);
     this.state = {
       projectName: "",
       description: "",
+      task: "",
       date: new Date(),
       formValues: [{ tasks: "" }],
-      students: null,
+      //user_id: user,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.add_project = this.add_project.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
+    this.edit_project = this.edit_project.bind(this);
+    this.delete_project = this.delete_project.bind(this);
   }
 
-  add_project(project_name, project_description, project_tasks, project_date,students) {
-    // get current user details from auth
+  edit_project(project_name, project_description, project_tasks, project_date) { //updates inputted fields to database
     const user = getAuth().currentUser;
     if (user !== null) {
     // The user object has basic properties such as display name, email, etc.
@@ -59,51 +63,79 @@ export default class CreateProject extends Component {
     const db = getDatabase();
     set(ref(db, "projects/" + project_name), {
       name: project_name,
-      user_id: user.displayName,
       description: project_description,
-      tasks: project_tasks,
+      //tasks: project_tasks,
       date: project_date,
+      user_id: user.displayName,
     });
   }
+  delete_project()
+  {
+       //const { state } = this.props.location; 
+       //console.log(state);
+       alert('test');
+       const db = getDatabase();
+       var rmvref = firebase.database().ref('projects/Project_1');
+      rmvref.remove();  
+  }
 
-  handleSubmit(event) {
-    const { projectName, description, task, date, students } = this.state;
+  handleSubmit(event) {//this will handle what happens whne the submit button is pressed
+    const { projectName, description, task, date } = this.state;
     event.preventDefault();
-    alert(JSON.stringify(this.state.formValues));
+    alert(JSON.stringify(this.state.formValues));// displays all inputted values
     alert(`
             ____Your Details____\n
-            Project : ${projectName}
+            Title : ${projectName}
             Description : ${description}
             Task : ${task}
             Date : ${date}
-            Student : ${JSON.stringify(students)}
         `);
-
-    this.add_project(
+    this.edit_project( //puts inputted values to database
       this.state.projectName,
       this.state.description,
       this.state.task,
-      JSON.stringify(this.state.date),
-      JSON.stringify(this.state.students)
+      this.state.date,
+      this.state.user_id
     );
+    window.location="/";
+  }
+
+  handleDelete(event) {//this will handle what happens whne the delete button is pressed
+    //event.preventDefault();
+    this.delete_project();
+    alert("Project Deleted");
+    alert(`
+            ____Your Details____\n
+            Title : ${this.props.location}
+        `);
+    //this.delete_project();
+    window.location="/";
+     
   }
 
   //handle change for project name and description
   handleChange(event) {
     this.setState({
+      // Computed property names
+      // keys of the objects are computed dynamically
       [event.target.name]: event.target.value,
     });
   }
-
   //handle change for multiselect of students
   handleStudentsChange(listOfStudents) {
     this.setState({
       students: listOfStudents,
     });
   }
+  //handle change for multiselect of projects
+  handleProjectsChange(listOfProjects) {
+    this.setState({
+      projects: listOfProjects,
+    });
+  }
   //handle change for due date
   selectDate=(e)=>{
-      this.setState({date:e})
+    this.setState({date:e})
   }
   //handle change for task field
   handleChanges(i, e) {
@@ -123,23 +155,31 @@ export default class CreateProject extends Component {
     formValues.splice(i, 1);
     this.setState({ formValues });
   }
-
+  /*
+  componentDidMount(x) {
+    const { id } = this.props.match.params;
+    this.fetchData(id);
+    //Gets data based on project Id
+    const getData = data.cardData[id - 1];
+    console.warn(getData);
+  }*/
+  
   render() {
     return (
       <div>
         <Navbar />
         <div className="cp-box">
-          {/* <Container className="d-flex align-item-center justify-content-center cp-box"> */}
+          {/* <Container className="d-flex align-item-center justify-content-center"> */}
           <div className="w-100" style={{ maxWidth: "400px" }}>
-            <Card className="createProject">
+            <Card className="editProject">
               <Card.Body>
-                <h1>Create Project</h1>
+                <h1>Edit Project</h1>
                 <div
                   className="w-100 text-center mt-2 text-danger"
                   id="errorMessage"
                 ></div>
                 <h3 style={{ lineHeight: "0px" }}></h3>
- 
+                
                 <Form onSubmit={this.handleSubmit}> {/* line for handling submit action */}
                   {/* field for inputting project name */}
                   <Form.Group id="projectName">
@@ -147,14 +187,14 @@ export default class CreateProject extends Component {
                       <input
                         name="projectName"
                         id="projectName"
-                        className="form__field"
+                        className="edit-field form__field"
                         type="text"
-                        placeholder="Project Name"
+                        placeholder="Prefilled name"
                         onChange={this.handleChange}
                         required
                       />
-                      <label htmlFor="projectName" className="form__label">
-                        Project Name
+                      <label htmlFor="projectName" className="edit-label">
+                        Project Name (must be the same name)
                       </label>
                     </div>
                   </Form.Group>
@@ -165,12 +205,12 @@ export default class CreateProject extends Component {
                       <input
                         id="description"
                         name="description"
-                        className="form__field"
-                        placeholder="Description"
+                        className="edit-field form__field"
+                        placeholder="prefilled desc"
                         onChange={this.handleChange}
                         required
                       />
-                      <label htmlFor="description" className="form__label">
+                      <label htmlFor="description" className="edit-label">
                         Description
                       </label>
                     </div>
@@ -183,12 +223,12 @@ export default class CreateProject extends Component {
                         <input
                           id="tasks"
                           name="tasks"
-                          className="form__field"
+                          className="edit-field form__field"
                           placeholder="Task"
                           value={element.tasks || ""}
                           onChange={(e) => this.handleChanges(index, e)}
                         />
-                        <label htmlFor="tasks" className="form__label">
+                        <label htmlFor="tasks" className="edit-label">
                           Task (Optional)
                         </label>
                       </div>
@@ -214,30 +254,30 @@ export default class CreateProject extends Component {
                       Add
                     </button>
                   </div>
-                  
+
                   {/* field for due date */}
                   <Form.Group id="date">
                     <div className="form__group field">
                       <DatePicker /* using datepicker for selecting duedate from calendar */
-                      id="date"
-                      name="date"
-                      className="form__field"
-                      selected={this.state.date}
-                      onChange={this.selectDate}
+                        id="date"
+                        name="date"
+                        className="edit-field form__field"
+                        selected={this.state.date}
+                        onChange={this.selectDate}
                       />
-                      <label htmlFor="date" className="form__label">
+                      <label htmlFor="date" className="edit-label">
                         Due Date
                       </label>
                     </div>
                   </Form.Group>
-                  
+
                   {/* field for selecting students to add */}
                   <Form.Group id="students">
                     <div className="form__group field">
                   <MultiSelect
                     onChange={this.handleStudentsChange.bind(this)}
                   />
-                  <label htmlFor="students" className="form__label">
+                  <label htmlFor="students" className="edit-label">
                         Add student(s) to project
                       </label>
                   </div>
@@ -248,7 +288,13 @@ export default class CreateProject extends Component {
               </Card.Body>
             </Card>
           </div>
-          {/* </Container> */}
+          <div style={{ minWidth: "400px" }}>
+            <Card className="deleteProject">
+              <Card.Body>
+                  <Button type="delete" onClick={this.handleDelete}>Delete Project</Button>
+              </Card.Body>
+            </Card>
+          </div>
         </div>
       </div>
     );
