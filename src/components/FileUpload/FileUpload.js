@@ -13,6 +13,7 @@ function FileUpload() {
 
   // progress
   const [percent, setPercent] = useState(0)
+  const [progress, setProgress] = useState()
 
   const [message, setMessage] = useState('')
   const [successMessage, setSuccessMessage] = useState('')
@@ -26,20 +27,21 @@ function FileUpload() {
       //alert("Please upload an image first!");
       setMessage('No file selected')
     }
-
-    const fullPath = window.location.href;
-    const projectPath = fullPath.substring(fullPath.lastIndexOf('/') + 1)
-    const storageRef = ref(storage, `/projects/${projectPath}/${file.name}`);
+    else {
+      setProgress(true);
+      const fullPath = window.location.href;
+      const projectPath = fullPath.substring(fullPath.lastIndexOf('/') + 1)
+      const storageRef = ref(storage, `/projects/${projectPath}/${file.name}`);
  
-    // progress can be paused and resumed. It also exposes progress updates.
-    // Receives the storage reference and the file to upload.
-    const uploadTask = uploadBytesResumable(storageRef, file);
+      // progress can be paused and resumed. It also exposes progress updates.
+      // Receives the storage reference and the file to upload.
+      const uploadTask = uploadBytesResumable(storageRef, file);
 
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
           const percent = Math.round(
-              (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
           );
 
           // // Clear percentage
@@ -47,21 +49,22 @@ function FileUpload() {
 
           // update progress
           setPercent(percent);
-      },
-      (err) => console.log(err),
-      () => {
+        },
+        (err) => console.log(err),
+        () => {
           // download url
           getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-              console.log(url);
-              // Clear percentage
-              setTimeout(() => setPercent(0), 3000);
-              setSuccessMessage('File successfully uploaded!')
-              setTimeout(() => document.getElementById("fileSubmit").reset(), 3000);
-              setTimeout(() => file(''), 3000);
-              setTimeout(() => setFile(''), 3000);
+            console.log(url);
+            // Clear percentage
+            setTimeout(() => setPercent(0), 3000);
+            setSuccessMessage('File successfully uploaded!')
+            setTimeout(() => document.getElementById("fileSubmit").reset(), 3000);
+            setTimeout(() => setFile(''), 1000);
+            setTimeout(() => setProgress(''), 1000);
           });
         }
-    );
+      );
+    }
   }
 
   return (
@@ -75,7 +78,7 @@ function FileUpload() {
             <button className='uploadBtn' type="submit">Upload</button>
           </div>
           <div className='progress-bar'>
-            <Progress percentage={percent}/>
+          {progress ? <Progress percentage={percent} /> : null}
           </div>
         </form>
     </div>
