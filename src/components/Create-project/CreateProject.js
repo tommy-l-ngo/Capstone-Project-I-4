@@ -11,7 +11,7 @@ import {
 import "./CreateProject.css";
 import "../Login/Login.css";
 import firebase from "firebase/compat/app";
-import { getDatabase, ref, set } from "firebase/database";
+import { getDatabase, ref, set, push} from "firebase/database";
 import { initializeApp } from "firebase/app";
 import MultiSelect from "./MultiSelect";
 import Navbar from "../Dashboard/Navbar";
@@ -33,7 +33,7 @@ const firebaseConfig = {
 export function CreateProject(props)
 {
       const [projInfo, setProjInfo] = useState({
-        projectName: "",
+        name: "",
         description: "",
         date: new Date(),
         tasks: [""], //tasks is an array of strings
@@ -55,6 +55,31 @@ export function CreateProject(props)
         {
             console.log("No User");
         }
+
+        const db = getDatabase();
+        let dbRef = ref(db, "projects/");
+        push(dbRef, {
+          name: project_name,
+          user_id: user.displayName,
+          description: project_description,
+          tasks: project_tasks,
+          date: project_date,
+          students: project_students
+        }).then(() => {
+          navigate("/Home"); //navigate back to homepage after adding new project 
+          //console.log("navigating");
+        });
+
+        /*
+        The below code is no good. We need to push new objects with unique identifiers or else
+        we cannot specify a project, and projects of different people with the same
+        project name will just overwrite each other. 
+        
+        IMPORTANT: Use push() instead when adding to the database and set() when 
+        modigying an exisiting object in the database.
+        push() assigns the new object with a unique key, and with set() you can modify
+        that object by getting it using it's unique key.
+
         const db = getDatabase();
         set(ref(db, "projects/" + project_name), {
           name: project_name,
@@ -67,27 +92,29 @@ export function CreateProject(props)
           navigate("/Home"); //navigate back to homepage after adding new project 
           //console.log("navigating");
         });
+        */
  
     }
 
     function handleSubmit(event) {
-        const { projectName, description, tasks, date, students } = projInfo;
+        const { name, description, tasks, date, students } = projInfo;
         event.preventDefault();
         //alert(JSON.stringify(projInfo.tasks));
         alert(`
                 ____New Project Details____\n
-                Project : ${projectName}
+                Project : ${name}
                 Description : ${description}
                 Tasks : ${tasks.join(", ")}
-                Date : ${date}
+                Due Date : ${date.toDateString()}
                 Students : ${students.join(", ")}
             `);
     
         add_project(
-          projInfo.projectName,
+          projInfo.name,
           projInfo.description,
           projInfo.tasks,
-          JSON.stringify(projInfo.date),
+          //JSON.stringify(projInfo.date),
+          projInfo.date.toDateString(),
           projInfo.students
         );
 
@@ -149,18 +176,18 @@ export function CreateProject(props)
          
                         <Form onSubmit={handleSubmit}> {/* line for handling submit action */}
                           {/* field for inputting project name */}
-                          <Form.Group id="projectName">
+                          <Form.Group id="name">
                             <div className="form__group field">
                               <input
-                                name="projectName"
-                                id="projectName"
+                                name="name"
+                                id="name"
                                 className="form__field"
                                 type="text"
                                 placeholder="Project Name"
                                 onChange={handleChange}
                                 required
                               />
-                              <label htmlFor="projectName" className="form__label">
+                              <label htmlFor="name" className="form__label">
                                 Project Name
                               </label>
                             </div>

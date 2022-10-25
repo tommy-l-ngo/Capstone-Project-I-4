@@ -31,7 +31,6 @@ function Cards() {
   so the auth listener is set only once. Without useEffect() here, an infinite loop occurs.
   */
   useEffect(() => {
-
     var unsubcribe = getAuth().onAuthStateChanged(function(user) {
       console.log("loop starts here");
       if (user) {
@@ -72,18 +71,21 @@ function Cards() {
             if (snapShot.exists()) {
               // Matches projects that belong to user
               projmatch = snapShot.forEach((subSnap) => {
-                console.log(currUserID);
-                console.log(subSnap.val().user_id);
+                //console.log(currUserID);
+                //console.log(subSnap.val().user_id);
                 if (subSnap.val().user_id === currUserID)
                 {
+                    console.log("key: " + subSnap.key);
                     let project = {
-                    id: subSnap.val().project_id,
+                    key: subSnap.key,
                     text: subSnap.val().name,
                     desc: subSnap.val().description,
                     label: subSnap.val().date,
-                    src: "images/img-1.png"
+                    src: "images/img-1.png",
                     //path: `/Projects/${subSnap.val().project_id}`  
                   };
+                  //console.log("key: " + subSnap.key)
+                  //console.log(subSnap.val().name == subSnap.key)
                   setProjects((projects) => [...projects, project]); //adding found project to array of user's projects
                 }
               //const ID = curr.ref._path.pieces_[1];
@@ -167,7 +169,7 @@ function Cards() {
                                 return(
                                    
                                     <CardItem 
-                                    key={index} 
+                                    projectKey={item.key} 
                                     src={item.src} 
                                     text={item.text} 
                                     desc={item.desc} 
