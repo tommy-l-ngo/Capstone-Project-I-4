@@ -9,15 +9,16 @@ const Attachments = () => {
     
     const fullPath = window.location.href;
     const projectPath = fullPath.substring(fullPath.lastIndexOf('/') + 1)
-    const storageRef = ref(storage, `/projects/${projectPath}/`);
+    //const storageRef = ref(storage, `/projects/${projectPath}/`);
+    const storageRef = ref(storage, 'projects/');
 
     // const listItem = async () => {
     //   const res = await storageRef.list();
     //   return await Promise.all(res.items.map(i => i.getDownloadURL()));
     // }
-
+  
     // const listItem = () => {
-    //     storageRef.listAll()
+    //     storageRef.child(`${projectPath}/`).listAll()
     //       .then(res => {
     //         res.items.forEach((item) => {
     //           setData(arr => [...arr, item.name]);
@@ -26,7 +27,7 @@ const Attachments = () => {
     //       .catch(err => {
     //         alert(err.message);
     //       })
-    //   }
+    // }
 
   return (
     <div className="img-grid">
