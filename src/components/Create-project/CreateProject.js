@@ -18,6 +18,9 @@ import Navbar from "../Dashboard/Navbar";
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import { getAuth } from "firebase/auth";
+import { storage } from "../../firebase";
+import {uploadBytesResumable, getDownloadURL } from "firebase/storage";
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyAu1kdEKPqTfL1XIjDF2l8rfG53FcdtVSM",
@@ -118,7 +121,15 @@ export function CreateProject(props)
           projInfo.students
         );
 
+                   
         
+        const fullPath = window.location.href;
+        const projectPath = fullPath.substring(fullPath.lastIndexOf('/') + 1)
+        const storageRef = ref(storage, `/projects/${projectPath}/${file.name}`);
+     
+        // progress can be paused and resumed. It also exposes progress updates.
+        // Receives the storage reference and the file to upload.
+        //const uploadTask = uploadBytesResumable(storageRef, file);
       }
 
       function handleChange(event) {
@@ -158,6 +169,25 @@ export function CreateProject(props)
             tasks.splice(i, 1); //removing a task
             setProjInfo({...projInfo, tasks});
           }
+
+          const [file, setFile] = useState()
+
+  // progress
+  /*const [percent, setPercent] = useState(0)*/
+
+ 
+
+          function fileSubmit(event) {
+           
+        
+            const fullPath = window.location.href;
+            const projectPath = fullPath.substring(fullPath.lastIndexOf('/') + 1)
+            const storageRef = ref(storage, `/projects/${projectPath}/${file.name}`);
+         
+            // progress can be paused and resumed. It also exposes progress updates.
+            // Receives the storage reference and the file to upload.
+            const uploadTask = uploadBytesResumable(storageRef, file);
+          };
 
             return (
               <div>
@@ -275,6 +305,24 @@ export function CreateProject(props)
                               </label>
                           </div>
                           </Form.Group>
+
+                          <div className="form-inline">
+                            
+                            <form id="fileSubmit" onSubmit={handleSubmit}>
+                              <h4>Upload a File</h4>
+                                <div className='fileSelector'>
+                                  <input type="file" onChange={handleChange}/>
+                                  {/*<button className='uploadBtn' type="submit">Upload</button>*/}
+                                </div>
+                                
+                            </form>
+                          </div>
+
+                        {/*<div className="form-inline">
+                         <div className="form__group field">
+                           <input type="file" onchange={(e)=>this.fileChange(e)}/>
+                         </div>              
+                              </div>*/}
         
                           <Button type="submit">Submit</Button>
                         </Form>

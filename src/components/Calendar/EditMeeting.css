@@ -84,23 +84,7 @@
   top: 20px;
 }
 
-.addevent{
-    
-    position: relative;
-    top:0px;
-    right: 0px;
-    width: 10%;
-    color: #fdfafa;
-    padding: 8px;
-    font-size: 14px;
-    font-weight: bold;
-    border: solid 2px rgba(0, 0, 0, 0.05);
-    border-radius: 4px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    cursor: pointer;
-    background-color: #051f42fa;
-}
+
   .submit{
     position: relative;
     right: 50px;
@@ -110,7 +94,7 @@
     font-size: 14px;
     font-weight: bold;
     border: solid 2px rgba(0, 0, 0, 0.05);
-    border-radius: 4px;
+    border-radius: 4px; 
     margin-top: 10px;
     margin-bottom: 10px;
     cursor: pointer;
@@ -148,7 +132,66 @@
     cursor: pointer;
     background-color: rgba(250, 37, 9, 0.4);
   }
-  .addsubmit{
+
+  .addEvent{
+    
+    position: relative;
+    top:0px;
+    right: 0px;
+    width: 10%;
+    color: #fdfafa;
+    padding: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    border: solid 2px rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    background-color: #051f42fa;
+}
+
+  .modalEdit {
+    position: fixed;
+    border-radius: 20px;
+    border: 10px solid #ccc;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    height: 615px;
+    width: 500px;
+  }
+
+  .modalOpen {
+      position: fixed;
+      border-radius: 20px;
+      border: 10px solid #ccc;
+      top: 50%;
+      left: 50%;
+      -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+      height: 615px;
+      width: 500px;
+  }
+
+  
+  .addCancel{
+    position: relative;
+    top: 0px; left: 7px;
+    width: 50%;
+    color: #565656;
+    padding: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    border: solid 2px rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    background-color: rgba(250, 37, 9, 0.4);
+  }
+  .addSubmit{
     position: relative;
     right: 7px;
     width: 50%;
@@ -164,19 +207,12 @@
     background-color: #a54bff85;
   }
 
-  .addcancel{
-    position: relative;
-    top: 0px; left: 7px;
-    width: 50%;
-    color: #565656;
-    padding: 5px;
-    font-size: 14px;
-    font-weight: bold;
-    border: solid 2px rgba(0, 0, 0, 0.05);
-    border-radius: 4px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    cursor: pointer;
-    background-color: rgba(250, 37, 9, 0.4);
+  .editModalButtons {
+    position:relative;
+    width: 100%;
   }
-  
+
+  .allButtons {
+    position:relative;
+    left: 50px;
+  }
