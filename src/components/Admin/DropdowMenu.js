@@ -1,5 +1,6 @@
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
+import { handleFilter } from './Admin';
 
 function DropdownMenu() {
 
@@ -10,12 +11,12 @@ function DropdownMenu() {
         </Dropdown.Toggle>
   
         <Dropdown.Menu>
-          <Dropdown.Item href="#/action-1" >Last Name</Dropdown.Item>
-          <Dropdown.Item href="#/action-2">email</Dropdown.Item>
-          <Dropdown.Item href="#/action-3">eUID</Dropdown.Item>
+          <Dropdown.Item onClick={() => handleFilter('email')}>email</Dropdown.Item>
+          <Dropdown.Item onClick={() => handleFilter('euid')}>euid</Dropdown.Item>
+          <Dropdown.Item onClick={() => handleFilter('first name')}>first name</Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
-    
+
   );
 }
 

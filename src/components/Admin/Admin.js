@@ -7,6 +7,7 @@ import { Dropdown } from "react-bootstrap";
 import DropdownMenu from "./DropdowMenu.js";
 
 // admin credentials: email: admin@gmail.com  password: Admin123!
+let filterType = "None";
 
 export function AdminPage() {
     console.log("Admin Page");
@@ -50,7 +51,8 @@ export function AdminPage() {
             console.error(error);
         });
     }// getUserData()
-    
+
+       
     useEffect(() => {
         getUserData();
     }, []);
@@ -68,7 +70,7 @@ export function AdminPage() {
                             <DropdownMenu></DropdownMenu>
                             <div className="input-container">
                                 <div className="input-data">
-                                    <input id="input-search" type="text" placeholder="eUID"></input>
+                                    <input id="input-search" type="text" placeholder="NONE" disabled="true"></input>
                                     <button id="input-button">Search</button>
                                     <label></label>
                                 </div>
@@ -122,4 +124,12 @@ export function AdminPage() {
             </div>
         </div>
     )
+}
+
+export function handleFilter(filterBy) // enable filter search box, allow search for certain filter type
+{
+    document.getElementById("input-search").disabled = false;
+    document.getElementById("input-search").placeholder = filterBy;
+    filterType = filterBy;
+    console.log("filterType:"+ filterType);
 }
