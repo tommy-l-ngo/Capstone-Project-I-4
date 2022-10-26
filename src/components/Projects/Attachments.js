@@ -17,17 +17,17 @@ const Attachments = () => {
     //   return await Promise.all(res.items.map(i => i.getDownloadURL()));
     // }
   
-    // const listItem = () => {
-    //     storageRef.child(`${projectPath}/`).listAll()
-    //       .then(res => {
-    //         res.items.forEach((item) => {
-    //           setData(arr => [...arr, item.name]);
-    //         })
-    //       })
-    //       .catch(err => {
-    //         alert(err.message);
-    //       })
-    // }
+    const listItem = () => {
+        storageRef.child(`${projectPath}/`).listAll()
+          .then(res => {
+            res.items.forEach((item) => {
+              setData(arr => [...arr, item.name]);
+            })
+          })
+          .catch(err => {
+            alert(err.message);
+          })
+    }
 
   return (
     <div className="img-grid">
