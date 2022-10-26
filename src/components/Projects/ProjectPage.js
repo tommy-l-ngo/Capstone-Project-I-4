@@ -15,192 +15,60 @@ import Attachments from './Attachments';
 // Gets current user
 const dbRef = ref(getDatabase());
 const user = getAuth().currentUser;
-var name = "No user";
-var currUserID;
-
-// getAuth().onAuthStateChanged(function(user) {
-//   if (user) {
-//     get(child(dbRef, "users"))
-//     .then((snapShot) => {
-//       let match = false;
-//       if (snapShot.exists()) {
-
-//         match = snapShot.forEach((curr) => {
-//           const ID = curr.ref._path.pieces_[1];
-//           let currUID = snapShot.child(ID).child("uid").val();
-//           if (currUID === user.uid) {
-//             currUserID = snapShot.child(ID).child("eUID").val();
-//             name = snapShot.child(ID).child("firstName").val();
-//           }
-//         });
-//       }
-//     })
-//   } else {
-//     // No user is signed in.
-
-//   }
-// });
 
 
 
 function ProjectPage() {
 
   //Need to use stateful variables, not just regular variables
-const [loggedIn, setLoggedIn] = useState(false);
-const [projects, setProjects] = useState([]);
+  const [project, setProject] = useState({});
+  const [currUserID, setCurrUserID] = useState("");
+  //Gets Project Id
+  const { id } = useParams();
+  //console.log(id);
+  
+  //Gets data based on project Id
+  const getData = data.cardData[id - 1];
+  
+  //console.warn(getData);
 
+  const location = useLocation();
+  const fullDataPath = location.pathname;
+  const dataPath = fullDataPath.replace("/Projects/", '');
+  const { key } = location.state;
+  
 /*
 Everything is encapsualted in useEffect so that the onAuthStateChanged
 listener is set only once at and by providing an empty dependency array to useEffect(), 
 we tell it to run the callback only once, when the component initially renders, 
 so the auth listener is set only once. Without useEffect() here, an infinite loop occurs.
 */
-useEffect(() => {
-
-  var unsubcribe = getAuth().onAuthStateChanged(function(user) {
-    console.log("loop starts here");
-    if (user) {
-      setLoggedIn(true);
-      currUserID = user.displayName;
-    } else {
-      // No user is signed in.
-      setLoggedIn(false);
-    }
   
-    // Grabs projects from database
-    console.log('hi')
+  useEffect(() => {
+    //getting the project by key
+    var unsubcribe = getAuth().onAuthStateChanged(function(user) {
       if (user) {
-        get(child(dbRef, "projects"))
+        setCurrUserID(user.displayName);
+        get(child(dbRef, "projects/" + key)) //get project based on key
         .then((snapShot) => {
-          let projmatch = false;
           if (snapShot.exists()) {
-            // Matches projects that belong to user
-            projmatch = snapShot.forEach((subSnap) => {
-              console.log(currUserID);
-              console.log(subSnap.val().user_id);
-
-              //proj path
-              const fullPath = window.location.href;
-              //const projectPath = fullPath.replace("http://localhost:3000/?#/Projects/", '');
-              const projectPath = fullPath.substring(fullPath.lastIndexOf('/') + 1)
-              //console.log('path', projectPath);
-              if(!subSnap.val().name) return
-              const path_withSpaces = subSnap.val().name;
-              const projectName = path_withSpaces.replace(/ /g, '_');
-              console.log('projectPath', projectPath);
-              console.log('projectName', projectName);
-
-              if (subSnap.val().user_id === currUserID && projectPath === projectName)
-              {
-                  let project = {
-                  id: subSnap.val().project_id,
-                  text: subSnap.val().name,
-                  desc: subSnap.val().description,
-                  label: subSnap.val().date,
-                  src: "images/img-1.png"
-                  //path: `/Projects/${subSnap.val().project_id}`  
-                };
-                setProjects((projects) => [...projects, project]); //adding found project to array of user's projects
-              }
-            //const ID = curr.ref._path.pieces_[1];
-            //let currUID = snapShot.child(ID).child("uid").val();
-            //if (currUID === user.uid) {
-              //name = snapShot.child(ID).child("firstName").val();
-            });
+            let project = {
+              text: snapShot.val().name,
+              desc: snapShot.val().description,
+              label: snapShot.val().date,
+              src: "images/img-1.png"
+              //path: `/Projects/${subSnap.val().project_id}`  
+            };
+            setProject(project); 
           }
         })
-      } else {
-      // No user is signed in.
-    }
-  /*
-  function getCurrentUser(auth) {
-    return new Promise((resolve, reject) => {
-       const unsubscribe = auth.onAuthStateChanged(user => {
-          unsubscribe();
-          resolve(user);
-       }, reject);
-    });
-  }
-  */
+      }
+
   })
 
   //unsubcribe();
-
-}, []);
-
-// let projectsList = [];
-// get(child(dbRef, "projects"))
-// .then((snapShot) => {
-//   let projmatch = false;
-//   if (snapShot.exists()) {
-//     // Matches projects that belong to user
-//     projmatch = snapShot.forEach((subSnap) => {
-//         //console.log('Curent URL', window.location.href);
-//         //const location = useLocation();
-//         //console.log('pathname', location.pathname);
-//         /*do{
-//           const fullPath = window.location.href;
-//           console.log('path', fullPath);
-//         } while(fullPath === "http://localhost:3000/#/Login");*/
-//         const fullPath = window.location.href;
-//         const projectPath = fullPath.replace("http://localhost:3000/?#/Projects/", '');
-//         //console.log('path', projectPath);
-//         if(!subSnap.val().name) return
-//         const path_withSpaces = subSnap.val().name;
-//         const projectName = path_withSpaces.replace(/ /g, '_');
-//         console.log('projectPath', projectPath);
-//         console.log('projectName', projectName);
-//         if (projectPath === projectName)
-//         {
-//           projectsList.push({
-//             id: subSnap.val().project_id,
-//             text: subSnap.val().name,
-//             desc: subSnap.val().description,
-//             label: subSnap.val().date,
-//             src: "images/img-1.png"
-//         })
-//     }
-//       //const ID = curr.ref._path.pieces_[1];
-//       //let currUID = snapShot.child(ID).child("uid").val();
-//       //if (currUID === user.uid) {
-//         //name = snapShot.child(ID).child("firstName").val();
-//     });
-//   }
-// });  
-    
-    //Gets Project Id
-    const { id } = useParams();
-    //console.log(id);
-    
-    //Gets data based on project Id
-    const getData = data.cardData[id - 1];
-    
-    //console.warn(getData);
-
-    const location = useLocation();
-    const fullDataPath = location.pathname;
-    const dataPath = fullDataPath.replace("/Projects/", '');
-    //console.log('dataPath', dataPath);
-    /*
-    const [isLoading, setLoading] = useState(true); // Loading state
-    
-    useEffect(() => { // useEffect hook
-    setTimeout(() => { // simulate a delay
-        setLoading(false); //set loading state
-     }, 3000);
-    }, []);
-    
-    if (isLoading) {
-      return(
-        <div className="projects_page">
-          <Navbar />
-          <div className="project_details">
-              <h1>Loading Project...</h1>            
-          </div>
-        </div>
-      );
-    }
-*/
+  }, []);
+  
     if ((dataPath === "1" || dataPath === "2" || dataPath === "3"))
       return(
       <div className="projects_page">
@@ -235,7 +103,7 @@ useEffect(() => {
     </div>
     );
 
-    if(!(dataPath === "1" || dataPath === "2" || dataPath === "3") && !(projects[0] === null))
+    if(!(dataPath === "1" || dataPath === "2" || dataPath === "3") && !(project === null))
     return (
         <div className='projects_page'>
             <Navbar />
@@ -262,22 +130,14 @@ useEffect(() => {
             </div>
             </div>
             <div className='project_details'>
-                {(projects.map((item, index)=>{
-                  return(
                     <>
-                      <h1>{item.text}</h1>
-                      <h3>{item.desc}</h3>
+                      <h1>{project.text}</h1>
+                      <h3>{project.desc}</h3>
                       <hr/>
                       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo. Cursus in hac habitasse platea dictumst quisque. Sed libero enim sed faucibus turpis in eu mi. Fusce id velit ut tortor pretium. Lacus sed viverra tellus in. Ipsum consequat nisl vel pretium lectus quam id leo. Urna id volutpat lacus laoreet non curabitur. Suscipit adipiscing bibendum est ultricies integer quis auctor elit sed. Purus non enim praesent elementum facilisis leo vel. Eu non diam phasellus vestibulum lorem sed risus ultricies. Turpis massa sed elementum tempus. In tellus integer feugiat scelerisque. Quis vel eros donec ac odio tempor orci. Cursus mattis molestie a iaculis at erat. Sagittis nisl rhoncus mattis rhoncus urna neque viverra justo. Id donec ultrices tincidunt arcu non sodales neque.</p>
                       <p>Orci ac auctor augue mauris augue neque. Arcu cursus euismod quis viverra nibh cras pulvinar. Rhoncus mattis rhoncus urna neque. Vitae tempus quam pellentesque nec nam aliquam sem et tortor. Morbi enim nunc faucibus a. Sagittis id consectetur purus ut faucibus pulvinar elementum integer. Non blandit massa enim nec dui nunc mattis. Volutpat maecenas volutpat blandit aliquam etiam. Erat velit scelerisque in dictum non consectetur a. Rhoncus mattis rhoncus urna neque. Aenean pharetra magna ac placerat vestibulum. Integer enim neque volutpat ac tincidunt vitae semper. Amet porttitor eget dolor morbi non arcu. Elementum facilisis leo vel fringilla est ullamcorper eget nulla facilisi. Consectetur adipiscing elit duis tristique sollicitudin nibh sit. Cursus turpis massa tincidunt dui ut ornare.</p>
                       <Attachments />
                     </>
-                  )
-                }))}
-                {/*<h1>{getData.text}</h1>
-                <h3>{getData.label}</h3>
-                
-                <p>{getData.desc}</p>*/}
             </div>
         </div>
   );
