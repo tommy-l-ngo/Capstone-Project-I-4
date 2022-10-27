@@ -35,7 +35,7 @@ function ProjectPage() {
   const location = useLocation();
   const fullDataPath = location.pathname;
   const dataPath = fullDataPath.replace("/Projects/", '');
-  var key;
+  
   
   
   
@@ -47,6 +47,7 @@ so the auth listener is set only once. Without useEffect() here, an infinite loo
 */
   
   useEffect(() => {
+    var key;
     if (location.state != null)
     {
       key = location.state.key;
@@ -78,7 +79,7 @@ so the auth listener is set only once. Without useEffect() here, an infinite loo
   })
 
   //unsubcribe();
-  }, []);
+  });
   
     if ((dataPath === "1" || dataPath === "2" || dataPath === "3"))
       return(

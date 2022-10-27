@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { storage } from "../../firebase";
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { ref, uploadBytesResumable, getDownloadURL, uploadBytes } from "firebase/storage";
 import Progress from './Progress';
 import './FileUpload.css'
 import '../Dashboard/Button.css'
@@ -13,7 +13,7 @@ function FileUpload() {
 
   // progress
   const [percent, setPercent] = useState(0)
-  const [progress, setProgress] = useState()
+  const [progress, setProgress] = useState(false)
 
   const [message, setMessage] = useState('')
   const [successMessage, setSuccessMessage] = useState('')
@@ -21,6 +21,8 @@ function FileUpload() {
   function handleChange(event) {
     setFile(event.target.files[0])
   }
+
+
   
   function handleSubmit(event) {
     if (!file) {
@@ -71,13 +73,13 @@ function FileUpload() {
 
   return (
     <div className="File-Upload">
-        {message ? <Message msg={message} /> : null}
+        {message ? (<Message msg={message} />) : null}
         {successMessage ? <MessageSuccess msg={successMessage} /> : null}
-        <form id="fileSubmit" onSubmit={handleSubmit}>
+        <form id="fileSubmit">
           <h4>Upload a File</h4>
           <div className='fileSelector'>
             <input type="file" onChange={handleChange}/>
-            <button className='uploadBtn' type="submit">Upload</button>
+            <button className='uploadBtn' type="button" onClick={handleSubmit}>Upload</button>
           </div>
           <div className='progress-bar'>
           {progress ? <Progress percentage={percent} /> : null}
