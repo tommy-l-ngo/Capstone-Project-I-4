@@ -50,7 +50,9 @@ function FileUpload() {
           // update progress
           setPercent(percent);
         },
-        (err) => console.log(err),
+        (err) => {
+          console.log(err)
+        },
         () => {
           // download url
           getDownloadURL(uploadTask.snapshot.ref).then((url) => {

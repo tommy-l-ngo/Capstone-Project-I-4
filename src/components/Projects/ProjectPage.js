@@ -35,7 +35,9 @@ function ProjectPage() {
   const location = useLocation();
   const fullDataPath = location.pathname;
   const dataPath = fullDataPath.replace("/Projects/", '');
-  const { key } = location.state;
+  var key;
+  
+  
   
 /*
 Everything is encapsualted in useEffect so that the onAuthStateChanged
@@ -45,6 +47,15 @@ so the auth listener is set only once. Without useEffect() here, an infinite loo
 */
   
   useEffect(() => {
+    if (location.state != null)
+    {
+      key = location.state.key;
+      sessionStorage.setItem("key", key);
+    }
+    else
+    {
+      key = sessionStorage.getItem("key");
+    }
     //getting the project by key
     var unsubcribe = getAuth().onAuthStateChanged(function(user) {
       if (user) {
