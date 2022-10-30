@@ -21,18 +21,19 @@ body {
     margin-bottom: 32px;
   }
   .todo-input {
-    padding: 14px 32px 14px 16px;
-    border-radius: 4px 0 0 4px;
+    padding: 14px 32px 10px 16px;
+    border-radius: 10px 0px 0px 10px;
     border: 2px solid #040404;
     outline: none;
-    width: 320px;
+    width: 500px;
     background: transparent;
     color: rgb(5, 5, 5);
   }
   .todo-button {
-    padding: 16px;
+    position: absolute;
+    padding: 26px;
     border: none;
-    border-radius: 0 4px 4px 0;
+    border-radius: 0 10px 10px 0;
     cursor: pointer;
     outline: none;
     background: black;
@@ -46,9 +47,9 @@ body {
     margin: 4px auto;
     color: #fff;
     background: black;
-    padding: 10px;
+    padding: 15px;
     border-radius: 5px;
-    width: 70%;
+    min-width: 96%;
     text-transform: capitalize;
   }
   .icons {
@@ -59,8 +60,8 @@ body {
   }
   .delete-icon {
     margin-right: 5px;
-    color: #fff;
+    color: rgb(238, 10, 10);
   }
   .edit-icon {
-    color: #fff;
+    color: rgb(38, 255, 0);
   }

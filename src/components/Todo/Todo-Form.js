@@ -60,7 +60,7 @@ export function TodoForm(props){
         <form onSubmit={handleSubmit} className='todo-form'>
       {props.edit ? (
         <>
-          <input
+          <textarea
             placeholder='Update your item'
             value={input}
             onChange={handleChange}
@@ -74,7 +74,7 @@ export function TodoForm(props){
         </>
       ) : (
         <>
-          <input
+          <textarea
             placeholder='Add a todo'
             value={input}
             onChange={handleChange}
