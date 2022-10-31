@@ -15,6 +15,7 @@ export function AdminPage() {
     const db = getDatabase();
 
     const [userData, setUserData] = useState([]);
+    const [userData2, setUserData2] = useState([]);
     let userDataList = [];
 
     // connect to auth
@@ -44,6 +45,8 @@ export function AdminPage() {
                     userDataList.push(userVals);
                 })
                 setUserData(userDataList);
+                setUserData2(userDataList);
+                console.log("RESET");
             } else {
                 console.log("No user data available");
             }
@@ -51,6 +54,23 @@ export function AdminPage() {
             console.error(error);
         });
     }// getUserData()
+
+    function handleFilterInput(userInput) // filters users based on search input
+    {
+        let userDataFiltered = [];
+
+        for (let item in userData2) // loop through user data
+        { 
+            let current = userData2[item].email;
+            if (current.includes(userInput)) // if user includes search input, add user to filtered list
+            {
+                userDataFiltered.push(userData2[item]);
+            }
+        }
+        
+        setUserData(userDataFiltered);
+        console.log(userDataFiltered);
+    }
 
        
     useEffect(() => {
@@ -70,8 +90,8 @@ export function AdminPage() {
                             <DropdownMenu></DropdownMenu>
                             <div className="input-container">
                                 <div className="input-data">
-                                    <input id="input-search" type="text" placeholder="NONE" disabled="true"></input>
-                                    <button id="input-button">Search</button>
+                                    <input id="input-search" type="text" placeholder="SELECT FILTER ABOVE" disabled="true" onChange={(e) => handleFilterInput(e.target.value)}></input>
+                                    
                                     <label></label>
                                 </div>
                             </div>
@@ -102,14 +122,7 @@ export function AdminPage() {
                                     )
                                     })}
 
-                                <tr>
-                                        <td className="personal-info">someemail@unt.edu</td>
-                                        <td className="personal-info">Eagle</td>
-                                        <td className="personal-info">Denton</td>
-                                        <td className="personal-info">Student</td>
-                                        <td className="personal-info">abc0020</td>
-                                        <td className="delete-user"><button className="delete-user-button">X</button></td>
-                                    </tr>
+                                
                                     
                                 </table>
 
