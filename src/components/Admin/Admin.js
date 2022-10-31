@@ -61,7 +61,19 @@ export function AdminPage() {
 
         for (let item in userData2) // loop through user data
         { 
-            let current = userData2[item].email;
+            let current = userData2[item].email
+
+            // get item corresponding to filter type
+            if (filterType == "euid") {
+                current = userData2[item].euid;
+            }
+            else if (filterType == "firstName") { // FIX ME: Does not work properly, may delete in future
+                current = userData2[item].first;
+            }
+            else { 
+                current = userData2[item].email; // get current filter item
+            }
+            
             if (current.includes(userInput)) // if user includes search input, add user to filtered list
             {
                 userDataFiltered.push(userData2[item]);

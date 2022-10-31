@@ -13,7 +13,7 @@ function DropdownMenu() {
         <Dropdown.Menu>
           <Dropdown.Item onClick={() => handleFilter('email')}>email</Dropdown.Item>
           <Dropdown.Item onClick={() => handleFilter('euid')}>euid</Dropdown.Item>
-          <Dropdown.Item onClick={() => handleFilter('first name')}>first name</Dropdown.Item>
+          
         </Dropdown.Menu>
       </Dropdown>
 
