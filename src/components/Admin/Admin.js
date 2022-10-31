@@ -14,8 +14,8 @@ export function AdminPage() {
     const user = getAuth().currentUser;
     const db = getDatabase();
 
-    const [userData, setUserData] = useState([]);
-    const [userData2, setUserData2] = useState([]);
+    const [userData, setUserData] = useState([]); // userData to display
+    const [userData2, setUserData2] = useState([]); // copy of userData from db
     let userDataList = [];
 
     // connect to auth
@@ -67,8 +67,7 @@ export function AdminPage() {
                 userDataFiltered.push(userData2[item]);
             }
         }
-        
-        setUserData(userDataFiltered);
+        setUserData(userDataFiltered); // update userData list to display filtered data
         console.log(userDataFiltered);
     }
 
