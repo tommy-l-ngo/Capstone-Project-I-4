@@ -11,8 +11,7 @@ export function TodoForm(props){
     const inputRef = useRef(null)
     const db =getDatabase()
     const todoid = userEUID+"_"+ Date.now()
-    //Fix me, get id from databe
-    const id = "e23223_1666098260418"
+  
     useEffect(() =>{
         inputRef.current.focus()
     })
@@ -20,7 +19,7 @@ export function TodoForm(props){
     const handleChange =e=>{
         setIput(e.target.value)
     }
-    //Fix me add a new handleSubmit to update todo on the correct id
+  //set todo databse
     const handleSubmit=e=>{
         e.preventDefault();
         props.onSubmit({
@@ -40,17 +39,11 @@ export function TodoForm(props){
       }
 
         setIput('')
-    }
+  }
+  //set new todo text
     const handleSubmitEdit=e=>{
       e.preventDefault();
-      props.onSubmit({
-          id: id,
-          isComplete: false,
-          text: input
-      })
-      set(ref(db, "todos/" + userEUID + "/" + id),{
-          id: id,
-          isComplete: false,
+      props.onSubmit({  
           text: input
       })
 

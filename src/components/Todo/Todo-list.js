@@ -43,11 +43,20 @@ export function Todolist(){
         if(!newValue.text || /^\s*$/.test(newValue.text)){
             return
         }
-        setTodos(prev => prev.map(item => (item.id === todoId ? newValue : item)))
+        setTodos(prev => prev.map(todo => (todo.id === todoId ? newValue : todo)))
+        //update todo database 
+        update(ref(db, "todos/" + userEUID + "/" + todoId), {
+            id:todoId,
+            isComplete: false,
+            text: newValue.text
+            
+        })
+            
+        
     }
     
     //remove todo
-    const removeTodo =id => {
+    const removeTodo = id => {
         const removeArr = [...todos].filter(todo => todo.id !== id)
         setTodos(removeArr);
         remove(ref(db, "todos/"+userEUID+"/"+id))
