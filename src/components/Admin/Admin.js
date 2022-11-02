@@ -46,7 +46,7 @@ export function AdminPage() {
                 })
                 setUserData(userDataList);
                 setUserData2(userDataList);
-                console.log("RESET");
+                console.log("User data loaded from db");
             } else {
                 console.log("No user data available");
             }
@@ -83,6 +83,22 @@ export function AdminPage() {
         console.log(userDataFiltered);
     }
 
+    function handleDelete(e) {
+        const userDelete = e.target.parentNode.parentNode.childNodes[1].innerHTML; // get euid next to x button
+        console.log("del:", userDelete)
+
+        // display confirmation window to delete user
+        if (window.confirm("Are you sure you want to delete " + userDelete + " This cannot be reversed")) {
+            // delete user data from database
+            remove(ref(db, "users/" + userDelete))
+            alert("User deleted");
+            getUserData();
+        }
+        else
+        {
+            console.log("no delete");
+        }
+    }
        
     useEffect(() => {
         getUserData();
@@ -128,7 +144,7 @@ export function AdminPage() {
                                             <td>{val.last}</td>
                                             <td>{val.first}</td>
                                             <td>{val.role}</td>
-                                            <td className="delete-user"><button className="delete-user-button">X</button></td>
+                                            <td className="delete-user" onClick={(e) => handleDelete(e)}><button className="delete-user-button">X</button></td>
                                         </tr>
                                     )
                                     })}
