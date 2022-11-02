@@ -5,6 +5,8 @@ import { getDatabase, set, ref, get, update, remove } from "firebase/database";
 import "./AdminSytle.css";
 import { Dropdown } from "react-bootstrap";
 import DropdownMenu from "./DropdowMenu.js";
+import { useNavigate } from "react-router-dom";
+import { applyMutationToEventStore } from "@fullcalendar/react";
 
 // admin credentials: email: admin@gmail.com  password: Admin123!
 let filterType = "None";
@@ -13,24 +15,25 @@ export function AdminPage() {
     console.log("Admin Page");
     const user = getAuth().currentUser;
     const db = getDatabase();
+    const navigate = useNavigate();
 
     const [userData, setUserData] = useState([]); // userData to display
     const [userData2, setUserData2] = useState([]); // copy of userData from db
     let userDataList = [];
-
-    // connect to auth
-    if (user !== null) {
-        // The user object has basic properties such as display name, email, etc.
-        const displayName = user.displayName;
-        console.log(displayName);
-    }
-    else {
-        console.log("No User");
+    
+    // redirects to home page if user is not admin // Hardcoded 
+    function checkValidAdmin()
+    {
+        if (user.uid != "sl99ANRsAscaBU6n1mFxC6wMpk13") { 
+            navigate("/#", { state: { role: "student" } });
+            alert("Not admin user");
+        }
     }
 
     // get user data from db
     function getUserData()
     {
+        checkValidAdmin();
         get(ref(db, "users/")).then((snapshot) => {
             if (snapshot.exists()) {
                 //loop through users in db
