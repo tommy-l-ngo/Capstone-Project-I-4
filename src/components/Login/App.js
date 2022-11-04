@@ -28,6 +28,7 @@ import { getAuth, sendSignInLinkToEmail } from "@firebase/auth";
 import ProjectPage from "../Projects/ProjectPage";
 import { Todolist } from "../Todo/Todo-list";
 import { AdminPage } from "../Admin/Admin";
+import { ChatPage } from "../LiveChat/ChatPage";
 
 /* ------- Login Component -------- */
 class App extends React.Component {
@@ -115,6 +116,14 @@ class App extends React.Component {
                   element={
                     <ProtectedRoute>
                       <Tasks />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/Chat"
+                  element={
+                    <ProtectedRoute>
+                      <ChatPage/>
                     </ProtectedRoute>
                   }
                 />

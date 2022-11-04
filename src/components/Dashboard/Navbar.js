@@ -189,6 +189,16 @@ function Navbar() {
 
             <li className="nav-item">
               <Link
+                to="/Chat"
+                className="nav-links"
+                onClick={closeMobileMenu}
+              >
+                Chat
+              </Link>
+            </li>
+
+            <li className="nav-item">
+              <Link
                 to="/#"
                 className="nav-links-mobile"
                 onClick={handleButtonClick}
