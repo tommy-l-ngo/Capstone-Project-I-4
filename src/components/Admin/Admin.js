@@ -7,6 +7,7 @@ import { Dropdown } from "react-bootstrap";
 import DropdownMenu from "./DropdowMenu.js";
 import { useNavigate } from "react-router-dom";
 import { applyMutationToEventStore } from "@fullcalendar/react";
+import AddUserButton from "./AddUserButton.js";
 
 // admin credentials: email: admin@gmail.com  password: Admin123!
 let filterType = "None";
@@ -19,6 +20,12 @@ export function AdminPage() {
 
     const [userData, setUserData] = useState([]); // userData to display
     const [userData2, setUserData2] = useState([]); // copy of userData from db
+
+    const [modalOpen, setModalOpen] = useState(false);
+    const [modalData, setModal] = useState([]);
+
+
+
     let userDataList = [];
     
     // redirects to home page if user is not admin // Hardcoded 
@@ -159,7 +166,10 @@ export function AdminPage() {
                                 {/* </div> */}
                             </div>
                             <div className="add-user">
-                                <button className="submit-user-button">Add New User</button>
+                                <button className="submit-user-button" onClick={() => setModalOpen(true)}>
+                                Add New User
+                                </button>
+                                <AddUserButton isOpen={modalOpen} onClose={() => setModalOpen(false)}></AddUserButton>
                             </div>
                         </div>
                     </div>
