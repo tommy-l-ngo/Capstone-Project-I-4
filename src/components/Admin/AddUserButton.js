@@ -20,63 +20,120 @@ export default function ({ isOpen, onClose }) {
 
     const db = getDatabase();
     function onSubmit() {
-
-    }
+        try {
+            if (userEUID == "") {
+                throw Error("Please enter EUID");
+            } else if (userEmail == 0) {
+                throw Error("Please enter Email Address.");
+            } else if (userEmail < 6) {
+                throw Error("Please enter a valid Email Address.");
+            } else if (userFirstName == 0) {
+                throw Error("Please enter first name.");
+            } else if (userLastName == 0) {
+                throw Error("Please enter last name.");
+            } else {
+            
+                set(ref(db, "users/" + userEUID), {
+                    eUID: userEUID,
+                    lastName: userLastName,
+                    firstName: userFirstName,
+                    email: userEmail,
+                    role: userRole,
+                });
+                onClose();
+            }
+        } catch (err) {
+                console.log(err.code);
+                setError(err.message);
+            }
+        }
 
     return (
-        <Modal
-            isOpen={isOpen}
-            onClose={onClose}
-            ariaHideApp={false}
-            style={{
-                content: {
-                    position: "fixed",
-                    borderRadius: "20px",
-                    border: "10px solid #ccc",
-                    top: "55%",
-                    left: "50%",
-                    msTransform: "translate(-50%, -50%)",
-                    transform: "translate(-50%, -50%)",
-                    height: "615px",
-                    width: "500px",
-                },
-            }}
+            <Modal
+                isOpen={isOpen}
+                onClose={onClose}
+                ariaHideApp={false}
+                style={{
+                    content: {
+                        position: "fixed",
+                        borderRadius: "20px",
+                        border: "10px solid #ccc",
+                        top: "55%",
+                        left: "50%",
+                        msTransform: "translate(-50%, -50%)",
+                        transform: "translate(-50%, -50%)",
+                        height: "615px",
+                        width: "500px",
+                    },
 
-        >
-            <div className="xBtn">
-                <Link to="/Admin" className="xLink" onClick={onClose}>
-                    <i className="fas fa-times xButton" />
-                </Link>
-            </div>
-            <Container>
-                <form onSubmit={onSubmit} style={{ margin: "50px" }}>
-                <h3>Add User Form</h3>
-                    <div>
-                        <h6>EUID</h6>
-                        <input placeholder="EUID" value={userEUID}></input>
-                    </div>
-                    <div>
-                        <h6>Last Name</h6>
-                        <input placeholder="Last Name" value={userLastName}></input>
-                    </div>
-                    <div>
-                        <h6>First Name</h6>
-                        <input placeholder="First Name" value={userFirstName}></input>
-                    </div>
-                    <div>
-                        <h6>Email</h6>
-                        <input placeholder="Email" value={userEmail}></input>
-                    </div>
-                    <div>
-                        <h6>Role</h6>
-                        <input placeholder="Role" value={userRole}></input>
-                    </div>
+                }}
 
-                    <button class="addSubmit" onClick={onSubmit}>Submit</button>
-                    <button class="addCancel" onClick={cancelSubmit}>Cancel</button>
-                </form>
-            </Container>
-        </Modal>
-    )
-}
+            >
+                {error && (
+                    <p
+                        style={{
+                            marginTop: "10px",
+                            fontSize: "20px",
+                            color: "red",
+                        }}
+                    >
+                        {error}
+                    </p>
+                )}
+                <div className="xBtn">
+                    <Link to="/Admin" className="xLink" onClick={onClose}>
+                        <i className="fas fa-times xButton" />
+                    </Link>
+                </div>
+                <Container>
+                    <form onSubmit={onSubmit} style={{ margin: "50px" }}>
+                        <h3>Add User Form</h3>
+                        <div>
+                            <h6>EUID</h6>
+                            <input
+                                placeholder="EUID"
+                                value={userEUID}
+                                onChange={(e) => setUserEUID(e.target.value)}
+                            />
+                        </div>
+                        <div>
+                            <h6>Last Name</h6>
+                            <input
+                                placeholder="Last Name"
+                                value={userLastName}
+                                onChange={(e) => setUserLastName(e.target.value)}
+                            />
+                        </div>
+                        <div>
+                            <h6>First Name</h6>
+                            <input
+                                placeholder="First Name"
+                                value={userFirstName}
+                                onChange={(e) => setUserFirstName(e.target.value)}
+                            />
+                        </div>
+                        <div>
+                            <h6>Email</h6>
+                            <input
+                                placeholder="Email"
+                                value={userEmail}
+                                onChange={(e) => setUserEmail(e.target.value)}
+                            />
+                        </div>
+                        <div>
+                            <h6>Role</h6>
+                            <input
+                                placeholder="Role"
+                                value={userRole}
+                                onChange={(e) => setUserRole(e.target.value)}
+                            />
+                        </div>
+
+                        <button class="addSubmit" onClick={onSubmit}>Submit</button>
+                        <button class="addCancel" onClick={cancelSubmit}>Cancel</button>
+                    </form>
+                </Container>
+            </Modal>
+        );
+    }
 

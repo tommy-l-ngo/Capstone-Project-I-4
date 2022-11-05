@@ -114,7 +114,6 @@ export function AdminPage() {
         getUserData();
     }, []);
     
-    
     // rendered content
     return (
         <div>
@@ -145,7 +144,6 @@ export function AdminPage() {
                                     </tr>
                                 </thead>
                                 
-
                                 {userData.map((val, key) => { /* map userData array into table*/
                                     return (
                                         <tr key={key}>
@@ -158,18 +156,13 @@ export function AdminPage() {
                                         </tr>
                                     )
                                     })}
-
-                                
-                                    
                                 </table>
-
-                                {/* </div> */}
                             </div>
                             <div className="add-user">
                                 <button className="submit-user-button" onClick={() => setModalOpen(true)}>
                                 Add New User
                                 </button>
-                                <AddUserButton isOpen={modalOpen} onClose={() => setModalOpen(false)}></AddUserButton>
+                                <AddUserButton isOpen={modalOpen} onClose={() => [setModalOpen(false), getUserData()]}></AddUserButton>
                             </div>
                         </div>
                     </div>
