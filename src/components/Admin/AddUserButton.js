@@ -11,7 +11,9 @@ export default function ({ isOpen, onClose }) {
     const [userEUID, setUserEUID] = useState(" ");
     const [userLastName, setUserLastName] = useState(" ");
     const [userFirstName, setUserFirstName] = useState(" ");
+    const [userPassword, setUserPassword] = useState(" ");
     const [userRole, setUserRole] = useState(" ");
+    const [userDepartment, setUserDepartment] = useState(" ");
     const [error, setError] = useState(null);
 
     function cancelSubmit() {
@@ -34,10 +36,12 @@ export default function ({ isOpen, onClose }) {
             } else {
             
                 set(ref(db, "users/" + userEUID), {
+                    department: userDepartment,
                     eUID: userEUID,
-                    lastName: userLastName,
-                    firstName: userFirstName,
                     email: userEmail,
+                    firstName: userFirstName,
+                    lastName: userLastName,
+                    password: userPassword,
                     role: userRole,
                 });
                 onClose();
@@ -87,13 +91,21 @@ export default function ({ isOpen, onClose }) {
                 </div>
                 <Container>
                     <form onSubmit={onSubmit} style={{ margin: "50px" }}>
-                        <h3>Add User Form</h3>
+                    <h3>Add User Form</h3>
                         <div>
                             <h6>EUID</h6>
                             <input
                                 placeholder="EUID"
                                 value={userEUID}
                                 onChange={(e) => setUserEUID(e.target.value)}
+                            />
+                    </div>
+                    <div>
+                            <h6>First Name</h6>
+                            <input
+                                placeholder="First Name"
+                                value={userFirstName}
+                                onChange={(e) => setUserFirstName(e.target.value)}
                             />
                         </div>
                         <div>
@@ -105,19 +117,19 @@ export default function ({ isOpen, onClose }) {
                             />
                         </div>
                         <div>
-                            <h6>First Name</h6>
-                            <input
-                                placeholder="First Name"
-                                value={userFirstName}
-                                onChange={(e) => setUserFirstName(e.target.value)}
-                            />
-                        </div>
-                        <div>
                             <h6>Email</h6>
                             <input
                                 placeholder="Email"
                                 value={userEmail}
                                 onChange={(e) => setUserEmail(e.target.value)}
+                            />
+                    </div>
+                    <div>
+                            <h6>Password</h6>
+                            <input
+                                placeholder="Password"
+                                value={userPassword}
+                                onChange={(e) => setUserPassword(e.target.value)}
                             />
                         </div>
                         <div>
@@ -127,7 +139,15 @@ export default function ({ isOpen, onClose }) {
                                 value={userRole}
                                 onChange={(e) => setUserRole(e.target.value)}
                             />
-                        </div>
+                    </div>
+                    <div>
+                            <h6>Department</h6>
+                            <input
+                                placeholder="Department"
+                                value={userDepartment}
+                                onChange={(e) => setUserDepartment(e.target.value)}
+                            />
+                    </div>
 
                         <button class="addSubmit" onClick={onSubmit}>Submit</button>
                         <button class="addCancel" onClick={cancelSubmit}>Cancel</button>
