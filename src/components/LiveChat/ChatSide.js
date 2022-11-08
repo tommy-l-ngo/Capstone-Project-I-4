@@ -64,7 +64,7 @@ export function ChatSide(props) {
     return (
         <aside className="chatAside">
             <header>
-                <input type="text" placeholder="search"/>
+                <input type="text" placeholder="search (DOESN'T WORK YET)"/>
             </header>
             
             <ul>

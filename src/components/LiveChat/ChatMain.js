@@ -215,7 +215,7 @@ export function ChatMain(props) {
                         chatbubble: {
                           borderRadius: 70,
                             padding: 20,
-                        }
+                        },
                       }}
                 />
         </div>
