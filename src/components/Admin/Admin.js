@@ -1,6 +1,6 @@
 import Navbar from "../Dashboard/Navbar"
 import React, { useState, useEffect } from 'react'
-import { getAuth, auth, onAuthStateChanged } from "firebase/auth";
+import { getAuth, auth, onAuthStateChanged, signInWithEmailAndPassword,} from "firebase/auth";
 import { getDatabase, set, ref, get, update, remove } from "firebase/database";
 import "./AdminSytle.css";
 import { Dropdown } from "react-bootstrap";
@@ -8,12 +8,24 @@ import DropdownMenu from "./DropdowMenu.js";
 import { useNavigate } from "react-router-dom";
 import { applyMutationToEventStore } from "@fullcalendar/react";
 import AddUserButton from "./AddUserButton.js";
+import { initializeApp } from "firebase/app";
+import TimePicker from "react-time-picker/dist/TimePicker";
+import { hasSelectionSupport } from "@testing-library/user-event/dist/utils";
 
 // admin credentials: email: admin@gmail.com  password: Admin123!
 let filterType = "None";
 
+const firebaseConfig = {
+    apiKey: "AIzaSyAu1kdEKPqTfL1XIjDF2l8rfG53FcdtVSM",
+    authDomain: "capstone-i4.firebaseapp.com",
+    projectId: "capstone-i4",
+    storageBucket: "capstone-i4.appspot.com",
+    messagingSenderId: "768427043765",
+    appId: "1:768427043765:web:6643185734fe346ddd07fc",
+    measurementId: "G-X8E63KZMT3"
+  };
+
 export function AdminPage() {
-    console.log("Admin Page");
     const user = getAuth().currentUser;
     const db = getDatabase();
     const navigate = useNavigate();
@@ -24,10 +36,8 @@ export function AdminPage() {
     const [modalOpen, setModalOpen] = useState(false);
     const [modalData, setModal] = useState([]);
 
-
-
     let userDataList = [];
-    
+
     // redirects to home page if user is not admin // Hardcoded 
     function checkValidAdmin()
     {
@@ -40,7 +50,7 @@ export function AdminPage() {
     // get user data from db
     function getUserData()
     {
-        checkValidAdmin();
+        //checkValidAdmin();
         get(ref(db, "users/")).then((snapshot) => {
             if (snapshot.exists()) {
                 //loop through users in db
@@ -95,12 +105,12 @@ export function AdminPage() {
 
     function handleDelete(e) {
         const userDelete = e.target.parentNode.parentNode.childNodes[1].innerHTML; // get euid next to x button
-        console.log("del:", userDelete)
+        console.log("user to delete:", userDelete)
 
         // display confirmation window to delete user
         if (window.confirm("Are you sure you want to delete " + userDelete + " This cannot be reversed")) {
-            // delete user data from database
-            remove(ref(db, "users/" + userDelete))
+            
+            deleteUser(userDelete); // delete user from auth
             alert("User deleted");
             getUserData();
         }
@@ -109,6 +119,72 @@ export function AdminPage() {
             console.log("no delete");
         }
     }
+
+    function deleteUser(userEUID) { 
+        const db = getDatabase();
+        get(ref(db, "users/" + userEUID))
+          .then((snapshot) => {
+              if (snapshot.exists()) {
+                  deleteUserAuth(snapshot.val().email, snapshot.val().password);
+            } else {
+                  console.log("user not found");
+            }
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+    }// deleteUser()
+
+    function deleteUserAuth(emailDelete, passDelete) {
+        console.log(emailDelete, passDelete);
+        let email = emailDelete;
+        let password = passDelete;
+
+        // sign into user to delete
+        const secondaryApp = initializeApp(firebaseConfig);
+        const auth2 = getAuth(secondaryApp);
+        signInWithEmailAndPassword(auth2, email, password)
+            .then((userCredential2) => {
+                // Signed in 
+                const auth = getAuth();
+                const user = auth.currentUser;
+                console.log("will delete this:", user);
+                
+                deleteUser(user).then(() => {
+                    console.log("deleted this user", user);
+                  }).catch((error) => {
+                    console.log("deleted this user", error)
+                  });
+                  
+                
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+            });
+        
+        // sign back into admin
+        setTimeout(resetAdmin, 3000);
+        
+        // Then you can delete the user from the users collection if you have one.
+    }// deleteUserAuth()
+
+    function resetAdmin() { 
+        // sign back into admin
+        const auth = getAuth();
+        signInWithEmailAndPassword(auth, "admin@gmail.com", "Admin123!")
+        .then((userCredential) => {
+            // Signed in 
+            const user = userCredential.user;
+            console.log("admin reset:", user);
+            // ...
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+        });
+    }
+
        
     useEffect(() => {
         getUserData();
