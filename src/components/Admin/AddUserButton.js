@@ -1,9 +1,20 @@
 import Modal from "react-modal";
 import React, { useState } from "react";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, updateProfile, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { Container } from "react-bootstrap";
 import { getDatabase, set, ref } from "firebase/database";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { initializeApp } from "firebase/app";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyAu1kdEKPqTfL1XIjDF2l8rfG53FcdtVSM",
+    authDomain: "capstone-i4.firebaseapp.com",
+    projectId: "capstone-i4",
+    storageBucket: "capstone-i4.appspot.com",
+    messagingSenderId: "768427043765",
+    appId: "1:768427043765:web:6643185734fe346ddd07fc",
+    measurementId: "G-X8E63KZMT3"
+  };
 
 export default function ({ isOpen, onClose }) {
     const user = getAuth().currentUser;
@@ -15,9 +26,24 @@ export default function ({ isOpen, onClose }) {
     const [userRole, setUserRole] = useState(" ");
     const [userDepartment, setUserDepartment] = useState(" ");
     const [error, setError] = useState(null);
+    const navigate = useNavigate();
 
     function cancelSubmit() {
         onClose();
+    }
+
+    function resetAdmin() { // sign back into admin user
+        const auth = getAuth();
+        signInWithEmailAndPassword(auth, "admin1@gmail.com", "Admin123!")
+        .then((userCredential) => {
+            // Signed in 
+            const user = userCredential.user;
+            // ...
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+        });
     }
 
     const db = getDatabase();
@@ -34,6 +60,43 @@ export default function ({ isOpen, onClose }) {
             } else if (userLastName == 0) {
                 throw Error("Please enter last name.");
             } else {
+                
+                /// create second auth instance for adding user
+                const secondaryApp = initializeApp(firebaseConfig);
+                const auth2 = getAuth(secondaryApp);
+                // add user to auth
+                createUserWithEmailAndPassword(auth2, userEmail, userPassword)
+                .then((userCredential2) => {
+                  // Signed in 
+                    const user2 = userCredential2.user;
+                    console.log("create:", user2);
+
+                    // set display name for user (euid)
+                    updateProfile(auth2.currentUser, {
+                    "displayName": userEUID
+                    }).then(() => {
+                        console.log("Profile Updated, displayName:" + user.displayName);
+                        
+                        // sign out of auth
+                        signOut(auth2).then(() => {
+                            console.log("sign out success", auth2.currentUser)
+                          }).catch((error) => {
+                              console.log("errro sign out", auth2.currentUser);
+                          });
+                        
+                    }).catch((error) => {
+                        // An error occurred
+                        // ...
+                        console.log(error);
+                    });
+                    resetAdmin(); //
+                })
+                .catch((error) => {
+                  const errorCode = error.code;
+                    const errorMessage = error.message;
+                    console.log("create:", errorMessage);
+                  
+                });
             
                 set(ref(db, "users/" + userEUID), {
                     department: userDepartment,
@@ -44,7 +107,9 @@ export default function ({ isOpen, onClose }) {
                     password: userPassword,
                     role: userRole,
                 });
+            
                 onClose();
+                
             }
         } catch (err) {
                 console.log(err.code);
