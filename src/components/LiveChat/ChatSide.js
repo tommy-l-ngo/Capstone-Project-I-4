@@ -16,27 +16,34 @@ const user = getAuth().currentUser;
 
 
 
-export function ChatSide() {
+export function ChatSide(props) {
 
     const [chatList, setChatList] = useState([]);
 
     useEffect(() => {
-        //getting the project by key
         var unsubcribe = getAuth().onAuthStateChanged(function(user) {
             if (user) {
                 get(child(dbRef, "users/"))
                     .then((snapShot) => {
                         if (snapShot.exists())
                         {
+                            var defaultChat;
                             //console.log(snapShot);
                             snapShot.forEach(userShot => {
                                 //console.log(userShot.key);
                                 const curr = userShot.val();
                                 if (curr.eUID != user.displayName && curr.eUID != "admin")
                                 {
+                                    if (defaultChat == null)
+                                    {
+                                        defaultChat = curr;
+                                        props.defaultChat(defaultChat);
+                                    }
                                     setChatList(chatList => [...chatList, curr])    
                                 }
                             })
+
+
                         }
                     
                 })
@@ -47,7 +54,12 @@ export function ChatSide() {
       //unsubcribe();
 
     }, []);
-
+    /*
+    function SendChatInfo()
+    {
+        props.chatInfo(element)
+    }
+*/
   
     return (
         <aside className="chatAside">
@@ -57,7 +69,7 @@ export function ChatSide() {
             
             <ul>
                 {chatList.map((element, index) => (
-                    <li>
+                    <li className={index == 0 ? ("clicked") : ("")} onClick={(e) => props.chatInfo(e, element)}>
                         <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_01.jpg" alt=""/>
                         <div>
                             <h2>{element.firstName}</h2>

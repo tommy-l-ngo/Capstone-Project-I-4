@@ -59,6 +59,9 @@
 .chatAside li:hover{
 	background-color:#5e616a;
 }
+.chatAside li.clicked{
+	background-color:#5e616a;
+}
 h2,h3{
 	margin:0;
 }
@@ -209,7 +212,7 @@ h2,h3{
 	height:30px;
 	cursor:pointer;
 }
-.chatMain footer a{
+.chatMain footer button{
 	text-decoration:none;
 	text-transform:uppercase;
 	font-weight:bold;

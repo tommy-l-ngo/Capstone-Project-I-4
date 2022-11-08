@@ -20,24 +20,19 @@ const user = getAuth().currentUser;
 
 export function ChatPage() {
 
+    const [chatPerson, setChatPerson] = useState({});
 
-    useEffect(() => {
-        //getting the project by key
-        var unsubcribe = getAuth().onAuthStateChanged(function(user) {
-            if (user) {
-                get(child(dbRef, "users/"))
-                    .then((snapShot) => {
-                        snapShot.forEach((user, index) => {
-                        
-                    })
-                })
-          }
+    function ChatToDisplay(e, chatPersonInfo) {
+        //console.log(e.currentTarget.parentElement.children);
+        //setChatPerson({...chatPersonInfo});
 
-      })
-    
-      //unsubcribe();
-
-    }, []);
+        for (let i = 0; i < e.currentTarget.parentElement.children.length; ++i)
+        {
+            e.currentTarget.parentElement.children[i].className = "";
+        }
+        e.currentTarget.className = "clicked";
+        setChatPerson(chatPersonInfo);
+    }
 
   
     return (
@@ -45,8 +40,8 @@ export function ChatPage() {
             <Navbar />
 
             <div id="#container">
-                <ChatSide/>
-                <ChatMain/>
+                <ChatSide defaultChat={setChatPerson} chatInfo={ChatToDisplay}/>
+                <ChatMain chatPerson={chatPerson}/>
             </div>    
             </>
       );
