@@ -19,6 +19,9 @@ const user = getAuth().currentUser;
 export function ChatSide(props) {
 
     const [chatList, setChatList] = useState([]);
+    const [filteredChatList, setFilteredChatList] = useState([]);
+    const [searchText, setSearchText] = useState("");
+    const [chatPerson, setChatPerson] = useState({});
 
     useEffect(() => {
         var unsubcribe = getAuth().onAuthStateChanged(function(user) {
@@ -38,6 +41,7 @@ export function ChatSide(props) {
                                     {
                                         defaultChat = curr;
                                         props.defaultChat(defaultChat);
+                                        setChatPerson(defaultChat);
                                     }
                                     setChatList(chatList => [...chatList, curr])    
                                 }
@@ -60,27 +64,74 @@ export function ChatSide(props) {
         props.chatInfo(element)
     }
 */
+    
+    function HandleSearch(e)
+    {
+        const searchText = e.target.value;
+        setSearchText(searchText);
+
+        if (!searchText)
+        {
+            setFilteredChatList([]);
+        }
+
+        const filtered = chatList.filter((element, index) => {
+            const eUID = element.eUID.toLowerCase();
+            const firstName = element.firstName.toLowerCase();
+            const lastName = element.lastName.toLowerCase();
+            const email = element.email.toLowerCase();
+
+            return ((eUID.indexOf(searchText) > -1) || (firstName.indexOf(searchText) > -1) ||
+                    (lastName.indexOf(searchText) > -1) || (email.indexOf(searchText) > -1))
+
+        })
+
+        setFilteredChatList(filtered);
+    }
   
     return (
         <aside className="chatAside">
             <header>
-                <input type="text" placeholder="search (DOESN'T WORK YET)"/>
+                <input type="text" value={searchText} onChange={HandleSearch} placeholder="search"/>
             </header>
             
             <ul>
-                {chatList.map((element, index) => (
-                    <li className={index == 0 ? ("clicked") : ("")} onClick={(e) => props.chatInfo(e, element)}>
-                        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_01.jpg" alt=""/>
-                        <div>
-                            <h2>{element.firstName}</h2>
-                            <h3 className="eUID">{element.eUID}</h3>
-                            <h3>
-                                <span className="status orange"></span>
-                                offline
-                            </h3>
-                        </div>
-                    </li>
-                ))}
+                {(searchText && filteredChatList.length == 0) && (<h3>No Results</h3>)}
+    
+                {(searchText) ?
+                    (filteredChatList.map((element, index) => {
+                        var clicked;
+                        (chatPerson.eUID == element.eUID) ? (clicked = true) : (clicked = false);
+    
+                        return (<li className={clicked ? ("clicked") : ("")} onClick={(e) => {setChatPerson(element); setSearchText(""); props.chatInfo(element)}}>
+                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_01.jpg" alt=""/>
+                            <div>
+                                <h2>{element.firstName}</h2>
+                                <h3 className="eUID">{element.eUID}</h3>
+                                <h3>
+                                    <span className="status orange"></span>
+                                    offline
+                                </h3>
+                            </div>
+                        </li>)
+                    }))
+                    :
+                    (chatList.map((element, index) => {
+                        var clicked;
+                        (chatPerson.eUID == element.eUID) ? (clicked = true) : (clicked = false);
+    
+                        return (<li className={clicked ? ("clicked") : ("")} onClick={(e) => {setChatPerson(element); props.chatInfo(element)}}>
+                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_01.jpg" alt=""/>
+                            <div>
+                                <h2>{element.firstName}</h2>
+                                <h3 className="eUID">{element.eUID}</h3>
+                                <h3>
+                                    <span className="status orange"></span>
+                                    offline
+                                </h3>
+                            </div>
+                        </li>)
+                    }))}
             </ul>
         </aside>
       );

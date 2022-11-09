@@ -22,25 +22,13 @@ export function ChatPage() {
 
     const [chatPerson, setChatPerson] = useState({});
 
-    function ChatToDisplay(e, chatPersonInfo) {
-        //console.log(e.currentTarget.parentElement.children);
-        //setChatPerson({...chatPersonInfo});
-
-        for (let i = 0; i < e.currentTarget.parentElement.children.length; ++i)
-        {
-            e.currentTarget.parentElement.children[i].className = "";
-        }
-        e.currentTarget.className = "clicked";
-        setChatPerson(chatPersonInfo);
-    }
-
   
     return (
         <>
             <Navbar />
-
+            
             <div id="#container">
-                <ChatSide defaultChat={setChatPerson} chatInfo={ChatToDisplay}/>
+                <ChatSide defaultChat={setChatPerson} chatInfo={setChatPerson}/>
                 <ChatMain chatPerson={chatPerson}/>
             </div>    
             </>

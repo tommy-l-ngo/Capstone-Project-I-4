@@ -61,6 +61,7 @@
 }
 .chatAside li.clicked{
 	background-color:#5e616a;
+    /*border: ;*/
 }
 h2,h3{
 	margin:0;
