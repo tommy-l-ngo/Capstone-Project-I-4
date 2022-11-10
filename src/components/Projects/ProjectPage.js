@@ -35,6 +35,10 @@ function ProjectPage() {
   const location = useLocation();
   const fullDataPath = location.pathname;
   const dataPath = fullDataPath.replace("/Projects/", '');
+
+  const onSubmit = (event) => {
+    event.preventDefault();
+  };
   
   
   
@@ -68,6 +72,8 @@ so the auth listener is set only once. Without useEffect() here, an infinite loo
               text: snapShot.val().name,
               desc: snapShot.val().description,
               label: snapShot.val().date,
+              paragraph: snapShot.val().paragraph,
+
               src: "images/img-1.png"
               //path: `/Projects/${subSnap.val().project_id}`  
             };
@@ -77,10 +83,10 @@ so the auth listener is set only once. Without useEffect() here, an infinite loo
       }
 
   })
-
+    
   //unsubcribe();
   });
-  
+
     if ((dataPath === "1" || dataPath === "2" || dataPath === "3"))
       return(
       <div className="projects_page">
@@ -114,7 +120,7 @@ so the auth listener is set only once. Without useEffect() here, an infinite loo
         </div>
     </div>
     );
-
+    
     if(!(dataPath === "1" || dataPath === "2" || dataPath === "3") && !(project === null))
     return (
         <div className='projects_page'>
@@ -145,7 +151,15 @@ so the auth listener is set only once. Without useEffect() here, an infinite loo
                     <>
                       <h1>{project.text}</h1>
                       <h3>{project.desc}</h3>
-                      <hr/>
+                      <hr />
+                      <form onSubmit={onSubmit}>
+                        <textarea
+                        className="project-paragraph-textarea"
+                        value={project.paragraph}
+                        onChange={onSubmit}
+              />
+              </form>
+                      <p>{project.paragraph}</p>
                       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo. Cursus in hac habitasse platea dictumst quisque. Sed libero enim sed faucibus turpis in eu mi. Fusce id velit ut tortor pretium. Lacus sed viverra tellus in. Ipsum consequat nisl vel pretium lectus quam id leo. Urna id volutpat lacus laoreet non curabitur. Suscipit adipiscing bibendum est ultricies integer quis auctor elit sed. Purus non enim praesent elementum facilisis leo vel. Eu non diam phasellus vestibulum lorem sed risus ultricies. Turpis massa sed elementum tempus. In tellus integer feugiat scelerisque. Quis vel eros donec ac odio tempor orci. Cursus mattis molestie a iaculis at erat. Sagittis nisl rhoncus mattis rhoncus urna neque viverra justo. Id donec ultrices tincidunt arcu non sodales neque.</p>
                       <p>Orci ac auctor augue mauris augue neque. Arcu cursus euismod quis viverra nibh cras pulvinar. Rhoncus mattis rhoncus urna neque. Vitae tempus quam pellentesque nec nam aliquam sem et tortor. Morbi enim nunc faucibus a. Sagittis id consectetur purus ut faucibus pulvinar elementum integer. Non blandit massa enim nec dui nunc mattis. Volutpat maecenas volutpat blandit aliquam etiam. Erat velit scelerisque in dictum non consectetur a. Rhoncus mattis rhoncus urna neque. Aenean pharetra magna ac placerat vestibulum. Integer enim neque volutpat ac tincidunt vitae semper. Amet porttitor eget dolor morbi non arcu. Elementum facilisis leo vel fringilla est ullamcorper eget nulla facilisi. Consectetur adipiscing elit duis tristique sollicitudin nibh sit. Cursus turpis massa tincidunt dui ut ornare.</p>
                       <Attachments />

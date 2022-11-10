@@ -57,3 +57,13 @@
     float: right;
     padding-left: 40px;
 }
+
+.project-paragraph-textarea {
+    width: 90%;
+    height: 80px;
+    margin-bottom: 8px;
+    margin-top: 8px;
+    border: 1px solid rgb(107, 114, 12);
+    text-align: left;
+    text-indent: 5px;
+}
