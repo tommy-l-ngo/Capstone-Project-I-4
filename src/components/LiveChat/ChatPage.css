@@ -46,6 +46,28 @@
 .chatAside input::placeholder{
 	color:#fff;
 }
+
+.chatAside .tabs{
+	width: 100%;
+}
+
+.chatAside .tabs .tab{
+	width:50%;
+	background-color:#3b3e49;
+	color: white;
+	position: relative;
+}
+
+.chatAside .tabs .clicked{
+	width:50%;
+	background-color:#5e616a;
+	color: white;
+	position: relative;
+	top: 2px;
+	padding-top: 6px;
+	border-bottom: 0px;
+}
+
 .chatAside ul{
 	padding-left:0;
 	margin:0;

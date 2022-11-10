@@ -20,6 +20,8 @@ export function ChatSide(props) {
 
     const [chatList, setChatList] = useState([]);
     const [filteredChatList, setFilteredChatList] = useState([]);
+    const [activeChats, setActiveChats] = useState([]);
+    const [openTab, setOpenTab] = useState("All Users");
     const [searchText, setSearchText] = useState("");
     const [chatPerson, setChatPerson] = useState({});
 
@@ -88,51 +90,117 @@ export function ChatSide(props) {
 
         setFilteredChatList(filtered);
     }
+
+    function HandleSwitch(e, tab)
+    {
+        const len = e.target.parentElement.children.length;
+        for (let i = 0; i < len; ++i)
+        {
+            e.target.parentElement.children[i].className = "tab";
+        }
+        e.target.className = "clicked";
+
+        if (tab == "active")
+        {
+            setOpenTab("Active Chats");
+        }
+        else if (tab == "all")
+        {
+            setOpenTab("All Users");
+        }
+    }
   
     return (
         <aside className="chatAside">
             <header>
                 <input type="text" value={searchText} onChange={HandleSearch} placeholder="search"/>
             </header>
+
+            <div className="tabs">
+                <button className="tab" onClick={(e) => HandleSwitch(e, "active")}>Active Chats</button>
+                <button className="clicked" onClick={(e) => HandleSwitch(e, "all")}>All Users</button>
+            </div>
             
-            <ul>
-                {(searchText && filteredChatList.length == 0) && (<h3>No Results</h3>)}
+            {(openTab == "All Users") &&
+                <ul>
+                    {(searchText && filteredChatList.length == 0) && (<h3>No Results</h3>)}
     
-                {(searchText) ?
-                    (filteredChatList.map((element, index) => {
-                        var clicked;
-                        (chatPerson.eUID == element.eUID) ? (clicked = true) : (clicked = false);
+                    {(searchText) ?
+                        (filteredChatList.map((element, index) => {
+                            var clicked;
+                            (chatPerson.eUID == element.eUID) ? (clicked = true) : (clicked = false);
     
-                        return (<li className={clicked ? ("clicked") : ("")} onClick={(e) => {setChatPerson(element); setSearchText(""); props.chatInfo(element)}}>
-                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_01.jpg" alt=""/>
-                            <div>
-                                <h2>{element.firstName}</h2>
-                                <h3 className="eUID">{element.eUID}</h3>
-                                <h3>
-                                    <span className="status orange"></span>
-                                    offline
-                                </h3>
-                            </div>
-                        </li>)
-                    }))
-                    :
-                    (chatList.map((element, index) => {
-                        var clicked;
-                        (chatPerson.eUID == element.eUID) ? (clicked = true) : (clicked = false);
+                            return (<li className={clicked ? ("clicked") : ("")} onClick={(e) => { setChatPerson(element); setSearchText(""); props.chatInfo(element) }}>
+                                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_01.jpg" alt="" />
+                                <div>
+                                    <h2>{element.firstName}</h2>
+                                    <h3 className="eUID">{element.eUID}</h3>
+                                    <h3>
+                                        <span className="status orange"></span>
+                                        offline
+                                    </h3>
+                                </div>
+                            </li>)
+                        }))
+                        :
+                        (chatList.map((element, index) => {
+                            var clicked;
+                            (chatPerson.eUID == element.eUID) ? (clicked = true) : (clicked = false);
     
-                        return (<li className={clicked ? ("clicked") : ("")} onClick={(e) => {setChatPerson(element); props.chatInfo(element)}}>
-                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_01.jpg" alt=""/>
-                            <div>
-                                <h2>{element.firstName}</h2>
-                                <h3 className="eUID">{element.eUID}</h3>
-                                <h3>
-                                    <span className="status orange"></span>
-                                    offline
-                                </h3>
-                            </div>
-                        </li>)
-                    }))}
-            </ul>
+                            return (<li className={clicked ? ("clicked") : ("")} onClick={(e) => { setChatPerson(element); props.chatInfo(element) }}>
+                                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_01.jpg" alt="" />
+                                <div>
+                                    <h2>{element.firstName}</h2>
+                                    <h3 className="eUID">{element.eUID}</h3>
+                                    <h3>
+                                        <span className="status orange"></span>
+                                        offline
+                                    </h3>
+                                </div>
+                            </li>)
+                        }))}
+                </ul>}
+            
+            {(openTab == "Active Chats") &&
+                <ul>
+                    {(searchText && filteredChatList.length == 0) && (<h3>No Results</h3>)}
+    
+                    {(searchText) ?
+                        (filteredChatList.map((element, index) => {
+                            var clicked;
+                            (chatPerson.eUID == element.eUID) ? (clicked = true) : (clicked = false);
+    
+                            return (<li className={clicked ? ("clicked") : ("")} onClick={(e) => { setChatPerson(element); setSearchText(""); props.chatInfo(element) }}>
+                                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_01.jpg" alt="" />
+                                <div>
+                                    <h2>{element.firstName}</h2>
+                                    <h3 className="eUID">{element.eUID}</h3>
+                                    <h3>
+                                        <span className="status orange"></span>
+                                        offline
+                                    </h3>
+                                </div>
+                            </li>)
+                        }))
+                        :
+                        (activeChats.map((element, index) => {
+                            var clicked;
+                            (chatPerson.eUID == element.eUID) ? (clicked = true) : (clicked = false);
+    
+                            return (<li className={clicked ? ("clicked") : ("")} onClick={(e) => { setChatPerson(element); props.chatInfo(element) }}>
+                                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_01.jpg" alt="" />
+                                <div>
+                                    <h2>{element.firstName}</h2>
+                                    <h3 className="eUID">{element.eUID}</h3>
+                                    <h3>
+                                        <span className="status orange"></span>
+                                        offline
+                                    </h3>
+                                </div>
+                            </li>)
+                        }))}
+                </ul>}
+
         </aside>
       );
 }
