@@ -26,3 +26,17 @@
 .card-content {
     /*padding-top: 10px;*/
 }
+
+.delete-btn {
+    background-color: white;
+    border: none;
+    float: right;
+    color: #333;
+    border: none;
+    cursor: pointer;
+}
+  
+.delete-btn:hover {
+    color: #ff0000;
+}
+
