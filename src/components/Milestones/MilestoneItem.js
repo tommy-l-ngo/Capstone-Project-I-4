@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import "./Milestones.css";
 
-function MilestoneItem({ title, date }) {          //Code to make page scroll to top
+function MilestoneItem({ title, date, key }) {          //Code to make page scroll to top
     
     function deleteItem() {
         alert("hellow");
@@ -20,7 +20,7 @@ function MilestoneItem({ title, date }) {          //Code to make page scroll to
     // props.desc - project description
   return (
       <>
-                  <div className="xBtn" onClick={deleteItem}>
+                  <div className="xBtn2" onClick={deleteItem}>
           <i className="fas fa-times xButton" />
         </div>
         <div className='m_Item'>

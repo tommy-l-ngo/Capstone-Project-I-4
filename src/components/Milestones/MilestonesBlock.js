@@ -137,7 +137,7 @@ const fullDataPath = location.pathname;
                                 const curr = userShot.val();
 
                                 let mile1 = {
-                                    key: snapShot.key,
+                                    key: userShot.key,
                                     name: curr.name,
                                     desc: curr.description,
                                     date: curr.date,
@@ -145,7 +145,8 @@ const fullDataPath = location.pathname;
                                     user: curr.user_id,
                                     src: "images/img-1.png"
                                     //path: `/Projects/${subSnap.val().project_id}`  
-                                  };
+                                };
+                                alert("k:" + mile1.key)
                                 //console.log(userShot.key);
                                 // alert(mile1.name);
                                 let mile2 = curr;
@@ -219,13 +220,15 @@ const fullDataPath = location.pathname;
                 
                 
                 // <h4>Some milestone</h4>
-                milestones.map((item)=>{
+                    milestones.map((item) => {
+                    // alert(item.key)
                     // alert(item.name);
                 return(
                 //    <>asdf</>
                     <MilestoneItem 
-                    title={item.name} 
-                    date={item.date} 
+                        title={item.name} 
+                        date={item.date} 
+                        key={item.key}
                     // label={item.date} 
                     // path={`/Projects/${project_path}`}
                     />
