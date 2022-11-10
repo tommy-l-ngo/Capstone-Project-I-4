@@ -99,6 +99,17 @@ export function CreateProject(props)
  
     }
 
+    function handleNotifs(event) {
+      const user = getAuth().currentUser;
+      const db = getDatabase();
+      let dbRef = ref(db, "notifications/");
+      push(dbRef, {
+        name: `created a new project:  ${projInfo.name}`,
+        user_id: user.displayName,
+        date: new Date().toLocaleString(),
+      })
+    }
+  
     function handleSubmit(event) {
         const { name, description, tasks, date, students } = projInfo;
         event.preventDefault();
@@ -119,7 +130,9 @@ export function CreateProject(props)
           //JSON.stringify(projInfo.date),
           projInfo.date.toDateString(),
           projInfo.students
-        );
+        )
+      handleNotifs();
+          ;
 
                    
         

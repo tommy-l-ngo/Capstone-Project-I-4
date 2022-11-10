@@ -1,0 +1,28 @@
+.notifications {
+    padding-left: -35px;
+    padding-right: 35px;
+}
+
+.notif_msg {
+    list-style-type: none;  
+    text-align: left;
+    white-space: initial;
+    padding-left: 4.0em;
+    text-indent:-4.0em;
+}
+
+.notif_date {
+    list-style-type: none;  
+    text-align: right;
+    font-size: 14px;
+    color: gray;
+}
+
+.card-title {
+    font-size: 30px;
+    padding-bottom: 10px;
+}
+
+.card-content {
+    /*padding-top: 10px;*/
+}

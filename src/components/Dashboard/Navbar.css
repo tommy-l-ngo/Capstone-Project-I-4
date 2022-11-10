@@ -419,3 +419,24 @@
   font-size: 1.8rem;
   cursor: pointer;
 }
+
+.notification_bell {
+  padding-left: 15px;
+}
+
+.notification_bell > button {
+  background-color: rgb(26, 23, 23);
+  color: white;
+  border: 0px;
+}
+
+.displayNotifs {
+  position:absolute;
+  color: black;
+  top: 58px;
+  width: 550px;
+  transform: translateX(-90%);
+  /*transform: translateY(0%);*/
+  padding: 1rem;
+  overflow: hidden;
+}

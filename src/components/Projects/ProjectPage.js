@@ -133,7 +133,7 @@ so the auth listener is set only once. Without useEffect() here, an infinite loo
             </div>
             <div className = "file_upload">
                 <FileUpload />
-            </div>
+          </div>
             <div className='project_comments'>
                 {currUserID === undefined ? 
                 (<Comments currentUserId={0} />) : 

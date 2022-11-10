@@ -128,8 +128,29 @@ export function EditProject(props)
         });
         */
  
-    }
+  }
+  
+  function handleEditNotifs(event) {
+    const user = getAuth().currentUser;
+    const db = getDatabase();
+    let dbRef = ref(db, "notifications/");
+    push(dbRef, {
+      name: `edited project:  ${projInfo.name}`,
+      user_id: user.displayName,
+      date: new Date().toLocaleString(),
+    })
+  }
 
+  function handleDeleteNotifs(event) {
+    const user = getAuth().currentUser;
+    const db = getDatabase();
+    let dbRef = ref(db, "notifications/");
+    push(dbRef, {
+      name: `deleted project:  ${projInfo.name}`,
+      user_id: user.displayName,
+      date: new Date().toLocaleString(),
+    })
+  }
 
     function handleSubmit(event) {
       const { name, description, tasks, date, students } = projInfo;
@@ -153,7 +174,7 @@ export function EditProject(props)
           projInfo.students
         );
 
-        
+      handleEditNotifs();
       }
 
     function handleDelete(event) {//this will handle what happens whne the delete button is pressed
@@ -166,6 +187,7 @@ export function EditProject(props)
       remove(rmvref)
       .then(() => {
         alert("Project deleted successfully!");
+        handleDeleteNotifs();
         window.location = "/";
       })
       .catch((err) => {
