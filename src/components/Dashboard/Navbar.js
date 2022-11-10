@@ -199,6 +199,16 @@ function Navbar() {
 
             <li className="nav-item">
               <Link
+                to="/Milestones"
+                className="nav-links"
+                onClick={closeMobileMenu}
+              >
+                Milestones
+              </Link>
+            </li>
+
+            <li className="nav-item">
+              <Link
                 to="/#"
                 className="nav-links-mobile"
                 onClick={handleButtonClick}
