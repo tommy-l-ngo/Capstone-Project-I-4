@@ -59,11 +59,26 @@
 }
 
 .project-paragraph-textarea {
-    width: 90%;
+    width: 70%;
     height: 80px;
     margin-bottom: 8px;
     margin-top: 8px;
     border: 1px solid rgb(107, 114, 12);
     text-align: left;
     text-indent: 5px;
+}
+
+.project-paragraph-button {
+    font-size: 16px;
+    padding: 8px 44px;
+    margin-bottom: 8px;
+    margin-top: 8px;
+    background: rgb(89, 152, 255);
+    border-radius: 8px;
+    color: white;
+}
+  
+.project-paragraph-button:hover {
+    cursor: pointer;
+    background: rgb(72, 129, 252);
 }

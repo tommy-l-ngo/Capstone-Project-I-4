@@ -9,7 +9,7 @@ import './ProjectPage.css';
 import Comments from "../Comments/Comments";
 import FileUpload from "../FileUpload/FileUpload";
 import { getAuth } from "firebase/auth";
-import { getDatabase, get, child, ref} from "firebase/database";
+import { getDatabase, get, child, ref, set } from "firebase/database";
 import Attachments from './Attachments';
 
 // Gets current user
@@ -31,15 +31,36 @@ function ProjectPage() {
   const getData = data.cardData[id - 1];
   
   //console.warn(getData);
-
   const location = useLocation();
   const fullDataPath = location.pathname;
   const dataPath = fullDataPath.replace("/Projects/", '');
 
-  const onSubmit = (event) => {
+  let updatedValue = project.paragraph;
+  const { key } = location.state;
+  
+  const handleSubmit = (event) => {
     event.preventDefault();
+    console.log(updatedValue.paragraph);
+    //console.log(project.students);
+    const db = getDatabase();
+        let dbRef = ref(db, "projects/" + key);
+        set(dbRef, {
+          name: project.name,
+          user_id: project.user_id,
+          description: project.description,
+          tasks: project.tasks,
+          date: project.date,
+          //
+          paragraph: updatedValue.paragraph,
+          students: project.students
+        })
   };
   
+  function handleChange(event, updatedValue) {
+    // console.log(updatedValue);
+    updatedValue = { [event.target.name]: event.target.value };
+    console.log(updatedValue.paragraph);
+  }
   
   
   
@@ -68,15 +89,10 @@ so the auth listener is set only once. Without useEffect() here, an infinite loo
         get(child(dbRef, "projects/" + key)) //get project based on key
         .then((snapShot) => {
           if (snapShot.exists()) {
-            let project = {
-              text: snapShot.val().name,
-              desc: snapShot.val().description,
-              label: snapShot.val().date,
-              paragraph: snapShot.val().paragraph,
-
-              src: "images/img-1.png"
+            //let project = "";
+            let project = snapShot.val();
+            project.src = "images/img-1.png";
               //path: `/Projects/${subSnap.val().project_id}`  
-            };
             setProject(project); 
           }
         })
@@ -111,8 +127,8 @@ so the auth listener is set only once. Without useEffect() here, an infinite loo
         </div>
         <div className="project_details">
           
-            <h1>{getData.text}</h1>
-            <h3>{getData.desc}</h3>
+            <h1>{getData.name}</h1>
+            <h3>{getData.description}</h3>
             <hr/>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo. Cursus in hac habitasse platea dictumst quisque. Sed libero enim sed faucibus turpis in eu mi. Fusce id velit ut tortor pretium. Lacus sed viverra tellus in. Ipsum consequat nisl vel pretium lectus quam id leo. Urna id volutpat lacus laoreet non curabitur. Suscipit adipiscing bibendum est ultricies integer quis auctor elit sed. Purus non enim praesent elementum facilisis leo vel. Eu non diam phasellus vestibulum lorem sed risus ultricies. Turpis massa sed elementum tempus. In tellus integer feugiat scelerisque. Quis vel eros donec ac odio tempor orci. Cursus mattis molestie a iaculis at erat. Sagittis nisl rhoncus mattis rhoncus urna neque viverra justo. Id donec ultrices tincidunt arcu non sodales neque.</p>
             <p>Orci ac auctor augue mauris augue neque. Arcu cursus euismod quis viverra nibh cras pulvinar. Rhoncus mattis rhoncus urna neque. Vitae tempus quam pellentesque nec nam aliquam sem et tortor. Morbi enim nunc faucibus a. Sagittis id consectetur purus ut faucibus pulvinar elementum integer. Non blandit massa enim nec dui nunc mattis. Volutpat maecenas volutpat blandit aliquam etiam. Erat velit scelerisque in dictum non consectetur a. Rhoncus mattis rhoncus urna neque. Aenean pharetra magna ac placerat vestibulum. Integer enim neque volutpat ac tincidunt vitae semper. Amet porttitor eget dolor morbi non arcu. Elementum facilisis leo vel fringilla est ullamcorper eget nulla facilisi. Consectetur adipiscing elit duis tristique sollicitudin nibh sit. Cursus turpis massa tincidunt dui ut ornare.</p>
@@ -149,16 +165,24 @@ so the auth listener is set only once. Without useEffect() here, an infinite loo
             </div>
             <div className='project_details'>
                     <>
-                      <h1>{project.text}</h1>
-                      <h3>{project.desc}</h3>
+                      <h1>{project.name}</h1>
+                      <h3>{project.description}</h3>
                       <hr />
-                      <form onSubmit={onSubmit}>
+                      <form onSubmit={handleSubmit}>
                         <textarea
-                        className="project-paragraph-textarea"
-                        value={project.paragraph}
-                        onChange={onSubmit}
-              />
-              </form>
+                          className="project-paragraph-textarea"
+                          id="paragraph"
+                          name="paragraph"
+                          defaultValue={project.paragraph}
+                          onChange={handleChange}
+                        />
+                        <button
+                          className="project-paragraph-button"
+                          onClick={handleSubmit}
+                        >
+                          Submit
+                        </button>
+                      </form>
                       <p>{project.paragraph}</p>
                       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo. Cursus in hac habitasse platea dictumst quisque. Sed libero enim sed faucibus turpis in eu mi. Fusce id velit ut tortor pretium. Lacus sed viverra tellus in. Ipsum consequat nisl vel pretium lectus quam id leo. Urna id volutpat lacus laoreet non curabitur. Suscipit adipiscing bibendum est ultricies integer quis auctor elit sed. Purus non enim praesent elementum facilisis leo vel. Eu non diam phasellus vestibulum lorem sed risus ultricies. Turpis massa sed elementum tempus. In tellus integer feugiat scelerisque. Quis vel eros donec ac odio tempor orci. Cursus mattis molestie a iaculis at erat. Sagittis nisl rhoncus mattis rhoncus urna neque viverra justo. Id donec ultrices tincidunt arcu non sodales neque.</p>
                       <p>Orci ac auctor augue mauris augue neque. Arcu cursus euismod quis viverra nibh cras pulvinar. Rhoncus mattis rhoncus urna neque. Vitae tempus quam pellentesque nec nam aliquam sem et tortor. Morbi enim nunc faucibus a. Sagittis id consectetur purus ut faucibus pulvinar elementum integer. Non blandit massa enim nec dui nunc mattis. Volutpat maecenas volutpat blandit aliquam etiam. Erat velit scelerisque in dictum non consectetur a. Rhoncus mattis rhoncus urna neque. Aenean pharetra magna ac placerat vestibulum. Integer enim neque volutpat ac tincidunt vitae semper. Amet porttitor eget dolor morbi non arcu. Elementum facilisis leo vel fringilla est ullamcorper eget nulla facilisi. Consectetur adipiscing elit duis tristique sollicitudin nibh sit. Cursus turpis massa tincidunt dui ut ornare.</p>
