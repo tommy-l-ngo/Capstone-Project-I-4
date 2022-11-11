@@ -44,3 +44,27 @@
     color: rgb(255, 57, 90);
     font-weight: bold;
 }
+
+/* .notifs-btn {
+    width: 450px;
+    padding: 5px;
+    border-radius: 1rem;
+    background-color: white;
+    border: white;
+} */
+
+.notifs-btn {
+    width: 450px;
+    padding: 8px 10px 8px 10px;
+    border-radius: 10px;
+    background-color: white;
+    border: white;
+    transition: all 0.05s linear;
+}
+
+.notifs-btn:hover {
+    transform: scale(1.03);
+    box-shadow: 0 6px 20px rgba(36, 77, 155, 0.17);
+    -webkit-filter: drop-shadow(0 6px 20px rgba(56, 125, 255, 0.017));
+    filter: drop-shadow(0 6px 20px rgba(56, 125, 255, 0.017));
+}
