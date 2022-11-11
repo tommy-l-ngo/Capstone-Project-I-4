@@ -74,7 +74,7 @@ export function EditProject(props)
     }, []);
       
 
-    function edit_project(project_name, project_description, project_tasks, project_date, project_students, project_paragraph)
+    function edit_project(project_name, project_description, project_tasks, project_date, project_students)
     {
         // get current user details from auth
         const user = getAuth().currentUser;
@@ -96,8 +96,7 @@ export function EditProject(props)
           description: project_description,
           tasks: project_tasks,
           date: project_date,
-          students: project_students,
-          paragraph: project_paragraph
+          students: project_students
         })
         .then(() => {
           window.location = "/" //navigate back to homepage after adding new project 
@@ -172,8 +171,7 @@ export function EditProject(props)
           projInfo.tasks,
           //JSON.stringify(projInfo.date),
           projInfo.date.toDateString(),
-          projInfo.students,
-          projInfo.paragraph
+          projInfo.students
         );
 
       handleEditNotifs();

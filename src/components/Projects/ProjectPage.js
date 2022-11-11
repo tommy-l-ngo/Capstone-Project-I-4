@@ -35,31 +35,44 @@ function ProjectPage() {
   const fullDataPath = location.pathname;
   const dataPath = fullDataPath.replace("/Projects/", '');
 
-  let updatedValue = project.paragraph;
+  const [updatedValue, setUpdatedValue] = useState(project.paragraph);
+  //setUpdatedValue(project.paragraph);
   const { key } = location.state;
   
-  const handleSubmit = (event) => {
+  function handleSubmit(event) {
     event.preventDefault();
-    console.log(updatedValue.paragraph);
+    console.log(updatedValue);
     //console.log(project.students);
     const db = getDatabase();
-        let dbRef = ref(db, "projects/" + key);
-        set(dbRef, {
-          name: project.name,
-          user_id: project.user_id,
-          description: project.description,
-          tasks: project.tasks,
-          date: project.date,
-          //
-          paragraph: updatedValue.paragraph,
-          students: project.students
-        })
-  };
+    let dbRef = ref(db, "projects/" + key);
+    set(dbRef, {
+      name: project.name,
+      user_id: project.user_id,
+      description: project.description,
+      tasks: project.tasks,
+      date: project.date,
+      //
+      paragraph: updatedValue
+      //students: project.students
+    })
+    .then(() => {
+      window.location.reload(false);
+      debugger
+      //window.location = "projects/" + key //navigate back to homepage after adding new project
+      //console.log("navigating");
+    })
+    .catch((err) => {
+      alert("Edit unsuccessful, set failed: " + err.message);
+    })
+    console.log("success");
+    alert("success");
+  }
   
-  function handleChange(event, updatedValue) {
+  function handleChange(event) {
     // console.log(updatedValue);
-    updatedValue = { [event.target.name]: event.target.value };
-    console.log(updatedValue.paragraph);
+    let Value = { [event.target.name]: event.target.value };
+    console.log(Value.paragraph);
+    setUpdatedValue(Value.paragraph);
   }
   
   
@@ -168,7 +181,7 @@ so the auth listener is set only once. Without useEffect() here, an infinite loo
                       <h1>{project.name}</h1>
                       <h3>{project.description}</h3>
                       <hr />
-                      <form onSubmit={handleSubmit}>
+                      <form >
                         <textarea
                           className="project-paragraph-textarea"
                           id="paragraph"
