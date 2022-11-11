@@ -436,21 +436,21 @@
   border-radius: 1rem;
   background-color: white;
 
-  box-shadow: 0 6px 20px rgba(36, 77, 155, 0.17);
-  -webkit-filter: drop-shadow(0 6px 20px rgba(56, 125, 255, 0.017));
-  filter: drop-shadow(0 6px 20px rgba(56, 125, 255, 0.017));
-
   width: 530px;
-  height: 500px;
+  max-height: 500px;
     
 }
 
 .displayNotifs {
-  /* position:absolute; */
+  position:absolute;
   color: black;
-  top: 58px;
+  top: 20px;
   width: 530px;
-  height: 500px;
+  max-height: 500px;
+
+  box-shadow: 0 6px 20px rgba(36, 77, 155, 0.17);
+  -webkit-filter: drop-shadow(0 6px 20px rgba(56, 125, 255, 0.017));
+  filter: drop-shadow(0 6px 20px rgba(56, 125, 255, 0.017));
   
   overflow: auto;
 }
