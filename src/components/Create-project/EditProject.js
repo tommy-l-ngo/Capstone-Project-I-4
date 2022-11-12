@@ -156,7 +156,7 @@ export function EditProject(props)
   }
 
     function handleSubmit(event) {
-      const { name, description, tasks, date, students } = projInfo;
+      const { name, description, tasks, date, students} = projInfo;
       event.preventDefault();
       //alert(JSON.stringify(projInfo.tasks));
       alert(`
