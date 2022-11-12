@@ -36,12 +36,18 @@ function ProjectPage() {
   const dataPath = fullDataPath.replace("/Projects/", '');
 
   const [updatedValue, setUpdatedValue] = useState(project.paragraph);
-  //setUpdatedValue(project.paragraph);
+
   const { key } = location.state;
   
   function handleSubmit(event) {
     event.preventDefault();
-    console.log(updatedValue);
+    //debugger
+    //console.log(updatedValue);
+    //console.log(project.paragraph);
+    if (updatedValue == undefined) {
+      setUpdatedValue(project.paragraph);
+    }
+    //console.log(updatedValue);
     //console.log(project.students);
     const db = getDatabase();
     let dbRef = ref(db, "projects/" + key);
@@ -66,6 +72,7 @@ function ProjectPage() {
     })
     console.log("success");
     alert("success");
+    document.getElementById("paragraph-edit").style.display = "block";
   }
   
   function handleChange(event) {
@@ -75,7 +82,11 @@ function ProjectPage() {
     setUpdatedValue(Value.paragraph);
   }
   
-  
+  function showEditParagraph() {
+    document.getElementById("paragraph-textarea").style.display = "inline";
+    document.getElementById("paragraph-button").style.display = "inline";
+    document.getElementById("paragraph-edit").style.display = "none";
+  }
   
 /*
 Everything is encapsualted in useEffect so that the onAuthStateChanged
@@ -180,17 +191,26 @@ so the auth listener is set only once. Without useEffect() here, an infinite loo
                     <>
                       <h1>{project.name}</h1>
                       <h3>{project.description}</h3>
-                      <hr />
+            <hr />
+            <button
+              className="project-paragraph-edit"
+              id="paragraph-edit"
+              onClick={showEditParagraph}
+            >
+              Edit paragraph
+            </button>
                       <form >
                         <textarea
                           className="project-paragraph-textarea"
-                          id="paragraph"
+                          id="paragraph-textarea"
                           name="paragraph"
                           defaultValue={project.paragraph}
                           onChange={handleChange}
-                        />
+              />
+              <br/>
                         <button
-                          className="project-paragraph-button"
+                className="project-paragraph-button"
+                id="paragraph-button"
                           onClick={handleSubmit}
                         >
                           Submit

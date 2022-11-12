@@ -59,8 +59,9 @@
 }
 
 .project-paragraph-textarea {
+    display: none;
     width: 70%;
-    height: 80px;
+    height: 200px;
     margin-bottom: 8px;
     margin-top: 8px;
     border: 1px solid rgb(107, 114, 12);
@@ -69,6 +70,7 @@
 }
 
 .project-paragraph-button {
+    display: none;
     font-size: 16px;
     padding: 8px 44px;
     margin-bottom: 8px;
@@ -79,6 +81,21 @@
 }
   
 .project-paragraph-button:hover {
+    cursor: pointer;
+    background: rgb(72, 129, 252);
+}
+
+.project-paragraph-edit {
+    font-size: 16px;
+    padding: 8px 44px;
+    margin-bottom: 8px;
+    margin-top: 8px;
+    background: rgb(89, 152, 255);
+    border-radius: 8px;
+    color: white;
+}
+
+.project-paragraph-edit:hover {
     cursor: pointer;
     background: rgb(72, 129, 252);
 }
