@@ -138,6 +138,8 @@ export function EditProject(props)
       name: `edited project:  ${projInfo.name}`,
       user_id: user.displayName,
       date: new Date().toLocaleString(),
+      notify: projInfo.students,
+      //src: `${projInfo.name}`,
     })
   }
 
@@ -149,6 +151,7 @@ export function EditProject(props)
       name: `deleted project:  ${projInfo.name}`,
       user_id: user.displayName,
       date: new Date().toLocaleString(),
+      notify: projInfo.students,
     })
   }
 
