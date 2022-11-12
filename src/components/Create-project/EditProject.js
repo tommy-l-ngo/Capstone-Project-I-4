@@ -151,6 +151,7 @@ export function EditProject(props)
       name: `deleted project:  ${projInfo.name}`,
       user_id: user.displayName,
       date: new Date().toLocaleString(),
+      notify: projInfo.students,
     })
   }
 
