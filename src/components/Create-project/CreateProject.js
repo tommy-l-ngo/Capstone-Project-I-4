@@ -107,6 +107,7 @@ export function CreateProject(props)
         name: `created a new project:  ${projInfo.name}`,
         user_id: user.displayName,
         date: new Date().toLocaleString(),
+        notify: projInfo.students,
         //src: `${projInfo.name}`,
       })
     }

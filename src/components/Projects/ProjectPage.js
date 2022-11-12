@@ -24,11 +24,11 @@ function ProjectPage() {
   const [project, setProject] = useState({});
   const [currUserID, setCurrUserID] = useState("");
   //Gets Project Id
-  const { id } = useParams();
-  //console.log(id);
+  // const { id } = useParams();
+  // //console.log(id);
   
-  //Gets data based on project Id
-  const getData = data.cardData[id - 1];
+  // //Gets data based on project Id
+  // const getData = data.cardData[id - 1];
   
   //console.warn(getData);
 
@@ -81,41 +81,41 @@ so the auth listener is set only once. Without useEffect() here, an infinite loo
   //unsubcribe();
   });
   
-    if ((dataPath === "1" || dataPath === "2" || dataPath === "3"))
-      return(
-      <div className="projects_page">
-        <Navbar />
-        <div className='rightsection'>
-        <div className = "task_btn">
-                <Button
-                    page="Tasks"
-                    className="btns"
-                    buttonStyle="btn--primary"
-                    buttonSize="btn--medium"
-        >   
-                    Tasks
-                </Button>
-        </div>
-        <div className='project_comments'>
-            {currUserID === undefined ? 
-            (<Comments currentUserId={0} />) : 
-            (<Comments currentUserId={currUserID}  />)
-            }
-        </div>
-        </div>
-        <div className="project_details">
+    // if ((dataPath === "1" || dataPath === "2" || dataPath === "3"))
+    //   return(
+    //   <div className="projects_page">
+    //     <Navbar />
+    //     <div className='rightsection'>
+    //     <div className = "task_btn">
+    //             <Button
+    //                 page="Tasks"
+    //                 className="btns"
+    //                 buttonStyle="btn--primary"
+    //                 buttonSize="btn--medium"
+    //     >   
+    //                 Tasks
+    //             </Button>
+    //     </div>
+    //     <div className='project_comments'>
+    //         {currUserID === undefined ? 
+    //         (<Comments currentUserId={0} />) : 
+    //         (<Comments currentUserId={currUserID}  />)
+    //         }
+    //     </div>
+    //     </div>
+    //     <div className="project_details">
           
-            <h1>{getData.text}</h1>
-            <h3>{getData.desc}</h3>
-            <hr/>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo. Cursus in hac habitasse platea dictumst quisque. Sed libero enim sed faucibus turpis in eu mi. Fusce id velit ut tortor pretium. Lacus sed viverra tellus in. Ipsum consequat nisl vel pretium lectus quam id leo. Urna id volutpat lacus laoreet non curabitur. Suscipit adipiscing bibendum est ultricies integer quis auctor elit sed. Purus non enim praesent elementum facilisis leo vel. Eu non diam phasellus vestibulum lorem sed risus ultricies. Turpis massa sed elementum tempus. In tellus integer feugiat scelerisque. Quis vel eros donec ac odio tempor orci. Cursus mattis molestie a iaculis at erat. Sagittis nisl rhoncus mattis rhoncus urna neque viverra justo. Id donec ultrices tincidunt arcu non sodales neque.</p>
-            <p>Orci ac auctor augue mauris augue neque. Arcu cursus euismod quis viverra nibh cras pulvinar. Rhoncus mattis rhoncus urna neque. Vitae tempus quam pellentesque nec nam aliquam sem et tortor. Morbi enim nunc faucibus a. Sagittis id consectetur purus ut faucibus pulvinar elementum integer. Non blandit massa enim nec dui nunc mattis. Volutpat maecenas volutpat blandit aliquam etiam. Erat velit scelerisque in dictum non consectetur a. Rhoncus mattis rhoncus urna neque. Aenean pharetra magna ac placerat vestibulum. Integer enim neque volutpat ac tincidunt vitae semper. Amet porttitor eget dolor morbi non arcu. Elementum facilisis leo vel fringilla est ullamcorper eget nulla facilisi. Consectetur adipiscing elit duis tristique sollicitudin nibh sit. Cursus turpis massa tincidunt dui ut ornare.</p>
+    //         <h1>{getData.text}</h1>
+    //         <h3>{getData.desc}</h3>
+    //         <hr/>
+    //         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo. Cursus in hac habitasse platea dictumst quisque. Sed libero enim sed faucibus turpis in eu mi. Fusce id velit ut tortor pretium. Lacus sed viverra tellus in. Ipsum consequat nisl vel pretium lectus quam id leo. Urna id volutpat lacus laoreet non curabitur. Suscipit adipiscing bibendum est ultricies integer quis auctor elit sed. Purus non enim praesent elementum facilisis leo vel. Eu non diam phasellus vestibulum lorem sed risus ultricies. Turpis massa sed elementum tempus. In tellus integer feugiat scelerisque. Quis vel eros donec ac odio tempor orci. Cursus mattis molestie a iaculis at erat. Sagittis nisl rhoncus mattis rhoncus urna neque viverra justo. Id donec ultrices tincidunt arcu non sodales neque.</p>
+    //         <p>Orci ac auctor augue mauris augue neque. Arcu cursus euismod quis viverra nibh cras pulvinar. Rhoncus mattis rhoncus urna neque. Vitae tempus quam pellentesque nec nam aliquam sem et tortor. Morbi enim nunc faucibus a. Sagittis id consectetur purus ut faucibus pulvinar elementum integer. Non blandit massa enim nec dui nunc mattis. Volutpat maecenas volutpat blandit aliquam etiam. Erat velit scelerisque in dictum non consectetur a. Rhoncus mattis rhoncus urna neque. Aenean pharetra magna ac placerat vestibulum. Integer enim neque volutpat ac tincidunt vitae semper. Amet porttitor eget dolor morbi non arcu. Elementum facilisis leo vel fringilla est ullamcorper eget nulla facilisi. Consectetur adipiscing elit duis tristique sollicitudin nibh sit. Cursus turpis massa tincidunt dui ut ornare.</p>
             
-        </div>
-    </div>
-    );
+    //     </div>
+    // </div>
+    // );
 
-    if(!(dataPath === "1" || dataPath === "2" || dataPath === "3") && !(project === null))
+    //if(!(project === null))
     return (
         <div className='projects_page'>
             <Navbar />
@@ -142,7 +142,8 @@ so the auth listener is set only once. Without useEffect() here, an infinite loo
             </div>
             </div>
             <div className='project_details'>
-                    <>
+          {project !== null ? (
+              <>
                       <h1>{project.text}</h1>
                       <h3>{project.desc}</h3>
                       <hr/>
@@ -150,6 +151,17 @@ so the auth listener is set only once. Without useEffect() here, an infinite loo
                       <p>Orci ac auctor augue mauris augue neque. Arcu cursus euismod quis viverra nibh cras pulvinar. Rhoncus mattis rhoncus urna neque. Vitae tempus quam pellentesque nec nam aliquam sem et tortor. Morbi enim nunc faucibus a. Sagittis id consectetur purus ut faucibus pulvinar elementum integer. Non blandit massa enim nec dui nunc mattis. Volutpat maecenas volutpat blandit aliquam etiam. Erat velit scelerisque in dictum non consectetur a. Rhoncus mattis rhoncus urna neque. Aenean pharetra magna ac placerat vestibulum. Integer enim neque volutpat ac tincidunt vitae semper. Amet porttitor eget dolor morbi non arcu. Elementum facilisis leo vel fringilla est ullamcorper eget nulla facilisi. Consectetur adipiscing elit duis tristique sollicitudin nibh sit. Cursus turpis massa tincidunt dui ut ornare.</p>
                       <Attachments />
                     </>
+          ) : (
+              <h1>Loading Data.</h1>
+              )}
+                    {/* // <>
+                    //   <h1>{project.text}</h1>
+                    //   <h3>{project.desc}</h3>
+                    //   <hr/>
+                    //   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo. Cursus in hac habitasse platea dictumst quisque. Sed libero enim sed faucibus turpis in eu mi. Fusce id velit ut tortor pretium. Lacus sed viverra tellus in. Ipsum consequat nisl vel pretium lectus quam id leo. Urna id volutpat lacus laoreet non curabitur. Suscipit adipiscing bibendum est ultricies integer quis auctor elit sed. Purus non enim praesent elementum facilisis leo vel. Eu non diam phasellus vestibulum lorem sed risus ultricies. Turpis massa sed elementum tempus. In tellus integer feugiat scelerisque. Quis vel eros donec ac odio tempor orci. Cursus mattis molestie a iaculis at erat. Sagittis nisl rhoncus mattis rhoncus urna neque viverra justo. Id donec ultrices tincidunt arcu non sodales neque.</p>
+                    //   <p>Orci ac auctor augue mauris augue neque. Arcu cursus euismod quis viverra nibh cras pulvinar. Rhoncus mattis rhoncus urna neque. Vitae tempus quam pellentesque nec nam aliquam sem et tortor. Morbi enim nunc faucibus a. Sagittis id consectetur purus ut faucibus pulvinar elementum integer. Non blandit massa enim nec dui nunc mattis. Volutpat maecenas volutpat blandit aliquam etiam. Erat velit scelerisque in dictum non consectetur a. Rhoncus mattis rhoncus urna neque. Aenean pharetra magna ac placerat vestibulum. Integer enim neque volutpat ac tincidunt vitae semper. Amet porttitor eget dolor morbi non arcu. Elementum facilisis leo vel fringilla est ullamcorper eget nulla facilisi. Consectetur adipiscing elit duis tristique sollicitudin nibh sit. Cursus turpis massa tincidunt dui ut ornare.</p>
+                    //   <Attachments />
+                    // </> */}
             </div>
         </div>
   );

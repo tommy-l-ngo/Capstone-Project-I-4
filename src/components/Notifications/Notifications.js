@@ -24,7 +24,7 @@ const Notifications = (props) => {
     */
     useEffect(() => {
         var unsubcribe = getAuth().onAuthStateChanged(function (user) {
-            console.log("loop starts here");
+            //console.log("loop starts here");
             if (user) {
                 setLoggedIn(true);
                 currUserID = user.displayName;
@@ -45,6 +45,7 @@ const Notifications = (props) => {
                             notifsMatch = snapShot.forEach((subSnap) => {
                                 //console.log(currUserID);
                                 //console.log(subSnap.val().user_id);
+                                
                                 if (subSnap.val().user_id === currUserID) {
                                     //console.log("notif key: " + subSnap.key);
                                     let notif = {
@@ -56,6 +57,21 @@ const Notifications = (props) => {
                                     };
                                     setNotifs((notifs) => [...notifs, notif]); //adding found project to array of user's projects
                                 }
+
+                                subSnap.child("notify").forEach((subSubSnap) => {
+                                    //console.log("subSubSnap " + subSubSnap.val())
+                                    if (subSubSnap.val() === currUserID) {
+                                        let notif = {
+                                            key: subSnap.key,
+                                            message: subSnap.val().name,
+                                            user: subSnap.val().user_id,
+                                            date: subSnap.val().date,
+                                            //src: subSnap.val().src,
+                                        };
+                                        setNotifs((notifs) => [...notifs, notif]); //adding found project to array of user's projects
+                                    }
+                                });
+                                
                             });
                         }
                     })
