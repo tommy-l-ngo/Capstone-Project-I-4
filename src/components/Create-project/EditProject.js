@@ -362,6 +362,18 @@ export function EditProject(props)
                               </label>
                           </div>
                           </Form.Group>
+
+                          <div className="form-inline">
+                            
+                            <form id="fileSubmit" onSubmit={handleSubmit}>
+                              <h4>Upload a File</h4>
+                                <div className='fileSelector'>
+                                  <input type="file" onChange={handleChange}/>
+                                  {/*<button className='uploadBtn' type="submit">Upload</button>*/}
+                                </div>
+                                
+                            </form>
+                          </div>
         
                           <Button type="submit">Save Changes</Button>
                         </Form>
