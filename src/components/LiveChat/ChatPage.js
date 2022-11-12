@@ -20,33 +20,16 @@ const user = getAuth().currentUser;
 
 export function ChatPage() {
 
-
-    useEffect(() => {
-        //getting the project by key
-        var unsubcribe = getAuth().onAuthStateChanged(function(user) {
-            if (user) {
-                get(child(dbRef, "users/"))
-                    .then((snapShot) => {
-                        snapShot.forEach((user, index) => {
-                        
-                    })
-                })
-          }
-
-      })
-    
-      //unsubcribe();
-
-    }, []);
+    const [chatPerson, setChatPerson] = useState({});
 
   
     return (
         <>
             <Navbar />
-
+            
             <div id="#container">
-                <ChatSide/>
-                <ChatMain/>
+                <ChatSide defaultChat={setChatPerson} chatInfo={setChatPerson}/>
+                <ChatMain chatPerson={chatPerson}/>
             </div>    
             </>
       );

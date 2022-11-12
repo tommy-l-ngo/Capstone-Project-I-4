@@ -46,6 +46,28 @@
 .chatAside input::placeholder{
 	color:#fff;
 }
+
+.chatAside .tabs{
+	width: 100%;
+}
+
+.chatAside .tabs .tab{
+	width:50%;
+	background-color:#3b3e49;
+	color: white;
+	position: relative;
+}
+
+.chatAside .tabs .clicked{
+	width:50%;
+	background-color:#5e616a;
+	color: white;
+	position: relative;
+	top: 2px;
+	padding-top: 6px;
+	border-bottom: 0px;
+}
+
 .chatAside ul{
 	padding-left:0;
 	margin:0;
@@ -58,6 +80,10 @@
 }
 .chatAside li:hover{
 	background-color:#5e616a;
+}
+.chatAside li.clicked{
+	background-color:#5e616a;
+    /*border: ;*/
 }
 h2,h3{
 	margin:0;
@@ -106,7 +132,7 @@ h2,h3{
 }
 .blue{
 	background-color:#6fbced;
-	margin-right:0;
+	margin-right: 3px;
 	margin-left:7px;
 }
 
@@ -209,7 +235,7 @@ h2,h3{
 	height:30px;
 	cursor:pointer;
 }
-.chatMain footer a{
+.chatMain footer button{
 	text-decoration:none;
 	text-transform:uppercase;
 	font-weight:bold;
