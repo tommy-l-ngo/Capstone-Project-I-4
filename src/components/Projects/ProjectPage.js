@@ -121,7 +121,7 @@ so the auth listener is set only once. Without useEffect() here, an infinite loo
           }
         })
       }
-
+    })
   })
     
   //unsubcribe();
