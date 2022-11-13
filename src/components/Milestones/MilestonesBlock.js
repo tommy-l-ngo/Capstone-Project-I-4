@@ -270,7 +270,7 @@ function MilestonesBlock({ isVisible, project_id }) {
             Submit
             </button>                 */}
 
-                {milestones.map((item) => {
+                {/* {milestones.map((item) => {
                     // alert(item.key)
                     // alert(item.name);
                     return (
@@ -286,9 +286,9 @@ function MilestonesBlock({ isVisible, project_id }) {
                         />
                     )
                 })
-                }
+                } */}
 
-                {/* {milestones ? (
+                {milestones.length ? (
 
 
                     // <h4>Some milestone</h4>
@@ -311,7 +311,7 @@ function MilestonesBlock({ isVisible, project_id }) {
 
                 ) : (
                     <><h4>No milestones available.</h4></>
-                )} */}
+                )}
 
 
 
