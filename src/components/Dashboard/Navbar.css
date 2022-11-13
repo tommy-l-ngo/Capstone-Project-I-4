@@ -419,3 +419,63 @@
   font-size: 1.8rem;
   cursor: pointer;
 }
+
+.notification_bell {
+  padding-left: 15px;
+}
+
+.notification_bell > button {
+  background-color: rgb(26, 23, 23);
+  color: white;
+  border: 0px;
+}
+
+.notifs-box {
+  position: absolute;
+  transform: translateX(-90%) translateY(4%);
+  border-radius: 1rem;
+  background-color: white;
+
+  width: 530px;
+  max-height: 500px;
+    
+}
+
+.displayNotifs {
+  position:absolute;
+  color: black;
+  top: 20px;
+  width: 530px;
+  max-height: 500px;
+
+  box-shadow: 0 6px 20px rgba(36, 77, 155, 0.17);
+  -webkit-filter: drop-shadow(0 6px 20px rgba(56, 125, 255, 0.017));
+  filter: drop-shadow(0 6px 20px rgba(56, 125, 255, 0.017));
+  
+  overflow: auto;
+}
+
+/* Designing for scroll-bar */
+::-webkit-scrollbar {
+  /* width: 15px;
+  transform: translateX(40%); */
+  width: 10px;
+    background: transparent;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: gainsboro;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgb(131, 131, 131);
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(184, 184, 184);
+}

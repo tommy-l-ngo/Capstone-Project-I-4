@@ -32,7 +32,7 @@ function Cards() {
   */
   useEffect(() => {
     var unsubcribe = getAuth().onAuthStateChanged(function(user) {
-      console.log("loop starts here");
+      //console.log("loop starts here");
       if (user) {
         setLoggedIn(true);
         currUserID = user.displayName;
@@ -63,7 +63,7 @@ function Cards() {
     
       // Grabs projects from database
 
-      console.log('hi')
+      //console.log('hi')
         if (user) {
           get(child(dbRef, "projects"))
           .then((snapShot) => {
@@ -88,6 +88,23 @@ function Cards() {
                   //console.log(subSnap.val().name == subSnap.key)
                   setProjects((projects) => [...projects, project]); //adding found project to array of user's projects
                 }
+
+                subSnap.child("students").forEach((subSubSnap) => {
+                  //console.log("subSubSnap " + subSubSnap.val())
+                  if (subSubSnap.val() === currUserID) {
+                    let project = {
+                      key: subSnap.key,
+                      text: subSnap.val().name,
+                      desc: subSnap.val().description,
+                      label: subSnap.val().date,
+                      src: "images/img-1.png",
+                      //path: `/Projects/${subSnap.val().project_id}`  
+                    };
+                    //console.log("key: " + subSnap.key)
+                    //console.log(subSnap.val().name == subSnap.key)
+                    setProjects((projects) => [...projects, project]); //adding found project to array of user's projects
+                  };
+              });
               //const ID = curr.ref._path.pieces_[1];
               //let currUID = snapShot.child(ID).child("uid").val();
               //if (currUID === user.uid) {
