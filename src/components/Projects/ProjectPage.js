@@ -25,6 +25,7 @@ function ProjectPage() {
   const [project, setProject] = useState({});
   const [currUserID, setCurrUserID] = useState("");
   const [projectKey, setProjectKey] = useState("");
+  const [pKey2, setPKey2] = useState("");
   
   
   //Gets Project Id
@@ -52,20 +53,32 @@ so the auth listener is set only once. Without useEffect() here, an infinite loo
   function addMilestone (){
 
   }
+  var project_key2 = "";
+  var first = true;
+
   useEffect(() => {
-  var key;
+    var key;
+    project_key2 = location.state.key;
 
     if (location.state != null)
     {
       key = location.state.key;
+      if (first) {
+        // setPKey2(key);
+      // project_key2 = key;
+
+        first = false;
+      }
+      // alert(project_key2);
       sessionStorage.setItem("key", key);
+      sessionStorage.setItem("pKey", key);
     }
     else
     {
       key = sessionStorage.getItem("key");
     }
     // alert(key);
-
+    project_key2 = key;
     //getting the project by key
     var unsubcribe = getAuth().onAuthStateChanged(function(user) {
       if (user) {
@@ -74,7 +87,7 @@ so the auth listener is set only once. Without useEffect() here, an infinite loo
         .then((snapShot) => {
           if (snapShot.exists()) {
             let project = {
-              // key: snapShot.key,
+              p_key: snapShot.key,
               text: snapShot.val().name,
               desc: snapShot.val().description,
               label: snapShot.val().date,
@@ -83,6 +96,7 @@ so the auth listener is set only once. Without useEffect() here, an infinite loo
               //path: `/Projects/${subSnap.val().project_id}`  
             };
             setProject(project); 
+            setProjectKey(project.p_key);
           }
         })
       }
@@ -92,7 +106,7 @@ so the auth listener is set only once. Without useEffect() here, an infinite loo
   })
 
   //unsubcribe();
-  });
+  }, []);
   
     if ((dataPath === "1" || dataPath === "2" || dataPath === "3"))
       return(
@@ -192,9 +206,12 @@ so the auth listener is set only once. Without useEffect() here, an infinite loo
               {/* <button className='bt milestoneBtn' onClick={addMilestone}>
                 Add milestone
               </button> */}
+              {pKey2}
               <MilestonesBlock
                 isVisible={true}
                 project_id={sessionStorage.getItem("key")}
+                // project_id={project.p_key}
+                // project_id={project_key2}
               />
 
                       </div>            
