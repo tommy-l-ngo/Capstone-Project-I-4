@@ -29,6 +29,7 @@ import ProjectPage from "../Projects/ProjectPage";
 import { Todolist } from "../Todo/Todo-list";
 import { AdminPage } from "../Admin/Admin";
 import { ChatPage } from "../LiveChat/ChatPage";
+import { MilestonesPage } from "../Milestones/Milestones";
 
 /* ------- Login Component -------- */
 class App extends React.Component {
@@ -123,7 +124,15 @@ class App extends React.Component {
                   path="/Chat"
                   element={
                     <ProtectedRoute>
-                      <ChatPage/>
+                      <ChatPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/Milestones"
+                  element={
+                    <ProtectedRoute>
+                      <MilestonesPage />
                     </ProtectedRoute>
                   }
                 />
