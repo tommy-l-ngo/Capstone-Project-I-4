@@ -26,6 +26,8 @@ export default function ({ isOpen, onClose }) {
     const [userRole, setUserRole] = useState(" ");
     const [userDepartment, setUserDepartment] = useState(" ");
     const [error, setError] = useState(null);
+    const [userUID, setUserUID] = useState(" ");
+    //var userUID = "temp";
     const navigate = useNavigate();
 
     function cancelSubmit() {
@@ -70,12 +72,25 @@ export default function ({ isOpen, onClose }) {
                   // Signed in 
                     const user2 = userCredential2.user;
                     console.log("create:", user2);
+                    
+                    //console.log("new uid:,", user2.uid);
+                    set(ref(db, "users/" + userEUID), {
+                        department: userDepartment,
+                        eUID: userEUID,
+                        email: userEmail,
+                        firstName: userFirstName,
+                        lastName: userLastName,
+                        password: userPassword,
+                        role: userRole,
+                        uid: user2.uid,
+                    });
 
                     // set display name for user (euid)
                     updateProfile(auth2.currentUser, {
                     "displayName": userEUID
                     }).then(() => {
                         console.log("Profile Updated, displayName:" + user.displayName);
+                        
                         
                         // sign out of auth
                         signOut(auth2).then(() => {
@@ -96,16 +111,6 @@ export default function ({ isOpen, onClose }) {
                     const errorMessage = error.message;
                     console.log("create:", errorMessage);
                   
-                });
-            
-                set(ref(db, "users/" + userEUID), {
-                    department: userDepartment,
-                    eUID: userEUID,
-                    email: userEmail,
-                    firstName: userFirstName,
-                    lastName: userLastName,
-                    password: userPassword,
-                    role: userRole,
                 });
             
                 onClose();
