@@ -1,0 +1,226 @@
+.complete{
+    text-decoration: line-through red;
+    opacity: 0.6;
+}
+body {
+    background: white;
+  }
+
+  .todo-list{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    width: 520px;
+    min-height: 600px;
+    text-align: center;
+    margin: 128px auto;
+    border-radius: 10px;
+    padding-bottom: 32px;
+  }
+  .todo-form {
+    margin-bottom: 32px;
+  }
+  .todo-input {
+    padding: 14px 32px 10px 16px;
+    border-radius: 10px 0px 0px 10px;
+    border: 2px solid #040404;
+    outline: none;
+    width: 500px;
+    background: transparent;
+    color: rgb(5, 5, 5);
+  }
+  .todo-button {
+    position: absolute;
+    padding: 26px;
+    border: none;
+    border-radius: 0 10px 10px 0;
+    cursor: pointer;
+    outline: none;
+    background: black;
+    color: #fff;
+    text-transform: capitalize;
+  }
+  .todo-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 4px auto;
+    color: #fff;
+    background: black;
+    padding: 15px;
+    border-radius: 5px;
+    min-width: 96%;
+    text-transform: capitalize;
+  }
+  .icons {
+    display: flex;
+    align-items: center;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  .delete-icon {
+    margin-right: 5px;
+    color: rgb(238, 10, 10);
+  }
+  .edit-icon {
+    color: rgb(38, 255, 0);
+  }
+
+  .milestoneTitle {
+
+    margin: auto;
+    position: absolute;
+    top: 8%;
+    width: 100%;
+    background-color: red;
+    text-align: center;
+    font-size: 24px;
+  }
+
+  #milestoneContainer {
+    display: flex;
+    /* background-color: red; */
+    align-items: center;
+    /* width: 50%; */
+    margin: auto;
+    /* background-color: red; */
+  }
+
+  .label3 {
+    margin-right: 20px;
+    margin-bottom: 10px;
+
+    display: inline-block;
+    width: 100px;
+    text-align: left;
+  }
+
+  .m_Item {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    background-color: rgba(234, 19, 19, 0.75);
+    margin: 50px;
+    border-radius: 10px;
+    border: solid 3px;
+    border-color: black;
+  }
+  .done {
+    background-color: rgba(0, 131, 11, 0.75);
+  }
+
+
+  .xBtn {
+    position:relative;
+    top: -120px;
+    left: 100px;
+    width:32px;
+    color:grey;
+    height:32px;
+    text-align:center;
+    cursor: pointer;
+    /* border-radius: 100px; */
+    /* background:red; */
+    transition: transform .25s;
+    /* background:red; */
+    z-index: 10;
+  }
+  .xBtn:hover{
+    transform: scale(1.2);
+    /* box-shadow: 0px 0px, ; */
+    /* background:black; */
+    /* color:rgb(65, 65, 65); */
+    /* text-shadow: 0px 0px 100px rgba(0, 0, 0, 0.5); */
+  }
+  .xBtn:hover .xButton{
+    color:rgb(112, 112, 112);
+    
+    /* box-shadow: 0px 0px 0 px rgb(112, 112, 112); */
+  }
+  .xBtn .xButton {
+    color:grey;
+  }
+  
+  .xBtn:active .xButton {
+    color:rgb(112, 112, 112);
+  }
+  
+.xButton {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  font-size: 32px;
+  transition: all 0.11s;
+
+  /* transition: font-size .5s; */
+  /* transition: font-size .5s, text-shadow .05s ease-out; */
+  text-align: center;
+}
+.xBtn2 {
+  position:relative;
+  top: 10px;
+  left: 10px;
+  width: 32px;
+  color:grey;
+  height: 32px;
+  text-align:center;
+  cursor: pointer;
+  /* border-radius: 100px; */
+  /* background:red; */
+  transition: all 1.25s;
+  /* background:red; */
+  z-index: 10;
+}
+.xBtn2:hover{
+  /* transform: scale(1.2); */
+  /* box-shadow: 0px 0px, ; */
+  /* background:black; */
+  /* color:rgb(65, 65, 65); */
+  /* text-shadow: 0px 0px 100px rgba(0, 0, 0, 0.5); */
+}
+.xBtn2:hover .xButton{
+  color:rgb(148, 148, 148);
+  
+  /* box-shadow: 0px 0px 0 px rgb(112, 112, 112); */
+}
+.xBtn2 .xButton {
+  color:rgb(168, 168, 168);
+}
+
+.xBtn2:active .xButton {
+  color:rgb(112, 112, 112);
+}
+
+.btnToggle {
+  width: 160px;
+  padding: 15px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 7px;
+  /* position: relative;
+  top: 100px; */
+}
+
+.center {
+  position: absolute;
+  margin: 0;
+
+   bottom:0px;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.milestoneBtn {
+  margin-top: 20px;
+  border-radius: 3px;
+  position: relative;
+  top: -20px;
+}
+
+.labels {
+  position: relative;
+  top: -10px;
+}

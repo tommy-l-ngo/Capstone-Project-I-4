@@ -10,6 +10,7 @@
   color:grey;
   height:32px;
   text-align:center;
+  cursor: pointer;
   /* border-radius: 100px; */
   /* background:red; */
   transition: transform .25s;
@@ -33,8 +34,8 @@
 
 .xBtn:active .xButton {
   color:rgb(112, 112, 112);
-
 }
+
 .xButton {
   /* position: absolute; */
   /* left: 10px; */

@@ -58,6 +58,22 @@
     padding-left: 40px;
 }
 
+.project_milestones {
+    /* display: flex; */
+    /* align-items: center; */
+    position: relative;
+    top: 100px;
+}
+
+.milestoneBtn {
+
+    padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
 .project-paragraph-textarea {
     display: none;
     width: 70%;
