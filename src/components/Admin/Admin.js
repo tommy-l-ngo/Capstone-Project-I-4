@@ -52,7 +52,7 @@ export function AdminPage() {
     // get user data from db
     function getUserData()
     {
-        checkValidAdmin();
+        //checkValidAdmin();
         get(ref(db, "users/")).then((snapshot) => {
             if (snapshot.exists()) {
                 //loop through users in db
