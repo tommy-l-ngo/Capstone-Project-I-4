@@ -36,7 +36,7 @@ export default function ({ isOpen, onClose }) {
 
     function resetAdmin() { // sign back into admin user
         const auth = getAuth();
-        signInWithEmailAndPassword(auth, "admin1@gmail.com", "Admin123!")
+        signInWithEmailAndPassword(auth, "admin@gmail.com", "Admin123!")
         .then((userCredential) => {
             // Signed in 
             const user = userCredential.user;
