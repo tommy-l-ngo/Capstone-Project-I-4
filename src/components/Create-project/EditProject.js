@@ -128,11 +128,55 @@ export function EditProject(props)
         });
         */
  
+  }
+  
+  function handleEditNotifs(event) {
+    const user = getAuth().currentUser;
+    const db = getDatabase();
+    let dbRef = ref(db, "notifications/");
+    if (projInfo.students != undefined) {
+      push(dbRef, {
+        name: `edited project:  ${projInfo.name}`,
+        user_id: user.displayName,
+        date: new Date().toLocaleString(),
+        notify: projInfo.students,
+        //src: `${projInfo.name}`,
+      });
     }
+    else {
+      push(dbRef, {
+        name: `edited project:  ${projInfo.name}`,
+        user_id: user.displayName,
+        date: new Date().toLocaleString(),
+        //notify: projInfo.students,
+        //src: `${projInfo.name}`,
+      });
+    }
+  }
 
+  function handleDeleteNotifs(event) {
+    const user = getAuth().currentUser;
+    const db = getDatabase();
+    let dbRef = ref(db, "notifications/");
+    if (projInfo.students != undefined) {
+      push(dbRef, {
+        name: `deleted project:  ${projInfo.name}`,
+        user_id: user.displayName,
+        date: new Date().toLocaleString(),
+        notify: projInfo.students,
+      });
+    }
+    else {
+      push(dbRef, {
+        name: `deleted project:  ${projInfo.name}`,
+        user_id: user.displayName,
+        date: new Date().toLocaleString(),
+      });
+    }
+  }
 
     function handleSubmit(event) {
-      const { name, description, tasks, date, students } = projInfo;
+      const { name, description, tasks, date, students} = projInfo;
       event.preventDefault();
       //alert(JSON.stringify(projInfo.tasks));
       alert(`
@@ -153,7 +197,7 @@ export function EditProject(props)
           projInfo.students
         );
 
-        
+      handleEditNotifs();
       }
 
     function handleDelete(event) {//this will handle what happens whne the delete button is pressed
@@ -163,9 +207,11 @@ export function EditProject(props)
       const db = getDatabase();
       var rmvref = ref(db, "projects/" + key);
       //var rmvref = firebase.database().ref("projects/" + key);
+      //handleDeleteNotifs(event);
       remove(rmvref)
-      .then(() => {
+        .then(() => {
         alert("Project deleted successfully!");
+        handleDeleteNotifs();
         window.location = "/";
       })
       .catch((err) => {
@@ -337,6 +383,18 @@ export function EditProject(props)
                               </label>
                           </div>
                           </Form.Group>
+
+                          <div className="form-inline">
+                            
+                            <form id="fileSubmit" onSubmit={handleSubmit}>
+                              <h4>Upload a File</h4>
+                                <div className='fileSelector'>
+                                  <input type="file" onChange={handleChange}/>
+                                  {/*<button className='uploadBtn' type="submit">Upload</button>*/}
+                                </div>
+                                
+                            </form>
+                          </div>
         
                           <Button type="submit">Save Changes</Button>
                         </Form>

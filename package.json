@@ -4,10 +4,13 @@
   "private": true,
   "dependencies": {
     "-": "^0.0.1",
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
     "@fullcalendar/daygrid": "^5.10.1",
     "@fullcalendar/interaction": "^5.10.1",
     "@fullcalendar/react": "^5.10.1",
     "@fullcalendar/timegrid": "^5.10.1",
+    "@mui/material": "^5.10.13",
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",

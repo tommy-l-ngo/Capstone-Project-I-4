@@ -19,7 +19,8 @@ import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import { getAuth } from "firebase/auth";
 import { storage } from "../../firebase";
-import {uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { createContext } from "react";
 
 
 const firebaseConfig = {
@@ -32,6 +33,8 @@ const firebaseConfig = {
   appId: "1:768427043765:web:6643185734fe346ddd07fc",
   measurementId: "G-X8E63KZMT3",
 };
+
+export const ThemeContext = createContext(null);
 
 export function CreateProject(props)
 {
@@ -99,6 +102,19 @@ export function CreateProject(props)
  
     }
 
+    function handleNotifs(event) {
+      const user = getAuth().currentUser;
+      const db = getDatabase();
+      let dbRef = ref(db, "notifications/");
+      push(dbRef, {
+        name: `created a new project:  ${projInfo.name}`,
+        user_id: user.displayName,
+        date: new Date().toLocaleString(),
+        notify: projInfo.students,
+        //src: `${projInfo.name}`,
+      })
+    }
+  
     function handleSubmit(event) {
         const { name, description, tasks, date, students } = projInfo;
         event.preventDefault();
@@ -119,7 +135,9 @@ export function CreateProject(props)
           //JSON.stringify(projInfo.date),
           projInfo.date.toDateString(),
           projInfo.students
-        );
+        )
+      handleNotifs();
+          ;
 
                    
         
@@ -177,7 +195,7 @@ export function CreateProject(props)
 
  
 
-          function fileSubmit(event) {
+          /*function fileSubmit(event) {
            
         
             const fullPath = window.location.href;
@@ -187,7 +205,8 @@ export function CreateProject(props)
             // progress can be paused and resumed. It also exposes progress updates.
             // Receives the storage reference and the file to upload.
             const uploadTask = uploadBytesResumable(storageRef, file);
-          };
+  };*/
+  
 
             return (
               <div>
@@ -318,11 +337,6 @@ export function CreateProject(props)
                             </form>
                           </div>
 
-                        {/*<div className="form-inline">
-                         <div className="form__group field">
-                           <input type="file" onchange={(e)=>this.fileChange(e)}/>
-                         </div>              
-                              </div>*/}
         
                           <Button type="submit">Submit</Button>
                         </Form>
