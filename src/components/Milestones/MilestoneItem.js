@@ -22,12 +22,8 @@ function p2Num(p) {
 }
 
 function MilestoneItem({ title, date, m_key, description, projectID, priority }) {          //Code to make page scroll to top
-  // $('mStone').mouseup(function() {
-  //   $('input.active').removeClass('active');
-  // });
-  // $('mStone').onMouseUp
-  const mRef = useRef();
 
+  const mRef = useRef();
   const [mousePos, setMousePos] = useState({});
 
   const [finished, setFinished] = useState(false);
@@ -35,11 +31,12 @@ function MilestoneItem({ title, date, m_key, description, projectID, priority })
   // alert(priority);
   const [dropdown, setDropdown] = useState({value: "" + priority});
 
+
+  // Handles changing the dropdown (priority) value. 
   const changeDropdown = event => {
     setDropdown({value: event.target.value});
-
     let dbRefMilestone = ref(db, "projects/" + projectID + "/milestones/" + m_key);
-    // alert("projects/" + projectID + "/milestones/" + m_key);
+    // Update database to new value
     update(dbRefMilestone, {
       priority: event.target.value,
       urgency: p2Num(event.target.value)
@@ -52,13 +49,12 @@ function MilestoneItem({ title, date, m_key, description, projectID, priority })
 
   var initialMilestone = {};
 
+  // TODO: Still in progress: handling click and drag to rearrange milestones order.
   const _handleMouseUp = (event) => {
     // alert(mRef.current.style.left);
     // alert(initialMilestone.left);
     // mRef.current.style.left = initialMilestone.left;
     setClicking(false);
-
-    // alert('up');
   }
   const _handleMouseDown = (event) => {
     initialMouse = { x: event.pageX, y: event.pageY };
@@ -66,46 +62,37 @@ function MilestoneItem({ title, date, m_key, description, projectID, priority })
     setClicking(true);
   }
 
+
+  // Remove the milestone
   function deleteItem() {
       let dbRefMilestone = ref(db, "projects/" + projectID + "/milestones/" + m_key);
-      // alert("projects/" + projectID + "/milestones/" + m_key);
+      // Remove from database
       remove(dbRefMilestone).then(() => {
         // alert("location removed");
         window.location.reload();
       });
       
   }
+
+  // Change between finished/unfinished
   function toggleDone() {
     let dbRefMilestone = ref(db, "projects/" + projectID + "/milestones/" + m_key);
+    // Update database with new value
     update(dbRefMilestone, { complete: !finished }).then(() => {
       // alert("Data updated");
       setFinished(!finished);
     });
-
-
-    // let dbRefMilestone = dbRef.child("projects/" + projectID + "/milestones/" + m_key);
-    // mRef.update({
-    //   'complete':'true'}
-    // );
-    // setFinished(!finished);
   }
 
+  // TODO: Still in progress: handling click and drag to rearrange milestones order.
   function handleMouseDown (event) {
     // event.stopPropogation()
     // event.preventDefault()
     // alert(event.clientX);
     setClicking(true);
-    // alert('dwn');
-
-    // alert(clicking);
   };
 
-  function handleMouseUp (event) {
-    // event.stopPropogation()
-    // event.preventDefault()
-    // alert("up: " + event.clientX);
-    // setClicking(false);
-  };
+  // TODO: Still in progress: handling click and drag to rearrange milestones order.
   function handleMouseMove(event) {
     var offsetX = event.pageX - initialMouse.x;
     if (clicking) {
@@ -116,6 +103,7 @@ function MilestoneItem({ title, date, m_key, description, projectID, priority })
     setMousePos({ x: event.clientX, y: event.clientY });
 
   };
+
   useEffect(() => {
     initialMilestone = { left: mRef.current.style.left, top: mRef.current.style.top };
 
@@ -130,7 +118,10 @@ function MilestoneItem({ title, date, m_key, description, projectID, priority })
     
 
 
-
+    /*
+      Rest of useEffect() is still a work-in-progress
+      (handling click and drag to rearrange milestones order.)
+    */
 
     // window.addEventListener('mousemove', handleMouseMove);
     // window.addEventListener("mouseup", _handleMouseUp);
@@ -170,12 +161,7 @@ function MilestoneItem({ title, date, m_key, description, projectID, priority })
         <div className="xBtn2" onClick={deleteItem}>
           <i className="fas fa-times xButton" />
         </div>
-                  {/* <figure className='cards__item__pic-wrap' data-label={props.label}> */}
-                      {/* <img src={props.src} alt='Project Image' className='m_item_img' /> */}
-                      {/* <Link className="card-edit" to="/EditProject" state={{key: props.projectKey}}  onClick={scrollToTop}> */}
-                          {/* <i class="fas fa-bars"></i> */}
-                      {/* </Link> */}
-                  {/* </figure> */}
+                  
           <div className='m_info'>
             <h3 className='m_title'>{title}</h3>
             <p className='m_desc2'>{date}</p>
