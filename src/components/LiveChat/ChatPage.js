@@ -1,6 +1,6 @@
 //import React, { Component } from 'react';
 import { Button } from '../Dashboard/Button';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import './ChatPage.css';
 import Navbar from '../Dashboard/Navbar';
 import data from '../Dashboard/data';
@@ -22,12 +22,14 @@ export function ChatPage() {
 
     const [chatPerson, setChatPerson] = useState({});
 
+
   
     return (
         <>
+            
             <Navbar />
             
-            <div id="#container">
+            <div id="container">
                 <ChatSide defaultChat={setChatPerson} chatInfo={setChatPerson}/>
                 <ChatMain chatPerson={chatPerson}/>
             </div>    

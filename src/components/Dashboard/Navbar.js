@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
 import LoginPopup from "../Login/LoginPopup";
@@ -6,6 +6,7 @@ import { userGlobal, getUserGlobal } from "../Login/LoginForm";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { getDatabase, set, get, ref, child } from "firebase/database";
 import Notifications from "../Notifications/Notifications";
+import { MessageContext } from "../Login/App";
 //import ReactSwitch from "react-switch";
 
 export var fadeIn = false;
@@ -18,7 +19,10 @@ export function getFade() {
 }
 const auth = getAuth();
 
+
+
 function Navbar() {
+  const [messageAlert, setMessageAlert] = useContext(MessageContext);
   const dbRef = ref(getDatabase());
   const [userEUID, setUserEUID] = useState("");
 
@@ -199,13 +203,14 @@ function Navbar() {
             </li>
 
             <li className="nav-item">
-              <Link
-                to="/Chat"
-                className="nav-links"
-                onClick={closeMobileMenu}
-              >
-                Chat
-              </Link>
+                <Link
+                  to="/Chat"
+                  className="nav-links"
+                  onClick={closeMobileMenu}
+                >
+                  Chat
+                  {messageAlert && <span className="newMessage"></span>}
+                </Link>
             </li>
 
             <li className="nav-item">

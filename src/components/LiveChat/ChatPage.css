@@ -2,18 +2,15 @@
 	box-sizing:border-box;
 }
 
-#container{
-	width:100%;
-    height: 100%;
-	background:#eff3f7;
-	margin:0 auto;
-	font-size:0;
-	border-radius:5px;
-	overflow:hidden;
+#container
+{
+	/*background: #3b3e49;*/
+	background: black;
 }
+
 .chatAside{
 	width:20%;
-    height:100%;
+	height: 45em;
 	background-color:#3b3e49;
 	display:inline-block;
 	font-size:15px;
@@ -73,10 +70,11 @@
 	margin:0;
 	list-style-type:none;
 	overflow-y:scroll;
-	height:690px;
+	height:80%;
 }
 .chatAside li{
 	padding:10px 0;
+	border-bottom: 1px black solid;
 }
 .chatAside li:hover{
 	background-color:#5e616a;
@@ -89,6 +87,7 @@ h2,h3{
 	margin:0;
 }
 .chatAside li img{
+	height: 4rem;
 	border-radius:50%;
 	margin-left:20px;
 	margin-right:8px;
@@ -137,12 +136,16 @@ h2,h3{
 }
 
 .chatMain header{
-	height:110px;
+	height:6em;
 	padding:30px 20px 30px 40px;
+	background-color: white;
 }
 .chatMain header > *{
 	display:inline-block;
 	vertical-align:top;
+}
+.chatMain header img{
+	height: 4em;
 }
 .chatMain header img:first-child{
 	border-radius:50%;
@@ -152,12 +155,17 @@ h2,h3{
 	margin-top:8px;
 }
 .chatMain header div{
-	margin-left:10px;
-	margin-right:145px;
+	height: 100%;
+	margin-left:6em;
+	margin-right: 10em;
+	position: relative;
+	bottom: 40%;
 }
 .chatMain header h2{
+	display: inline;
 	font-size:16px;
-	margin-bottom:5px;
+	position: relative;
+	padding-left: 10px;
 }
 .chatMain header h3{
 	font-size:14px;
@@ -170,10 +178,11 @@ h2,h3{
 	margin:0;
 	list-style-type:none;
 	overflow-y:scroll;
-	height:535px;
+	height: 30em;
 	border-top:2px solid #fff;
 	border-bottom:2px solid #fff;
-    background-color:rgba(209, 206, 206, 0.5)
+	background-color: rgb(230, 230, 230);
+    /*background-color:rgba(209, 206, 206, 0.5)*/
 }
 #chat li{
 	padding:10px 30px;
@@ -214,15 +223,16 @@ h2,h3{
 }
 
 .chatMain footer{
-	height:155px;
+	height:50%;
 	padding:20px 30px 10px 20px;
+	background-color: white;
 }
 .chatMain footer textarea{
 	resize:none;
 	border:none;
 	display:block;
 	width:100%;
-	height:80px;
+	height:5em;
 	border-radius:3px;
 	padding:20px;
 	font-size:13px;
@@ -241,7 +251,8 @@ h2,h3{
 	font-weight:bold;
 	color:#6fbced;
 	vertical-align:top;
-	margin-left:333px;
+	margin-left:10%;
+	margin-right: 10%;
 	margin-top:5px;
 	display:inline-block;
 }
