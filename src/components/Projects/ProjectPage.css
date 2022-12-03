@@ -31,6 +31,8 @@
     /*float: right;*/
     margin-top: 20px;
     margin-right: 20px;
+    position: relative;
+    z-index: 100;
 }
 
 .task_btn {
@@ -62,7 +64,15 @@
     /* display: flex; */
     /* align-items: center; */
     position: relative;
+    width: 100%;
     top: 100px;
+    /* background-color: #30475E; */
+    /* background-color: rgb(136, 136, 136); */
+    box-shadow:  0px 90px 50px 200px rgba(0, 0, 0, 0.1) inset;
+    background-image: url(../Milestones/45degreee_fabric.png);
+    /* background-image: url(../Login/memphis-mini.webp); */
+    /* background-image: linear-gradient(180deg, rgba(27, 27, 27, 0.493), rgba(46, 46, 46, 0.4)); */
+    z-index: 1;
 }
 
 .milestoneBtn {
