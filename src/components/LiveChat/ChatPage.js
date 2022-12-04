@@ -22,6 +22,12 @@ export function ChatPage() {
 
     const [chatPerson, setChatPerson] = useState({});
 
+    useEffect(() => {
+        document.body.style.background = "#3b3e49";
+
+        return () => {document.body.style.backgroundColor = "white"}
+    }, [])
+
 
   
     return (
@@ -29,7 +35,7 @@ export function ChatPage() {
             
             <Navbar />
             
-            <div id="container">
+            <div>
                 <ChatSide defaultChat={setChatPerson} chatInfo={setChatPerson}/>
                 <ChatMain chatPerson={chatPerson}/>
             </div>    
