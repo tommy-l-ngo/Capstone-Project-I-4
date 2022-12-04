@@ -86,10 +86,29 @@ body {
     /* background-color: red; */
   }
 
+  .dates {
+    /* background-color: green; */
+    display:inline-flex;
+  }
+
+  .datePicker {
+    /* display: inline; */
+    position: relative;
+    left: 15px;
+    /* margin: 0; */
+  }
+
   .label3 {
     margin-right: 20px;
     margin-bottom: 10px;
-
+    display: inline-block;
+    width: 100px;
+    text-align: left;
+  }
+  .label4 {
+    margin-right: 20px;
+    margin-bottom: 10px;
+    /* margin-left: 50px; */
     display: inline-block;
     width: 100px;
     text-align: left;
@@ -104,6 +123,27 @@ body {
     border-radius: 10px;
     border: solid 3px;
     border-color: black;
+    left: 0px;
+    top: 0px;
+  }
+  .m_info {
+    /* position: absolute; */
+    position: relative;
+    top: -20px;
+    /* background-color: green; */
+  }
+
+  .m_title {
+    font-family: Trebuchet MS,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Tahoma,sans-serif; 
+    font-weight: bold;
+    font-size: 40px;
+  }
+  .m_desc2 {
+    /* font-weight: bolder; */
+    font-family: Trebuchet MS,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Tahoma,sans-serif; 
+    /* font-family: "Gill Sans", sans-serif; */
+
+
   }
   .done {
     background-color: rgba(0, 131, 11, 0.75);
@@ -146,12 +186,26 @@ body {
   }
   
 .xButton {
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: black;
   position: absolute;
   left: 10px;
   top: 10px;
   font-size: 32px;
   transition: all 0.11s;
 
+  /* transition: font-size .5s; */
+  /* transition: font-size .5s, text-shadow .05s ease-out; */
+  text-align: center;
+}
+.xButton2 {
+  /* position: absolute;
+  left: 10px;
+  top: 10px; */
+  font-size: 32px;
+  transition: all 0.11s;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: black;
   /* transition: font-size .5s; */
   /* transition: font-size .5s, text-shadow .05s ease-out; */
   text-align: center;
@@ -218,9 +272,146 @@ body {
   border-radius: 3px;
   position: relative;
   top: -20px;
+  transition: box-shadow .15s;
+
+  /* box-shadow: rgba(0, 0, 0, 0.52) 0px 1px 3px 0px, rgba(27, 31, 35, 0.85) 0px 0px 0px 1px; */
+
+}
+
+
+.milestoneBtn:hover {
+  /* box-shadow: rgba(0, 0, 0, 0.52) 0px 1px 5px 0px, rgba(27, 31, 35, 0.85) 0px 0px 0px 4px; */
+  box-shadow: rgba(0, 0, 0, 0.52) 0px 10px 5px 0px, rgba(27, 31, 35, 0.85) 0px 0px 0px 4px ;
+
+}
+.milestoneBtn:active {
+  box-shadow: rgba(0, 0, 0, 0.52) 0px 10px 5px -3px, rgba(27, 31, 35, 0.85) 0px 0px 0px 4px;
+  /* , rgba(27, 31, 35, 1) 0px 0px 0px 2px inset; */
+  background-color: #e8e8e8;
+  /* box-shadow: rgba(0, 0, 0, 0.52) 0px 10px 5px 0px, rgba(27, 31, 35, 0.85) 0px 0px 0px 4px ; */
 }
 
 .labels {
   position: relative;
-  top: -10px;
+  /* top: -10px; */
+  /* width: 500px; */
+  /* background-color: rgba(175, 121, 245, 0.8); */
+}
+.addingM {
+  /* display: flex;
+  align-items: center;
+  justify-content: center; */
+  width: 450px;
+  /* background-color: rgba(175, 121, 245, 0.8); */
+  background-color: rgba(175, 121, 245, 0.75 );
+  border-radius: 7px;
+  border: solid black;
+  /* padding: 10px; */
+  padding: 10px 0px 0px 0px;
+  /* background-color: blue; */
+  margin-bottom: 10px;
+}
+.addingMContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* width: 500px; */
+  /* background-color: red; */
+}
+
+
+
+.xBtn3 {
+  /* position:absolute;
+  top: 0px;
+  left: 0px; */
+  /* position: absolute;
+  top: 10px; */
+  /* margin: 0;
+  padding: 0; */
+  position: absolute;
+  top: -6px;
+  left: 4px;
+  width: 32px;
+  color:grey;
+  height: 32px;
+  text-align:center;
+  cursor: pointer;
+  /* border: solid black; */
+  /* border-radius: 100px; */
+  /* background:red; */
+  transition: all 1.25s;
+  /* background:red; */
+  z-index: 10;
+}
+.xBtn3:hover{
+  /* transform: scale(1.2); */
+  /* box-shadow: 0px 0px, ; */
+  /* background:black; */
+  /* color:rgb(65, 65, 65); */
+  /* text-shadow: 0px 0px 100px rgba(0, 0, 0, 0.5); */
+}
+.xBtn3:hover .xButton2{
+  color:rgb(125, 125, 125);
+  
+  /* box-shadow: 0px 0px 0 px rgb(112, 112, 112); */
+}
+.xBtn3 .xButton2 {
+  color:rgb(105, 105, 105);
+}
+
+.xBtn3:active .xButton2 {
+  color:rgb(112, 112, 112);
+}
+
+.mErrorText {
+  color: rgb(199, 0, 0);
+  margin-bottom: 10px;
+}
+
+.buttonMilestone {
+
+  transition: all 1s;
+}
+
+.noSelect {
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+}
+
+select{
+  border:none;
+  padding: 10px 20px;
+  border-radius:5px;
+  text-align: center;
+  text-align-last: center;
+  -moz-text-align-last: center;
+    -ms-box-sizing:content-box;
+  -moz-box-sizing:content-box;
+  box-sizing:content-box;
+  -webkit-box-sizing:content-box; 
+}
+
+select:focus{
+  outline:none;
+}
+
+input {
+  -ms-box-sizing:content-box;
+  -moz-box-sizing:content-box;
+  box-sizing:content-box;
+  -webkit-box-sizing:content-box; 
+  border-radius:3px;
+  border: none;
+
+}
+
+.priorities {
+  width: 150px;
+  text-align: left;
+}
+
+option {
+  text-align: left;
 }
