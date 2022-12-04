@@ -75,6 +75,11 @@ export function ChatMain(props) {
                         message.message = dbMessage.message;
                         (dbMessage.from == user.displayName) ? (message.senderName = null) : (message.senderName = props.chatPerson.firstName);
                         setMessages(messages => [...messages, message]);
+
+                        if (dbMessage.to == user.displayName && dbMessage.seen == false)
+                        {
+                            set(ref(db, "messages/" + snapshot1.key), { ...dbMessage, seen: true });
+                        }
                     }
                 });
             })
@@ -112,6 +117,11 @@ export function ChatMain(props) {
                         message.message = dbMessage.message;
                         (dbMessage.from == user.displayName) ? (message.senderName = null) : (message.senderName = props.chatPerson.firstName);
                         setMessages(messages => [...messages, message]);
+
+                        if (dbMessage.to == user.displayName && dbMessage.seen == false)
+                        {
+                            set(ref(db, "messages/" + snapshot.key), { ...dbMessage, seen: true });
+                        }
                     }
                     //first = true;
                 });
@@ -178,7 +188,8 @@ export function ChatMain(props) {
             from: user.displayName,
             to: props.chatPerson.eUID,
             message: messageText,
-            timestamp: Date.now()
+            timestamp: Date.now(),
+            seen: false
         };
 
         setMessageText("");
@@ -198,12 +209,10 @@ export function ChatMain(props) {
     return (
         <main className="chatMain">
         <header>
-            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_01.jpg" alt=""/>
             <div>
-                    <h2>Chat with {props.chatPerson.firstName }</h2>
-                <h3>already 1902 messages</h3>
+                <img src="https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg" alt=""/>
+                <span><h2>Chat with {props.chatPerson.firstName }</h2></span>
             </div>
-            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_star.png" alt=""/>
         </header>
         <div id="chat">
                 <ChatFeed
@@ -221,9 +230,11 @@ export function ChatMain(props) {
         </div>
         
         <footer>
-            <textarea placeholder="Type your message" value={messageText} onChange={HandleChange}></textarea>
-            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_picture.png" alt=""/>
-            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_file.png" alt=""/>
+                <textarea placeholder="Type your message" value={messageText} onChange={HandleChange}></textarea>
+                {/*
+                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_picture.png" alt=""/>
+                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_file.png" alt=""/>
+                */}
                 <button onClick={HandleSend} disabled={messageText ? (false) : (true)}>
                     Send
                 </button>

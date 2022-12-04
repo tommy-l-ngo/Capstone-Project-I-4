@@ -1,5 +1,5 @@
 import "./Login.css";
-import React from "react";
+import React, {createContext} from "react";
 import { observer } from "mobx-react";
 import LoginPopup from "./LoginPopup";
 import SubmitButton from "./SubmitButton";
@@ -31,114 +31,131 @@ import { AdminPage } from "../Admin/Admin";
 import { ChatPage } from "../LiveChat/ChatPage";
 import { MilestonesPage } from "../Milestones/Milestones";
 
+
+export const MessageContext = createContext();
+
 /* ------- Login Component -------- */
 class App extends React.Component {
+
+  state = {
+    messageAlert: false
+  }
+
+  
+
   render() {
+
+    const setMessageAlert = (alert) => {this.setState({...this.state, messageAlert: alert})}
+
+    const value = [this.state.messageAlert, setMessageAlert];
+
     return (
       <main>
         <div className="App">
-          <AuthProvider>
-            <Router>
-              <Switch>
-                <Route
-                  path="/"
-                  element={
-                    <ProtectedRoute>
-                      <Home />
-                    </ProtectedRoute>
-                  }
-                  exact
-                />
-                <Route path="/Forgot" element={<HomeForgotPopup />} />
-                <Route path="/Register" element={<HomeRegisterPopup />} />
-                <Route path="/RegisterAs" element={<HomeRegisterAsPopup />} />
-                <Route path="/PageRedirect" element={<PageRedirect />} />
+          <MessageContext.Provider value={value}>
+            <AuthProvider>
+              <Router>
+                <Switch>
+                  <Route
+                    path="/"
+                    element={
+                      <ProtectedRoute>
+                        <Home />
+                      </ProtectedRoute>
+                    }
+                    exact
+                  />
+                  <Route path="/Forgot" element={<HomeForgotPopup />} />
+                  <Route path="/Register" element={<HomeRegisterPopup />} />
+                  <Route path="/RegisterAs" element={<HomeRegisterAsPopup />} />
+                  <Route path="/PageRedirect" element={<PageRedirect />} />
 
-                <Route path="/Login" element={<HomeLoginPopup />} exact />
-                <Route
-                  path="/Home"
-                  element={
-                    <ProtectedRoute>
-                      <Home />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/CreateProject"
-                  element={
-                    <ProtectedRoute>
-                      <CreateProject />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/EditProject"
-                  element={
-                    <ProtectedRoute>
-                      <EditProject />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/Calendar"
-                  element={
-                    <ProtectedRoute>
-                      <Calendar />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/Todo"
-                  element={
-                    <ProtectedRoute>
-                      <Todolist />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/Admin"
-                  element={
-                    <ProtectedRoute>
-                      <AdminPage />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/Projects/:id"
-                  exact
-                  element={
-                    <ProtectedRoute>
-                      <ProjectPage />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/Tasks"
-                  element={
-                    <ProtectedRoute>
-                      <Tasks />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/Chat"
-                  element={
-                    <ProtectedRoute>
-                      <ChatPage />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/Milestones"
-                  element={
-                    <ProtectedRoute>
-                      <MilestonesPage />
-                    </ProtectedRoute>
-                  }
-                />
-              </Switch>
-            </Router>
-          </AuthProvider>
+                  <Route path="/Login" element={<HomeLoginPopup />} exact />
+                  <Route
+                    path="/Home"
+                    element={
+                      <ProtectedRoute>
+                        <Home />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/CreateProject"
+                    element={
+                      <ProtectedRoute>
+                        <CreateProject />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/EditProject"
+                    element={
+                      <ProtectedRoute>
+                        <EditProject />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/Calendar"
+                    element={
+                      <ProtectedRoute>
+                        <Calendar />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/Todo"
+                    element={
+                      <ProtectedRoute>
+                        <Todolist />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/Admin"
+                    element={
+                      <ProtectedRoute>
+                        <AdminPage />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/Projects/:id"
+                    exact
+                    element={
+                      <ProtectedRoute>
+                        <ProjectPage />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/Tasks"
+                    element={
+                      <ProtectedRoute>
+                        <Tasks />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/Chat"
+                    element={
+                      <ProtectedRoute>
+                        <ChatPage />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/Milestones"
+                    element={
+                      <ProtectedRoute>
+                        <MilestonesPage />
+                      </ProtectedRoute>
+                    }
+                  />
+                </Switch>
+              </Router>
+            </AuthProvider>
+            </MessageContext.Provider>
         </div>
       </main>
     );

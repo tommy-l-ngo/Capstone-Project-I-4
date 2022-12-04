@@ -1,6 +1,6 @@
 //import React, { Component } from 'react';
 import { Button } from '../Dashboard/Button';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import './ChatPage.css';
 import Navbar from '../Dashboard/Navbar';
 import data from '../Dashboard/data';
@@ -8,7 +8,8 @@ import { useParams, useLocation } from 'react-router-dom';
 import Comments from "../Comments/Comments";
 import FileUpload from "../FileUpload/FileUpload";
 import { getAuth } from "firebase/auth";
-import { getDatabase, get, child, ref, onChildAdded} from "firebase/database";
+import { getDatabase, get, child, ref, onChildAdded, onChildChanged} from "firebase/database";
+import { MessageContext } from '../Login/App';
 
 // Gets current user
 const db = getDatabase();
@@ -19,10 +20,11 @@ const dbRef = ref(db);
 
 export function ChatSide(props) {
 
+    const [messageAlert, setMessageAlert] = useContext(MessageContext)
     const [chatList, setChatList] = useState([]);
     const [filteredChatList, setFilteredChatList] = useState([]);
     const [activeChats, setActiveChats] = useState({});
-    const [readChats, setReadChats] = useState({});
+    const [newMessage, setNewMessage] = useState({});
     const [openTab, setOpenTab] = useState("Active Chats");
     const [searchText, setSearchText] = useState("");
     const [chatPerson, setChatPerson] = useState({});
@@ -49,7 +51,7 @@ export function ChatSide(props) {
                                     }
                                     setChatList(chatList => [...chatList, curr])
                                     setActiveChats(activeChats => ({ ...activeChats, [curr.eUID]: false }));
-                                    setReadChats(readChats => ({ ...readChats, [curr.eUID]: false }));
+                                    setNewMessage(newMessage => ({ ...newMessage, [curr.eUID]: false }));
                                 }
                             })
 
@@ -63,10 +65,14 @@ export function ChatSide(props) {
                         onChildAdded(dbMessagesRef, (snapShot) => {
                             const dbMessage = snapShot.val();
 
-                            if (dbMessage.from == user.displayName || dbMessage.to == user.displayName)
-                            {
+                            if (dbMessage.from == user.displayName || dbMessage.to == user.displayName) {
                                 let other_eUID;
                                 (dbMessage.from == user.displayName) ? (other_eUID = dbMessage.to) : (other_eUID = dbMessage.from);
+                                if (dbMessage.to == user.displayName && dbMessage.seen == false)
+                                {
+                                    setNewMessage(newMessage => ({ ...newMessage, [other_eUID]: true }));
+                                    setMessageAlert(true);
+                                }
                                 setActiveChats(activeChats => ({ ...activeChats, [other_eUID]: true }));
                                 if (defaultChat == null)
                                 {
@@ -83,6 +89,21 @@ export function ChatSide(props) {
                                 }
                             }
                         })
+
+                        onChildChanged(dbMessagesRef, (snapShot) => {
+                           //console.log(snapShot.val())
+                           const dbMessage = snapShot.val();
+
+                           if (dbMessage.from == user.displayName || dbMessage.to == user.displayName)
+                           {
+                               let other_eUID;
+                               (dbMessage.from == user.displayName) ? (other_eUID = dbMessage.to) : (other_eUID = dbMessage.from);
+                               if (dbMessage.to == user.displayName && dbMessage.seen == true)
+                               {
+                                    setNewMessage(newMessage => ({...newMessage, [other_eUID]: false}));  
+                               }
+                           }
+                        })
                     })
           }
 
@@ -91,6 +112,18 @@ export function ChatSide(props) {
       //unsubcribe();
 
     }, []);
+
+    useEffect(() => {
+        var alert = false;
+        for (const key in newMessage) {
+            if (newMessage[key] == true) {
+                alert = true
+                break;
+            }
+        }
+        setMessageAlert(alert);
+    }, [newMessage]);
+    
     /*
     function SendChatInfo()
     {
@@ -202,10 +235,11 @@ export function ChatSide(props) {
                                 <div>
                                     <h2>{element.firstName}</h2>
                                     <h3 className="eUID">{element.eUID}</h3>
-                                    <h3>
-                                        <span className="status blue"></span>
-                                        New Messages
-                                    </h3>
+                                    {(newMessage[element.eUID]) &&
+                                        (<h3>
+                                            <span className="status blue"></span>
+                                            New Messages
+                                        </h3>)}
                                 </div>
                             </li>)
                         }))
@@ -219,14 +253,15 @@ export function ChatSide(props) {
                             (chatPerson.eUID == element.eUID) ? (clicked = true) : (clicked = false);
     
                             return (<li className={clicked ? ("clicked") : ("")} onClick={(e) => { setChatPerson(element); props.chatInfo(element) }}>
-                                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_01.jpg" alt="" />
+                                <img src="https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg" alt="" />
                                 <div>
                                     <h2>{element.firstName}</h2>
                                     <h3 className="eUID">{element.eUID}</h3>
-                                    <h3>
-                                        <span className="status blue"></span>
-                                        New Messages
-                                    </h3>
+                                    {(newMessage[element.eUID]) &&
+                                        (<h3>
+                                            <span className="status blue"></span>
+                                            New Messages
+                                        </h3>)}
                                 </div>
                             </li>)
                         }))}

@@ -479,3 +479,14 @@
 ::-webkit-scrollbar-thumb:hover {
   background: rgb(184, 184, 184);
 }
+
+.newMessage{
+	width:20px;
+	height:20px;
+	border-radius:50%;
+	display:inline-block;
+  position: relative;
+  top: 2px;
+	left: 15px;
+  background-color:#6fbced;
+}
