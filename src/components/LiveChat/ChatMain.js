@@ -41,6 +41,7 @@ export function ChatMain(props) {
     var pushRef;
     const unsubscribe = useRef(() => { });
 
+
     //called every time user switches betweeen chats
     useEffect(() => {
         //resetting everything
@@ -131,6 +132,15 @@ export function ChatMain(props) {
                 first = false;
             })
     }, [props.chatPerson]);
+
+     //For scrolling to bottom of chat
+     const messagesEndRef = useRef(null);
+     const scrollToBottom = () => {
+         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+     }
+     useEffect(() => {
+         scrollToBottom()
+     }, [messages]);
 
 /*
     //listens for a new message added
@@ -227,7 +237,9 @@ export function ChatMain(props) {
                         },
                       }}
                 />
-        </div>
+                <div ref={messagesEndRef} />
+            </div>
+            
         
         <footer>
                 <textarea placeholder="Type your message" value={messageText} onChange={HandleChange}></textarea>

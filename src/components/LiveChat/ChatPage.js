@@ -24,6 +24,7 @@ export function ChatPage() {
 
     useEffect(() => {
         document.body.style.background = "#3b3e49";
+        //document.body.style.height = "100%";
 
         return () => {document.body.style.backgroundColor = "white"}
     }, [])

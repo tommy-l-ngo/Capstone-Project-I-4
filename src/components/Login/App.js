@@ -30,6 +30,7 @@ import { Todolist } from "../Todo/Todo-list";
 import { AdminPage } from "../Admin/Admin";
 import { ChatPage } from "../LiveChat/ChatPage";
 import { MilestonesPage } from "../Milestones/Milestones";
+import { CheckMessages } from "./CheckMessages";
 
 
 export const MessageContext = createContext();
@@ -40,6 +41,7 @@ class App extends React.Component {
   state = {
     messageAlert: false
   }
+  
 
   
 
@@ -53,6 +55,7 @@ class App extends React.Component {
       <main>
         <div className="App">
           <MessageContext.Provider value={value}>
+            <CheckMessages/>
             <AuthProvider>
               <Router>
                 <Switch>

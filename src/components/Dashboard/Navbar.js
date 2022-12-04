@@ -23,6 +23,7 @@ const auth = getAuth();
 
 function Navbar() {
   const [messageAlert, setMessageAlert] = useContext(MessageContext);
+  const [navMessageAlert, setNavMessageAlert] = useState(false);
   const dbRef = ref(getDatabase());
   const [userEUID, setUserEUID] = useState("");
 
@@ -54,6 +55,8 @@ function Navbar() {
     Refer to comment in CreateProject.js for explanation
   */
   useEffect(() => {
+
+    setNavMessageAlert(messageAlert);
 
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -209,7 +212,7 @@ function Navbar() {
                   onClick={closeMobileMenu}
                 >
                   Chat
-                  {messageAlert && <span className="newMessage"></span>}
+                  {navMessageAlert && <span className="newMessage"></span>}
                 </Link>
             </li>
 
