@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import './Message.css'
 
+// Alert message for an empty file selection
 const Message = ({ msg }) => {
   return (
     <div className="alert alert-danger alert-dismissible fade show" role="alert">

@@ -1,5 +1,7 @@
 .comments {
+    position: relative;
     margin-top: 10px;
+    z-index: 100;
   }
   
 .comments-title {

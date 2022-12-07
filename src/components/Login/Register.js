@@ -194,14 +194,10 @@ export default function Register(props) {
       {(!success) && (
         <>
           <div className="titleBar">
-          <Navi destination="/RegisterAs" />
-          <div className="titleText">Registration</div>
-        </div>
-        <Container className="d-flex align-item-center justify-content-center">
-          <div
-            className="w-100"
-            // style={{ maxWidth: "400px" }}
-          >
+            <Navi destination="/RegisterAs" />
+            <div className="titleText">Registration</div>
+          </div>
+
             <Card className="register">
               <Card.Body style={{ width: "100%" }}>
                 {error && (
@@ -215,12 +211,6 @@ export default function Register(props) {
                     {error}
                   </p>
                 )}
-  
-  
-                <div
-                  className="w-100 text-center mt-2 text-danger"
-                  id="errorMessage"
-                ></div>
   
                 <Form>
                   <Form.Group id="department">
@@ -313,8 +303,7 @@ export default function Register(props) {
               </Card.Body>
               <SubmitButton text="Submit" onClick={newUser} />
             </Card>
-          </div>
-        </Container>
+
         {/* </div> */}
         </>
       )}

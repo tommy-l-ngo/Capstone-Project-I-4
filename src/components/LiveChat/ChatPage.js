@@ -1,6 +1,6 @@
 //import React, { Component } from 'react';
 import { Button } from '../Dashboard/Button';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import './ChatPage.css';
 import Navbar from '../Dashboard/Navbar';
 import data from '../Dashboard/data';
@@ -20,33 +20,25 @@ const user = getAuth().currentUser;
 
 export function ChatPage() {
 
+    const [chatPerson, setChatPerson] = useState({});
 
     useEffect(() => {
-        //getting the project by key
-        var unsubcribe = getAuth().onAuthStateChanged(function(user) {
-            if (user) {
-                get(child(dbRef, "users/"))
-                    .then((snapShot) => {
-                        snapShot.forEach((user, index) => {
-                        
-                    })
-                })
-          }
+        document.body.style.background = "#3b3e49";
+        //document.body.style.height = "100%";
 
-      })
-    
-      //unsubcribe();
+        return () => {document.body.style.backgroundColor = "white"}
+    }, [])
 
-    }, []);
 
   
     return (
         <>
+            
             <Navbar />
-
-            <div id="#container">
-                <ChatSide/>
-                <ChatMain/>
+            
+            <div>
+                <ChatSide defaultChat={setChatPerson} chatInfo={setChatPerson}/>
+                <ChatMain chatPerson={chatPerson}/>
             </div>    
             </>
       );
