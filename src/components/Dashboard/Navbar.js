@@ -6,9 +6,7 @@ import { userGlobal, getUserGlobal } from "../Login/LoginForm";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { getDatabase, set, get, ref, child } from "firebase/database";
 import Notifications from "../Notifications/Notifications";
-import { useNavigate } from "react-router-dom";
 //import ReactSwitch from "react-switch";
-
 
 export var fadeIn = false;
 export function setFade(b) {
@@ -36,7 +34,6 @@ function Navbar() {
   const [welcomeName, setWelcomeName] = useState("");
 
   const auth = getAuth();
-  const navigate = useNavigate();
 
   function handleLogout() {
     signOut(auth)
@@ -67,11 +64,6 @@ function Navbar() {
             let match = false;
             if (snapShot.exists()) {
               console.log("User uID: " + uid);
-
-              if (uid == "QHAPyKzcbhO4qNKGGMqpt0spcR83") // hardcoded admin credentials
-              { 
-                navigate("/Admin");
-              }
   
               match = snapShot.forEach((curr) => {
                 const ID = curr.ref._path.pieces_[1];
@@ -107,7 +99,6 @@ function Navbar() {
               }
             } catch (err) {
               console.log(err.code);
-              console.log(err);
               // setError(err.message);
             }
           });

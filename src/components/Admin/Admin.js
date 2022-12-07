@@ -49,20 +49,6 @@ export function AdminPage() {
         }
     }
 
-    function resetAdmin() { // sign back into admin user
-        const auth = getAuth();
-        signInWithEmailAndPassword(auth, "admin@gmail.com", "Admin123!")
-        .then((userCredential) => {
-            // Signed in 
-            const user = userCredential.user;
-            // ...
-        })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-        });
-    }
-
     // get user data from db
     function getUserData()
     {
@@ -160,7 +146,6 @@ export function AdminPage() {
             });//get
             // delete user data from database
             remove(ref(db, "users/" + userDelete));
-            resetAdmin();
             alert("User deleted");
             getUserData();
         }
