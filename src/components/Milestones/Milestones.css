@@ -3,7 +3,8 @@
     opacity: 0.6;
 }
 body {
-    background: white;
+  height: 100%;
+    background-color: yellow;
   }
 
   .todo-list{
@@ -81,6 +82,7 @@ body {
     display: flex;
     /* background-color: red; */
     align-items: center;
+    height: 100%;
     /* width: 50%; */
     margin: auto;
     /* background-color: red; */
@@ -114,18 +116,28 @@ body {
     text-align: left;
   }
 
+  .sortByText>a {
+    cursor: pointer;
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+  }
+
   .m_Item {
     position: relative;
-    width: 300px;
+    min-width: 300px;
     height: 300px;
     background-color: rgba(234, 19, 19, 0.75);
     margin: 50px;
+    margin-top: 0px;
+    margin-bottom: 100px; 
     border-radius: 10px;
     border: solid 3px;
     border-color: black;
     left: 0px;
     top: 0px;
   }
+
   .m_info {
     /* position: absolute; */
     position: relative;
@@ -147,6 +159,10 @@ body {
   }
   .done {
     background-color: rgba(0, 131, 11, 0.75);
+  }
+
+  .m_Block {
+    height: 100%;
   }
 
 
@@ -253,18 +269,20 @@ body {
   display: inline-block;
   font-size: 16px;
   border-radius: 7px;
+  /* margin-top: 10px; */
+  /* margin:10px; */
   /* position: relative;
   top: 100px; */
 }
 
 .center {
-  position: absolute;
-  margin: 0;
+  /* position: relative; */
+  /* margin-top: 100px; */
 
-   bottom:0px;
-  left: 50%;
+   /* bottom:0px; */
+  /* left: 50%;
   -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%); */
 }
 
 .milestoneBtn {
@@ -410,8 +428,16 @@ input {
 .priorities {
   width: 150px;
   text-align: left;
+  margin-bottom: 10px;
 }
 
 option {
   text-align: left;
+}
+
+.sortByText {
+  text-align: left;
+  position: relative;
+  margin-left: 50px;
+  /* left: 50px; */
 }

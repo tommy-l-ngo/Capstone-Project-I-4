@@ -133,95 +133,72 @@ function Cards() {
   
 
 
-    if (loggedIn === true){
-      return (
-        <div className='cards'>
-            <h1>Current Projects</h1>
-            <div className='cards__container'>
-                <div className='cards__wrapper'>
-                    <ul className='cards__items'>
-                        {/*
-                        
-                        //***data.cardData discarded as there is no longer need to display test projects***
-
-                        data.cardData.map((item, index)=>{
-                            return(
-                                <CardItem 
-                                key={index} 
-                                src={item.src} 
-                                text={item.text} 
-                                desc={item.desc} 
-                                label={item.label} 
-                                path={`/Projects/${item.id}`}
-                                />
-                            )
-                        })
-                        */}
-                        {/*projects.length === 0 ? (
-                            <h4>No current projects!</h4>
-                            ) : */
-                            /*
-                            (projects.map((item, index)=>{
-                              const path_withSpaces = item.text;
-                              const project_path = path_withSpaces.replace(/ /g, '_');
-                            return(
-                               
-                                <CardItem 
-                                key={index} 
-                                src={item.src} 
-                                text={item.text} 
-                                desc={item.desc} 
-                                label={item.label} 
-                                path={`/Projects/${project_path}`}
-                                />
-                            )
-                        }))*/}
-
-
-                            {projects.length ? 
-                              (
-                                projects.map((item, index)=>{
-                                  const path_withSpaces = item.text;
-                                  const project_path = path_withSpaces.replace(/ /g, '_');
-                                return(
-                                   
-                                    <CardItem 
-                                    projectKey={item.key} 
-                                    src={item.src} 
-                                    text={item.text} 
-                                    desc={item.desc} 
-                                    label={item.label} 
-                                    path={`/Projects/${project_path}`}
-                                    />
-                                )
-                                })
-                              ) 
-                              : 
-                              (
-                                <h4>Nothing to see here. Go create some projects!</h4>
-                              )}
-                            
-                        
-                    </ul>
-                </div>
-            </div>
-        </div>
-    )
-}
-if(loggedIn === false)
-{
+    // if (loggedIn === true){
   return (
-    <div className='cards' id={localStorage.getItem('currTheme')}>
-        <h1>Current Projects</h1>
-        <div className='cards__container'>
-            <div className='cards__wrapper'>
-                <ul className='cards__items'>
-                    <h4>No Current Projects.</h4>
-                </ul>
-            </div>
+  <>
+      {loggedIn ?
+        (
+        <div className='cards'>
+          <h1>Current Projects</h1>
+          <div className='cards__container'>
+              <div className='cards__wrapper'>
+                  <ul className='cards__items'>
+
+
+                    {projects.length ? 
+                      (
+                        projects.map((item, index)=>{
+                          const path_withSpaces = item.text;
+                          const project_path = path_withSpaces.replace(/ /g, '_');
+                        return(
+                            <CardItem 
+                            projectKey={item.key} 
+                            src={item.src} 
+                            text={item.text} 
+                            desc={item.desc} 
+                            label={item.label} 
+                            path={`/Projects/${project_path}`}
+                            />
+                        )
+                        })
+                      ) 
+                      : 
+                      (
+                        <h4>Nothing to see here. Go create some projects!</h4>
+                      )}
+                    
+                
+            </ul>
         </div>
     </div>
-  )
-}
+</div>
+) : (<div className="a">a</div>)}
+    </>)
+// }
+// if(loggedIn === false)
+// {
+  // return (
+
+    
+    
+    
+    
+    // <div className='cards' id={localStorage.getItem('currTheme')}>
+    //     <h1>Current Projects</h1>
+    //     <div className='cards__container'>
+    //         <div className='cards__wrapper'>
+    //             <ul className='cards__items'>
+    //                 <h4>No Current Projects.</h4>
+    //             </ul>
+    //         </div>
+    //     </div>
+    // </div >
+      
+
+
+
+
+  // )
+// }
 }
 export default Cards;

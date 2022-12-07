@@ -62,12 +62,15 @@ function p2Num(p) {
         return 3;
 }
 
+const SortedMilestones = ({data}) => data ? 
+          <h2>{data}</h2>
+          :<h2>There was no result!</h2> 
+
 function MilestonesBlock({ isVisible, project_id }) {
     var first = true;
     var sorted = [{
 
     }];
-    const [sortedMilestones, setSorted] = useState([]);
     const [loggedIn, setLoggedIn] = useState(false);
     const [project, setProject] = useState({});
 
@@ -101,6 +104,7 @@ function MilestonesBlock({ isVisible, project_id }) {
     const [inp2, setInp2] = useState("");
     const [inp3, setInp3] = useState("");
     const [dropdown, setDropdown] = useState({ value: "Low" });
+    const [sortOrder, setSortOrder] = useState(false);  // 0 for [High → Low], 1 for [Low → High]
     // var tempMiles = [{}, {}, {}, {}];
     var tempMiles = [p0, p1, p2, p3];
     // var tempMiles = new Array(4);
@@ -144,7 +148,9 @@ function MilestonesBlock({ isVisible, project_id }) {
         });
     }
 
-
+    const handleClickSort = event => {
+        setSortOrder(+!sortOrder);  // Swap sortOrder between zero and one.
+    }
 
     const handleChange1 = event => {
         setInp1(event.target.value);
@@ -300,6 +306,8 @@ function MilestonesBlock({ isVisible, project_id }) {
 
     return (
         <>
+            <div className='m_Block'>
+
             {addingM ?  // Show input fields after clicking 'add milestone' button.
                 <div className='addingMContainer'>
                     <div className='addingM'>
@@ -378,29 +386,58 @@ function MilestonesBlock({ isVisible, project_id }) {
                 </button>
             </div>
 
+            <div className='sortByText'>
+                Sort by: <a onClick={handleClickSort} style={{cursor: 'pointer'}}>High → Low</a>
+            </div>
             {/* Container for displaying user milestones */}
             <div id="milestoneContainer">
-                {milestones.length ?
-                    (
-                        // Display user milestones, sorted by priority (crit/high/medium/low)
-                        tempMiles.slice(0).reverse().map((parent, i) => {
-                            return (parent.map((item, j) => {
-                                // console.log(i + ", " + item.name);
-                                return (<MilestoneItem
-                                    key={j}
-                                    title={item.name}
-                                    date={item.date}
-                                    m_key={item.key}
-                                    description={item.desc}
-                                    projectID={project_id}
-                                    priority={item.priority}
-                                />);
-                            }))
-                        })
-                    ) : (
-                        // No milestones found for project
-                        <><h4>No milestones available.</h4></>
-                    )}
+                    
+
+
+
+
+
+                { ( () => 
+                    {
+                        if (milestones.length == 0) { 
+                                return (<h4>No milestones available.</h4>)
+                        } else {
+                            if (sortOrder) {    // High → Low
+                                tempMiles.slice(0).reverse().map((parent, i) => {
+                                    return (parent.map((item, j) => {
+                                        // console.log(i + ", " + item.name);
+                                        return (<MilestoneItem
+                                            key={j}
+                                            title={item.name}
+                                            date={item.date}
+                                            m_key={item.key}
+                                            description={item.desc}
+                                            projectID={project_id}
+                                            priority={item.priority}
+                                        />);
+                                    }))
+                                })
+                            } else {    // Low → High
+                                tempMiles.slice(0).map((parent, i) => {
+                                    return (parent.map((item, j) => {
+                                        // console.log(i + ", " + item.name);
+                                        return (<MilestoneItem
+                                            key={j}
+                                            title={item.name}
+                                            date={item.date}
+                                            m_key={item.key}
+                                            description={item.desc}
+                                            projectID={project_id}
+                                            priority={item.priority}
+                                        />);
+                                    }))
+                                })
+                            }
+                        }
+                    }
+                )()}
+
+            </div>
             </div>
 
         </>
