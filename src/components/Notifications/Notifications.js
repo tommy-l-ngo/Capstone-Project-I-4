@@ -11,9 +11,11 @@ var name = "No user";
 var currUserID;
 
 const Notifications = (props) => {
-    const [loggedIn, setLoggedIn] = useState(true);
-    const [notifs, setNotifs] = useState([]);
-    const [updateNotifs, setUpdateNotifs] = useState(true);
+
+    // Use states
+    const [loggedIn, setLoggedIn] = useState(true);             // If user is logged in
+    const [notifs, setNotifs] = useState([]);                   // List of notifications for the current user
+    const [updateNotifs, setUpdateNotifs] = useState(true);     // Update the notifications
     //const [projects, setProjects] = useState([]);
   
     /*
@@ -37,7 +39,7 @@ const Notifications = (props) => {
   
             //console.log('hi')
             if (user) {
-                get(child(dbRef, "notifications"))
+                get(child(dbRef, "notifications"))      // Reference the notifications database
                     .then((snapShot) => {
                         let notifsMatch = false;
                         if (snapShot.exists()) {
@@ -46,7 +48,7 @@ const Notifications = (props) => {
                                 //console.log(currUserID);
                                 //console.log(subSnap.val().user_id);
                                 
-                                if (subSnap.val().user_id === currUserID) {
+                                if (subSnap.val().user_id === currUserID) {            // Populate the notifications list with every notification of the current user
                                     //console.log("notif key: " + subSnap.key);
                                     let notif = {
                                         key: subSnap.key,
@@ -58,7 +60,7 @@ const Notifications = (props) => {
                                     setNotifs((notifs) => [...notifs, notif]); //adding found project to array of user's projects
                                 }
 
-                                subSnap.child("notify").forEach((subSubSnap) => {
+                                subSnap.child("notify").forEach((subSubSnap) => {       // Update notifications for users that should be notified
                                     //console.log("subSubSnap " + subSubSnap.val())
                                     if (subSubSnap.val() === currUserID) {
                                         let notif = {
@@ -135,7 +137,7 @@ const Notifications = (props) => {
         const removeArr = [...notifs].filter(notif => notif.key !== param)
         setNotifs(removeArr);
 
-      remove(rmvref)
+      remove(rmvref)        // Removes notification from the database
       .then(() => {
         console.log("notif delete successful")
       })

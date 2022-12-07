@@ -1,6 +1,7 @@
 import React from 'react'
 import { PropTypes } from 'prop-types'
 
+// Bootstrap for progress bar that displays the percentages accordingly
 const Progress = ({ percentage }) => {
     return (
         <div className="progress">
