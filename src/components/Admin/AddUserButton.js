@@ -93,10 +93,13 @@ export default function ({ isOpen, onClose }) {
                         
                         
                         // sign out of auth
+                        console.log("about to sign out", auth2.currentUser);
                         signOut(auth2).then(() => {
-                            console.log("sign out success", auth2.currentUser)
+                            console.log("sign out success ", auth2.currentUser)
+                            resetAdmin();
+                            console.log("test sign in");
                           }).catch((error) => {
-                              console.log("errro sign out", auth2.currentUser);
+                              console.log("error sign out ", error);
                           });
                         
                     }).catch((error) => {
@@ -104,7 +107,7 @@ export default function ({ isOpen, onClose }) {
                         // ...
                         console.log(error);
                     });
-                    resetAdmin(); //
+                    //resetAdmin(); //
                 })
                 .catch((error) => {
                   const errorCode = error.code;
