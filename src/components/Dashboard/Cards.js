@@ -3,7 +3,7 @@ import CardItem from './CardItem';
 import './Cards.css';
 import data from "./data"
 import { getAuth } from "firebase/auth";
-import { getDatabase, get, child, ref} from "firebase/database";
+import { getDatabase, get, child, ref, onValue} from "firebase/database";
 
 // User authentification
 const dbRef = ref(getDatabase());
@@ -65,8 +65,7 @@ function Cards() {
 
       //console.log('hi')
         if (user) {
-          get(child(dbRef, "projects"))
-          .then((snapShot) => {
+          onValue(child(dbRef, "projects"), (snapShot) => {
             let projmatch = false;
             if (snapShot.exists()) {
               // Matches projects that belong to user

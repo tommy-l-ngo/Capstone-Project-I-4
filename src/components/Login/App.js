@@ -1,5 +1,5 @@
 import "./Login.css";
-import React, {createContext} from "react";
+import React, {createContext, useState} from "react";
 import { observer } from "mobx-react";
 import LoginPopup from "./LoginPopup";
 import SubmitButton from "./SubmitButton";
@@ -38,8 +38,12 @@ export const MessageContext = createContext();
 /* ------- Login Component -------- */
 class App extends React.Component {
 
-  state = {
-    messageAlert: false
+  constructor(props)
+  {
+    super(props);
+    this.state = {
+      messageAlert: false
+    };
   }
   
 
@@ -47,7 +51,7 @@ class App extends React.Component {
 
   render() {
 
-    const setMessageAlert = (alert) => {this.setState({...this.state, messageAlert: alert})}
+    const setMessageAlert = (alert) => {this.setState({messageAlert: alert})}
 
     const value = [this.state.messageAlert, setMessageAlert];
 
@@ -55,9 +59,9 @@ class App extends React.Component {
       <main>
         <div className="App">
           <MessageContext.Provider value={value}>
-            <CheckMessages/>
             <AuthProvider>
               <Router>
+                <CheckMessages/>
                 <Switch>
                   <Route
                     path="/"
@@ -166,3 +170,5 @@ class App extends React.Component {
 }
 
 export default observer(App);
+
+

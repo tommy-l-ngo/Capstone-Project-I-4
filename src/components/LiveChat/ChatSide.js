@@ -230,7 +230,7 @@ export function ChatSide(props) {
                             var clicked;
                             (chatPerson.eUID == element.eUID) ? (clicked = true) : (clicked = false);
     
-                            return (<li className={clicked ? ("clicked") : ("")} onClick={(e) => { setChatPerson(element); setSearchText(""); props.chatInfo(element) }}>
+                            return (<li key={index} className={clicked ? ("clicked") : ("")} onClick={(e) => { setChatPerson(element); setSearchText(""); props.chatInfo(element) }}>
                                 <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_01.jpg" alt="" />
                                 <div>
                                     <h2>{element.firstName}</h2>
@@ -252,7 +252,7 @@ export function ChatSide(props) {
                             var clicked;
                             (chatPerson.eUID == element.eUID) ? (clicked = true) : (clicked = false);
     
-                            return (<li className={clicked ? ("clicked") : ("")} onClick={(e) => { setChatPerson(element); props.chatInfo(element) }}>
+                            return (<li key={index} className={clicked ? ("clicked") : ("")} onClick={(e) => { setChatPerson(element); props.chatInfo(element) }}>
                                 <img src="https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg" alt="" />
                                 <div>
                                     <h2>{element.firstName}</h2>

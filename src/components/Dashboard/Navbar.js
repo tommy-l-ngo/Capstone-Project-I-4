@@ -4,10 +4,12 @@ import "./Navbar.css";
 import LoginPopup from "../Login/LoginPopup";
 import { userGlobal, getUserGlobal } from "../Login/LoginForm";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
-import { getDatabase, set, get, ref, child } from "firebase/database";
+import { getDatabase, set, get, ref, child, onValue } from "firebase/database";
 import Notifications from "../Notifications/Notifications";
 import { MessageContext } from "../Login/App";
+import { CheckMessages } from "../Login/CheckMessages";
 //import ReactSwitch from "react-switch";
+
 
 export var fadeIn = false;
 export function setFade(b) {
@@ -32,7 +34,7 @@ function Navbar() {
   const [clickLogin, setClickLogin] = useState(false);
   const [clickReg, setClickReg] = useState(false);
   const [dName, setDName] = useState("");
-  const handleClick = () => setClick(!click);
+  const handleClick = () => setClick(!click)
   const closeMobileMenu = () => setClick(false);
   const handleClickLogin = () => setClickLogin(!clickLogin);
   const handleClickReg = () => setClickReg(!clickReg);
@@ -56,7 +58,7 @@ function Navbar() {
   */
   useEffect(() => {
 
-    setNavMessageAlert(messageAlert);
+    //setNavMessageAlert(messageAlert);
 
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -66,8 +68,7 @@ function Navbar() {
         setUser(user);
         const uid = user.uid; // Current user's Unique ID (NOT related to EUID)
   
-        get(child(dbRef, "users"))
-          .then((snapShot) => {
+        onValue(child(dbRef, "users"), (snapShot) => {
             let match = false;
             if (snapShot.exists()) {
               console.log("User uID: " + uid);
@@ -92,7 +93,8 @@ function Navbar() {
               //console.log(IDs);
               //console.log(userEmail);
             }
-          })
+        })
+          /*
           .then((match) => {
             try {
               if (match) {
@@ -109,6 +111,7 @@ function Navbar() {
               // setError(err.message);
             }
           });
+          */
       } else {
         setUser("");
       }
@@ -212,7 +215,7 @@ function Navbar() {
                   onClick={closeMobileMenu}
                 >
                   Chat
-                  {navMessageAlert && <span className="newMessage"></span>}
+                  {messageAlert && <span className="newMessage"></span>}
                 </Link>
             </li>
 
