@@ -199,8 +199,9 @@ export default function ({ isOpen, onClose }) {
                     </div>
                     <div>
                             <h6>Password</h6>
-                            <input
-                                placeholder="Password"
+                        <input
+                                type="password"
+                                placeholder=""
                                 value={userPassword}
                                 onChange={(e) => setUserPassword(e.target.value)}
                             />
