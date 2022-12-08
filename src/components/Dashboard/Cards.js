@@ -3,7 +3,8 @@ import CardItem from './CardItem';
 import './Cards.css';
 import data from "./data"
 import { getAuth } from "firebase/auth";
-import { getDatabase, get, child, ref, onValue} from "firebase/database";
+import { getDatabase, get, child, ref, onValue } from "firebase/database";
+import { Col, Container, Row } from 'react-bootstrap';
 
 // User authentification
 const dbRef = ref(getDatabase());
@@ -176,14 +177,14 @@ function Cards() {
                             )
                         }))*/}
 
-
+                        <Row>
                             {projects.length ? 
                               (
                                 projects.map((item, index)=>{
                                   const path_withSpaces = item.text;
                                   const project_path = path_withSpaces.replace(/ /g, '_');
                                 return(
-                                   
+                                   <Col sm={4}>
                                     <CardItem 
                                     projectKey={item.key} 
                                     src={item.src} 
@@ -192,6 +193,7 @@ function Cards() {
                                     label={item.label} 
                                     path={`/Projects/${project_path}`}
                                     />
+                                  </Col>
                                 )
                                 })
                               ) 
@@ -199,7 +201,7 @@ function Cards() {
                               (
                                 <h4>Nothing to see here. Go create some projects!</h4>
                               )}
-                            
+                           </Row> 
                         
                     </ul>
                 </div>

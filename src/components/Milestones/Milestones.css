@@ -118,13 +118,17 @@ body {
     position: relative;
     width: 300px;
     height: 300px;
-    background-color: rgba(234, 19, 19, 0.75);
+    background-color: rgb(243, 243, 243);
+    filter: drop-shadow(0 0 .5rem rgba(41, 41, 41, 0.685));
     margin: 50px;
     border-radius: 10px;
-    border: solid 3px;
-    border-color: black;
+    /* border: solid 3px; */
+    /* border-color: black; */
     left: 0px;
     top: 0px;
+  }
+  .m_desc2>select {
+    filter: drop-shadow(0 0 .5rem rgba(192, 192, 192, 0.685));
   }
   .m_info {
     /* position: absolute; */
@@ -146,7 +150,9 @@ body {
 
   }
   .done {
-    background-color: rgba(0, 131, 11, 0.75);
+    background-color: rgba(96, 255, 144, 0.918);
+    border: solid 2px;
+    border-color: rgb(232, 255, 239);
   }
 
 
@@ -297,15 +303,29 @@ body {
   /* width: 500px; */
   /* background-color: rgba(175, 121, 245, 0.8); */
 }
+
+.labels>input{
+  filter: drop-shadow(0 0 .45rem rgba(41, 41, 41, 0.11));
+}
+
+.dates{
+  filter: drop-shadow(0 0 .45rem rgba(41, 41, 41, 0.11));
+}
+
+.labels>select{
+  filter: drop-shadow(0 0 .45rem rgba(41, 41, 41, 0.11));
+}
+
 .addingM {
   /* display: flex;
   align-items: center;
   justify-content: center; */
   width: 450px;
   /* background-color: rgba(175, 121, 245, 0.8); */
-  background-color: rgba(175, 121, 245, 0.75 );
+  background-color: rgb(243, 243, 243);
   border-radius: 7px;
-  border: solid black;
+  /*border: 1px solid black;*/
+  filter: drop-shadow(0 0 .5rem rgba(41, 41, 41, 0.685));
   /* padding: 10px; */
   padding: 10px 0px 0px 0px;
   /* background-color: blue; */

@@ -33,6 +33,7 @@
     margin: 0 1rem;
     border-radius: 10px;
     transition: all 0.05s linear;
+    margin-bottom: 15px;
 }
 
 .cards__item:hover {
