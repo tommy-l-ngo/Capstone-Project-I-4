@@ -163,14 +163,12 @@ function Cards() {
                         )
                         })
                       ) 
-                    : 
-                    loading?<h4>Loading...</h4> 
-                :
-                (
-                  <h4>Nothing to see here. Go create some projects!</h4>
-                )
-                
-                      }
+                      : 
+                        loading ?
+                            <h4>Loading...</h4> 
+                        :
+                            <h4>Nothing to see here. Go create some projects!</h4>
+                    }
                     
                 
             </ul>
