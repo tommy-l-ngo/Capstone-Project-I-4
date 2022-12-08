@@ -11,7 +11,7 @@ function HomeLoginPopup() {
     <>
       {/* <div className="loginFormContainer"></div> */}
       <LoginPopup />
-      <Link to="/Home">
+      <Link to="/Home" style={{textDecoration:'none'}}>
         <div className="mainContent">
           <Navbar />
           <HeroSection />
