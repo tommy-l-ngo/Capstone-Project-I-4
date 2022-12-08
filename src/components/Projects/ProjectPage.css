@@ -27,7 +27,7 @@
 .project_comments {
     background-color: rgb(247, 247, 247);
     border: 0.5px solid;
-    width: 400px;
+    /* width: 400px; */
     /*float: right;*/
     margin-top: 20px;
     margin-right: 20px;
@@ -42,6 +42,11 @@
     margin-right: 20px;
     margin-top: 20px;
     background-color: white;
+    transition: all 0.05s linear;
+}
+
+.task_btn:hover {
+    transform: scale(1.03);
 }
 
 .file_upload {
@@ -75,7 +80,9 @@
 .project_milestones {
     /* display: flex; */
     /* align-items: center; */
-    position: relative;
+    float: left;
+    position: static;
+    margin-top: 10px;
     width: 100%;
     top: 100px;
     height: 100%;
@@ -97,6 +104,11 @@
     /* background-image: url(../Login/memphis-mini.webp); */
     /* background-image: linear-gradient(180deg, rgba(27, 27, 27, 0.493), rgba(46, 46, 46, 0.4)); */
     z-index: 0;
+}
+
+.project_milestones>h1 {
+    color: white;
+    filter: drop-shadow(0 0 .45rem rgb(41, 41, 41));
 }
 
 .milestoneBtn {

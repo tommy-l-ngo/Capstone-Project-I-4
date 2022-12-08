@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
 import LoginPopup from "../Login/LoginPopup";
 import { userGlobal, getUserGlobal } from "../Login/LoginForm";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
-import { getDatabase, set, get, ref, child } from "firebase/database";
+import { getDatabase, set, get, ref, child, onValue } from "firebase/database";
 import Notifications from "../Notifications/Notifications";
+import { MessageContext } from "../Login/App";
+import { useNavigate } from "react-router-dom";
 //import ReactSwitch from "react-switch";
+
 
 export var fadeIn = false;
 export function setFade(b) {
@@ -18,7 +21,11 @@ export function getFade() {
 }
 const auth = getAuth();
 
+
+
 function Navbar() {
+  const [messageAlert, setMessageAlert] = useContext(MessageContext);
+  const [navMessageAlert, setNavMessageAlert] = useState(false);
   const dbRef = ref(getDatabase());
   const [userEUID, setUserEUID] = useState("");
 
@@ -27,13 +34,14 @@ function Navbar() {
   const [clickLogin, setClickLogin] = useState(false);
   const [clickReg, setClickReg] = useState(false);
   const [dName, setDName] = useState("");
-  const handleClick = () => setClick(!click);
+  const handleClick = () => setClick(!click)
   const closeMobileMenu = () => setClick(false);
   const handleClickLogin = () => setClickLogin(!clickLogin);
   const handleClickReg = () => setClickReg(!clickReg);
   const [welcomeName, setWelcomeName] = useState("");
 
   const auth = getAuth();
+  const navigate = useNavigate();
 
   function handleLogout() {
     signOut(auth)
@@ -51,6 +59,8 @@ function Navbar() {
   */
   useEffect(() => {
 
+    //setNavMessageAlert(messageAlert);
+
     onAuthStateChanged(auth, (user) => {
       if (user) {
         // User is signed in, see docs for a list of available properties
@@ -59,11 +69,15 @@ function Navbar() {
         setUser(user);
         const uid = user.uid; // Current user's Unique ID (NOT related to EUID)
   
-        get(child(dbRef, "users"))
-          .then((snapShot) => {
+        onValue(child(dbRef, "users"), (snapShot) => {
             let match = false;
             if (snapShot.exists()) {
               console.log("User uID: " + uid);
+
+              if (uid == "QHAPyKzcbhO4qNKGGMqpt0spcR83") // hardcoded admin credentials
+              { 
+                navigate("/Admin");
+              }
   
               match = snapShot.forEach((curr) => {
                 const ID = curr.ref._path.pieces_[1];
@@ -85,7 +99,8 @@ function Navbar() {
               //console.log(IDs);
               //console.log(userEmail);
             }
-          })
+        })
+          /*
           .then((match) => {
             try {
               if (match) {
@@ -99,9 +114,11 @@ function Navbar() {
               }
             } catch (err) {
               console.log(err.code);
+              console.log(err);
               // setError(err.message);
             }
           });
+          */
       } else {
         setUser("");
       }
@@ -199,13 +216,14 @@ function Navbar() {
             </li>
 
             <li className="nav-item">
-              <Link
-                to="/Chat"
-                className="nav-links"
-                onClick={closeMobileMenu}
-              >
-                Chat
-              </Link>
+                <Link
+                  to="/Chat"
+                  className="nav-links"
+                  onClick={closeMobileMenu}
+                >
+                  Chat
+                  {messageAlert && <span className="newMessage"></span>}
+                </Link>
             </li>
 
             <li className="nav-item">

@@ -73,7 +73,7 @@ export const LoginForm = (props) => {
         //sendEmailVerification(userCredential.user);
 
         // if user is admin, navigate to admin page. if regular user, navigate to home
-        if (userCredential.user.uid == "sl99ANRsAscaBU6n1mFxC6wMpk13") // note: admin uid(s) is/are hardcoded here
+        if (userCredential.user.uid == "QHAPyKzcbhO4qNKGGMqpt0spcR83") // note: admin uid(s) is/are hardcoded here
         {
           navigate("/Admin");
         }

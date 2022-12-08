@@ -6,6 +6,7 @@ import Navbar from '../Navbar';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 
+
   const auth = getAuth();
 
   //import {useLocation} from 'react-router-dom';
@@ -55,7 +56,7 @@ function Home() {
 
 //Home page has the navigation bar, the hero section, and the projects (cards)
     return (
-        <>
+      <>
             <Navbar />
             <HeroSection />
             <Cards />

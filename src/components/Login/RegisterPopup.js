@@ -14,7 +14,7 @@ import { fadeIn, setFade } from "../Dashboard/Navbar";
 
 
 export const RegisterPopup = () => {
-  return <div className="loginFormContainer">
+  return <div className="RegisterPopupContainer">
       <Register />
   </div>;
 };

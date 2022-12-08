@@ -146,7 +146,7 @@ function ProjectPage() {
       }
 
     })
-  })
+  }, []);
 
   //unsubcribe();
 

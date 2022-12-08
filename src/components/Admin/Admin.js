@@ -1,6 +1,6 @@
 import Navbar from "../Dashboard/Navbar"
 import React, { useState, useEffect } from 'react'
-import { getAuth, auth, onAuthStateChanged } from "firebase/auth";
+import { getAuth, auth, onAuthStateChanged, signInWithEmailAndPassword, deleteUser } from "firebase/auth";
 import { getDatabase, set, ref, get, update, remove } from "firebase/database";
 import "./AdminSytle.css";
 import { Dropdown } from "react-bootstrap";
@@ -8,6 +8,18 @@ import DropdownMenu from "./DropdowMenu.js";
 import { useNavigate } from "react-router-dom";
 import { applyMutationToEventStore } from "@fullcalendar/react";
 import AddUserButton from "./AddUserButton.js";
+import { initializeApp } from "firebase/app";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyAu1kdEKPqTfL1XIjDF2l8rfG53FcdtVSM",
+    authDomain: "capstone-i4.firebaseapp.com",
+    projectId: "capstone-i4",
+    storageBucket: "capstone-i4.appspot.com",
+    messagingSenderId: "768427043765",
+    appId: "1:768427043765:web:6643185734fe346ddd07fc",
+    measurementId: "G-X8E63KZMT3"
+  };
+
 
 // admin credentials: email: admin@gmail.com  password: Admin123!
 let filterType = "None";
@@ -31,16 +43,30 @@ export function AdminPage() {
     // redirects to home page if user is not admin // Hardcoded 
     function checkValidAdmin()
     {
-        if (user.uid != "sl99ANRsAscaBU6n1mFxC6wMpk13") { 
+        if (user.uid != "QHAPyKzcbhO4qNKGGMqpt0spcR83") { 
             navigate("/#", { state: { role: "student" } });
             alert("Not admin user");
         }
     }
 
+    function resetAdmin() { // sign back into admin user
+        const auth = getAuth();
+        signInWithEmailAndPassword(auth, "admin@gmail.com", "Admin123!")
+        .then((userCredential) => {
+            // Signed in 
+            const user = userCredential.user;
+            // ...
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+        });
+    }
+
     // get user data from db
     function getUserData()
     {
-        checkValidAdmin();
+        //checkValidAdmin();
         get(ref(db, "users/")).then((snapshot) => {
             if (snapshot.exists()) {
                 //loop through users in db
@@ -95,12 +121,46 @@ export function AdminPage() {
 
     function handleDelete(e) {
         const userDelete = e.target.parentNode.parentNode.childNodes[1].innerHTML; // get euid next to x button
-        console.log("del:", userDelete)
+        var delEmail = "";
+        var delPass = "";
+        console.log("del:", userDelete);
 
         // display confirmation window to delete user
         if (window.confirm("Are you sure you want to delete " + userDelete + " This cannot be reversed")) {
+            // get user credentials from realtime db, delete from auth
+            get(ref(db, "users/"+ userDelete + "/")).then((snapshot) => {
+                if (snapshot.exists()) {
+                    delEmail = snapshot.val().email;
+                    delPass = snapshot.val().password;
+
+                    /// create second auth instance for adding user
+                    const secondaryApp = initializeApp(firebaseConfig);
+                    const auth2 = getAuth(secondaryApp);
+
+                    signInWithEmailAndPassword(auth2, delEmail, delPass)
+                    .then((userCredential2) => {
+                        const user2 = userCredential2.user;
+                        console.log("delete:", user2);
+
+                        deleteUser(user2).then(() => {
+                            console.log("USER DELETED");
+                        }).catch((error) => {
+                            console.log(error);
+                        });
+                    })
+                    .catch((error) => {
+                        const errorCode = error.code;
+                        const errorMessage = error.message;
+                    });
+                } else {
+                    console.log("Error: User not found");
+                }
+            }).catch((error) => {
+                console.error(error);
+            });//get
             // delete user data from database
-            remove(ref(db, "users/" + userDelete))
+            remove(ref(db, "users/" + userDelete));
+            resetAdmin();
             alert("User deleted");
             getUserData();
         }
