@@ -224,12 +224,13 @@
     -ms-user-select: none; /* IE 10 and IE 11 */
     user-select: none; /* Standard syntax */
   }
+  /*
   a:hover {
     text-decoration: underline;
   }
 a {
   color: red;
-}
+}*/
   .m_Item {
     position: relative;
     min-width: 300px;
