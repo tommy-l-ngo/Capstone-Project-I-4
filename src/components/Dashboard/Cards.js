@@ -24,6 +24,7 @@ function Cards() {
   //Need to use stateful variables, not just regular variables
   const [loggedIn, setLoggedIn] = useState(false);
   const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   /*
   Everything is encapsualted in useEffect so that the onAuthStateChanged
@@ -37,25 +38,7 @@ function Cards() {
       if (user) {
         setLoggedIn(true);
         currUserID = user.displayName;
-        /*
-        //No need for all this anymore since we have displayName now
-
-        get(child(dbRef, "users"))
-        .then((snapShot) => {
-        let match = false;
-        if (snapShot.exists()) {
-          // Grabs user id
-          match = snapShot.forEach((curr) => {
-            const ID = curr.ref._path.pieces_[1];
-            let currUID = snapShot.child(ID).child("uid").val();
-            if (currUID === user.uid) {
-              currUserID = snapShot.child(ID).child("eUID").val();
-              name = snapShot.child(ID).child("firstName").val();
-            }
-          });
-        }
-      })
-      */
+        
       } else {
         // No user is signed in.
         setLoggedIn(false);
@@ -65,8 +48,9 @@ function Cards() {
       // Grabs projects from database
 
       //console.log('hi')
-        if (user) {
+      if (user) {
           onValue(child(dbRef, "projects"), (snapShot) => {
+            setLoading(false);
             let projmatch = false;
             if (snapShot.exists()) {
               // Matches projects that belong to user
@@ -105,16 +89,15 @@ function Cards() {
                     };
                   });
                 }
-              //const ID = curr.ref._path.pieces_[1];
-              //let currUID = snapShot.child(ID).child("uid").val();
-              //if (currUID === user.uid) {
+                //const ID = curr.ref._path.pieces_[1];
+                //let currUID = snapShot.child(ID).child("uid").val();
+                //if (currUID === user.uid) {
                 //name = snapShot.child(ID).child("firstName").val();
               });
             }
           })
-        } else {
-        // No user is signed in.
-      }
+        }
+        
     /*
     function getCurrentUser(auth) {
       return new Promise((resolve, reject) => {
@@ -177,8 +160,10 @@ function Cards() {
                             )
                         }))*/}
 
-                        {/* <Row> */}
-                            {projects.length ? 
+                {/* <Row> */}
+                            {loading && (<h4>Loading projects...</h4>)}
+
+                            {projects.length > 0 && 
                               (
                                 projects.map((item, index)=>{
                                   const path_withSpaces = item.text;
@@ -196,8 +181,8 @@ function Cards() {
                                   /* </Col> */
                                 )
                                 })
-                              ) 
-                              : 
+                              )} 
+                             {(!loading && projects.length == 0) &&
                               (
                                 <h4>Nothing to see here. Go create some projects!</h4>
                               )}

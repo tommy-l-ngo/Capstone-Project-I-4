@@ -100,25 +100,6 @@ function Navbar() {
               //console.log(userEmail);
             }
         })
-          /*
-          .then((match) => {
-            try {
-              if (match) {
-                // setError("Email already exists. Try logging in.");
-                // setButtonDisabled(true);
-                // throw Error("Email does not exist in system");
-              } else {
-                setWelcomeName(User.email);
-                // setError("");
-                // setButtonDisabled(false);
-              }
-            } catch (err) {
-              console.log(err.code);
-              console.log(err);
-              // setError(err.message);
-            }
-          });
-          */
       } else {
         setUser("");
       }
