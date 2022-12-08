@@ -62,12 +62,20 @@ function p2Num(p) {
         return 3;
 }
 
+const SortedMilestones = ({ data }) => data ?
+    <h2>{data}</h2>
+    : <h2>There was no result!</h2>
+
 function MilestonesBlock({ isVisible, project_id }) {
     var first = true;
     var sorted = [{
 
     }];
-    const [sortedMilestones, setSorted] = useState([]);
+    var totalRendered = 0;
+    const rows = [];
+    let columns = [];
+
+    const [loading, setLoading] = useState(true);
     const [loggedIn, setLoggedIn] = useState(false);
     const [project, setProject] = useState({});
 
@@ -78,7 +86,9 @@ function MilestonesBlock({ isVisible, project_id }) {
     const [milestones, setMilestones] = useState([]);
     const [milestonesOrdered, setMilestonesOrdered] = useState([]);
     const [addingM, setAddingM] = useState(false);
-
+    const [checked, setChecked] = useState(true);
+    
+    var _loading = true;
 
     const [_date, setDate] = useState(new Date);
 
@@ -101,6 +111,7 @@ function MilestonesBlock({ isVisible, project_id }) {
     const [inp2, setInp2] = useState("");
     const [inp3, setInp3] = useState("");
     const [dropdown, setDropdown] = useState({ value: "Low" });
+    const [sortOrder, setSortOrder] = useState(true);  // 1 for [High → Low], 0 for [Low → High]
     // var tempMiles = [{}, {}, {}, {}];
     var tempMiles = [p0, p1, p2, p3];
     // var tempMiles = new Array(4);
@@ -144,7 +155,9 @@ function MilestonesBlock({ isVisible, project_id }) {
         });
     }
 
-
+    const handleClickSort = event => {
+        setSortOrder(+!sortOrder);  // Swap sortOrder between zero and one.
+    }
 
     const handleChange1 = event => {
         setInp1(event.target.value);
@@ -182,14 +195,18 @@ function MilestonesBlock({ isVisible, project_id }) {
     function addMilestone(p_key, p_name, m_name, m_description, m_date, m_complete, m_priority) {
         const user = getAuth().currentUser;
         // alert(project_id);
+        if (m_description === '') {
+            alert('null');
+            m_description = "\n";
 
+        }
         if (user !== null) {
             const email = user.email;
             const displayName = user.displayName; // (euid)
         }
         else {
             console.log("No User");
-            
+
         }
         if (addingM) {
             // alert("1");
@@ -207,7 +224,6 @@ function MilestonesBlock({ isVisible, project_id }) {
                 setmError("Please add a date for the milestone.");
             }
             else {
-                // alert(_date.toDateString());
                 let dbRefMilestones = ref(db, "projects/" + project_id + "/milestones/");
                 push(dbRefMilestones, {
                     name: m_name,
@@ -235,6 +251,8 @@ function MilestonesBlock({ isVisible, project_id }) {
 
 
     useEffect(() => {
+
+        totalRendered = 0;
         if (location.state != null) {
             key1 = location.state.key;
         }
@@ -259,36 +277,41 @@ function MilestonesBlock({ isVisible, project_id }) {
                                     user: curr.user_id,
                                     src: "images/img-1.png",
                                     priority: curr.priority,
-                                    urgency: curr.urgency
-                                    //path: `/Projects/${subSnap.val().project_id}`  
+                                    urgency: curr.urgency,
+                                    complete: curr.complete
                                 };
                                 var i = parseInt(curr.urgency);
                                 setMilestones((miles) => [...miles, mile1]);
 
                                 // Add curr milestone to correct list (P0 = low, P1 = medium, etc.)
-                                if (i == 0) {
-                                    setP0((miles) => [...miles, mile1]);
-                                }
-                                else if (i == 1) {
-                                    setP1((miles) => [...miles, mile1]);
-                                }
-                                else if (i == 2) {
-                                    setP2((miles) => [...miles, mile1]);
-                                }
-                                else if (i == 3) {
-                                    setP3((miles) => [...miles, mile1]);
-                                }
+                                tempMiles[i].push(mile1);
+
+
+                                // if (i == 0) {
+                                //     setP0((miles) => [...miles, mile1]);
+                                // }
+                                // else if (i == 1) {
+                                //     setP1((miles) => [...miles, mile1]);
+                                // }
+                                // else if (i == 2) {
+                                //     setP2((miles) => [...miles, mile1]);
+                                // }
+                                // else if (i == 3) {
+                                //     setP3((miles) => [...miles, mile1]);
+                                // }
+                                // console.log(tempMiles);
 
                                 setMilestonesOrdered(tempMiles);
-                            })
-
+                            });
                         }
-
+                        // _loading = false;
+                        setLoading(false);
                     });
                 // sorted = _.sortBy(milestones, 'priority');
                 // alert(milestones[0].priority +", " + sortedObjs[0].priority);
                 setAllMiles([p0, p1, p2, p3]);
                 // setMilestones(_.sortBy())
+                // setLoading(false);
 
                 // console.log(tempMiles[0]);
 
@@ -296,29 +319,29 @@ function MilestonesBlock({ isVisible, project_id }) {
 
         })
     }, []);
-
-
     return (
         <>
-            {addingM ?  // Show input fields after clicking 'add milestone' button.
-                <div className='addingMContainer'>
-                    <div className='addingM'>
-                        <div className='labels'>
-                            <div className="xBtn3" onClick={closeInput}>
-                                <i className="fas fa-times xButton2" />
-                            </div>
+            <div className='m_Block'>
+                {/* {loading ? <>Loading</> : <>Not Loading</>} */}
+                {addingM ?  // Show input fields after clicking 'add milestone' button.
+                    <div className='addingMContainer'>
+                        <div className='addingM'>
+                            <div className='labels'>
+                                <div className="xBtn3" onClick={closeInput}>
+                                    <i className="fas fa-times xButton2" />
+                                </div>
 
-                            <label htmlFor="milestoneName" className='label3'>
-                                Title
-                            </label>
-                            <input
-                                type={"text"}
-                                id={"titleInp"}
-                                name={"titleInp"}
-                                onChange={handleChange1}
-                                value={inp1}
-                            />  <br />
-                            
+                                <label htmlFor="milestoneName" className='label3'>
+                                    Title
+                                </label>
+                                <input
+                                    type={"text"}
+                                    id={"titleInp"}
+                                    name={"titleInp"}
+                                    onChange={handleChange1}
+                                    value={inp1}
+                                />  <br />
+
 
                                 <div className='dates'>
                                     <label htmlFor='dateInp' className="label4">
@@ -333,74 +356,197 @@ function MilestonesBlock({ isVisible, project_id }) {
                                     />
                                 </div>
 
+
+                                <br />
+                                <label htmlFor="milestoneDesc" className='label3'>
+                                    Description
+                                </label>
+                                <input
+                                    type={"text"}
+                                    id={"descInp"}
+                                    name={"descInp"}
+                                    onChange={handleChange3}
+                                    value={inp3}
+                                />
+                                <br />
+
+                                <label htmlFor="priorities" className='label3'>Priority</label>
+                                <select name="priorities" id="priorities" className='priorities'
+                                    value={dropdown.value}
+                                    onChange={(e) => { changeDropdown(e) }}
+                                >
+                                    <option value="Critical">       Critical </option>
+                                    <option value="High">           High     </option>
+                                    <option value="Medium">         Medium   </option>
+                                    <option value="Low">            Low      </option>
+                                </select>
+
+                                <div className='mErrorText'>
+                                    {mError}
+                                </div>
+                            </div>  {/* labels (end)*/}
+                        </div>      {/* addingM (end)*/}
+                    </div> :
+                    <></>   // Otherwise hide input fields
+                }
+
+
+                <div className='buttonMilestone'>
+                    <button className='bt milestoneBtn'
+                        onClick={() => {
+                            if (addingM)
+                                addMilestone(project_id, '', inp1, inp3, _date.value, '', dropdown.value);
+                            else
+                                setAddingM(true);
+                        }
+                        }
+                    >
+                        Add milestone
+                    </button>
+                </div>
+                {loading ?
+                    <div className='errorNoMiles'>Loading...</div>                      // Not done loading database
+                :   milestones.length ?                             
+                        <></>
+                    :   <div className='errorNoMiles'>No milestones available.</div>    // No milestones (and already loaded database)
+                }
+                <div className='mainWrap'>
+                    {milestones.length  ?
+                        (
+                            <div className='noSelect centered'>
+                            <span className='sortByText'>
+                                Sort by: {"  "}
+                                <a onClick={handleClickSort}>
+                                    {sortOrder ?
+                                        <span className='hiLo'>High → Low</span> :
+                                        <span className='hiLo'>Low → High</span>
+                                    }
+                                </a>
+                        </span>
+                        <span className='checkboxContainer'>
+                            <input type='checkbox'
+                                id='showAllBox' name='showAllBox'
+                                className='showCheckbox'
+                                checked={checked}
+                                onChange={() => { setChecked(!checked) }} />
+
+                            <label for='showAllBox'>Show Completed</label>
+                        </span>
+
+                        </div>
+                        ):
                             
-                            <br />
-                            <label htmlFor="milestoneDesc" className='label3'>
-                                Description
-                            </label>
-                            <input
-                                type={"text"}
-                                id={"descInp"}
-                                name={"descInp"}
-                                onChange={handleChange3}
-                                value={inp3}
-                            />
-                            <br />
-
-                            <label htmlFor="priorities" className='label3'>Priority</label>
-                            <select name="priorities" id="priorities" className='priorities'
-                                value={dropdown.value}
-                                onChange={(e) => { changeDropdown(e) }}
-                            >
-                                <option value="Critical">       Critical </option>
-                                <option value="High">           High     </option>
-                                <option value="Medium">         Medium   </option>
-                                <option value="Low">            Low      </option>
-                            </select>
-
-                            <div className='mErrorText'>
-                                {mError}
-                            </div>
-                        </div>  {/* labels (end)*/}
-                    </div>      {/* addingM (end)*/}
-                </div> :
-                <></>   // Otherwise hide input fields
-            }
-
-
-            <div className='buttonMilestone'>
-                <button className='bt milestoneBtn'
-                    onClick={() =>
-                        addMilestone(project_id, '', inp1, inp3, _date.value, '', dropdown.value)
+                            <>{}</>
                     }
-                >
-                    Add milestone
-                </button>
-            </div>
 
-            {/* Container for displaying user milestones */}
-            <div id="milestoneContainer">
-                {milestones.length ?
-                    (
-                        // Display user milestones, sorted by priority (crit/high/medium/low)
-                        tempMiles.slice(0).reverse().map((parent, i) => {
-                            return (parent.map((item, j) => {
-                                // console.log(i + ", " + item.name);
-                                return (<MilestoneItem
-                                    key={j}
-                                    title={item.name}
-                                    date={item.date}
-                                    m_key={item.key}
-                                    description={item.desc}
-                                    projectID={project_id}
-                                    priority={item.priority}
-                                />);
-                            }))
-                        })
-                    ) : (
-                        // No milestones found for project
-                        <><h4>No milestones available.</h4></>
-                    )}
+
+                    {/* Container for displaying user milestones */}
+                    <div id="milestoneContainer">
+                        <div className='milestoneWrapper'>
+                            <div className='contentWrapper'>
+
+                                {
+                                    !milestones.length ?
+                                        <></> :
+                                        sortOrder ?
+                                            <ul className='noBullets'>
+                                            {(      // High → Low
+                                                    tempMiles.slice(0).reverse().map((parent, i) => {
+
+                                                        return (parent.map((item, j) => {
+                                                            totalRendered++;
+                                                            if (item.complete == false || checked) {
+
+                                                                return (<li><MilestoneItem
+                                                                    key={item.key}
+                                                                    title={item.name}
+                                                                    date={item.date}
+                                                                    m_key={item.key}
+                                                                    description={item.desc}
+                                                                    projectID={project_id}
+                                                                    priority={item.priority}
+                                                                    complete={item.complete}
+                                                                /></li>);
+                                                            }
+                                                        }))
+                                                    })
+                                                )}
+                                            </ul> :
+                                            // Low → High
+                                            <ul className='noBullets'>
+                                            {(   // High → Low
+                                                    tempMiles.slice(0).map((parent, i) => {
+    
+                                                        return (parent.map((item, j) => {
+                                                            totalRendered++;
+                                                            // console.log(totalRendered + ": " + i + ", " + j);
+                                                            if (item.complete == false || checked) {
+    
+                                                                return (<li><MilestoneItem
+                                                                    key={item.key}
+                                                                    title={item.name}
+                                                                    date={item.date}
+                                                                    m_key={item.key}
+                                                                    description={item.desc}
+                                                                    projectID={project_id}
+                                                                    priority={item.priority}
+                                                                    complete={item.complete}
+                                                                /></li>);
+                                                            }
+
+                                                        }))
+                                                    })
+                                            )}</ul>
+                                }
+                            </div>
+
+
+
+
+                            {/* { ( () => 
+                {
+                    if (milestones.length == 0) { 
+                            return (<h4>No milestones available.</h4>)
+                    } else {
+                        if (sortOrder) {    // High → Low
+                            tempMiles.slice(0).reverse().map((parent, i) => {
+                                return (parent.map((item, j) => {
+                                    // console.log(i + ", " + item.name);
+                                    return (<MilestoneItem
+                                        key={j}
+                                        title={item.name}
+                                        date={item.date}
+                                        m_key={item.key}
+                                        description={item.desc}
+                                        projectID={project_id}
+                                        priority={item.priority}
+                                    />);
+                                }))
+                            })
+                        } else {    // Low → High
+                            tempMiles.slice(0).map((parent, i) => {
+                                return (parent.map((item, j) => {
+                                    // console.log(i + ", " + item.name);
+                                    return (<MilestoneItem
+                                        key={j}
+                                        title={item.name}
+                                        date={item.date}
+                                        m_key={item.key}
+                                        description={item.desc}
+                                        projectID={project_id}
+                                        priority={item.priority}
+                                    />);
+                                }))
+                            })
+                        }
+                    }
+                }
+            )} */}
+
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
         </>

@@ -26,8 +26,8 @@ function ProjectPage() {
   const [currUserID, setCurrUserID] = useState("");
   const [projectKey, setProjectKey] = useState("");
   const [pKey2, setPKey2] = useState("");
-
-
+  const [loading, setLoading] = useState(true);
+  // user = getAuth().currentUser;
   //Gets Project Id
   // const { id } = useParams();
   // //console.log(id);
@@ -140,6 +140,8 @@ function ProjectPage() {
               setProject(project);
               setProjectKey(project.key);
             }
+            setLoading(false);
+
           })
       }
 
@@ -259,15 +261,19 @@ function ProjectPage() {
                     //   <Attachments />
                     // </> */}
       </div>
+
       <div className='project_milestones'>
               <h1>Milestones</h1>
-              {/* <br /> */}
-              <MilestonesBlock
-                isVisible={true}
-                project_id={sessionStorage.getItem("key")}
-              />
-            </div>
-    </div>
+        {/* <br /> */}
+        {/* <div className='blocked'> */}
+          <MilestonesBlock
+            isVisible={true}
+            project_id={sessionStorage.getItem("key")}
+          />
+        {/* </div> */}
+          
+        </div>
+      </div>
   );
 }
 /*

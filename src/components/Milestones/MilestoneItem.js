@@ -6,35 +6,40 @@ import { getDatabase, get, child, ref, set, push, remove, update } from "firebas
 
 import "./Milestones.css";
 import { click } from '@testing-library/user-event/dist/click';
-  const db = getDatabase();
+const db = getDatabase();
 const dbRef = ref(getDatabase());
-  
+
 
 function p2Num(p) {
   if (p == "Low")
-      return 0;
+    return 0;
   else if (p == "Medium")
-      return 1;
+    return 1;
   else if (p == "High")
-      return 2;
+    return 2;
   else if (p == "Critical")
-      return 3;
+    return 3;
 }
 
-function MilestoneItem({ title, date, m_key, description, projectID, priority }) {          //Code to make page scroll to top
-
+function MilestoneItem({ title, date, m_key, description, projectID, priority, complete }) {          //Code to make page scroll to top
+  // console.log(title + ", " + complete);
   const mRef = useRef();
   const [mousePos, setMousePos] = useState({});
 
-  const [finished, setFinished] = useState(false);
+  const [finished, setFinished] = useState(complete);
   const [clicking, setClicking] = useState(false);
   // alert(priority);
-  const [dropdown, setDropdown] = useState({value: "" + priority});
+  const [dropdown, setDropdown] = useState({ value: "" + priority });
 
-
+  // let dbRef0 = ref(db, "projects/" + projectID + "/milestones/" + m_key);
+  // const _complete = ref.on('complete', (snapshot) => {
+  //   console.log(snapshot.val());
+  // }, (errorObject) => {
+  //   console.log('The read failed: ' + errorObject.name);
+  // });
   // Handles changing the dropdown (priority) value. 
   const changeDropdown = event => {
-    setDropdown({value: event.target.value});
+    setDropdown({ value: event.target.value });
     let dbRefMilestone = ref(db, "projects/" + projectID + "/milestones/" + m_key);
     // Update database to new value
     update(dbRefMilestone, {
@@ -45,7 +50,7 @@ function MilestoneItem({ title, date, m_key, description, projectID, priority })
       window.location.reload();
     });
   };
-  var initialMouse = {x: 0, y: 0};
+  var initialMouse = { x: 0, y: 0 };
 
   var initialMilestone = {};
 
@@ -65,13 +70,13 @@ function MilestoneItem({ title, date, m_key, description, projectID, priority })
 
   // Remove the milestone
   function deleteItem() {
-      let dbRefMilestone = ref(db, "projects/" + projectID + "/milestones/" + m_key);
-      // Remove from database
-      remove(dbRefMilestone).then(() => {
-        // alert("location removed");
-        window.location.reload();
-      });
-      
+    let dbRefMilestone = ref(db, "projects/" + projectID + "/milestones/" + m_key);
+    // Remove from database
+    remove(dbRefMilestone).then(() => {
+      // alert("location removed");
+      window.location.reload();
+    });
+
   }
 
   // Change between finished/unfinished
@@ -80,12 +85,14 @@ function MilestoneItem({ title, date, m_key, description, projectID, priority })
     // Update database with new value
     update(dbRefMilestone, { complete: !finished }).then(() => {
       // alert("Data updated");
+      // complete = !finished;
       setFinished(!finished);
+      window.location.reload();
     });
   }
 
   // TODO: Still in progress: handling click and drag to rearrange milestones order.
-  function handleMouseDown (event) {
+  function handleMouseDown(event) {
     // event.stopPropogation()
     // event.preventDefault()
     // alert(event.clientX);
@@ -115,7 +122,7 @@ function MilestoneItem({ title, date, m_key, description, projectID, priority })
       }
     });
 
-    
+
 
 
     /*
@@ -155,38 +162,36 @@ function MilestoneItem({ title, date, m_key, description, projectID, priority })
   return (
     <>
       <div className={finished ? 'm_Item done ' : 'm_Item '} id='mStone' ref={mRef}
-        onMouseDown={ (e) => { handleMouseDown(e); } }
-        // onMouseUp={ (e) => { handleMouseUp(e); } }
+        onMouseDown={(e) => { handleMouseDown(e); }}
+      // onMouseUp={ (e) => { handleMouseUp(e); } }
       >
         <div className="xBtn2" onClick={deleteItem}>
           <i className="fas fa-times xButton" />
         </div>
-                  
-          <div className='m_info'>
-            <h3 className='m_title'>{title}</h3>
-            <p className='m_desc2'>{date}</p>
-            <p className='m_desc2'>{description}</p>
-            <span className='m_text'>Priority</span> <br />
-            <span className='m_desc2'>
-                              <select name="priorities" id="priorities" className='priorities'
-                                value={dropdown.value}
-                                onChange={changeDropdown}
-                              >
-                                  <option value="Critical"> Critical </option>
-                                  <option value="High">     High     </option>
-                                  <option value="Medium">   Medium   </option>
-                                  <option value="Low">      Low      </option>
-                              </select>
 
-            
-            </span>
-          </div>
+        <div className='m_info'>
+          <h3 className='m_title'>{title}</h3>
+          <p className='m_desc2'>{date}</p>
+          <p className='m_desc3'>{description}</p>
+          <span className='m_text'>Priority</span> <br />
+          <span className='m_desc2'>
+            <select name="priorities" id="priorities" className='priorities'
+              value={dropdown.value}
+              onChange={changeDropdown} >
+                <option value="Critical"> Critical </option>
+                <option value="High">     High     </option>
+                <option value="Medium">   Medium   </option>
+                <option value="Low">      Low      </option>
+            </select>
+          </span>
           <div className='center'>
-            <button className='btnToggle' onClick={toggleDone}>
-              {finished ? "Mark Incomlete" : "Mark Complete"}
-            </button>
-          </div>
+          <button className='btnToggle' onClick={toggleDone}>
+            {finished ? "Mark Incomlete" : "Mark Complete"}
+          </button>
         </div>
+
+        </div>
+      </div>
     </>
   )
 }

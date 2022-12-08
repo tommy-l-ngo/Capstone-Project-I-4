@@ -59,12 +59,24 @@
     padding-bottom: 15px;
     background-color: white;
 }
+.jj {
+    background: url(../Milestones/45degreee_fabric.png);
 
+}
 .rightsection {
     float: right;
     padding-left: 40px;
 }
 
+.blocked {
+    display: flex;
+}
+.mBackground {
+    width: 100%;
+    height: 100%;
+    background: url(../Milestones/45degreee_fabric.png);
+
+  }
 .project_milestones {
     /* display: flex; */
     /* align-items: center; */
@@ -73,13 +85,25 @@
     margin-top: 10px;
     width: 100%;
     top: 100px;
+    height: 100%;
+    /* padding-bottom: 0; */
+    /* background: blue; */
+    background: url(../Milestones/45degreee_fabric.png);
+
     /* background-color: #30475E; */
     /* background-color: rgb(136, 136, 136); */
-    box-shadow:  0px 90px 50px 200px rgba(0, 0, 0, 0.1) inset;
-    background-image: url(../Milestones/45degreee_fabric.png);
+
+
+   
+   
+    /* box-shadow:  0px -5999999999px 10px 10px rgba(0, 0, 0, 1) inset; */
+    box-shadow:  0px 0px 50px 0px rgba(0, 0, 0, .51) ;
+   
+   
+    /* background: url(../Milestones/45degreee_fabric.png); */
     /* background-image: url(../Login/memphis-mini.webp); */
     /* background-image: linear-gradient(180deg, rgba(27, 27, 27, 0.493), rgba(46, 46, 46, 0.4)); */
-    z-index: 1;
+    z-index: 0;
 }
 
 .project_milestones>h1 {
