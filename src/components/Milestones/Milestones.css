@@ -1,11 +1,13 @@
+:root {
+  --wide: 70%;
+  --high: 500px;
+}
+
 .complete{
     text-decoration: line-through red;
     opacity: 0.6;
 }
-body {
-  height: 100%;
-    background-color: yellow;
-  }
+
 
   .todo-list{
     display: flex;
@@ -68,26 +70,111 @@ body {
   }
 
   .milestoneTitle {
-
+    
     margin: auto;
     position: absolute;
     top: 8%;
     width: 100%;
-    background-color: red;
+    /* background-color: red; */
     text-align: center;
     font-size: 24px;
   }
 
+  .mBackground {
+    width: 100%;
+    height: 100%;
+    /* background: blue; */
+    /* background: url(45degreee_fabric.png); */
+
+  }
   #milestoneContainer {
     display: flex;
     /* background-color: red; */
-    align-items: center;
-    height: 100%;
+    background: url(45degreee_fabric.png);
+    /* background-color: blue; */
+    /* background-color: red; */
+    /* align-items: center; */
+    /* height: 100%; */
+    /* width: 1800px; */
+    justify-content: center;
+
+    min-height: 400px;
+    /* height: 100%; */
+    position: absolute;
+    margin-top: 0px;
+    width: 100%;
     /* width: 50%; */
+    
     margin: auto;
+    /* overflow: wrap; */
+    /* background-color: red; */
+  }
+  .centered {
+    margin: auto;
+    width: var(--wide);
+    text-align: left;
+    padding-top: 10px;
+    padding-bottom: 2px;
+    margin-bottom: 15px;
+    
+    /* padding: 10px; */
+  }
+  .mainWrap {
+    /* display: flex; */
+    background: url(45degreee_fabric.png);
+    /* background-color: blue; */
+    /* background-color: red; */
+    /* align-items: center; */
+    /* width: 1800px; */
+    justify-content: center;
+
+    /* min-height: 800px; */
+    position: absolute;
+    margin-top: 0px;
+    /* background-color: blue; */
+    width: 100%;
+    height: 100%;
+
+    /* width: 50%; */
+    
+    margin: auto;
+    /* overflow: wrap; */
     /* background-color: red; */
   }
 
+
+
+  .milestoneWrapper {
+    width: var(--wide);
+    /* height: 100%; */
+    /* background-color: chartreuse; */
+    z-index: 10;
+  }
+  ul.noBullets {
+    list-style-type: none; /* Remove bullets */
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margins */
+    list-style: none;
+    /* background-color: yellow; */
+  }
+
+  li {
+    float:left;
+  }
+
+ ul li {
+    display: inline;
+    /* background-color: yellow; */
+
+  }
+.contentWrapper {
+  width: 100%;
+  height: 100%;
+  /* background-color: yellow; */
+}
+  .noBulletz {
+    display: inline;
+  }
   .dates {
     /* background-color: green; */
     display:inline-flex;
@@ -116,22 +203,42 @@ body {
     text-align: left;
   }
 
+
+
+
+
+
+  
+  .hiLo:hover,
+  .hiLo:focus {
+    /* text-decoration: underline; */
+    /* background-size: 0 0.1em, 100% 0.1em; */
+  }
+
+
+
   .sortByText>a {
     cursor: pointer;
+    color: red;
     -webkit-user-select: none; /* Safari */
     -ms-user-select: none; /* IE 10 and IE 11 */
     user-select: none; /* Standard syntax */
   }
-
+  a:hover {
+    text-decoration: underline;
+  }
+a {
+  color: red;
+}
   .m_Item {
     position: relative;
     min-width: 300px;
     height: 300px;
     background-color: rgba(234, 19, 19, 0.75);
-    margin: 50px;
+    margin-left: 50px;
     margin-top: 0px;
-    margin-bottom: 100px; 
-    border-radius: 10px;
+    margin-bottom: 50px; 
+    border-radius: 30px;
     border: solid 3px;
     border-color: black;
     left: 0px;
@@ -157,14 +264,34 @@ body {
 
 
   }
+  .m_desc3 {
+    /* font-weight: bolder; */
+    font-family: Trebuchet MS,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Tahoma,sans-serif; 
+    /* font-family: "Gill Sans", sans-serif; */
+    min-height: 25px;
+
+  }
   .done {
     background-color: rgba(0, 131, 11, 0.75);
   }
 
   .m_Block {
+    position: relative;
     height: 100%;
+    /* background: url(45degreee_fabric.png); */
+
+    /* display: flexbox; */
   }
 
+  .errorNoMiles {
+    position: relative;
+    margin-top: 20px;
+    background: url(45degreee_fabric.png);
+    font-weight: normal;
+    font-size: 30px;
+    /* font-family: Trebuchet MS,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Tahoma,sans-serif;  */
+
+  }
 
   .xBtn {
     position:relative;
@@ -183,9 +310,6 @@ body {
   }
   .xBtn:hover{
     transform: scale(1.2);
-    /* box-shadow: 0px 0px, ; */
-    /* background:black; */
-    /* color:rgb(65, 65, 65); */
     /* text-shadow: 0px 0px 100px rgba(0, 0, 0, 0.5); */
   }
   .xBtn:hover .xButton{
@@ -286,11 +410,13 @@ body {
 }
 
 .milestoneBtn {
-  margin-top: 20px;
-  border-radius: 3px;
+  /* margin-top: 20px; */
+  border-radius: 10px;
+
+  /* border-radius: 3px; */
   position: relative;
-  top: -20px;
-  transition: box-shadow .15s;
+  /* top: -20px; */
+  transition: box-shadow .15s, border-radius .15s;
 
   /* box-shadow: rgba(0, 0, 0, 0.52) 0px 1px 3px 0px, rgba(27, 31, 35, 0.85) 0px 0px 0px 1px; */
 
@@ -298,8 +424,9 @@ body {
 
 
 .milestoneBtn:hover {
+  /* border-radius: 20px; */
   /* box-shadow: rgba(0, 0, 0, 0.52) 0px 1px 5px 0px, rgba(27, 31, 35, 0.85) 0px 0px 0px 4px; */
-  box-shadow: rgba(0, 0, 0, 0.52) 0px 10px 5px 0px, rgba(27, 31, 35, 0.85) 0px 0px 0px 4px ;
+  box-shadow: rgba(0, 0, 0, 0.52) 0px 10px 5px 0px, black 0px 0px 0px 4px ;
 
 }
 .milestoneBtn:active {
@@ -388,7 +515,8 @@ body {
 }
 
 .buttonMilestone {
-
+  padding: 0;
+  margin: 0;
   transition: all 1s;
 }
 
@@ -426,7 +554,7 @@ input {
 }
 
 .priorities {
-  width: 150px;
+  width: 120px;
   text-align: left;
   margin-bottom: 10px;
 }
@@ -438,6 +566,90 @@ option {
 .sortByText {
   text-align: left;
   position: relative;
-  margin-left: 50px;
+  margin-left: 60px;
+  width: 200px;
+  height: 100px;
+  outline: 2px solid black;
+  border-radius: 25px;
+  background-color: rgba(0, 0, 0,.25);
+
+  /* background-color: white; */
+  padding: 0px 0px 0px 10px;
+  /* margin-bottom: 10px; */
   /* left: 50px; */
+}
+
+.hiLo {
+  text-decoration: none;
+  border: none;
+  border-radius: 4px 25px 25px  4px; 
+  /* 2pt; */
+  /* box-shadow: 0 0 0 1pt grey; */
+  transition: box-shadow .1s;
+  /* outline: 2pt solid grey; */
+  border-left: 2px solid grey;
+  margin-left: 10px;
+  padding: 0px 10px 0px 10px;
+  /* background: none; */
+  /* margin-left: 50px; */
+    /* linear-gradient(to right, rgba(100, 200, 200, 1), rgba(100, 200, 200, 1)), */
+    /* linear-gradient(to right, rgba(255, 0, 0, 1), rgba(255, 0, 180, 1), rgba(0, 100, 200, 1)); */
+  /* background-size: 100% 0.1em, 0 0.1em;
+  background-position: 100% 100%, 0 100%;
+  background-repeat: no-repeat; */
+  /* transition: background-size 400ms; */
+}
+.hiLo:hover {
+  /* outline: 3px solid green; */
+  box-shadow: rgba(0, 0, 0, 0.52) 0px 10px 5px 0px, black 0px 0px 0px 4px ;
+
+  /* border-left: 2px solid black; */
+
+              /* ,0 0 10px 10px blue; */
+
+  /* margin-bottom: 10px; */
+  /* left: 50px; */
+}
+.checkboxContainer {
+  /* background-color: blue; */
+  margin-left: 30px;
+  position: relative;
+  width: 150px;
+  outline: 2px solid black;
+  cursor: pointer;
+  border-radius: 20px;
+  /* height: 1000px; */
+  transition: 0.12s;
+  background-color: rgba(0, 0, 0,.25);
+}
+
+span.checkboxContainer {
+  display: inline-block;
+}
+
+.showCheckbox {
+  /* margin-left: 30px; */
+  /* background-color: red; */
+  width: 20px;
+  cursor: pointer;
+
+}
+
+.left {
+  /* margin: auto; */
+  position: absolute;
+}
+.checkboxContainer:hover {
+  box-shadow: rgba(0, 0, 0, 0.52) 0px 10px 5px 0px, black 0px 0px 0px 4px ;
+
+  /* box-shadow: 0 0 5px 2pt black; */
+
+}
+.optionsWrapper {
+  /* width: 80%; */
+  /* background-color: blue; */
+}
+
+.checkboxContainer label {
+  cursor: pointer;
 }

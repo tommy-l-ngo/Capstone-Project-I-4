@@ -21,17 +21,22 @@ function p2Num(p) {
     return 3;
 }
 
-function MilestoneItem({ title, date, m_key, description, projectID, priority }) {          //Code to make page scroll to top
-
+function MilestoneItem({ title, date, m_key, description, projectID, priority, complete }) {          //Code to make page scroll to top
+  // console.log(title + ", " + complete);
   const mRef = useRef();
   const [mousePos, setMousePos] = useState({});
 
-  const [finished, setFinished] = useState(false);
+  const [finished, setFinished] = useState(complete);
   const [clicking, setClicking] = useState(false);
   // alert(priority);
   const [dropdown, setDropdown] = useState({ value: "" + priority });
 
-
+  // let dbRef0 = ref(db, "projects/" + projectID + "/milestones/" + m_key);
+  // const _complete = ref.on('complete', (snapshot) => {
+  //   console.log(snapshot.val());
+  // }, (errorObject) => {
+  //   console.log('The read failed: ' + errorObject.name);
+  // });
   // Handles changing the dropdown (priority) value. 
   const changeDropdown = event => {
     setDropdown({ value: event.target.value });
@@ -80,7 +85,9 @@ function MilestoneItem({ title, date, m_key, description, projectID, priority })
     // Update database with new value
     update(dbRefMilestone, { complete: !finished }).then(() => {
       // alert("Data updated");
+      // complete = !finished;
       setFinished(!finished);
+      window.location.reload();
     });
   }
 
@@ -165,7 +172,7 @@ function MilestoneItem({ title, date, m_key, description, projectID, priority })
         <div className='m_info'>
           <h3 className='m_title'>{title}</h3>
           <p className='m_desc2'>{date}</p>
-          <p className='m_desc2'>{description}</p>
+          <p className='m_desc3'>{description}</p>
           <span className='m_text'>Priority</span> <br />
           <span className='m_desc2'>
             <select name="priorities" id="priorities" className='priorities'

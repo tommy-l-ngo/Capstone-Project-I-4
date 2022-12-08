@@ -23,7 +23,7 @@ function Cards() {
   //Need to use stateful variables, not just regular variables
   const [loggedIn, setLoggedIn] = useState(false);
   const [projects, setProjects] = useState([]);
-
+  const [loading, setLoading] = useState(true);
   /*
   Everything is encapsualted in useEffect so that the onAuthStateChanged
   listener is set only once at and by providing an empty dependency array to useEffect(), 
@@ -111,6 +111,7 @@ function Cards() {
                 //name = snapShot.child(ID).child("firstName").val();
               });
             }
+            setLoading(false);
           })
         } else {
         // No user is signed in.
@@ -162,10 +163,14 @@ function Cards() {
                         )
                         })
                       ) 
-                      : 
-                      (
-                        <h4>Nothing to see here. Go create some projects!</h4>
-                      )}
+                    : 
+                    loading?<h4>Loading...</h4> 
+                :
+                (
+                  <h4>Nothing to see here. Go create some projects!</h4>
+                )
+                
+                      }
                     
                 
             </ul>
