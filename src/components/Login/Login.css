@@ -20,6 +20,9 @@
   margin-bottom: 20px;
   /* justify-content: center; */
 }
+a {
+  text-decoration: none;
+}
 
 .backImg {
   opacity: 0.5;
