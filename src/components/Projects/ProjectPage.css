@@ -27,7 +27,7 @@
 .project_comments {
     background-color: rgb(247, 247, 247);
     border: 0.5px solid;
-    width: 400px;
+    /* width: 400px; */
     /*float: right;*/
     margin-top: 20px;
     margin-right: 20px;
@@ -42,6 +42,11 @@
     margin-right: 20px;
     margin-top: 20px;
     background-color: white;
+    transition: all 0.05s linear;
+}
+
+.task_btn:hover {
+    transform: scale(1.03);
 }
 
 .file_upload {
