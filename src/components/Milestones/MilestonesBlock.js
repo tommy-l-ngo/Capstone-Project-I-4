@@ -371,7 +371,7 @@ function MilestonesBlock({ isVisible, project_id }) {
                                 <br />
 
                                 <label htmlFor="priorities" className='label3'>Priority</label>
-                                <select name="priorities" id="priorities" className='priorities'
+                                <select name="priorities" id="priorities" className='priorities0'
                                     value={dropdown.value}
                                     onChange={(e) => { changeDropdown(e) }}
                                 >
@@ -404,6 +404,7 @@ function MilestonesBlock({ isVisible, project_id }) {
                         Add milestone
                     </button>
                 </div>
+                
                 {loading ?
                     <div className='errorNoMiles'>Loading...</div>                      // Not done loading database
                 :   milestones.length ?                             

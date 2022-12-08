@@ -572,7 +572,11 @@ input {
   border: none;
 
 }
-
+.priorities0 {
+  width: 150px;
+  text-align: left;
+  margin-bottom: 10px;
+}
 .priorities {
   width: 120px;
   text-align: left;
