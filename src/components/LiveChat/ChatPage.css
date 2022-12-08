@@ -28,9 +28,10 @@ body{
 
 .chatAside header{
 	padding:30px 20px;
+	width: 100%;
 }
 .chatAside input{
-	width:100%;
+	width:75%;
 	height:50px;
 	line-height:50px;
 	padding:0 50px 0 20px;
@@ -41,7 +42,7 @@ body{
 	background-image:url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_search.png);
 	background-repeat:no-repeat;
 	background-position:100%;
-	background-size:20%;
+	background-size:15%;
 }
 .chatAside input::placeholder{
 	color:#fff;
@@ -78,6 +79,7 @@ body{
 .chatAside li{
 	padding:10px 0;
 	border-bottom: 1px black solid;
+	width: 100%;
 }
 .chatAside li:hover{
 	background-color:#5e616a;
@@ -92,8 +94,7 @@ h2,h3{
 .chatAside li img{
 	height: 4rem;
 	border-radius:50%;
-	margin-left:20px;
-	margin-right:8px;
+	margin-right: 5%;
 }
 .chatAside li div{
 	display:inline-block;

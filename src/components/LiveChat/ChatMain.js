@@ -124,6 +124,7 @@ export function ChatMain(props) {
                             set(ref(db, "messages/" + snapshot.key), { ...dbMessage, seen: true });
                         }
                     }
+                    
                     //first = true;
                 });
             })
@@ -131,16 +132,19 @@ export function ChatMain(props) {
                 console.log(err.message);
                 first = false;
             })
+        
+        //scrollToBottom();
     }, [props.chatPerson]);
 
      //For scrolling to bottom of chat
-     const messagesEndRef = useRef(null);
-     const scrollToBottom = () => {
-         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
-     }
-     useEffect(() => {
-         scrollToBottom()
-     }, [messages]);
+    const messagesEndRef = useRef();
+    const scrollToBottom = () => {
+        messagesEndRef.current?.scrollIntoView()
+        //document.querySelector("#chatBottom").scrollIntoView({ behavior: "smooth" })
+    }
+    useEffect(() => {
+        scrollToBottom()
+    }, [messages]);
 
 /*
     //listens for a new message added
