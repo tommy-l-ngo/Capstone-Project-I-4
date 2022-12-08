@@ -811,3 +811,7 @@ h2 {
 .select select:disabled ~ .select_arrow {
   border-top-color: #cccccc;
 }
+
+a:hover {
+  text-decoration: none;
+}
