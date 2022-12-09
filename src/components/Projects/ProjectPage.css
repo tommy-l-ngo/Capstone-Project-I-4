@@ -86,6 +86,7 @@
     width: 100%;
     top: 100px;
     height: 100%;
+    min-height: 400px;
     /* padding-bottom: 0; */
     /* background: blue; */
     background: url(../Milestones/45degreee_fabric.png);
