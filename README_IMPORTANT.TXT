@@ -9,4 +9,4 @@ The "--legacy-peer-deps" flag is required on the first command.
 ALternatively copy and paste the below into console:
 
 npm install --legacy-peer-deps
-npm run
+npm start
