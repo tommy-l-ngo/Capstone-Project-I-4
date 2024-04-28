@@ -1,3 +1,17 @@
+https://capstone-i4.web.app/#/Login
+
+Testing Credentials
+Email: test2024_1@email.com
+Password: Password2024!
+
+
+
+
+
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
